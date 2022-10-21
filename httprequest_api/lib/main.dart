@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:httprequest_api/post_result_model.dart';
+import 'package:httprequest_api/user_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   dynamic postResult = null;
+  dynamic user = null;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,15 @@ class _MyAppState extends State<MyApp> {
                     setState(() {});
                   });
                 },
-                child: Text("Post"))
+                child: Text("Post")),
+            ElevatedButton(
+                onPressed: () {
+                  User.connectToAPI("5").then((value) {
+                    user = value;
+                    setState(() {});
+                  });
+                },
+                child: Text("get"))
           ],
         )),
       ),
