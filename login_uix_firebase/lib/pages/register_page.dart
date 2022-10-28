@@ -20,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -41,18 +42,23 @@ class _RegisterPageState extends State<RegisterPage> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
 
+      final User? user = auth.currentUser;
+      final uid = user!.uid;
+
       //add user details
       addUserDetails(
-          _firstNameController.text.trim(),
-          _lastNameController.text.trim(),
-          _emailController.text.trim(),
-          int.parse(_ageController.text.trim()));
+        uid,
+        _firstNameController.text.trim(),
+        _lastNameController.text.trim(),
+        _emailController.text.trim(),
+        int.parse(_ageController.text.trim()),
+      );
     }
   }
 
   Future addUserDetails(
       String firstName, String lastName, String email, int age) async {
-    await FirebaseFirestore.instance.collection('users').add({
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
       'first name': firstName,
       'last name': lastName,
       'email': email,
