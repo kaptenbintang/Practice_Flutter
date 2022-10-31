@@ -41,6 +41,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future signUp() async {
+    String userUid;
+
     //authenticate user
     if (passwordConfirmed()) {
       try {
@@ -50,11 +52,22 @@ class _RegisterPageState extends State<RegisterPage> {
             password: _passwordController.text.trim());
 
         //add user details
-        addUserDetails(
-            _firstNameController.text.trim(),
-            _lastNameController.text.trim(),
-            _emailController.text.trim(),
-            int.parse(_ageController.text.trim()));
+        auth.authStateChanges().listen((User? user) {
+          if (user == null) {
+            SnackBar(
+              content: const Text('There is no User Login'),
+            );
+          } else {
+            userUid = user.uid;
+            addUserDetails(
+              userUid,
+              _firstNameController.text.trim(),
+              _lastNameController.text.trim(),
+              _emailController.text.trim(),
+              int.parse(_ageController.text.trim()),
+            );
+          }
+        });
       } on FirebaseAuthException catch (e) {
         print(e);
         showDialog(
@@ -70,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future addUserDetails(String uid, String firstName, String lastName,
       String email, int age) async {
-    await db.collection('users').add({
+    await db.collection('users').doc(uid).set({
       'first name': firstName,
       'last name': lastName,
       'email': email,
