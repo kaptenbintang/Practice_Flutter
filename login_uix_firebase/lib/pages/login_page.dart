@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'forgot_pw_page.dart';
@@ -19,8 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  String name = '';
-  // String _text = '';
+  bool isEmail(String input) => EmailValidator.validate(input);
 
   Future signIn() async {
     try {
@@ -126,8 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                           fillColor: Colors.grey[200],
                           filled: true),
                       validator: (value) {
-                        if (value!.isEmpty ||
-                            RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
+                        if (value!.isEmpty || !isEmail(value)) {
                           return "Enter correct email";
                         } else {
                           return null;
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                           fillColor: Colors.grey[200],
                           filled: true),
                       validator: (value) {
-                        if (value!.isEmpty || value.length < 4) {
+                        if (value!.isEmpty || value.length < 6) {
                           return "Enter correct password";
                         } else {
                           return null;
@@ -201,7 +201,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: GestureDetector(
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                          signIn;
+                          signIn();
+                          return;
                         }
                       },
                       child: Container(
