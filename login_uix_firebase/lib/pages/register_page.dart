@@ -21,6 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore db = FirebaseFirestore.instance;
 
   @override
   void dispose() {
@@ -38,27 +39,40 @@ class _RegisterPageState extends State<RegisterPage> {
     //authenticate user
     if (passwordConfirmed()) {
       //create user
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await auth.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
 
-      final User? user = auth.currentUser;
-      final uid = user!.uid;
+      // final User? user = auth.currentUser;
+      // final uid = user!.uid;
+      // final FirebaseAuth user2 = await auth.currentUser();
+      String userUid;
+
+      auth.authStateChanges().listen((User? user) {
+        if (user == null) {
+          SnackBar(
+            content: const Text('There is no User Login'),
+          );
+        } else {
+          userUid = user.uid;
+          addUserDetails(
+            userUid,
+            _firstNameController.text.trim(),
+            _lastNameController.text.trim(),
+            _emailController.text.trim(),
+            int.parse(_ageController.text.trim()),
+          );
+        }
+      });
 
       //add user details
-      addUserDetails(
-        uid,
-        _firstNameController.text.trim(),
-        _lastNameController.text.trim(),
-        _emailController.text.trim(),
-        int.parse(_ageController.text.trim()),
-      );
+
     }
   }
 
-  Future addUserDetails(
-      String firstName, String lastName, String email, int age) async {
-    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+  Future addUserDetails(String uid, String firstName, String lastName,
+      String email, int age) async {
+    await db.collection('users').doc(uid).set({
       'first name': firstName,
       'last name': lastName,
       'email': email,

@@ -1,3 +1,6 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
@@ -16,8 +19,33 @@ class _HomePageState extends State<HomePage> {
   final ageController = TextEditingController();
 
   final user = FirebaseAuth.instance.currentUser!;
+  final auth = FirebaseAuth.instance;
+  final db = FirebaseFirestore.instance;
+  var uid;
+  late String fName;
+
+  void getDataFromDb() async {
+    if (auth.currentUser != null) {
+      uid = auth.currentUser?.uid;
+
+      await db.collection("users").doc(uid).get().then((DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        String fName = data['first name'];
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text('halo: $fName'),
+            );
+          },
+        );
+      }).onError((error, stackTrace) => null);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // return FutureBuilder(future: db.collection("users").doc(uid).get(),builder: (context, DocumentSnapshot snapshot){ final data = snapshot.data() as Map<String, dynamic>;};);
     return Scaffold(
       body: Center(
           child: Column(
@@ -54,16 +82,26 @@ class _HomePageState extends State<HomePage> {
               labelText: 'Age'),
           ElevatedButton(
             onPressed: () {
+              uid = auth.currentUser?.uid;
+              db
+                  .collection("users")
+                  .doc(uid)
+                  .get()
+                  .then((DocumentSnapshot doc) {
+                final data = doc.data() as Map<String, dynamic>;
+                fName = data['first name'];
+              }).onError((error, stackTrace) => null);
+
               showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    content: Text('hello ${nameController.text}'),
+                    content: Text('halo: $fName'),
                   );
                 },
               );
             },
-            child: const Text('Sumbit'),
+            child: const Text('Submit'),
           ),
         ],
       )),
@@ -75,6 +113,9 @@ class _HomePageState extends State<HomePage> {
     // Clean up the controller when the widget is removed from the
     // widget tree.
     nameController.dispose();
+    lastsNameController.dispose();
+    emailController.dispose();
+    ageController.dispose();
     super.dispose();
   }
 }
