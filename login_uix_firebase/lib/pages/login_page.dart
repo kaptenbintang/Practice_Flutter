@@ -22,6 +22,12 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isEmail(String input) => EmailValidator.validate(input);
+  bool _isHidden = true;
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
 
   Future signIn() async {
     try {
@@ -115,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       // onChanged: (text) => setState(() => _text),
                       decoration: InputDecoration(
-                          labelText: "Enter your Email",
+                          labelText: "Email address",
                           // errorText: _errorEmailText,
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
@@ -123,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Email',
+                          // hintText: 'Email',
                           fillColor: Colors.grey[200],
                           filled: true),
                       validator: (value) {
@@ -144,19 +150,26 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextFormField(
                       controller: _passwordController,
                       // onChanged: (text) => setState(() => _text),
-                      obscureText: true,
+                      obscureText: _isHidden,
                       decoration: InputDecoration(
-                          labelText: "Enter your Password",
-                          // errorText: _errorPasswordText,
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                              borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Password',
-                          fillColor: Colors.grey[200],
-                          filled: true),
+                        labelText: "Password",
+                        // errorText: _errorPasswordText,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(12)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                            borderRadius: BorderRadius.circular(12)),
+                        // hintText: 'Password',
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                        suffix: InkWell(
+                          onTap: _togglePasswordView,
+                          child: Icon(_isHidden
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                        ),
+                      ),
                       validator: (value) {
                         if (value!.isEmpty || value.length < 6) {
                           return "Enter correct password";
@@ -233,7 +246,7 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         onTap: widget.showRegisterPage,
                         child: Text(
-                          " Register now",
+                          " Register now!",
                           style: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.bold),
                         ),

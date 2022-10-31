@@ -27,6 +27,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   bool isEmail(String input) => EmailValidator.validate(input);
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  bool _isHidden = true;
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
 
   @override
   void dispose() {
@@ -96,6 +102,13 @@ class _RegisterPageState extends State<RegisterPage> {
         _confirmpasswordController.text.trim()) {
       return true;
     } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Your Password is not same, Please try again!"),
+            );
+          });
       return false;
     }
   }
@@ -138,14 +151,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: TextFormField(
                       controller: _firstNameController,
                       decoration: InputDecoration(
-                          labelText: "Enter Your First Name",
+                          labelText: "First Name",
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'First Name',
+                          // hintText: 'First Name',
                           fillColor: Colors.grey[200],
                           filled: true),
                       validator: (value) {
@@ -168,14 +181,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: TextFormField(
                       controller: _lastNameController,
                       decoration: InputDecoration(
-                          labelText: "Enter Your Last Name",
+                          labelText: "Last Name",
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Last Name',
+                          // hintText: 'Last Name',
                           fillColor: Colors.grey[200],
                           filled: true),
                       validator: (value) {
@@ -202,14 +215,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                       controller: _ageController,
                       decoration: InputDecoration(
-                          labelText: "Enter Your ages",
+                          labelText: "Ages",
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Age',
+                          // hintText: 'Age',
                           fillColor: Colors.grey[200],
                           filled: true),
                       validator: (value) {
@@ -230,14 +243,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                          labelText: "Enter Your Email",
+                          labelText: "Email address",
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Email',
+                          // hintText: 'Email',
                           fillColor: Colors.grey[200],
                           filled: true),
                       validator: (value) {
@@ -259,18 +272,25 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         TextFormField(
                           controller: _passwordController,
-                          obscureText: true,
+                          obscureText: _isHidden,
                           decoration: InputDecoration(
-                              labelText: "Enter Your Password",
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(12)),
-                              hintText: 'Password',
-                              fillColor: Colors.grey[200],
-                              filled: true),
+                            labelText: "Password",
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(12)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                                borderRadius: BorderRadius.circular(12)),
+                            // hintText: 'Password',
+                            fillColor: Colors.grey[200],
+                            filled: true,
+                            suffix: InkWell(
+                              onTap: _togglePasswordView,
+                              child: Icon(_isHidden
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                            ),
+                          ),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Enter correct password";
@@ -299,18 +319,25 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextFormField(
                       controller: _confirmpasswordController,
-                      obscureText: true,
+                      obscureText: _isHidden,
                       decoration: InputDecoration(
-                          labelText: "Enter Your Confirm Password",
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                              borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Confirm Password',
-                          fillColor: Colors.grey[200],
-                          filled: true),
+                        labelText: "Confirm Password",
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(12)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                            borderRadius: BorderRadius.circular(12)),
+                        // hintText: 'Confirm Password',
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                        suffix: InkWell(
+                          onTap: _togglePasswordView,
+                          child: Icon(_isHidden
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                        ),
+                      ),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Enter correct password";
@@ -360,7 +387,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       GestureDetector(
                         onTap: widget.showLoginPage,
                         child: Text(
-                          " Login now",
+                          " Login now!",
                           style: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.bold),
                         ),
