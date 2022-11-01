@@ -25,24 +25,20 @@ class _DeleteAccountState extends State<DeleteAccount> {
   @override
   void initState() {
     emailController.text = user!.email.toString();
-    buttonOpen = false;
+    // buttonOpen = false;
     super.initState();
   }
 
   void removeUser() {
     deleteUser();
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   Future deleteUser() async {
     showDialog(
         context: context,
         builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return Center(child: CircularProgressIndicator());
         });
-
     try {
       await db.collection("users").doc(user?.uid).delete().onError(
             (error, stackTrace) => print('Something Wrong: $error'),
@@ -51,7 +47,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
       auth.signOut();
     } on FirebaseAuthException catch (e) {
       print(e.toString());
-      showDialog(
+      await showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -59,6 +55,8 @@ class _DeleteAccountState extends State<DeleteAccount> {
             );
           });
     }
+    Navigator.of(context).pop();
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   void authChenk() {
@@ -70,20 +68,11 @@ class _DeleteAccountState extends State<DeleteAccount> {
     try {
       AuthCredential credential =
           EmailAuthProvider.credential(email: email, password: password);
-      await user?.reauthenticateWithCredential(credential).then(
-        (value) async {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return const AlertDialog(
-                  content: Text("Thank you"),
-                );
-              });
-        },
-      );
+      await user?.reauthenticateWithCredential(credential);
       setState(() {
         buttonOpen = true;
       });
+      removeUser();
 
       return;
     } on FirebaseAuthException catch (e) {
@@ -91,8 +80,8 @@ class _DeleteAccountState extends State<DeleteAccount> {
       showDialog(
           context: context,
           builder: (context) {
-            return const AlertDialog(
-              content: Text("Please enter correct data"),
+            return AlertDialog(
+              content: Text(e.message.toString()),
             );
           });
       return;
@@ -112,27 +101,35 @@ class _DeleteAccountState extends State<DeleteAccount> {
             hintTextString: "Enter Email",
             maxLength: 30,
             labelText: "Email",
+            obscure: false,
           ),
+          SizedBox(height: 20),
           ProfileTextInput(
             textEditingController: passwordController,
             hintTextString: "Enter Password",
             maxLength: 30,
             labelText: "Password",
+            obscure: true,
           ),
+          // ElevatedButton(
+          //   onPressed: authChenk,
+          //   child: const Text("Re Login"),
+          // ),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: authChenk,
-            child: const Text("Re Login"),
-          ),
-          ElevatedButton(
-            onPressed: buttonOpen
-                ? () async {
-                    removeUser();
-                  }
-                : null,
             child: const Text("Delete"),
           ),
         ],
       )),
     );
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 }

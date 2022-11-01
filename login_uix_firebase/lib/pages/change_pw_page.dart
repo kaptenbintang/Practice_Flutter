@@ -7,6 +7,8 @@ import 'package:login_uix_firebase/auth/auth_page.dart';
 import 'package:login_uix_firebase/pages/home_page.dart';
 import 'package:login_uix_firebase/pages/login_page.dart';
 
+import '../main.dart';
+
 class changePasswordPage extends StatefulWidget {
   const changePasswordPage({super.key});
 
@@ -33,12 +35,7 @@ class _changePasswordPageState extends State<changePasswordPage> {
         await currentUser!.updatePassword(newPassword);
         FirebaseAuth.instance.signOut();
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: ((context) => AuthPage()),
-          ),
-        );
+        navigatorKey.currentState!.popUntil((route) => route.isFirst);
         showDialog(
             context: context,
             builder: (context) {

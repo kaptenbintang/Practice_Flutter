@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
+import 'change_pw_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -93,6 +95,14 @@ class _HomePageState extends State<HomePage> {
           emailController.text.trim(),
           int.parse(ageController.text.trim()),
         );
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text("Your personal details has been updated"),
+              );
+            });
+        print("aku");
       }
     });
   }
@@ -106,34 +116,39 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('signed in as: ' + user.email!),
-          MaterialButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            color: Colors.blue,
-            child: Text('Sign Out'),
-          ),
+          SizedBox(height: 20),
           ProfileTextInput(
             textEditingController: nameController,
             hintTextString: 'Enter Name',
             maxLength: 20,
             labelText: 'Name',
+            obscure: false,
           ),
+          SizedBox(height: 20),
           ProfileTextInput(
-              textEditingController: lastsNameController,
-              hintTextString: 'Enter Last Name',
-              maxLength: 40,
-              labelText: 'Last Name'),
+            textEditingController: lastsNameController,
+            hintTextString: 'Enter Last Name',
+            maxLength: 40,
+            labelText: 'Last Name',
+            obscure: false,
+          ),
+          SizedBox(height: 20),
           ProfileTextInput(
-              textEditingController: emailController,
-              hintTextString: 'Enter Email',
-              maxLength: 20,
-              labelText: 'Email'),
+            textEditingController: emailController,
+            hintTextString: 'Enter Email',
+            maxLength: 20,
+            labelText: 'Email',
+            obscure: false,
+          ),
+          SizedBox(height: 20),
           ProfileTextInput(
-              textEditingController: ageController,
-              hintTextString: 'Enter Age',
-              maxLength: 3,
-              labelText: 'Age'),
+            textEditingController: ageController,
+            hintTextString: 'Enter Age',
+            maxLength: 3,
+            labelText: 'Age',
+            obscure: false,
+          ),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               editUserData();
@@ -157,7 +172,10 @@ class _HomePageState extends State<HomePage> {
               //   },
               // );
             },
-            child: const Text('Submit'),
+            child: const Text('Update'),
+          ),
+          SizedBox(
+            height: 20,
           ),
           ElevatedButton(
             onPressed: () {
@@ -201,6 +219,29 @@ class _HomePageState extends State<HomePage> {
             // },
             child: const Text('Delete'),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return changePasswordPage();
+                    },
+                  ),
+                );
+              },
+              child: const Text('Change Password')),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Sign Out'))
         ],
       )),
     );

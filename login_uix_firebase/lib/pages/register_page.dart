@@ -51,6 +51,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
     //authenticate user
     if (passwordConfirmed()) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Center(child: CircularProgressIndicator());
+          });
+
       try {
         //create user
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -76,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
         });
       } on FirebaseAuthException catch (e) {
         print(e);
-        showDialog(
+        await showDialog(
             context: context,
             builder: (context) {
               return AlertDialog(
@@ -84,6 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
               );
             });
       }
+      Navigator.of(context).pop();
     }
   }
 
