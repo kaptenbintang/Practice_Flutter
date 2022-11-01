@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
 class HomePage extends StatefulWidget {
@@ -68,21 +69,16 @@ class _HomePageState extends State<HomePage> {
   Future editUserDetails(String uid, String firstName, String lastName,
       String email, int age) async {
     print(email);
+    await auth.currentUser?.updateEmail(email);
     await db.collection('users').doc(uid).set({
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
       'age': age,
-    });
+    }).onError((error, stackTrace) => print("Error writing document: $error"));
   }
 
   Future editUserData() async {
-    //authenticate user
-
-    //create user
-    await auth.currentUser?.updateEmail(emailController.toString());
-
-    //add user details
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
         SnackBar(
@@ -163,6 +159,48 @@ class _HomePageState extends State<HomePage> {
             },
             child: const Text('Submit'),
           ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const DeleteAccount(),
+                ),
+              );
+            },
+            // async {
+            //   uid = auth.currentUser?.uid;
+
+            //   bool step1 = true;
+            //   bool step2 = false;
+            //   bool step3 = false;
+            //   while (true) {
+            //     if (step1) {
+            //       //delete user info in the database
+            //       await db.collection('users').doc(uid).delete();
+            //       step1 = false;
+            //       step2 = true;
+            //     }
+
+            //     if (step2) {
+            //       //delete user
+            //       user.delete();
+            //       step2 = false;
+            //       step3 = true;
+            //     }
+
+            //     if (step3) {
+            //       await FirebaseAuth.instance.signOut();
+            //       step3 = false;
+            //     }
+
+            //     if (!step1 && !step2 && !step3) {
+            //       break;
+            //     }
+            //   }
+            // },
+            child: const Text('Delete'),
+          ),
         ],
       )),
     );
@@ -179,3 +217,5 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 }
+
+class DatabaseService {}
