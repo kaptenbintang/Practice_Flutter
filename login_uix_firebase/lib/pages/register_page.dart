@@ -90,8 +90,8 @@ class _RegisterPageState extends State<RegisterPage> {
   Future addUserDetails(String uid, String firstName, String lastName,
       String email, int age) async {
     await db.collection('users').doc(uid).set({
-      'first name': firstName,
-      'last name': lastName,
+      'firstName': firstName,
+      'lastName': lastName,
       'email': email,
       'age': age,
     });
