@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:login_uix_firebase/auth/main_page.dart';
+import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/main.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 

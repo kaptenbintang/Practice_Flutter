@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:login_uix_firebase/auth/main_page.dart';
+import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: ControllerPage(),
     );
   }
 }

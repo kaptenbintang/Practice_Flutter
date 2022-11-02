@@ -1,21 +1,20 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
+import '../main.dart';
 import 'change_pw_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProfilePageState extends State<ProfilePage> {
   final nameController = TextEditingController();
   final lastsNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -111,6 +110,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // return FutureBuilder(future: db.collection("users").doc(uid).get(),builder: (context, DocumentSnapshot snapshot){ final data = snapshot.data() as Map<String, dynamic>;};);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+      ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -240,6 +242,7 @@ class _HomePageState extends State<HomePage> {
           ElevatedButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
+                navigatorKey.currentState!.popUntil((route) => route.isFirst);
               },
               child: const Text('Sign Out'))
         ],
