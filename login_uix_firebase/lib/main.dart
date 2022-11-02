@@ -22,6 +22,12 @@ void main() async {
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
+class Util {
+  static void routeToWidget(context, Widget widget) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

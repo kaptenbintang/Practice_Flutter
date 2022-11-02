@@ -109,7 +109,7 @@ class _changePasswordPageState extends State<changePasswordPage> {
                       height: 10,
                     ),
                     Text(
-                      " Your new password must be different \n"
+                      "Your new password must be different \n"
                       "from previous used passwords",
                       style: TextStyle(color: Color(0xFF8a929f), fontSize: 15),
                     ),
