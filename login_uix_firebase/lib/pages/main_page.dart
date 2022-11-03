@@ -1,3 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 
@@ -102,6 +107,32 @@ class SpecialistItem extends StatelessWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  // final user = FirebaseAuth.instance.currentUser!;
+  // final auth = FirebaseAuth.instance;
+  // final db = FirebaseFirestore.instance;
+  // var uid;
+  // var fName, lName, age;
+
+  // Future<void> getDataFromDb() async {
+  //   if (auth.currentUser != null) {
+  //     uid = auth.currentUser?.uid;
+  //     await db.collection("users").doc(uid).get().then((DocumentSnapshot doc) {
+  //       final data = doc.data() as Map<String, dynamic>;
+  //       fName = data["firstName"];
+  //       lName = data["lastName"];
+  //       age = data["age"];
+  //     });
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   getDataFromDb();
+  //   super.initState();
+  // }
+
+  // CollectionReference _getUsername =
+  //     FirebaseFirestore.instance.collection('users');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,28 +180,38 @@ class _MainPageState extends State<MainPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        "Hello,",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 16,
-                        ),
+                  Text(
+                    "Hello,",
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  // StreamBuilder<QuerySnapshot>(
+                  //     stream: _getUsername.snapshots(),
+                  //     builder: ((BuildContext context, AsyncSnapshot snapshot) {
+                  //       if (snapshot.hasError) {
+                  //         return Center(child: Text(snapshot.error.toString()));
+                  //       }
+                  //       if (snapshot.connectionState ==
+                  //           ConnectionState.active) {
+                  //         QuerySnapshot querySnapshot = snapshot.data;
+                  //       }
+                  //       return Center(child: CircularProgressIndicator());
+                  //     })),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 150),
+                    child: Text(
+                      "Welcome Back!",
+                      style: TextStyle(
+                        color: Colors.black54,
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        "User",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                   MaterialButton(
                     onPressed: () {

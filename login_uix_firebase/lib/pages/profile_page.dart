@@ -70,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future editUserDetails(String uid, String firstName, String lastName,
       String email, int age) async {
     print(email);
-    await auth.currentUser?.updateEmail(email);
+    auth.currentUser?.updateEmail(email);
     await db.collection('users').doc(uid).set({
       'firstName': firstName,
       'lastName': lastName,
