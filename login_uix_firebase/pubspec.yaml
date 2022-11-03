@@ -43,6 +43,10 @@ dependencies:
   email_validator: ^2.1.17
   flutter_pw_validator: ^1.4.2
   curved_navigation_bar: ^1.0.3
+  firebase_storage: ^11.0.3
+  image_picker: ^0.8.6
+  image_picker_for_web: ^2.1.10
+  file_picker: ^5.2.2
 
 dev_dependencies:
   flutter_test:
