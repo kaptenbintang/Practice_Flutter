@@ -1,12 +1,18 @@
-import 'dart:html';
+// import 'dart:html';
+import 'dart:io' show file;
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'change_pw_page.dart';
+import 'package:image_picker_for_web/image_picker_for_web.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,8 +30,17 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser!;
   final auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
+  bool imgExist = false;
+
+  String? url;
+
   var uid;
   var fName, lName, age;
+
+  File? fImage;
+
+  XFile? imgXFile;
 
   Future<void> getDataFromDb() async {
     if (auth.currentUser != null) {
@@ -70,6 +85,11 @@ class _HomePageState extends State<HomePage> {
 
   Future editUserDetails(String uid, String firstName, String lastName,
       String email, int age) async {
+    final ref = storage.ref().child('usersImage').child('$uid.jpg');
+    File file = File(imgXFile!.path);
+    await ref.putFile(file);
+
+    url = await ref.getDownloadURL();
     print(email);
     await auth.currentUser?.updateEmail(email);
     await db.collection('users').doc(uid).set({
@@ -77,6 +97,7 @@ class _HomePageState extends State<HomePage> {
       'lastName': lastName,
       'email': email,
       'age': age,
+      'imageUrl': url,
     }).onError((error, stackTrace) => print("Error writing document: $error"));
   }
 
@@ -107,143 +128,253 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<String?> pickImageCamera() async {
+    final ImagePicker picker = ImagePicker();
+    XFile? pickedImage = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 100,
+        maxHeight: 100,
+        maxWidth: 100);
+    // final pickedImageFile = File(pickedImage!.path);
+    setState(() {
+      imgXFile = pickedImage;
+      imgExist = true;
+    });
+    Navigator.pop(context);
+    return pickedImage?.path;
+  }
+
   @override
   Widget build(BuildContext context) {
     // return FutureBuilder(future: db.collection("users").doc(uid).get(),builder: (context, DocumentSnapshot snapshot){ final data = snapshot.data() as Map<String, dynamic>;};);
     return Scaffold(
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('signed in as: ' + user.email!),
-          SizedBox(height: 20),
-          ProfileTextInput(
-            textEditingController: nameController,
-            hintTextString: 'Enter Name',
-            maxLength: 20,
-            labelText: 'Name',
-            obscure: false,
-          ),
-          SizedBox(height: 20),
-          ProfileTextInput(
-            textEditingController: lastsNameController,
-            hintTextString: 'Enter Last Name',
-            maxLength: 40,
-            labelText: 'Last Name',
-            obscure: false,
-          ),
-          SizedBox(height: 20),
-          ProfileTextInput(
-            textEditingController: emailController,
-            hintTextString: 'Enter Email',
-            maxLength: 20,
-            labelText: 'Email',
-            obscure: false,
-          ),
-          SizedBox(height: 20),
-          ProfileTextInput(
-            textEditingController: ageController,
-            hintTextString: 'Enter Age',
-            maxLength: 3,
-            labelText: 'Age',
-            obscure: false,
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              editUserData();
-              print('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-              // uid = auth.currentUser?.uid;
-              // db
-              //     .collection("users")
-              //     .doc(uid)
-              //     .get()
-              //     .then((DocumentSnapshot doc) {
-              //   final data = doc.data() as Map<String, dynamic>;
-              //   fName = data['firstName'];
-              // }).onError((error, stackTrace) => null);
-
-              // showDialog(
-              //   context: context,
-              //   builder: (context) {
-              //     return AlertDialog(
-              //       content: Text('halo: $fName'),
-              //     );
-              //   },
-              // );
-            },
-            child: const Text('Update'),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DeleteAccount(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                SizedBox(
+                  height: 20,
                 ),
-              );
-            },
-            // async {
-            //   uid = auth.currentUser?.uid;
-
-            //   bool step1 = true;
-            //   bool step2 = false;
-            //   bool step3 = false;
-            //   while (true) {
-            //     if (step1) {
-            //       //delete user info in the database
-            //       await db.collection('users').doc(uid).delete();
-            //       step1 = false;
-            //       step2 = true;
-            //     }
-
-            //     if (step2) {
-            //       //delete user
-            //       user.delete();
-            //       step2 = false;
-            //       step3 = true;
-            //     }
-
-            //     if (step3) {
-            //       await FirebaseAuth.instance.signOut();
-            //       step3 = false;
-            //     }
-
-            //     if (!step1 && !step2 && !step3) {
-            //       break;
-            //     }
-            //   }
-            // },
-            child: const Text('Delete'),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
+                Stack(
+                  children: [
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      child: CircleAvatar(
+                        radius: 71,
+                        backgroundColor: Colors.black,
+                        child: CircleAvatar(
+                          child: imgExist
+                              ? kIsWeb
+                                  ? Image.network(imgXFile!.path)
+                                  : Image.file(File(imgXFile!.path))
+                              : Icon(Icons.person),
+                          // kIsWeb
+                          //     ? Image.file(File(imgXFile!.path))
+                          //     : Icon(Icons.person),
+                          // child: kIsWeb
+                          //     ? Image.network(_imageFileList![0].path)
+                          //     : Image.file(File(_imageFileList![0].path)),
+                          radius: 65,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 120,
+                      left: 110,
+                      child: RawMaterialButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text(
+                                  'Choose Option',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.lightBlue),
+                                ),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          String path =
+                                              pickImageCamera().toString();
+                                          Uint8List imageData =
+                                              await XFile(path).readAsBytes();
+                                        },
+                                        splashColor: Colors.purpleAccent,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Icons.camera,
+                                                color: Colors.purpleAccent,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Camera',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        splashColor: Colors.purpleAccent,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Icons.image,
+                                                color: Colors.purpleAccent,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Gallery',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        splashColor: Colors.purpleAccent,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Icons.remove_circle,
+                                                color: Colors.purpleAccent,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Remove',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18,
+                                                  color: Colors.red),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        elevation: 10,
+                        fillColor: Colors.grey.shade300,
+                        child: Icon(Icons.add_a_photo),
+                        padding: EdgeInsets.all(15.0),
+                        shape: CircleBorder(),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Text('signed in as: ' + user.email!),
+            SizedBox(height: 20),
+            ProfileTextInput(
+              textEditingController: nameController,
+              hintTextString: 'Enter Name',
+              maxLength: 20,
+              labelText: 'Name',
+              obscure: false,
+            ),
+            SizedBox(height: 20),
+            ProfileTextInput(
+              textEditingController: lastsNameController,
+              hintTextString: 'Enter Last Name',
+              maxLength: 40,
+              labelText: 'Last Name',
+              obscure: false,
+            ),
+            SizedBox(height: 20),
+            ProfileTextInput(
+              textEditingController: emailController,
+              hintTextString: 'Enter Email',
+              maxLength: 20,
+              labelText: 'Email',
+              obscure: false,
+            ),
+            SizedBox(height: 20),
+            ProfileTextInput(
+              textEditingController: ageController,
+              hintTextString: 'Enter Age',
+              maxLength: 3,
+              labelText: 'Age',
+              obscure: false,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                editUserData();
+                print('User : $user');
+              },
+              child: const Text('Update'),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) {
-                      return changePasswordPage();
-                    },
+                    builder: (context) => const DeleteAccount(),
                   ),
                 );
               },
-              child: const Text('Change Password')),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
+              child: const Text('Delete'),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return changePasswordPage();
+                      },
+                    ),
+                  );
+                },
+                child: const Text('Change Password')),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
               },
-              child: const Text('Sign Out'))
-        ],
-      )),
+              child: const Text('Sign Out'),
+            ),
+            // buildProgress(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -258,5 +389,3 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 }
-
-class DatabaseService {}
