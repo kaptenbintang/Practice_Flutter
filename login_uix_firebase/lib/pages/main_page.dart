@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -133,43 +134,22 @@ class _MainPageState extends State<MainPage> {
 
   // CollectionReference _getUsername =
   //     FirebaseFirestore.instance.collection('users');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        iconSize: 24,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: Colors.black54,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.calendar_month_outlined,
-              color: Colors.black54,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat_bubble_outline,
-              color: Colors.black54,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications_none_outlined,
-              color: Colors.black54,
-            ),
-            label: '',
-          ),
+      backgroundColor: Colors.grey[300],
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.blueAccent,
+        items: <Widget>[
+          Icon(Icons.home_outlined, size: 30),
+          Icon(Icons.calendar_month_outlined, size: 30),
+          Icon(Icons.chat_bubble_outline, size: 30),
+          Icon(Icons.notifications_none_outlined, size: 30),
         ],
+        onTap: (index) {
+          //Handle button tap
+        },
       ),
       body: SafeArea(
         child: Padding(
@@ -183,7 +163,7 @@ class _MainPageState extends State<MainPage> {
                   Text(
                     "Hello,",
                     style: TextStyle(
-                      color: Colors.black54,
+                      color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
@@ -207,7 +187,7 @@ class _MainPageState extends State<MainPage> {
                     child: Text(
                       "Welcome Back!",
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.black,
                         // fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -237,7 +217,7 @@ class _MainPageState extends State<MainPage> {
                   vertical: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 223, 200, 228),
+                  color: const Color.fromARGB(95, 179, 173, 173),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
