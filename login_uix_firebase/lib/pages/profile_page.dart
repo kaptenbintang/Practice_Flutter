@@ -1,5 +1,6 @@
-import 'dart:io' show file;
-import 'dart:io';
+// import 'dart:io' show file;
+// import 'dart:io';
+import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,13 +33,18 @@ class _ProfilePageState extends State<ProfilePage> {
   final storage = FirebaseStorage.instance;
 
   var uid;
-  var fName, lName, age;
+  var fName, lName, age, uEmail;
   bool imgExist = false;
+
   String? url;
 
   File? fImage;
 
-  XFile? imgXFile;
+  List<XFile>? imgXFile;
+
+  void _setImageFileListFromFile(XFile? value) {
+    imgXFile = value == null ? null : <XFile>[value];
+  }
 
   Future<void> getDataFromDb() async {
     if (auth.currentUser != null) {
@@ -83,20 +89,35 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future editUserDetails(String uid, String firstName, String lastName,
       String email, int age) async {
-    final ref = storage.ref().child('usersImage').child('$uid.jpg');
-    File file = File(imgXFile!.path);
-    await ref.putFile(file);
+    if (imgExist) {
+      final ref = storage.ref().child('usersImage').child('$uid.jpg');
+      File file = File(imgXFile));
+      await ref.putFile(file);
 
-    url = await ref.getDownloadURL();
-    print(email);
-    auth.currentUser?.updateEmail(email);
-    await db.collection('users').doc(uid).set({
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'age': age,
-      'imageUrl': url,
-    }).onError((error, stackTrace) => print("Error writing document: $error"));
+      url = await ref.getDownloadURL();
+      print(email);
+      await auth.currentUser?.updateEmail(email);
+      await db.collection('users').doc(uid).set({
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'age': age,
+        'imageUrl': url,
+      }).onError(
+          (error, stackTrace) => print("Error writing document: $error"));
+    } else {
+      print(email);
+      await auth.currentUser?.updateEmail(email).then((value) async {
+        await db.collection('users').doc(uid).set({
+          'firstName': firstName,
+          'lastName': lastName,
+          'email': email,
+          'age': age,
+          'imageUrl': '',
+        }).onError(
+            (error, stackTrace) => print("Error writing document: $error"));
+      });
+    }
   }
 
   Future editUserData() async {
@@ -135,7 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
         maxWidth: 100);
     // final pickedImageFile = File(pickedImage!.path);
     setState(() {
-      imgXFile = pickedImage;
+      imgXFile(pickedImage);
       imgExist = true;
     });
     Navigator.pop(context);
@@ -243,7 +264,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        setState(() {
+                                          imgXFile = null;
+                                          imgExist = false;
+                                        });
+                                      },
                                       splashColor: Colors.purpleAccent,
                                       child: Row(
                                         children: [
@@ -283,7 +309,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
           SizedBox(height: 10),
-          Text('signed in as: ' + user.email!),
+          Text('signed in as: ' + user.email.toString()),
           SizedBox(height: 20),
           ProfileTextInput(
             textEditingController: nameController,
