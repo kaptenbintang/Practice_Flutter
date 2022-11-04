@@ -1,11 +1,13 @@
 // import 'dart:io' show file;
 // import 'dart:io';
-import 'dart:html';
+import 'dart:html' as html;
+import 'dart:io' as ios;
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
@@ -33,18 +35,16 @@ class _ProfilePageState extends State<ProfilePage> {
   final storage = FirebaseStorage.instance;
 
   var uid;
-  var fName, lName, age, uEmail;
+  var fName, lName, age, uEmail, img;
   bool imgExist = false;
 
   String? url;
 
-  File? fImage;
+  html.File? fImage;
 
-  List<XFile>? imgXFile;
+  XFile? imgXFile;
 
-  void _setImageFileListFromFile(XFile? value) {
-    imgXFile = value == null ? null : <XFile>[value];
-  }
+  Uint8List webImage = Uint8List(10);
 
   Future<void> getDataFromDb() async {
     if (auth.currentUser != null) {
@@ -70,8 +70,10 @@ class _ProfilePageState extends State<ProfilePage> {
         fName = data["firstName"];
         lName = data["lastName"];
         age = data["age"];
+        img = data["imageUrl"];
       });
       setState(() {
+        if (img != null) {}
         emailController.text = user.email.toString();
         nameController.text = fName;
         lastsNameController.text = lName;
@@ -91,8 +93,9 @@ class _ProfilePageState extends State<ProfilePage> {
       String email, int age) async {
     if (imgExist) {
       final ref = storage.ref().child('usersImage').child('$uid.jpg');
-      File file = File(imgXFile));
-      await ref.putFile(file);
+      // html.File file = ios.File(imgXFile.path);
+
+      await ref.putData(webImage);
 
       url = await ref.getDownloadURL();
       print(email);
@@ -154,18 +157,21 @@ class _ProfilePageState extends State<ProfilePage> {
         imageQuality: 100,
         maxHeight: 100,
         maxWidth: 100);
-    // final pickedImageFile = File(pickedImage!.path);
+
+    var f = await pickedImage!.readAsBytes();
+
     setState(() {
-      imgXFile(pickedImage);
+      imgXFile = pickedImage;
+      webImage = f;
       imgExist = true;
     });
     Navigator.pop(context);
-    return pickedImage?.path;
   }
 
   @override
   Widget build(BuildContext context) {
     // return FutureBuilder(future: db.collection("users").doc(uid).get(),builder: (context, DocumentSnapshot snapshot){ final data = snapshot.data() as Map<String, dynamic>;};);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -189,8 +195,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: CircleAvatar(
                         child: imgExist
                             ? kIsWeb
-                                ? Image.network(imgXFile!.path)
-                                : Image.file(File(imgXFile!.path))
+                                ? Image.memory(webImage)
+                                : Image.file(new ios.File(imgXFile!.path))
                             : Icon(Icons.person),
                         radius: 65,
                       ),
