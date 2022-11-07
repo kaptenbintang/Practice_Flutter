@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
 
-import '../pages/admin_page.dart';
+import '../pages/dashboard_page.dart';
 import '../pages/profile_page.dart';
 import 'auth_page.dart';
 
@@ -27,7 +27,7 @@ class ControllerPage extends StatelessWidget {
                     AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
                     if (snapshot.data?['roles'] == 'admin') {
-                      return AdminHomePage();
+                      return DashboardPage();
                     } else {
                       return MainPage();
                     }
