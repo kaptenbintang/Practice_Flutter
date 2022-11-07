@@ -1,6 +1,15 @@
+// import 'dart:io' show file;
+// import 'dart:io';
+import 'dart:html' as html;
+import 'dart:io' as ios;
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
@@ -23,8 +32,19 @@ class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
   final auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
+
   var uid;
-  var fName, lName, age;
+  var fName, lName, age, uEmail, img, role;
+  bool imgExist = false;
+
+  String? url;
+
+  html.File? fImage;
+
+  XFile? imgXFile;
+
+  Uint8List webImage = Uint8List(10);
 
   Future<void> getDataFromDb() async {
     if (auth.currentUser != null) {
@@ -50,8 +70,11 @@ class _ProfilePageState extends State<ProfilePage> {
         fName = data["firstName"];
         lName = data["lastName"];
         age = data["age"];
+        img = data["imageUrl"];
+        role = data["roles"];
       });
       setState(() {
+        if (img != null) {}
         emailController.text = user.email.toString();
         nameController.text = fName;
         lastsNameController.text = lName;
@@ -69,14 +92,38 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future editUserDetails(String uid, String firstName, String lastName,
       String email, int age) async {
-    print(email);
-    await auth.currentUser?.updateEmail(email);
-    await db.collection('users').doc(uid).set({
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'age': age,
-    }).onError((error, stackTrace) => print("Error writing document: $error"));
+    if (imgExist) {
+      final ref = storage.ref().child('usersImage').child('$uid.jpg');
+      // html.File file = ios.File(imgXFile.path);
+
+      await ref.putData(webImage);
+
+      url = await ref.getDownloadURL();
+      print(email);
+      await auth.currentUser?.updateEmail(email);
+      await db.collection('users').doc(uid).set({
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'age': age,
+        'imageUrl': url,
+        'roles': role,
+      }).onError(
+          (error, stackTrace) => print("Error writing document: $error"));
+    } else {
+      print(email);
+      await auth.currentUser?.updateEmail(email).then((value) async {
+        await db.collection('users').doc(uid).set({
+          'firstName': firstName,
+          'lastName': lastName,
+          'email': email,
+          'age': age,
+          'imageUrl': '',
+          'roles': role
+        }).onError(
+            (error, stackTrace) => print("Error writing document: $error"));
+      });
+    }
   }
 
   Future editUserData() async {
@@ -106,9 +153,28 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  Future<String?> pickImageCamera() async {
+    final ImagePicker picker = ImagePicker();
+    XFile? pickedImage = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 100,
+        maxHeight: 100,
+        maxWidth: 100);
+
+    var f = await pickedImage!.readAsBytes();
+
+    setState(() {
+      imgXFile = pickedImage;
+      webImage = f;
+      imgExist = true;
+    });
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     // return FutureBuilder(future: db.collection("users").doc(uid).get(),builder: (context, DocumentSnapshot snapshot){ final data = snapshot.data() as Map<String, dynamic>;};);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -117,7 +183,142 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('signed in as: ' + user.email!),
+          Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Stack(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                    child: CircleAvatar(
+                      radius: 71,
+                      backgroundColor: Colors.black,
+                      child: CircleAvatar(
+                        child: imgExist
+                            ? kIsWeb
+                                ? Image.memory(webImage)
+                                : Image.file(new ios.File(imgXFile!.path))
+                            : Icon(Icons.person),
+                        radius: 65,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 120,
+                    left: 110,
+                    child: RawMaterialButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text(
+                                'Choose Option',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.lightBlue),
+                              ),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: [
+                                    InkWell(
+                                      onTap: () async {
+                                        String path =
+                                            pickImageCamera().toString();
+                                        Uint8List imageData =
+                                            await XFile(path).readAsBytes();
+                                      },
+                                      splashColor: Colors.purpleAccent,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.camera,
+                                              color: Colors.purpleAccent,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Camera',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18,
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {},
+                                      splashColor: Colors.purpleAccent,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.image,
+                                              color: Colors.purpleAccent,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Gallery',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18,
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          imgXFile = null;
+                                          imgExist = false;
+                                        });
+                                      },
+                                      splashColor: Colors.purpleAccent,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.remove_circle,
+                                              color: Colors.purpleAccent,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Remove',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18,
+                                                color: Colors.red),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      elevation: 10,
+                      fillColor: Colors.grey.shade300,
+                      child: Icon(Icons.add_a_photo),
+                      padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Text('signed in as: ' + user.email.toString()),
           SizedBox(height: 20),
           ProfileTextInput(
             textEditingController: nameController,
@@ -154,25 +355,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
             onPressed: () {
               editUserData();
-              print('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-              // uid = auth.currentUser?.uid;
-              // db
-              //     .collection("users")
-              //     .doc(uid)
-              //     .get()
-              //     .then((DocumentSnapshot doc) {
-              //   final data = doc.data() as Map<String, dynamic>;
-              //   fName = data['firstName'];
-              // }).onError((error, stackTrace) => null);
-
-              // showDialog(
-              //   context: context,
-              //   builder: (context) {
-              //     return AlertDialog(
-              //       content: Text('halo: $fName'),
-              //     );
-              //   },
-              // );
+              print('eeeeeeeeeeeee');
             },
             child: const Text('Update'),
           ),
@@ -188,37 +371,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               );
             },
-            // async {
-            //   uid = auth.currentUser?.uid;
-
-            //   bool step1 = true;
-            //   bool step2 = false;
-            //   bool step3 = false;
-            //   while (true) {
-            //     if (step1) {
-            //       //delete user info in the database
-            //       await db.collection('users').doc(uid).delete();
-            //       step1 = false;
-            //       step2 = true;
-            //     }
-
-            //     if (step2) {
-            //       //delete user
-            //       user.delete();
-            //       step2 = false;
-            //       step3 = true;
-            //     }
-
-            //     if (step3) {
-            //       await FirebaseAuth.instance.signOut();
-            //       step3 = false;
-            //     }
-
-            //     if (!step1 && !step2 && !step3) {
-            //       break;
-            //     }
-            //   }
-            // },
             child: const Text('Delete'),
           ),
           SizedBox(
@@ -261,5 +413,3 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 }
-
-class DatabaseService {}
