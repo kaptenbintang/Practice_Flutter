@@ -1,9 +1,4 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class ProfileTextInput extends StatefulWidget {
   final TextEditingController textEditingController;
@@ -45,7 +40,7 @@ class _ProfileTextInputState extends State<ProfileTextInput> {
               borderSide: BorderSide(color: Colors.white),
               borderRadius: BorderRadius.circular(12)),
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blue),
+              borderSide: const BorderSide(color: Colors.blue),
               borderRadius: BorderRadius.circular(12)),
           fillColor: Colors.grey[200],
           filled: true,
