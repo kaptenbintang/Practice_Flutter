@@ -25,8 +25,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _ageController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  bool isEmail(String input) => EmailValidator.validate(input);
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  bool isEmail(String input) => EmailValidator.validate(input);
   bool _isHidden = true;
   void _togglePasswordView() {
     setState(() {
@@ -101,6 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
       'lastName': lastName,
       'email': email,
       'age': age,
+      'roles': 'user',
     });
   }
 

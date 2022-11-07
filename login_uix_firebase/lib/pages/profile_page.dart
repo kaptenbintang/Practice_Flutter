@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final storage = FirebaseStorage.instance;
 
   var uid;
-  var fName, lName, age, uEmail, img;
+  var fName, lName, age, uEmail, img, role;
   bool imgExist = false;
 
   String? url;
@@ -71,6 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
         lName = data["lastName"];
         age = data["age"];
         img = data["imageUrl"];
+        role = data["roles"];
       });
       setState(() {
         if (img != null) {}
@@ -106,6 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
         'email': email,
         'age': age,
         'imageUrl': url,
+        'roles': role,
       }).onError(
           (error, stackTrace) => print("Error writing document: $error"));
     } else {
@@ -117,6 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
           'email': email,
           'age': age,
           'imageUrl': '',
+          'roles': role
         }).onError(
             (error, stackTrace) => print("Error writing document: $error"));
       });
