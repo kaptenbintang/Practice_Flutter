@@ -101,25 +101,23 @@ class _ProfilePageState extends State<ProfilePage> {
       url = await ref.getDownloadURL();
       print(email);
       await auth.currentUser?.updateEmail(email);
-      await db.collection('users').doc(uid).set({
+      await db.collection('users').doc(uid).update({
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
         'age': age,
         'imageUrl': url,
-        'roles': role,
       }).onError(
           (error, stackTrace) => print("Error writing document: $error"));
     } else {
       print(email);
       await auth.currentUser?.updateEmail(email).then((value) async {
-        await db.collection('users').doc(uid).set({
+        await db.collection('users').doc(uid).update({
           'firstName': firstName,
           'lastName': lastName,
           'email': email,
           'age': age,
           'imageUrl': '',
-          'roles': role
         }).onError(
             (error, stackTrace) => print("Error writing document: $error"));
       });
