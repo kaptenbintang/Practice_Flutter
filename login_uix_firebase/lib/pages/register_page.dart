@@ -107,7 +107,8 @@ class _RegisterPageState extends State<RegisterPage> {
       'clientcode': getInitials(_firstNameController.text.toString()) +
           getLastInitials(_lastNameController.text.toString()) +
           '-' +
-          generateRandomString(2)
+          generateRandomString(2),
+      'imageUrl': '',
     });
   }
 

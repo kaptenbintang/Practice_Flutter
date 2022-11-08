@@ -8,13 +8,20 @@ class UserData {
   final String lastName;
   final String emailUser;
   final int ageUser;
+  final String clientCode;
+  final String roles;
+  final String imgUrl;
 
-  UserData(
-      {this.id,
-      required this.firstName,
-      required this.lastName,
-      required this.emailUser,
-      required this.ageUser});
+  UserData({
+    this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.emailUser,
+    required this.ageUser,
+    required this.clientCode,
+    required this.roles,
+    required this.imgUrl,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -22,6 +29,9 @@ class UserData {
       "lastName": lastName,
       "age": ageUser,
       "email": emailUser,
+      "clientcode": clientCode,
+      "roles": roles,
+      "imageUrl": imgUrl,
     };
   }
 
@@ -52,5 +62,8 @@ class UserData {
         firstName = doc.data()!["firstName"],
         lastName = doc.data()!["lastName"],
         emailUser = doc.data()!["email"],
-        ageUser = doc.data()!["age"];
+        ageUser = doc.data()!["age"],
+        clientCode = doc.data()!["clientcode"],
+        roles = doc.data()!["roles"],
+        imgUrl = doc.data()!["imageUrl"];
 }
