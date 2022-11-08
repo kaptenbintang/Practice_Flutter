@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:math';
+import 'package:flutter/foundation.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -102,7 +104,57 @@ class _RegisterPageState extends State<RegisterPage> {
       'email': email,
       'age': age,
       'roles': 'user',
+      'clientcode': getInitials(_firstNameController.text.toString()) +
+          getLastInitials(_lastNameController.text.toString()) +
+          '-' +
+          generateRandomString(2)
     });
+  }
+
+  String getInitials(String _firstNameController) =>
+      _firstNameController.contains(' ')
+          ? _firstNameController
+              .trim()
+              .split(RegExp(' +'))
+              .map((s) => s[0])
+              .take(2)
+              .join()
+              .toUpperCase()
+          : _firstNameController
+                  .trim()
+                  .split(RegExp(' +'))
+                  .map((s) => s[0])
+                  .take(1)
+                  .join()
+                  .toUpperCase() +
+              _firstNameController
+                  .trim()
+                  .split(RegExp(' +'))
+                  .map((s) => s[1])
+                  .take(1)
+                  .join()
+                  .toUpperCase();
+
+  String getLastInitials(String _lastNameController) =>
+      _lastNameController.isNotEmpty
+          ? _lastNameController
+              .trim()
+              .split(RegExp(' +'))
+              .map((s) => s[0])
+              .take(1)
+              .join()
+              .toUpperCase()
+          : '';
+
+  // Define a reusable function
+  String generateRandomString(int length) {
+    final random = Random();
+    const availableChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    final randomString = List.generate(length,
+            (index) => availableChars[random.nextInt(availableChars.length)])
+        .join();
+
+    return randomString;
   }
 
   bool passwordConfirmed() {
