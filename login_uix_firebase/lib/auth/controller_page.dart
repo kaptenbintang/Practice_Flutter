@@ -26,7 +26,7 @@ class ControllerPage extends StatelessWidget {
                 builder: (BuildContext context,
                     AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
-                    if (snapshot.data?['roles'] == 'admin') {
+                    if (snapshot.data?['roles'] != 'user') {
                       return DashboardPage();
                     } else {
                       return MainPage();

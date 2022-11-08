@@ -48,6 +48,7 @@ dependencies:
   image_picker_for_web: ^2.1.10
   file_picker: ^5.2.2
   cross_file: ^0.3.3+2
+  data_table_2: ^2.3.8
 
 dev_dependencies:
   flutter_test:
