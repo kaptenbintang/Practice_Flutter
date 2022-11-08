@@ -1,3 +1,6 @@
+import 'dart:html' as html;
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,126 +19,158 @@ class _DashboardPageState extends State<DashboardPage> {
   DataService service = DataService();
   Future<List<UserData>>? userList;
   List<UserData>? retrievedUserList;
+  GlobalKey<ScaffoldState>? _scaffoldKey;
+  List<Map<String, dynamic>>? listofColumn;
+  UserData? dataU;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
+    // listofColumn = (await service.retrieveUsers()).cast<Map<String, dynamic>>();
     userList = service.retrieveUsers();
     retrievedUserList = await service.retrieveUsers();
+    // print(listofColumn.toString());
+  }
+
+  Future<void> _pullRefresh() async {
+    retrievedUserList = await service.retrieveUsers();
+
+    setState(() {
+      userList = service.retrieveUsers();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Dashboard Home'),
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text('Dashboard Home'),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Future.delayed(
+            Duration(seconds: 1),
+            () {
+              // html.window.location.reload;
+              _pullRefresh();
+              _scaffoldKey!.currentState!.showBottomSheet(
+                (context) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 50,
+                      color: Colors.orange,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [const Text('Done')],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FutureBuilder(
+            future: userList,
+            builder: (context, AsyncSnapshot<List<UserData>> snapshot) {
+              // retrievedUserList = toMap(snapshot.data);
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                return ListView(children: <Widget>[
+                  DataTable(
+                    columns: const [
+                      DataColumn(
+                          label: Text('First Name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Last Name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Email',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Age',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Action',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                    ],
+                    rows: List.generate(
+                        retrievedUserList!.length,
+                        (index) => _buildTableUser(
+                            context, retrievedUserList![index])),
+
+                    //   listofColumn!
+                    //       .map(
+                    //         ((element) => DataRow(
+                    //               cells: <DataCell>[
+                    //                 DataCell(Text(element["firstName"])),
+                    //                 DataCell(Text(element["lastName"])),
+                    //                 DataCell(Text(element["age"])),
+                    //                 DataCell(Text(element["email"])),
+                    //               ],
+                    //             )),
+                    //       )
+                    //       .toList(),
+                  ),
+                ]);
+
+                //     ListView.builder(
+                //   itemCount: retrievedUserList!.length,
+                //   itemBuilder: (context, index) {
+                //     return _buildListUser(context, retrievedUserList![index]);
+                //   },
+                // );
+              } else if (snapshot.connectionState == ConnectionState.done &&
+                  retrievedUserList!.isEmpty) {
+                return Center(
+                  child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: const <Widget>[
+                      Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text('No Data Availble'),
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ),
-        body: FutureBuilder(
-          future: userList,
-          builder: (context, AsyncSnapshot<List<UserData>> snapshot) {
-            // if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-            return ListView.builder(
-              itemCount: retrievedUserList!.length,
-              itemBuilder: (context, index) {
-                return _buildListUser(context, retrievedUserList![index]);
-              },
-            );
-            // }
-          },
-        )
-        // body: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     RefreshIndicator(
-        //       onRefresh: () async {},
-        //       child: Padding(
-        //         padding: const EdgeInsets.all(16.0),
-        //         child: FutureBuilder(
-        //           future: userList,
-        //           builder: (BuildContext context,
-        //               AsyncSnapshot<List<UserData>> snapshot) {
-        //             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-        //               return ListView.separated(
-        //                   itemCount: retrievedUserList!.length,
-        //                   separatorBuilder: (context, index) => const SizedBox(
-        //                         height: 10,
-        //                       ),
-        //                   itemBuilder: (context, index) {
-        //                     return Dismissible(
-        //                       onDismissed: ((direction) async {
-        //                         await service.deleteUser(
-        //                             retrievedUserList![index].id.toString());
-        //                         setState(() {
-        //                           retrievedUserList!.removeAt(index);
-        //                         });
-        //                       }),
-        //                       background: Container(
-        //                         decoration: BoxDecoration(
-        //                             color: Colors.red,
-        //                             borderRadius: BorderRadius.circular(16.0)),
-        //                         padding: const EdgeInsets.only(right: 28.0),
-        //                         alignment: AlignmentDirectional.centerEnd,
-        //                         child: const Text(
-        //                           "DELETE",
-        //                           style: TextStyle(color: Colors.white),
-        //                         ),
-        //                       ),
-        //                       direction: DismissDirection.endToStart,
-        //                       resizeDuration: const Duration(milliseconds: 200),
-        //                       key: UniqueKey(),
-        //                       child: Container(
-        //                         decoration: BoxDecoration(
-        //                             color: const Color.fromARGB(255, 83, 80, 80),
-        //                             borderRadius: BorderRadius.circular(16.0)),
-        //                         child: ListTile(
-        //                           onTap: () {
-        //                             Navigator.pushNamed(context, "/edit",
-        //                                 arguments: retrievedUserList![index]);
-        //                           },
-        //                           shape: RoundedRectangleBorder(
-        //                             borderRadius: BorderRadius.circular(8.0),
-        //                           ),
-        //                           title:
-        //                               Text(retrievedUserList![index].emailUser),
-        //                           subtitle: Text(
-        //                               "${retrievedUserList![index].firstName.toString()}, ${retrievedUserList![index].lastName.toString()}"),
-        //                           trailing: const Icon(Icons.arrow_right_sharp),
-        //                         ),
-        //                       ),
-        //                     );
-        //                   });
-        //             } else if (snapshot.connectionState == ConnectionState.done &&
-        //                 retrievedUserList!.isEmpty) {
-        //               return Center(
-        //                 child: ListView(
-        //                   children: const <Widget>[
-        //                     Align(
-        //                         alignment: AlignmentDirectional.center,
-        //                         child: Text('No data available')),
-        //                   ],
-        //                 ),
-        //               );
-        //             } else {
-        //               return const Center(child: CircularProgressIndicator());
-        //             }
-        //           },
-        //         ),
-        //       ),
-        //     ),
-        //     ElevatedButton(
-        //       child: Text("Log out"),
-        //       onPressed: () {
-        //         FirebaseAuth.instance.signOut();
-        //       },
-        //     )
-        //   ],
-        // ),
-        );
+      ),
+      //     ElevatedButton(
+      //       child: Text("Log out"),
+      //       onPressed: () {
+      //         FirebaseAuth.instance.signOut();
+      //       },
+      //     )
+      //   ],
+      // ),
+    );
   }
 
   Widget _buildListUser(BuildContext context, UserData snapshot) {
@@ -153,5 +188,43 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
     );
+  }
+
+  // List<DataRow> _buildList(BuildContext context, snapshot) {
+  //   return snapshot.map((data) => _buildTableUser(context, data)).toList();
+  // }
+
+  // DataRow _buildTableUser(BuildContext context, DocumentSnapshot snapshot) {
+  //   final record = UserData.fromDocumentSnapshot();
+
+  //   return DataRow(
+  //     cells: [
+  //       DataCell(Text(snapshot.firstName)),
+  //       DataCell(Text(snapshot.lastName)),
+  //       DataCell(Text(snapshot.emailUser)),
+  //     ],
+  //   );
+  // }
+
+  DataRow _buildTableUser(BuildContext context, UserData snapshot) {
+    return DataRow(
+      cells: [
+        DataCell(Text(snapshot.firstName)),
+        DataCell(Text(snapshot.lastName)),
+        DataCell(Text(snapshot.emailUser)),
+        DataCell(Text(snapshot.ageUser.toString())),
+        DataCell(ElevatedButton(
+          onPressed: () {},
+          child: const Text('adas'),
+        ))
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _scaffoldKey?.currentState?.dispose();
+    super.dispose();
   }
 }

@@ -27,5 +27,12 @@ class DataService {
     return snapshot.docs
         .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
         .toList();
+
+    // final ref = _db.collection("users").doc().withConverter(
+    //       fromFirestore: UserData.fromFirestore,
+    //       toFirestore: (UserData data, _) => data.toFireStore(),
+    //     );
+    // final docSnap = await ref.get();
+    // return docSnap.data();
   }
 }

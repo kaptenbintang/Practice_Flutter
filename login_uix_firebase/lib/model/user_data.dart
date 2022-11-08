@@ -25,6 +25,28 @@ class UserData {
     };
   }
 
+  // factory UserData.fromFirestore(
+  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
+  //   SnapshotOptions? options,
+  // ) {
+  //   final data = snapshot.data();
+  //   return UserData(
+  //     firstName: data?['firstName'],
+  //     lastName: data?['lastName'],
+  //     emailUser: data?['email'],
+  //     ageUser: data?['age'],
+  //   );
+  // }
+
+  // Map<String, dynamic> toFireStore() {
+  //   return {
+  //     if (firstName != null) "firstName": firstName,
+  //     if (lastName != null) "lastName": lastName,
+  //     if (emailUser != null) "email": emailUser,
+  //     if (ageUser != null) "age": ageUser,
+  //   };
+  // }
+
   UserData.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : id = doc.id,
         firstName = doc.data()!["firstName"],
