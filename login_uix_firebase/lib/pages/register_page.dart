@@ -104,8 +104,8 @@ class _RegisterPageState extends State<RegisterPage> {
       'email': email,
       'age': age,
       'roles': 'user',
-      'clientcode': getInitials(_firstNameController.text.toString()) +
-          getLastInitials(_lastNameController.text.toString()) +
+      'clientcode': getLastInitials(_lastNameController.text.toString()) +
+          getInitials(_firstNameController.text.toString()) +
           '-' +
           generateRandomString(2),
       'imageUrl': '',
@@ -117,6 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ? _firstNameController
               .trim()
               .split(RegExp(' +'))
+              .reversed
               .map((s) => s[0])
               .take(2)
               .join()
