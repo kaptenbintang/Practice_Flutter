@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../model/user_data.dart';
 
@@ -17,8 +18,21 @@ class DataService {
         .update(employeeData.toMap());
   }
 
-  Future<void> deleteUser(String documentId) async {
-    await _db.collection("users").doc(documentId).delete();
+  Future<void> deleteUser(BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("users").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Account"),
+            );
+          },
+        );
+      },
+    );
   }
 
   Future<List<UserData>> retrieveUsers() async {

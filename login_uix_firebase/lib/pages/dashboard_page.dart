@@ -23,10 +23,30 @@ class _DashboardPageState extends State<DashboardPage> {
   List<Map<String, dynamic>>? listofColumn;
   UserData? dataU;
 
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmpasswordController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _ageController = TextEditingController();
+
+  late String selectedValue;
+  late String selectedValue2;
+  late String initialDropDownVal;
+
+  List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
+
+  List<bool>? selected;
+  List<String>? valuesList;
+  final FocusNode dropDownFocus = FocusNode();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    // selectedValue = dropDownItemValue[0];
+    selectedValue2 = dropDownItemValue2[0];
+
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
@@ -35,7 +55,10 @@ class _DashboardPageState extends State<DashboardPage> {
     // listofColumn = (await service.retrieveUsers()).cast<Map<String, dynamic>>();
     userList = service.retrieveUsers();
     retrievedUserList = await service.retrieveUsers();
-    // print(listofColumn.toString());
+    selected =
+        List<bool>.generate(retrievedUserList!.length, (int index) => false);
+    valuesList = List<String>.generate(
+        retrievedUserList!.length, (int index) => 'Action');
   }
 
   Future<void> _pullRefresh() async {
@@ -90,57 +113,70 @@ class _DashboardPageState extends State<DashboardPage> {
             builder: (context, AsyncSnapshot<List<UserData>> snapshot) {
               // retrievedUserList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                return ListView(children: <Widget>[
-                  DataTable(
-                    columns: const [
-                      DataColumn(
-                          label: Text('CT Code',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('First Name',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Last Name',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold))),
-                      // DataColumn(
-                      //     label: Text('Email',
-                      //         style: TextStyle(
-                      //             fontSize: 18, fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Age',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Roles',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Action',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold))),
-                    ],
-                    rows: List.generate(
-                        retrievedUserList!.length,
-                        (index) => _buildTableUser(
-                            context, retrievedUserList![index])),
+                return ListView(
+                    // scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      DataTable(
+                        sortColumnIndex: 1,
+                        sortAscending: true,
+                        columns: const [
+                          DataColumn(
+                              label: Text('CT Code',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('First Name',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Last Name',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          // DataColumn(
+                          //     label: Text('Email',
+                          //         style: TextStyle(
+                          //             fontSize: 18, fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Age',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Roles',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Action',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                        ],
+                        rows: List.generate(
+                            retrievedUserList!.length,
+                            (index) => _buildTableUser(
+                                context,
+                                retrievedUserList![index],
+                                retrievedUserList,
+                                index)),
 
-                    //   listofColumn!
-                    //       .map(
-                    //         ((element) => DataRow(
-                    //               cells: <DataCell>[
-                    //                 DataCell(Text(element["firstName"])),
-                    //                 DataCell(Text(element["lastName"])),
-                    //                 DataCell(Text(element["age"])),
-                    //                 DataCell(Text(element["email"])),
-                    //               ],
-                    //             )),
-                    //       )
-                    //       .toList(),
-                  ),
-                ]);
+                        //   listofColumn!
+                        //       .map(
+                        //         ((element) => DataRow(
+                        //               cells: <DataCell>[
+                        //                 DataCell(Text(element["firstName"])),
+                        //                 DataCell(Text(element["lastName"])),
+                        //                 DataCell(Text(element["age"])),
+                        //                 DataCell(Text(element["email"])),
+                        //               ],
+                        //             )),
+                        //       )
+                        //       .toList(),
+                      ),
+                    ]);
 
                 //     ListView.builder(
                 //   itemCount: retrievedUserList!.length,
@@ -214,20 +250,295 @@ class _DashboardPageState extends State<DashboardPage> {
   //   );
   // }
 
-  DataRow _buildTableUser(BuildContext context, UserData snapshot) {
+  DataRow _buildTableUser(BuildContext context, UserData snapshot,
+      List<UserData>? user, int indexs) {
+    // int idx = int.parse(dropDownItemValue2[indexs]);
     return DataRow(
+      color: MaterialStateProperty.resolveWith<Color?>(
+          (Set<MaterialState> states) {
+        // All rows will have the same selected color.
+        if (states.contains(MaterialState.selected)) {
+          return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+        }
+        // Even rows will have a grey color.
+        if (indexs.isEven) {
+          return Colors.grey.withOpacity(0.3);
+        }
+        return null; // Use default value for other states and odd rows.
+      }),
+      selected: selected![indexs],
+      onSelectChanged: (bool? value) {
+        setState(() {
+          selected![indexs] = value!;
+        });
+      },
       cells: [
-        DataCell(Text(snapshot.clientCode)),
+        DataCell(
+          Text(snapshot.clientCode),
+          showEditIcon: true,
+        ),
         DataCell(Text(snapshot.firstName)),
         DataCell(Text(snapshot.lastName)),
         // DataCell(Text(snapshot.emailUser)),
         DataCell(Text(snapshot.ageUser.toString())),
         DataCell(Text(snapshot.roles)),
 
-        DataCell(ElevatedButton(
-          onPressed: () {},
-          child: const Text('adas'),
-        ))
+        DataCell(
+          DropdownButton<String>(
+            hint: valuesList![indexs] == null
+                ? Text("Dropdown")
+                : Text(
+                    valuesList![indexs],
+                    style: TextStyle(color: Colors.blue),
+                  ),
+            focusNode: dropDownFocus,
+            isExpanded: true,
+            elevation: 8,
+            onChanged: (value) {
+              print(value);
+              // if value doesnt contain just close the dropDown
+              if (value == null) {
+                dropDownFocus.unfocus();
+              } else {
+                switch (value) {
+                  case "Delete":
+                    break;
+                  case "Edit":
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Edit User Data"),
+                            content: SingleChildScrollView(
+                                child: ListBody(
+                              children: [
+                                Form(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          controller: _firstNameController,
+                                          decoration: InputDecoration(
+                                              labelText: "Client Code",
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.blue),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              // hintText: 'Last Name',
+                                              fillColor: Colors.grey[200],
+                                              filled: true),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: TextFormField(
+                                                controller:
+                                                    _firstNameController,
+                                                decoration: InputDecoration(
+                                                    labelText: "First Name",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .white),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12)),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .blue),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12)),
+                                                    // hintText: 'Last Name',
+                                                    fillColor: Colors.grey[200],
+                                                    filled: true),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: TextFormField(
+                                                controller:
+                                                    _firstNameController,
+                                                decoration: InputDecoration(
+                                                    labelText: "Last Name",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .white),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12)),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .blue),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12)),
+                                                    // hintText: 'Last Name',
+                                                    fillColor: Colors.grey[200],
+                                                    filled: true),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          controller: _firstNameController,
+                                          decoration: InputDecoration(
+                                              labelText: "Age",
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.blue),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              // hintText: 'Last Name',
+                                              fillColor: Colors.grey[200],
+                                              filled: true),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          controller: _firstNameController,
+                                          decoration: InputDecoration(
+                                              labelText: "Phone Number",
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.blue),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              // hintText: 'Last Name',
+                                              fillColor: Colors.grey[200],
+                                              filled: true),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          controller: _firstNameController,
+                                          decoration: InputDecoration(
+                                              labelText: "Roles",
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.blue),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              // hintText: 'Last Name',
+                                              fillColor: Colors.grey[200],
+                                              filled: true),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          controller: _firstNameController,
+                                          decoration: InputDecoration(
+                                              labelText: "Client Type",
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.blue),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              // hintText: 'Last Name',
+                                              fillColor: Colors.grey[200],
+                                              filled: true),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )),
+                          );
+                        });
+                    break;
+                  default:
+                }
+
+                setState(() {
+                  valuesList![indexs] = value;
+                });
+              }
+            },
+            items: List.generate(
+                dropDownItemValue2.length,
+                (index) => DropdownMenuItem(
+                      child: Text(dropDownItemValue2[index]),
+                      value: dropDownItemValue2[index],
+                    )),
+          ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     service.deleteUser(context, snapshot.id.toString());
+          //   },
+          //   child: const Text('Hard Delete'),
+          // ),
+        ),
       ],
     );
   }
