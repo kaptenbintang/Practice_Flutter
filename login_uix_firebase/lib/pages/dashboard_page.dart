@@ -94,6 +94,10 @@ class _DashboardPageState extends State<DashboardPage> {
                   DataTable(
                     columns: const [
                       DataColumn(
+                          label: Text('CT Code',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
                           label: Text('First Name',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
@@ -101,12 +105,16 @@ class _DashboardPageState extends State<DashboardPage> {
                           label: Text('Last Name',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
+                      // DataColumn(
+                      //     label: Text('Email',
+                      //         style: TextStyle(
+                      //             fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
-                          label: Text('Email',
+                          label: Text('Age',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
-                          label: Text('Age',
+                          label: Text('Roles',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
@@ -209,10 +217,13 @@ class _DashboardPageState extends State<DashboardPage> {
   DataRow _buildTableUser(BuildContext context, UserData snapshot) {
     return DataRow(
       cells: [
+        DataCell(Text(snapshot.clientCode)),
         DataCell(Text(snapshot.firstName)),
         DataCell(Text(snapshot.lastName)),
-        DataCell(Text(snapshot.emailUser)),
+        // DataCell(Text(snapshot.emailUser)),
         DataCell(Text(snapshot.ageUser.toString())),
+        DataCell(Text(snapshot.roles)),
+
         DataCell(ElevatedButton(
           onPressed: () {},
           child: const Text('adas'),
