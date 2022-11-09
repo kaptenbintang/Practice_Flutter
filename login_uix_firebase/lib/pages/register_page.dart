@@ -4,10 +4,12 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pw_validator/Utilities/Validator.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -25,9 +27,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
+  final _phoneNumberController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  final countryDial = "0";
   bool isEmail(String input) => EmailValidator.validate(input);
   bool _isHidden = true;
   void _togglePasswordView() {
@@ -45,6 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _ageController.dispose();
+    _phoneNumberController.dispose();
     super.dispose();
   }
 
@@ -74,12 +79,12 @@ class _RegisterPageState extends State<RegisterPage> {
           } else {
             userUid = user.uid;
             addUserDetails(
-              userUid,
-              _firstNameController.text.trim(),
-              _lastNameController.text.trim(),
-              _emailController.text.trim(),
-              int.parse(_ageController.text.trim()),
-            );
+                userUid,
+                _firstNameController.text.trim(),
+                _lastNameController.text.trim(),
+                _emailController.text.trim(),
+                int.parse(_ageController.text.trim()),
+                _phoneNumberController.text.trim());
           }
         });
       } on FirebaseAuthException catch (e) {
@@ -97,12 +102,13 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future addUserDetails(String uid, String firstName, String lastName,
-      String email, int age) async {
+      String email, int age, String phoneNumber) async {
     await db.collection('users').doc(uid).set({
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
       'age': age,
+      'phoneNumber': countryDial + phoneNumber,
       'roles': 'user',
       'clientcode': getLastInitials(_lastNameController.text.toString()) +
           getInitials(_firstNameController.text.toString()) +
@@ -296,6 +302,41 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                     ),
                   ),
+
+                  SizedBox(height: 10),
+
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: IntlPhoneField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(11)
+                        ],
+                        controller: _phoneNumberController,
+                        showCountryFlag: true,
+                        showDropdownIcon: true,
+                        initialCountryCode: 'MY',
+                        disableLengthCheck: true,
+                        decoration: InputDecoration(
+                          labelText: "Phone Number",
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.circular(12)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12)),
+                          fillColor: Colors.grey[200],
+                          filled: true,
+                        ),
+                        validator: (value) {
+                          if (value!.toString().isEmpty) {
+                            return "Enter correct phone number";
+                          } else {
+                            return null;
+                          }
+                        },
+                      )),
 
                   SizedBox(height: 10),
 
