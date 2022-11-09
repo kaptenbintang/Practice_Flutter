@@ -4,12 +4,11 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_pw_validator/Utilities/Validator.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl/intl.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -28,6 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
   final _phoneNumberController = TextEditingController();
+  final dateinput = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -38,6 +38,12 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() {
       _isHidden = !_isHidden;
     });
+  }
+
+  @override
+  void initState() {
+    dateinput.text = ""; //set the initial value of text field
+    super.initState();
   }
 
   @override
@@ -304,6 +310,55 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(
+                                1950), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime.now());
+
+                        if (pickedDate != null) {
+                          print(
+                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                          String formattedDate =
+                              DateFormat('yyyy-MM-dd').format(pickedDate);
+                          print(
+                              formattedDate); //formatted date output using intl package =>  2021-03-16
+                          //you can implement different kind of Date Format here according to your requirement
+
+                          setState(() {
+                            dateinput.text =
+                                formattedDate; //set output date to TextField value.
+                          });
+                        } else {
+                          print("Date is not selected");
+                        }
+                      },
+                      child: TextFormField(
+                        controller: dateinput,
+                        decoration: InputDecoration(
+                          labelText: "Date of Birth",
+                          icon: Icon(Icons.calendar_today),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.circular(12)),
+                          fillColor: Colors.grey[200],
+                          filled: true,
+                        ),
+                        readOnly: true,
+                        enabled: false,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
 
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -318,6 +373,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         showDropdownIcon: true,
                         initialCountryCode: 'MY',
                         disableLengthCheck: true,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                           labelText: "Phone Number",
                           border: OutlineInputBorder(
@@ -452,7 +508,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   SizedBox(height: 10),
-                  //sign in button
+                  //sign up button
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: GestureDetector(
