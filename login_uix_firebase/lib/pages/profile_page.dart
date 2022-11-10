@@ -3,7 +3,7 @@
 import 'dart:html' as html;
 import 'dart:io' as ios;
 import 'dart:typed_data';
-
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -27,15 +27,15 @@ class _ProfilePageState extends State<ProfilePage> {
   final nameController = TextEditingController();
   final lastsNameController = TextEditingController();
   final emailController = TextEditingController();
-  final ageController = TextEditingController();
-
+  // final ageController = TextEditingController();
+  final dateofbirthController = TextEditingController();
   final user = FirebaseAuth.instance.currentUser!;
   final auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
   final storage = FirebaseStorage.instance;
 
   var uid;
-  var fName, lName, age, uEmail, img, role;
+  var fName, lName, age, uEmail, img, role, dob;
   bool imgExist = false;
 
   String? url;
@@ -72,13 +72,15 @@ class _ProfilePageState extends State<ProfilePage> {
         age = data["age"];
         img = data["imageUrl"];
         role = data["roles"];
+        dob = data["dateofbirth"];
       });
       setState(() {
         if (img != null) {}
         emailController.text = user.email.toString();
         nameController.text = fName;
         lastsNameController.text = lName;
-        ageController.text = age.toString();
+        dateofbirthController.text = dob;
+        // ageController.text = age.toString();
       });
     }
     ;
@@ -91,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future editUserDetails(String uid, String firstName, String lastName,
-      String email, int age) async {
+      String email, String dateofbirth) async {
     if (imgExist) {
       final ref = storage.ref().child('usersImage').child('$uid.jpg');
       // html.File file = ios.File(imgXFile.path);
@@ -105,7 +107,8 @@ class _ProfilePageState extends State<ProfilePage> {
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
-        'age': age,
+        'dateofbirth': dateofbirth,
+        // 'age': age,
         'imageUrl': url,
       }).onError(
           (error, stackTrace) => print("Error writing document: $error"));
@@ -116,7 +119,8 @@ class _ProfilePageState extends State<ProfilePage> {
           'firstName': firstName,
           'lastName': lastName,
           'email': email,
-          'age': age,
+          'dateofbirth': dateofbirth,
+          // 'age': age,
           'imageUrl': '',
         }).onError(
             (error, stackTrace) => print("Error writing document: $error"));
@@ -137,7 +141,8 @@ class _ProfilePageState extends State<ProfilePage> {
           nameController.text.trim(),
           lastsNameController.text.trim(),
           emailController.text.trim(),
-          int.parse(ageController.text.trim()),
+          dateofbirthController.text.trim(),
+          // int.parse(ageController.text.trim()),
         );
         showDialog(
             context: context,
@@ -342,13 +347,47 @@ class _ProfilePageState extends State<ProfilePage> {
             obscure: false,
           ),
           SizedBox(height: 20),
+
           ProfileTextInput(
-            textEditingController: ageController,
-            hintTextString: 'Enter Age',
-            maxLength: 3,
-            labelText: 'Age',
+            textEditingController: dateofbirthController,
+            hintTextString: 'Enter Date',
+            maxLength: 20,
+            labelText: 'Date of Birth',
             obscure: false,
+            fungsitap: () async {
+              DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(
+                      1950), //DateTime.now() - not to allow to choose before today.
+                  lastDate: DateTime.now());
+
+              if (pickedDate != null) {
+                print(
+                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                String formattedDate =
+                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                print(
+                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                //you can implement different kind of Date Format here according to your requirement
+
+                setState(() {
+                  dateofbirthController.text =
+                      formattedDate; //set output date to TextField value.
+                });
+              } else {
+                print("Date is not selected");
+              }
+            },
           ),
+          // SizedBox(height: 20),
+          // ProfileTextInput(
+          //   textEditingController: ageController,
+          //   hintTextString: 'Enter Age',
+          //   maxLength: 3,
+          //   labelText: 'Age',
+          //   obscure: false,
+          // ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
@@ -360,20 +399,20 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(
             height: 20,
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DeleteAccount(),
-                ),
-              );
-            },
-            child: const Text('Delete'),
-          ),
-          SizedBox(
-            height: 20,
-          ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => const DeleteAccount(),
+          //       ),
+          //     );
+          //   },
+          //   child: const Text('Delete'),
+          // ),
+          // SizedBox(
+          //   height: 20,
+          // ),
           ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -407,7 +446,8 @@ class _ProfilePageState extends State<ProfilePage> {
     nameController.dispose();
     lastsNameController.dispose();
     emailController.dispose();
-    ageController.dispose();
+    dateofbirthController.dispose();
+    // ageController.dispose();
     super.dispose();
   }
 }

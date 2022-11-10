@@ -131,6 +131,10 @@ class _LoginPageState extends State<LoginPage> {
                       // onChanged: (text) => setState(() => _text),
                       decoration: InputDecoration(
                           labelText: "Email address",
+                          prefixIcon: Icon(
+                            Icons.mail,
+                            color: Colors.blue,
+                          ),
                           // errorText: _errorEmailText,
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
@@ -162,6 +166,10 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: _isHidden,
                       decoration: InputDecoration(
                         labelText: "Password",
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Colors.blue,
+                        ),
                         // errorText: _errorPasswordText,
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.white),
