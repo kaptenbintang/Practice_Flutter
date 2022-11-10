@@ -351,6 +351,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         }
                       },
+                      readOnly: true,
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
                             context: context,
