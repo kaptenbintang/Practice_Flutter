@@ -226,6 +226,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _firstNameController,
                       decoration: InputDecoration(
                           labelText: "First Name",
+                          hintText: "Enter First Name",
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
@@ -256,6 +257,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _lastNameController,
                       decoration: InputDecoration(
                           labelText: "Last Name",
+                          hintText: "Enter Last Name",
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),

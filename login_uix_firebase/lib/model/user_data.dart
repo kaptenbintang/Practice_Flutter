@@ -7,31 +7,40 @@ class UserData {
   final String firstName;
   final String lastName;
   final String emailUser;
-  final int ageUser;
+  // final int ageUser;
   final String clientCode;
   final String roles;
   final String imgUrl;
+  final String doBirth;
+  final String phoneNumber;
+  final String clientType;
 
   UserData({
     this.id,
     required this.firstName,
     required this.lastName,
     required this.emailUser,
-    required this.ageUser,
+    // required this.ageUser,
     required this.clientCode,
     required this.roles,
     required this.imgUrl,
+    required this.doBirth,
+    required this.phoneNumber,
+    required this.clientType,
   });
 
   Map<String, dynamic> toMap() {
     return {
       "firstName": firstName,
       "lastName": lastName,
-      "age": ageUser,
+      // "age": ageUser,
       "email": emailUser,
       "clientcode": clientCode,
       "roles": roles,
       "imageUrl": imgUrl,
+      "phoneNumber": phoneNumber,
+      "dateofbirth": doBirth,
+      "clientType": clientType,
     };
   }
 
@@ -62,8 +71,11 @@ class UserData {
         firstName = doc.data()!["firstName"],
         lastName = doc.data()!["lastName"],
         emailUser = doc.data()!["email"],
-        ageUser = doc.data()!["age"],
+        // ageUser = doc.data()!["age"],
         clientCode = doc.data()!["clientcode"],
         roles = doc.data()!["roles"],
-        imgUrl = doc.data()!["imageUrl"];
+        imgUrl = doc.data()!["imageUrl"],
+        phoneNumber = doc.data()!["phoneNumber"],
+        doBirth = doc.data()!["dateofbirth"],
+        clientType = doc.data()!["clientType"];
 }

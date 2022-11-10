@@ -24,21 +24,25 @@ class _DashboardPageState extends State<DashboardPage> {
   UserData? dataU;
 
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmpasswordController = TextEditingController();
+  final _clientTypeController = TextEditingController();
+  final _rolesController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
+  final _clientCodeController = TextEditingController();
+  final _phoneController = TextEditingController();
 
-  late String selectedValue;
+  String? selectedValue;
   late String selectedValue2;
   late String initialDropDownVal;
 
+  List<String> listOfValue = ['1', '2', '3', '4', '5'];
   List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
 
   List<bool>? selected;
   List<String>? valuesList;
   final FocusNode dropDownFocus = FocusNode();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -280,7 +284,7 @@ class _DashboardPageState extends State<DashboardPage> {
         DataCell(Text(snapshot.firstName)),
         DataCell(Text(snapshot.lastName)),
         // DataCell(Text(snapshot.emailUser)),
-        DataCell(Text(snapshot.ageUser.toString())),
+        DataCell(Text(snapshot.roles.toString())),
         DataCell(Text(snapshot.roles)),
 
         DataCell(
@@ -304,218 +308,17 @@ class _DashboardPageState extends State<DashboardPage> {
                   case "Delete":
                     break;
                   case "Edit":
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text("Edit User Data"),
-                            content: SingleChildScrollView(
-                                child: ListBody(
-                              children: [
-                                Form(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          controller: _firstNameController,
-                                          decoration: InputDecoration(
-                                              labelText: "Client Code",
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.white),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.blue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              // hintText: 'Last Name',
-                                              fillColor: Colors.grey[200],
-                                              filled: true),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                controller:
-                                                    _firstNameController,
-                                                decoration: InputDecoration(
-                                                    labelText: "First Name",
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    color: Colors
-                                                                        .white),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    color: Colors
-                                                                        .blue),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
-                                                    // hintText: 'Last Name',
-                                                    fillColor: Colors.grey[200],
-                                                    filled: true),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                controller:
-                                                    _firstNameController,
-                                                decoration: InputDecoration(
-                                                    labelText: "Last Name",
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    color: Colors
-                                                                        .white),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    color: Colors
-                                                                        .blue),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
-                                                    // hintText: 'Last Name',
-                                                    fillColor: Colors.grey[200],
-                                                    filled: true),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          controller: _firstNameController,
-                                          decoration: InputDecoration(
-                                              labelText: "Age",
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.white),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.blue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              // hintText: 'Last Name',
-                                              fillColor: Colors.grey[200],
-                                              filled: true),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          controller: _firstNameController,
-                                          decoration: InputDecoration(
-                                              labelText: "Phone Number",
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.white),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.blue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              // hintText: 'Last Name',
-                                              fillColor: Colors.grey[200],
-                                              filled: true),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          controller: _firstNameController,
-                                          decoration: InputDecoration(
-                                              labelText: "Roles",
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.white),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.blue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              // hintText: 'Last Name',
-                                              fillColor: Colors.grey[200],
-                                              filled: true),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          controller: _firstNameController,
-                                          decoration: InputDecoration(
-                                              labelText: "Client Type",
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.white),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.blue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              // hintText: 'Last Name',
-                                              fillColor: Colors.grey[200],
-                                              filled: true),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )),
-                          );
-                        });
+                    dialogEdit(context);
+                    setState(() {
+                      _emailController.text = snapshot.emailUser;
+                      _clientTypeController.text = snapshot.clientCode;
+                      _rolesController.text = snapshot.roles;
+                      _firstNameController.text = snapshot.firstName;
+                      _lastNameController.text = snapshot.lastName;
+                      _ageController.text = snapshot.clientCode;
+                      _clientCodeController.text = snapshot.clientCode;
+                      _phoneController.text = snapshot.emailUser;
+                    });
                     break;
                   default:
                 }
@@ -543,9 +346,242 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
+  Future<dynamic> dialogEdit(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            title: const Text("Edit User Data"),
+            content: SingleChildScrollView(
+                child: ListBody(
+              children: [
+                SizedBox(
+                  // height: 500,
+                  width: 400,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8, right: 8, bottom: 8),
+                          child: TextFormField(
+                            controller: _clientCodeController,
+                            decoration: InputDecoration(
+                                labelText: "Client Code",
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(12)),
+                                fillColor: Colors.grey[200],
+                                filled: true),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  controller: _firstNameController,
+                                  decoration: InputDecoration(
+                                      labelText: "First Name",
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.blue),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      fillColor: Colors.grey[200],
+                                      filled: true),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  controller: _lastNameController,
+                                  decoration: InputDecoration(
+                                      labelText: "Last Name",
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.blue),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      fillColor: Colors.grey[200],
+                                      filled: true),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                                labelText: "Email",
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(12)),
+                                fillColor: Colors.grey[200],
+                                filled: true),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: _ageController,
+                            decoration: InputDecoration(
+                                labelText: "Age",
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(12)),
+                                fillColor: Colors.grey[200],
+                                filled: true),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: _phoneController,
+                            decoration: InputDecoration(
+                                labelText: "Phone Number",
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(12)),
+                                fillColor: Colors.grey[200],
+                                filled: true),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: _rolesController,
+                            decoration: InputDecoration(
+                                labelText: "Roles",
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(12)),
+                                fillColor: Colors.grey[200],
+                                filled: true),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 8, right: 8, top: 8),
+                          child: TextFormField(
+                            controller: _clientTypeController,
+                            decoration: InputDecoration(
+                                labelText: "Client Type",
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(12)),
+                                fillColor: Colors.grey[200],
+                                filled: true),
+                          ),
+                        ),
+                        DropdownButtonFormField(
+                            value: selectedValue,
+                            items: [
+                              DropdownMenuItem(child: const Text('dsadsa'))
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                selectedValue = value;
+                              });
+                            },
+                            onSaved: (value) {
+                              setState(() {
+                                selectedValue = value;
+                              });
+                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "can't empty";
+                              } else {
+                                return null;
+                              }
+                            }),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Cancel'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text('Confirm'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )),
+          );
+        });
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
+    _ageController.dispose();
+    _clientCodeController.dispose();
+    _clientTypeController.dispose();
+    _emailController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneController.dispose();
+    _rolesController.dispose();
     _scaffoldKey?.currentState?.dispose();
     super.dispose();
   }

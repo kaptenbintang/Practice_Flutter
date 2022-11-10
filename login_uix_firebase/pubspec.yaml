@@ -50,6 +50,10 @@ dependencies:
   cross_file: ^0.3.3+2
   data_table_2: ^2.3.8
   intl_phone_field: ^3.1.0
+  flutter_form_builder: ^7.7.0
+  flutter_localizations:
+    sdk: flutter
+  form_builder_validators: ^8.4.0
 
 dev_dependencies:
   flutter_test:
