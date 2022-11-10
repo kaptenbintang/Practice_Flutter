@@ -25,9 +25,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmpasswordController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  final _ageController = TextEditingController();
+  // final _ageController = TextEditingController();
   final _phoneNumberController = TextEditingController();
-  final dateinput = TextEditingController();
+  final _dateofbirthController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -42,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void initState() {
-    dateinput.text = ""; //set the initial value of text field
+    _dateofbirthController.text = ""; //set the initial value of text field
     super.initState();
   }
 
@@ -54,8 +54,9 @@ class _RegisterPageState extends State<RegisterPage> {
     _confirmpasswordController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
-    _ageController.dispose();
+    // _ageController.dispose();
     _phoneNumberController.dispose();
+    _dateofbirthController.dispose();
     super.dispose();
   }
 
@@ -89,8 +90,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 _firstNameController.text.trim(),
                 _lastNameController.text.trim(),
                 _emailController.text.trim(),
-                int.parse(_ageController.text.trim()),
-                _phoneNumberController.text.trim());
+                // int.parse(_ageController.text.trim()),
+                _phoneNumberController.text.trim(),
+                _dateofbirthController.text.trim());
           }
         });
       } on FirebaseAuthException catch (e) {
@@ -108,13 +110,14 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future addUserDetails(String uid, String firstName, String lastName,
-      String email, int age, String phoneNumber) async {
+      String email, String phoneNumber, String dateofbirth) async {
     await db.collection('users').doc(uid).set({
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
-      'age': age,
+      // 'age': age,
       'phoneNumber': countryDial + phoneNumber,
+      'dateofbirth': dateofbirth,
       'roles': 'user',
       'clientcode': getLastInitials(_lastNameController.text.toString()) +
           getInitials(_firstNameController.text.toString()) +
@@ -226,6 +229,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _firstNameController,
                       decoration: InputDecoration(
                           labelText: "First Name",
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Colors.blue,
+                          ),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
@@ -256,6 +263,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _lastNameController,
                       decoration: InputDecoration(
                           labelText: "Last Name",
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Colors.blue,
+                          ),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
@@ -280,46 +291,50 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(height: 10),
 
                   // ages textfield
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      controller: _ageController,
-                      decoration: InputDecoration(
-                          labelText: "Ages",
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                              borderRadius: BorderRadius.circular(12)),
-                          // hintText: 'Age',
-                          fillColor: Colors.grey[200],
-                          filled: true),
-                      validator: (value) {
-                        if (value!.isEmpty || value.length > 3) {
-                          return "Enter correct age";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  //   child: TextFormField(
+                  //     keyboardType: TextInputType.number,
+                  //     inputFormatters: <TextInputFormatter>[
+                  //       FilteringTextInputFormatter.digitsOnly
+                  //     ],
+                  //     controller: _ageController,
+                  //     decoration: InputDecoration(
+                  //         labelText: "Ages",
+                  //         enabledBorder: OutlineInputBorder(
+                  //             borderSide: BorderSide(color: Colors.white),
+                  //             borderRadius: BorderRadius.circular(12)),
+                  //         focusedBorder: OutlineInputBorder(
+                  //             borderSide: BorderSide(color: Colors.blue),
+                  //             borderRadius: BorderRadius.circular(12)),
+                  //         // hintText: 'Age',
+                  //         fillColor: Colors.grey[200],
+                  //         filled: true),
+                  //     validator: (value) {
+                  //       if (value!.isEmpty || value.length > 3) {
+                  //         return "Enter correct age";
+                  //       } else {
+                  //         return null;
+                  //       }
+                  //     },
+                  //   ),
+                  // ),
 
                   SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextFormField(
-                      controller: dateinput,
+                      controller: _dateofbirthController,
                       decoration: InputDecoration(
                         labelText: "Date of Birth",
-                        icon: Icon(
+                        prefixIcon: Icon(
                           Icons.calendar_today,
                           color: Colors.blue,
                         ),
+                        // icon: Icon(
+                        //   Icons.calendar_today,
+                        //   color: Colors.blue,
+                        // ),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(12)),
@@ -329,6 +344,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter correct date of birth";
+                        } else {
+                          return null;
+                        }
+                      },
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
                             context: context,
@@ -347,7 +369,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           //you can implement different kind of Date Format here according to your requirement
 
                           setState(() {
-                            dateinput.text =
+                            _dateofbirthController.text =
                                 formattedDate; //set output date to TextField value.
                           });
                         } else {
@@ -402,6 +424,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _emailController,
                       decoration: InputDecoration(
                           labelText: "Email address",
+                          prefixIcon: Icon(
+                            Icons.mail,
+                            color: Colors.blue,
+                          ),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
@@ -433,6 +459,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           obscureText: _isHidden,
                           decoration: InputDecoration(
                             labelText: "Password",
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.blue,
+                            ),
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(12)),
@@ -480,6 +510,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureText: _isHidden,
                       decoration: InputDecoration(
                         labelText: "Confirm Password",
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Colors.blue,
+                        ),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(12)),
