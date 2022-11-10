@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../helper/database_service.dart';
 
@@ -31,12 +32,12 @@ class _DashboardPageState extends State<DashboardPage> {
   final _ageController = TextEditingController();
   final _clientCodeController = TextEditingController();
   final _phoneController = TextEditingController();
-
+  final textEditingController = TextEditingController();
   String? selectedValue;
   late String selectedValue2;
   late String initialDropDownVal;
 
-  List<String> listOfValue = ['1', '2', '3', '4', '5'];
+  List<String> listOfValue = ['satu', 'dua', 'tiga', 'enam', 'sembilan'];
   List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
 
   List<bool>? selected;
@@ -50,6 +51,7 @@ class _DashboardPageState extends State<DashboardPage> {
     super.initState();
     // selectedValue = dropDownItemValue[0];
     selectedValue2 = dropDownItemValue2[0];
+    // selectedValue = listOfValue[0];
 
     _scaffoldKey = GlobalKey();
     _initRetrieval();
@@ -497,8 +499,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(left: 8, right: 8, top: 8),
+                          padding: const EdgeInsets.all(8),
                           child: TextFormField(
                             controller: _clientTypeController,
                             decoration: InputDecoration(
@@ -513,28 +514,194 @@ class _DashboardPageState extends State<DashboardPage> {
                                 filled: true),
                           ),
                         ),
-                        DropdownButtonFormField(
-                            value: selectedValue,
-                            items: [
-                              DropdownMenuItem(child: const Text('dsadsa'))
-                            ],
-                            onChanged: (value) {
-                              setState(() {
-                                selectedValue = value;
-                              });
-                            },
-                            onSaved: (value) {
-                              setState(() {
-                                selectedValue = value;
-                              });
-                            },
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "can't empty";
-                              } else {
-                                return null;
-                              }
-                            }),
+                        // DropdownButtonFormField(
+                        //     value: selectedValue,
+                        //     items: [
+                        //       DropdownMenuItem(child: const Text('dsadsa'))
+                        //     ],
+                        //     onChanged: (value) {
+                        //       setState(() {
+                        //         selectedValue = value;
+                        //       });
+                        //     },
+                        //     onSaved: (value) {
+                        //       setState(() {
+                        //         selectedValue = value;
+                        //       });
+                        //     },
+                        //     validator: (value) {
+                        //       if (value.isEmpty) {
+                        //         return "can't empty";
+                        //       } else {
+                        //         return null;
+                        //       }
+                        //     }),
+
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButtonFormField2(
+                              buttonDecoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              decoration: InputDecoration(
+                                //Add isDense true and zero Padding.
+                                //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                                isDense: true,
+
+                                contentPadding: EdgeInsets.zero,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                //Add more decoration as you want here
+                                //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                              ),
+                              isExpanded: true,
+                              hint: const Text(
+                                'Select Client Type',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              icon: const Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.black45,
+                              ),
+                              iconSize: 30,
+                              buttonHeight: 50,
+                              buttonPadding:
+                                  const EdgeInsets.only(left: 20, right: 10),
+                              dropdownDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              items: listOfValue
+                                  .map((item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ))
+                                  .toList(),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please Client Type.';
+                                }
+                              },
+                              onChanged: (value) {
+                                selectedValue = value.toString();
+
+                                //Do something when changing the item if you want.
+                              },
+                              onSaved: (value) {
+                                selectedValue = value.toString();
+                              },
+                            ),
+                          ),
+                          //   DropdownButton2(
+                          //     isExpanded: true,
+                          //     hint: Row(
+                          //       children: const [
+                          //         Icon(
+                          //           Icons.list,
+                          //           size: 16,
+                          //           color: Colors.black,
+                          //         ),
+                          //         SizedBox(
+                          //           width: 4,
+                          //         ),
+                          //         Expanded(
+                          //           child: Text(
+                          //             'Selected Item',
+                          //             style: TextStyle(
+                          //                 fontSize: 14,
+                          //                 fontWeight: FontWeight.bold,
+                          //                 color: Colors.black),
+                          //             overflow: TextOverflow.ellipsis,
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     items: listOfValue
+                          //         .map((item) => DropdownMenuItem<String>(
+                          //               value: item,
+                          //               child: Text(
+                          //                 item,
+                          //                 style: const TextStyle(
+                          //                   fontSize: 14,
+                          //                   fontWeight: FontWeight.bold,
+                          //                   color: Colors.black,
+                          //                 ),
+                          //                 overflow: TextOverflow.ellipsis,
+                          //               ),
+                          //             ))
+                          //         .toList(),
+                          //     value: selectedValue,
+                          //     onChanged: (value) {
+                          //       setState(() {
+                          //         selectedValue = value as String;
+                          //       });
+                          //     },
+                          //     icon: const Icon(
+                          //       Icons.arrow_forward_ios_outlined,
+                          //     ),
+                          //     iconSize: 14,
+                          //     iconEnabledColor: Colors.black,
+                          //     iconDisabledColor: Colors.black,
+
+                          //     buttonPadding:
+                          //         const EdgeInsets.only(left: 14, right: 14),
+                          //     buttonDecoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(14),
+                          //       // border: Border.all(
+                          //       //   color: Colors.black26,
+                          //       // ),
+                          //     ),
+                          //     // buttonElevation: 2,
+                          //     // itemHeight: 40,
+                          //     buttonHeight: 40,
+                          //     buttonWidth: 200,
+                          //     itemHeight: 40,
+                          //     dropdownMaxHeight: 200,
+                          //     searchController: textEditingController,
+                          //     searchInnerWidget: Padding(
+                          //       padding: const EdgeInsets.only(
+                          //         top: 8,
+                          //         bottom: 4,
+                          //         right: 8,
+                          //         left: 8,
+                          //       ),
+                          //       child: TextFormField(
+                          //         controller: textEditingController,
+                          //         decoration: InputDecoration(
+                          //           isDense: true,
+                          //           contentPadding: const EdgeInsets.symmetric(
+                          //             horizontal: 10,
+                          //             vertical: 8,
+                          //           ),
+                          //           hintText: 'Search for an item...',
+                          //           hintStyle: const TextStyle(fontSize: 12),
+                          //           border: OutlineInputBorder(
+                          //             borderRadius: BorderRadius.circular(8),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     searchMatchFn: (item, searchValue) {
+                          //       return (item.value
+                          //           .toString()
+                          //           .contains(searchValue));
+                          //     },
+                          //     //This to clear the search value when you close the menu
+                          //     onMenuStateChange: (isOpen) {
+                          //       if (!isOpen) {
+                          //         textEditingController.clear();
+                          //       }
+                          //     },
+                          //   ),
+                          // ),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -554,7 +721,12 @@ class _DashboardPageState extends State<DashboardPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      _formKey.currentState!.save();
+                                      print(_formKey);
+                                    }
+                                  },
                                   child: const Text('Confirm'),
                                 ),
                               ),
@@ -583,6 +755,7 @@ class _DashboardPageState extends State<DashboardPage> {
     _phoneController.dispose();
     _rolesController.dispose();
     _scaffoldKey?.currentState?.dispose();
+    _formKey.currentState?.dispose();
     super.dispose();
   }
 }
