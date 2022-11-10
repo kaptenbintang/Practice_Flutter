@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
@@ -33,9 +34,13 @@ class _DashboardPageState extends State<DashboardPage> {
   final _clientCodeController = TextEditingController();
   final _phoneController = TextEditingController();
   final textEditingController = TextEditingController();
+  final newPasswordController = TextEditingController();
+  final newConfirmPasswordController = TextEditingController();
+  final currentUser = FirebaseAuth.instance.currentUser;
   String? selectedValue;
   late String selectedValue2;
   late String initialDropDownVal;
+  var newPassword = "";
 
   List<String> listOfValue = ['satu', 'dua', 'tiga', 'enam', 'sembilan'];
   List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
@@ -80,7 +85,32 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Dashboard Home'),
+        title: Text("Dashboard Home"),
+        leading: GestureDetector(
+          onTap: () {/* Write listener code here */},
+          child: Icon(
+            Icons.menu, // add custom icons also
+          ),
+        ),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.search,
+                  size: 26.0,
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                },
+                child: Icon(Icons.logout),
+              )),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () {
@@ -321,6 +351,10 @@ class _DashboardPageState extends State<DashboardPage> {
                       _clientCodeController.text = snapshot.clientCode;
                       _phoneController.text = snapshot.emailUser;
                     });
+                    break;
+                  case "Change Password":
+                    dialogChangePassword(context);
+
                     break;
                   default:
                 }
@@ -743,6 +777,165 @@ class _DashboardPageState extends State<DashboardPage> {
         });
   }
 
+  Future<dynamic> dialogChangePassword(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            title: const Text("Create new pasword for this user"),
+            content: SingleChildScrollView(
+                child: ListBody(
+              children: [
+                SizedBox(
+                  // height: 500,
+                  width: 400,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: newPasswordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: "New Password",
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(12)),
+                              fillColor: Colors.grey[200],
+                              filled: true,
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        FlutterPwValidator(
+                            width: 350,
+                            height: 110,
+                            minLength: 6,
+                            uppercaseCharCount: 1,
+                            numericCharCount: 1,
+                            specialCharCount: 1,
+                            onSuccess: () {
+                              print("submitted");
+                            },
+                            controller: newPasswordController),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: newConfirmPasswordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: "Confirm Password",
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(12)),
+                              fillColor: Colors.grey[200],
+                              filled: true,
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Cancel'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      setState(() {
+                                        newPassword =
+                                            newPasswordController.text;
+                                      });
+                                      changePassword();
+                                    }
+                                  },
+                                  child: const Text('Confirm'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )),
+          );
+        });
+  }
+
+  changePassword() async {
+    if (passwordConfirmed()) {
+      try {
+        await this
+            .currentUser!
+            .updatePassword(newConfirmPasswordController.text);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text("Change Password Successfully"),
+              );
+            });
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //   backgroundColor: Colors.black26,
+        //   content: Text("Your password has been changed & login again!"),
+        // ));
+      } catch (error) {}
+    }
+  }
+
+  bool passwordConfirmed() {
+    if (newPasswordController.text.trim() ==
+        newConfirmPasswordController.text.trim()) {
+      return true;
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Your Password is not same, Please try again!"),
+            );
+          });
+      return false;
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -754,6 +947,8 @@ class _DashboardPageState extends State<DashboardPage> {
     _lastNameController.dispose();
     _phoneController.dispose();
     _rolesController.dispose();
+    newPasswordController.dispose();
+    newConfirmPasswordController.dispose();
     _scaffoldKey?.currentState?.dispose();
     _formKey.currentState?.dispose();
     super.dispose();
