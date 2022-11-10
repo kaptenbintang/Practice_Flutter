@@ -6,17 +6,19 @@ class ProfileTextInput extends StatefulWidget {
   final int maxLength;
   final String labelText;
   final bool obscure;
+  void Function()? fungsitap;
   // final TextInputType inputType;
   // final Widget prefixIcon;
   // final Widget suffixIcon;
 
-  const ProfileTextInput({
+  ProfileTextInput({
     super.key,
     required this.textEditingController,
     required this.hintTextString,
     required this.maxLength,
     required this.labelText,
     required this.obscure,
+    this.fungsitap,
     // required this.inputType,
     // required this.prefixIcon,
     // required this.suffixIcon,
@@ -47,6 +49,7 @@ class _ProfileTextInputState extends State<ProfileTextInput> {
           labelText: widget.labelText,
           isDense: true,
         ),
+        onTap: widget.fungsitap,
         // maxLength: widget.maxLength,
       ),
     );
