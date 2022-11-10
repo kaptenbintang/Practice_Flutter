@@ -312,7 +312,23 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: GestureDetector(
+                    child: TextFormField(
+                      controller: dateinput,
+                      decoration: InputDecoration(
+                        labelText: "Date of Birth",
+                        icon: Icon(
+                          Icons.calendar_today,
+                          color: Colors.blue,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(12)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                            borderRadius: BorderRadius.circular(12)),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
                             context: context,
@@ -338,23 +354,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           print("Date is not selected");
                         }
                       },
-                      child: TextFormField(
-                        controller: dateinput,
-                        decoration: InputDecoration(
-                          labelText: "Date of Birth",
-                          icon: Icon(Icons.calendar_today),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                              borderRadius: BorderRadius.circular(12)),
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                        ),
-                        readOnly: true,
-                        enabled: false,
-                      ),
                     ),
                   ),
 
