@@ -350,6 +350,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       _ageController.text = snapshot.clientCode;
                       _clientCodeController.text = snapshot.clientCode;
                       _phoneController.text = snapshot.emailUser;
+                      selectedValue = snapshot.clientType;
                     });
                     break;
                   case "Change Password":
