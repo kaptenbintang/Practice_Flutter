@@ -70,6 +70,7 @@ class _DashboardPageState extends State<DashboardPage> {
   ];
   List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
 
+
   List<bool>? selected;
   List<String>? valuesList;
   final FocusNode dropDownFocus = FocusNode();
@@ -1003,9 +1004,7 @@ class _DashboardPageState extends State<DashboardPage> {
   changePassword() async {
     if (passwordConfirmed()) {
       try {
-        await this
-            .currentUser!
-            .updatePassword(newConfirmPasswordController.text);
+        await this.currentUser!.updatePassword(selectedValue2);
         showDialog(
             context: context,
             builder: (context) {

@@ -119,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
       'phoneNumber': countryDial + phoneNumber,
       'dateofbirth': dateofbirth,
       'roles': 'user',
-      'clientType': 'TBD',
+      'clientType': 'unassigned',
       'clientcode': getLastInitials(_lastNameController.text.toString()) +
           getInitials(_firstNameController.text.toString()) +
           '-' +
