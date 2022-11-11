@@ -11,7 +11,7 @@ class DataService {
     await _db.collection("users").add(employeeData.toMap());
   }
 
-  updateUser(UserData employeeData) async {
+  Future<void> updateUser(UserData employeeData) async {
     await _db
         .collection("users")
         .doc(employeeData.id)

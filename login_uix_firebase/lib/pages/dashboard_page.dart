@@ -33,22 +33,43 @@ class _DashboardPageState extends State<DashboardPage> {
   final _ageController = TextEditingController();
   final _clientCodeController = TextEditingController();
   final _phoneController = TextEditingController();
-  final textEditingController = TextEditingController();
+  final searchDropClientType = TextEditingController();
+  final searchDropRoles = TextEditingController();
   final newPasswordController = TextEditingController();
   final newConfirmPasswordController = TextEditingController();
   final currentUser = FirebaseAuth.instance.currentUser;
+  String? userId;
+
+  String? selectedValueRoles;
   String? selectedValue;
   late String selectedValue2;
   late String initialDropDownVal;
   var newPassword = "";
 
-  List<String> listOfValue = ['satu', 'dua', 'tiga', 'enam', 'sembilan'];
-  List<String> dropDownItemValue2 = [
-    'Action',
-    'Delete',
-    'Edit',
-    'Change Password'
+  int _currentSortColumn = 0;
+  bool _isAscending = true;
+
+  List<String> listOfValueRoles = [
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'Developer',
+    'user',
+    'admin'
   ];
+
+  List<String> listOfValue = [
+    'satu',
+    'dua',
+    'tiga',
+    'enam',
+    'sembilan',
+    'none'
+  ];
+  List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
+
 
   List<bool>? selected;
   List<String>? valuesList;
@@ -155,13 +176,34 @@ class _DashboardPageState extends State<DashboardPage> {
               // retrievedUserList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return ListView(
-                    // scrollDirection: Axis.horizontal,
+                    scrollDirection: Axis.horizontal,
                     children: <Widget>[
                       DataTable(
-                        sortColumnIndex: 1,
-                        sortAscending: true,
-                        columns: const [
+                        sortColumnIndex: _currentSortColumn,
+                        sortAscending: _isAscending,
+                        columns: [
                           DataColumn(
+                              onSort: (columnIndex, ascending) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  // _currentSortColumn = columnIndex;
+                                  if (_isAscending == true) {
+                                    _isAscending = false;
+                                    // sort the product list in Ascending, order by Price
+                                    retrievedUserList!.sort(
+                                        (productA, productB) => productB
+                                            .clientCode
+                                            .compareTo(productA.clientCode));
+                                  } else {
+                                    _isAscending = true;
+                                    // sort the product list in Descending, order by Price
+                                    retrievedUserList!.sort(
+                                        (productA, productB) => productA
+                                            .clientCode
+                                            .compareTo(productB.clientCode));
+                                  }
+                                });
+                              },
                               label: Text('CT Code',
                                   style: TextStyle(
                                       fontSize: 18,
@@ -176,12 +218,23 @@ class _DashboardPageState extends State<DashboardPage> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-                          // DataColumn(
-                          //     label: Text('Email',
-                          //         style: TextStyle(
-                          //             fontSize: 18, fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Age',
+                              label: Text('Email',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Birth Date',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Phone Number',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Client Type',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
@@ -320,10 +373,11 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         DataCell(Text(snapshot.firstName)),
         DataCell(Text(snapshot.lastName)),
-        // DataCell(Text(snapshot.emailUser)),
-        DataCell(Text(snapshot.roles.toString())),
+        DataCell(Text(snapshot.emailUser)),
+        DataCell(Text(snapshot.doBirth)),
+        DataCell(Text(snapshot.phoneNumber)),
+        DataCell(Text(snapshot.clientType)),
         DataCell(Text(snapshot.roles)),
-
         DataCell(
           DropdownButton<String>(
             hint: valuesList![indexs] == null
@@ -348,14 +402,17 @@ class _DashboardPageState extends State<DashboardPage> {
                     dialogEdit(context);
                     setState(() {
                       _emailController.text = snapshot.emailUser;
-                      _clientTypeController.text = snapshot.clientCode;
+                      _clientTypeController.text = snapshot.clientType;
                       _rolesController.text = snapshot.roles;
                       _firstNameController.text = snapshot.firstName;
                       _lastNameController.text = snapshot.lastName;
-                      _ageController.text = snapshot.clientCode;
+                      _ageController.text = snapshot.doBirth;
                       _clientCodeController.text = snapshot.clientCode;
-                      _phoneController.text = snapshot.emailUser;
+                      _phoneController.text = snapshot.phoneNumber;
+                      userId = snapshot.id;
+
                       selectedValue = snapshot.clientType;
+                      selectedValueRoles = snapshot.roles;
                     });
                     break;
                   case "Change Password":
@@ -364,17 +421,13 @@ class _DashboardPageState extends State<DashboardPage> {
                     break;
                   default:
                 }
-
-                setState(() {
-                  valuesList![indexs] = value;
-                });
               }
             },
             items: List.generate(
                 dropDownItemValue2.length,
                 (index) => DropdownMenuItem(
-                      child: Text(dropDownItemValue2[index]),
                       value: dropDownItemValue2[index],
+                      child: Text(dropDownItemValue2[index]),
                     )),
           ),
           // ElevatedButton(
@@ -390,6 +443,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<dynamic> dialogEdit(BuildContext context) {
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -522,65 +576,48 @@ class _DashboardPageState extends State<DashboardPage> {
                                 filled: true),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: _rolesController,
-                            decoration: InputDecoration(
-                                labelText: "Roles",
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
-                                fillColor: Colors.grey[200],
-                                filled: true),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: TextFormField(
-                            controller: _clientTypeController,
-                            decoration: InputDecoration(
-                                labelText: "Client Type",
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
-                                fillColor: Colors.grey[200],
-                                filled: true),
-                          ),
-                        ),
-                        // DropdownButtonFormField(
-                        //     value: selectedValue,
-                        //     items: [
-                        //       DropdownMenuItem(child: const Text('dsadsa'))
-                        //     ],
-                        //     onChanged: (value) {
-                        //       setState(() {
-                        //         selectedValue = value;
-                        //       });
-                        //     },
-                        //     onSaved: (value) {
-                        //       setState(() {
-                        //         selectedValue = value;
-                        //       });
-                        //     },
-                        //     validator: (value) {
-                        //       if (value.isEmpty) {
-                        //         return "can't empty";
-                        //       } else {
-                        //         return null;
-                        //       }
-                        //     }),
-
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: TextFormField(
+                        //     controller: _rolesController,
+                        //     decoration: InputDecoration(
+                        //         labelText: "Roles",
+                        //         enabledBorder: OutlineInputBorder(
+                        //             borderSide: BorderSide(color: Colors.white),
+                        //             borderRadius: BorderRadius.circular(12)),
+                        //         focusedBorder: OutlineInputBorder(
+                        //             borderSide: BorderSide(color: Colors.blue),
+                        //             borderRadius: BorderRadius.circular(12)),
+                        //         fillColor: Colors.grey[200],
+                        //         filled: true),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8),
+                        //   child: TextFormField(
+                        //     controller: _clientTypeController,
+                        //     decoration: InputDecoration(
+                        //         labelText: "Client Type",
+                        //         enabledBorder: OutlineInputBorder(
+                        //             borderSide: BorderSide(color: Colors.white),
+                        //             borderRadius: BorderRadius.circular(12)),
+                        //         focusedBorder: OutlineInputBorder(
+                        //             borderSide: BorderSide(color: Colors.blue),
+                        //             borderRadius: BorderRadius.circular(12)),
+                        //         fillColor: Colors.grey[200],
+                        //         filled: true),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField2(
+                              scrollbarAlwaysShow: true,
+                              offset: const Offset(0, 0),
+                              dropdownMaxHeight: 250,
+                              value: selectedValue!.isNotEmpty
+                                  ? selectedValue
+                                  : selectedValue == "",
                               buttonDecoration: BoxDecoration(
                                 color: Colors.grey[200],
                                 borderRadius: BorderRadius.circular(14),
@@ -589,6 +626,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                 //Add isDense true and zero Padding.
                                 //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
                                 isDense: true,
+                                // labelText: 'Client Type',
+                                label: const Text("Client Type"),
 
                                 contentPadding: EdgeInsets.zero,
                                 border: OutlineInputBorder(
@@ -637,110 +676,149 @@ class _DashboardPageState extends State<DashboardPage> {
                               onSaved: (value) {
                                 selectedValue = value.toString();
                               },
+                              searchController: searchDropClientType,
+                              searchInnerWidget: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 8,
+                                  bottom: 4,
+                                  right: 8,
+                                  left: 8,
+                                ),
+                                child: TextFormField(
+                                  controller: searchDropClientType,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 8,
+                                    ),
+                                    hintText: 'Search for an item...',
+                                    hintStyle: const TextStyle(fontSize: 12),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              searchMatchFn: (item, searchValue) {
+                                return (item.value
+                                    .toString()
+                                    .contains(searchValue));
+                              },
+                              //This to clear the search value when you close the menu
+                              onMenuStateChange: (isOpen) {
+                                if (!isOpen) {
+                                  searchDropClientType.clear();
+                                }
+                              },
                             ),
                           ),
-                          //   DropdownButton2(
-                          //     isExpanded: true,
-                          //     hint: Row(
-                          //       children: const [
-                          //         Icon(
-                          //           Icons.list,
-                          //           size: 16,
-                          //           color: Colors.black,
-                          //         ),
-                          //         SizedBox(
-                          //           width: 4,
-                          //         ),
-                          //         Expanded(
-                          //           child: Text(
-                          //             'Selected Item',
-                          //             style: TextStyle(
-                          //                 fontSize: 14,
-                          //                 fontWeight: FontWeight.bold,
-                          //                 color: Colors.black),
-                          //             overflow: TextOverflow.ellipsis,
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     items: listOfValue
-                          //         .map((item) => DropdownMenuItem<String>(
-                          //               value: item,
-                          //               child: Text(
-                          //                 item,
-                          //                 style: const TextStyle(
-                          //                   fontSize: 14,
-                          //                   fontWeight: FontWeight.bold,
-                          //                   color: Colors.black,
-                          //                 ),
-                          //                 overflow: TextOverflow.ellipsis,
-                          //               ),
-                          //             ))
-                          //         .toList(),
-                          //     value: selectedValue,
-                          //     onChanged: (value) {
-                          //       setState(() {
-                          //         selectedValue = value as String;
-                          //       });
-                          //     },
-                          //     icon: const Icon(
-                          //       Icons.arrow_forward_ios_outlined,
-                          //     ),
-                          //     iconSize: 14,
-                          //     iconEnabledColor: Colors.black,
-                          //     iconDisabledColor: Colors.black,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButtonFormField2(
+                              scrollbarAlwaysShow: true,
+                              offset: const Offset(0, 0),
+                              dropdownMaxHeight: 250,
+                              value: selectedValueRoles!.isNotEmpty
+                                  ? selectedValueRoles
+                                  : selectedValueRoles == "",
+                              buttonDecoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              decoration: InputDecoration(
+                                //Add isDense true and zero Padding.
+                                //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                                isDense: true,
+                                // labelText: 'Client Type',
+                                label: const Text("Roles Type"),
 
-                          //     buttonPadding:
-                          //         const EdgeInsets.only(left: 14, right: 14),
-                          //     buttonDecoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(14),
-                          //       // border: Border.all(
-                          //       //   color: Colors.black26,
-                          //       // ),
-                          //     ),
-                          //     // buttonElevation: 2,
-                          //     // itemHeight: 40,
-                          //     buttonHeight: 40,
-                          //     buttonWidth: 200,
-                          //     itemHeight: 40,
-                          //     dropdownMaxHeight: 200,
-                          //     searchController: textEditingController,
-                          //     searchInnerWidget: Padding(
-                          //       padding: const EdgeInsets.only(
-                          //         top: 8,
-                          //         bottom: 4,
-                          //         right: 8,
-                          //         left: 8,
-                          //       ),
-                          //       child: TextFormField(
-                          //         controller: textEditingController,
-                          //         decoration: InputDecoration(
-                          //           isDense: true,
-                          //           contentPadding: const EdgeInsets.symmetric(
-                          //             horizontal: 10,
-                          //             vertical: 8,
-                          //           ),
-                          //           hintText: 'Search for an item...',
-                          //           hintStyle: const TextStyle(fontSize: 12),
-                          //           border: OutlineInputBorder(
-                          //             borderRadius: BorderRadius.circular(8),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     searchMatchFn: (item, searchValue) {
-                          //       return (item.value
-                          //           .toString()
-                          //           .contains(searchValue));
-                          //     },
-                          //     //This to clear the search value when you close the menu
-                          //     onMenuStateChange: (isOpen) {
-                          //       if (!isOpen) {
-                          //         textEditingController.clear();
-                          //       }
-                          //     },
-                          //   ),
-                          // ),
+                                contentPadding: EdgeInsets.zero,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                //Add more decoration as you want here
+                                //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                              ),
+                              isExpanded: true,
+                              hint: const Text(
+                                'Select Roles Type',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              icon: const Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.black45,
+                              ),
+                              iconSize: 30,
+                              buttonHeight: 50,
+                              buttonPadding:
+                                  const EdgeInsets.only(left: 20, right: 10),
+                              dropdownDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              items: listOfValueRoles
+                                  .map((item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ))
+                                  .toList(),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please Client Type.';
+                                }
+                              },
+                              onChanged: (value) {
+                                selectedValueRoles = value.toString();
+
+                                //Do something when changing the item if you want.
+                              },
+                              onSaved: (value) {
+                                selectedValueRoles = value.toString();
+                              },
+                              searchController: searchDropRoles,
+                              searchInnerWidget: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 8,
+                                  bottom: 4,
+                                  right: 8,
+                                  left: 8,
+                                ),
+                                child: TextFormField(
+                                  controller: searchDropRoles,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 8,
+                                    ),
+                                    hintText: 'Search for an item...',
+                                    hintStyle: const TextStyle(fontSize: 12),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              searchMatchFn: (item, searchValue) {
+                                return (item.value
+                                    .toString()
+                                    .contains(searchValue));
+                              },
+                              //This to clear the search value when you close the menu
+                              onMenuStateChange: (isOpen) {
+                                if (!isOpen) {
+                                  searchDropRoles.clear();
+                                }
+                              },
+                            ),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -752,6 +830,10 @@ class _DashboardPageState extends State<DashboardPage> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
+                                    setState(() {
+                                      selectedValueRoles == "";
+                                      selectedValue == "";
+                                    });
                                   },
                                   child: const Text('Cancel'),
                                 ),
@@ -761,12 +843,26 @@ class _DashboardPageState extends State<DashboardPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: (() async {
                                     if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
+                                      // _formKey.currentState!.save();
                                       print(_formKey);
+
+                                      UserData userData = UserData(
+                                        id: userId,
+                                        firstName: _firstNameController.text,
+                                        lastName: _lastNameController.text,
+                                        emailUser: _emailController.text,
+                                        clientCode: _clientCodeController.text,
+                                        roles: selectedValueRoles as String,
+                                        imgUrl: '',
+                                        doBirth: _ageController.text,
+                                        phoneNumber: _phoneController.text,
+                                        clientType: selectedValue as String,
+                                      );
+                                      await service.updateUser(userData);
                                     }
-                                  },
+                                  }),
                                   child: const Text('Confirm'),
                                 ),
                               ),
@@ -943,6 +1039,8 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void dispose() {
     // TODO: implement dispose
+    searchDropRoles.dispose();
+    searchDropClientType.dispose();
     _ageController.dispose();
     _clientCodeController.dispose();
     _clientTypeController.dispose();
