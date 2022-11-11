@@ -102,6 +102,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
             maxLength: 30,
             labelText: "Email",
             obscure: false,
+            readonly: false,
           ),
           SizedBox(height: 20),
           ProfileTextInput(
@@ -110,6 +111,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
             maxLength: 30,
             labelText: "Password",
             obscure: true,
+            readonly: false,
           ),
           // ElevatedButton(
           //   onPressed: authChenk,

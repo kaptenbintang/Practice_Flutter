@@ -43,7 +43,12 @@ class _DashboardPageState extends State<DashboardPage> {
   var newPassword = "";
 
   List<String> listOfValue = ['satu', 'dua', 'tiga', 'enam', 'sembilan'];
-  List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
+  List<String> dropDownItemValue2 = [
+    'Action',
+    'Delete',
+    'Edit',
+    'Change Password'
+  ];
 
   List<bool>? selected;
   List<String>? valuesList;
@@ -903,9 +908,7 @@ class _DashboardPageState extends State<DashboardPage> {
   changePassword() async {
     if (passwordConfirmed()) {
       try {
-        await this
-            .currentUser!
-            .updatePassword(newConfirmPasswordController.text);
+        await this.currentUser!.updatePassword(selectedValue2);
         showDialog(
             context: context,
             builder: (context) {
