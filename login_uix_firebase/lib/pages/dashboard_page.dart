@@ -20,6 +20,8 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   DataService service = DataService();
   Future<List<UserData>>? userList;
+  Map<String, dynamic>? currentUserData;
+  // String? currentUserData;
   List<UserData>? retrievedUserList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
@@ -38,6 +40,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final newPasswordController = TextEditingController();
   final newConfirmPasswordController = TextEditingController();
   final currentUser = FirebaseAuth.instance.currentUser;
+  final db = FirebaseFirestore.instance;
   String? userId;
 
   String? selectedValueRoles;
@@ -68,8 +71,7 @@ class _DashboardPageState extends State<DashboardPage> {
     'sembilan',
     'none'
   ];
-  List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
-
+  List<String> dropDownItemValue2 = ['Action', 'Edit', 'Remove'];
 
   List<bool>? selected;
   List<String>? valuesList;
@@ -82,42 +84,69 @@ class _DashboardPageState extends State<DashboardPage> {
     super.initState();
     // selectedValue = dropDownItemValue[0];
     selectedValue2 = dropDownItemValue2[0];
-    // selectedValue = listOfValue[0];
+    // selectedValue = listOfValue[0]
 
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveUsers()).cast<Map<String, dynamic>>();
-    userList = service.retrieveUsers();
-    retrievedUserList = await service.retrieveUsers();
+    userList = service.retrieveAllUsers();
+    retrievedUserList = await service.retrieveAllUsers();
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
         retrievedUserList!.length, (int index) => 'Action');
+    currentUserData = await service.currentUsers(currentUser!.uid);
+    print(currentUserData!["roles"]);
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveUsers();
+    retrievedUserList = await service.retrieveAllUsers();
 
     setState(() {
-      userList = service.retrieveUsers();
+      userList = service.retrieveAllUsers();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Staff Table'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Client Table'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
-        leading: GestureDetector(
-          onTap: () {/* Write listener code here */},
-          child: Icon(
-            Icons.menu, // add custom icons also
-          ),
-        ),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -125,6 +154,15 @@ class _DashboardPageState extends State<DashboardPage> {
                 onTap: () {},
                 child: Icon(
                   Icons.search,
+                  size: 26.0,
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: _pullRefresh,
+                child: Icon(
+                  Icons.refresh_outlined,
                   size: 26.0,
                 ),
               )),
@@ -238,11 +276,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
+                          // currentUserData!.containsKey("roles")
+                          // currentUserData?["roles"] == 'Developer'
+                          // ?
                           DataColumn(
                               label: Text('Roles',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
+                          // : DataColumn(
+                          //     label: Text('',
+                          //         style: TextStyle(
+                          //             fontSize: 18,
+                          //             fontWeight: FontWeight.bold))),
                           DataColumn(
                               label: Text('Action',
                                   style: TextStyle(
@@ -252,10 +298,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         rows: List.generate(
                             retrievedUserList!.length,
                             (index) => _buildTableUser(
-                                context,
-                                retrievedUserList![index],
-                                retrievedUserList,
-                                index)),
+                                context, retrievedUserList![index], index)),
 
                         //   listofColumn!
                         //       .map(
@@ -311,23 +354,6 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _buildListUser(BuildContext context, UserData snapshot) {
-    return Material(
-      child: Center(
-        child: ListTile(
-          onTap: () {
-            // Navigator.pushNamed(context, ArticlesDetailPage.routeName,
-            //     arguments: article);
-          },
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          title: Text(snapshot.emailUser),
-          subtitle: Text(snapshot.firstName),
-        ),
-      ),
-    );
-  }
-
   // List<DataRow> _buildList(BuildContext context, snapshot) {
   //   return snapshot.map((data) => _buildTableUser(context, data)).toList();
   // }
@@ -344,8 +370,7 @@ class _DashboardPageState extends State<DashboardPage> {
   //   );
   // }
 
-  DataRow _buildTableUser(BuildContext context, UserData snapshot,
-      List<UserData>? user, int indexs) {
+  DataRow _buildTableUser(BuildContext context, UserData snapshot, int indexs) {
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return DataRow(
       color: MaterialStateProperty.resolveWith<Color?>(
@@ -377,7 +402,10 @@ class _DashboardPageState extends State<DashboardPage> {
         DataCell(Text(snapshot.doBirth)),
         DataCell(Text(snapshot.phoneNumber)),
         DataCell(Text(snapshot.clientType as String)),
+        // currentUserData?["roles"] == "Developer"
+        // ?
         DataCell(Text(snapshot.roles as String)),
+        // : DataCell(Text("")),
         DataCell(
           DropdownButton<String>(
             hint: valuesList![indexs] == null
@@ -396,7 +424,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 dropDownFocus.unfocus();
               } else {
                 switch (value) {
-                  case "Delete":
+                  case "Remove":
                     break;
                   case "Edit":
                     dialogEdit(context);
@@ -425,19 +453,28 @@ class _DashboardPageState extends State<DashboardPage> {
                 }
               }
             },
-            items: List.generate(
-                dropDownItemValue2.length,
-                (index) => DropdownMenuItem(
-                      value: dropDownItemValue2[index],
-                      child: Text(dropDownItemValue2[index]),
-                    )),
+            // items: List.generate(
+            //     dropDownItemValue2.length,
+            //     (index) => DropdownMenuItem(
+            //           value: dropDownItemValue2[index],
+            //           child: Text(dropDownItemValue2[index]),
+            //         )),
+            items: [
+              DropdownMenuItem(
+                child: Text('Action'),
+                value: "Action",
+              ),
+              DropdownMenuItem(
+                child: Text('Edit'),
+                value: "Edit",
+              ),
+              if (currentUser?.uid.toString != snapshot.id.toString)
+                DropdownMenuItem(
+                  child: Text('Remove'),
+                  value: "Remove",
+                ),
+            ],
           ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     service.deleteUser(context, snapshot.id.toString());
-          //   },
-          //   child: const Text('Hard Delete'),
-          // ),
         ),
       ],
     );
@@ -467,6 +504,9 @@ class _DashboardPageState extends State<DashboardPage> {
                           padding: const EdgeInsets.only(
                               left: 8, right: 8, bottom: 8),
                           child: TextFormField(
+                            enabled: currentUserData?["roles"] == 'Developer'
+                                ? true
+                                : false,
                             controller: _clientCodeController,
                             decoration: InputDecoration(
                                 labelText: "Client Code",
@@ -617,11 +657,15 @@ class _DashboardPageState extends State<DashboardPage> {
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
                               dropdownMaxHeight: 250,
-                              value: selectedValue!.isNotEmpty
-                                  ? selectedValue
-                                  : selectedValue == "",
+                              value: currentUserData?['roles'] == "Developer"
+                                  ? selectedValue!.isNotEmpty
+                                      ? selectedValue
+                                      : selectedValue == ""
+                                  : null,
                               buttonDecoration: BoxDecoration(
-                                color: Colors.grey[200],
+                                color: currentUserData?['roles'] == "Developer"
+                                    ? Colors.grey[200]
+                                    : Colors.grey[400],
                                 borderRadius: BorderRadius.circular(14),
                               ),
                               decoration: InputDecoration(
@@ -670,11 +714,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   return 'Please Client Type.';
                                 }
                               },
-                              onChanged: (value) {
-                                selectedValue = value.toString();
+                              onChanged:
+                                  currentUserData?['roles'] == "Developer"
+                                      ? (value) {
+                                          selectedValue = value.toString();
 
-                                //Do something when changing the item if you want.
-                              },
+                                          //Do something when changing the item if you want.
+                                        }
+                                      : null,
                               onSaved: (value) {
                                 selectedValue = value.toString();
                               },
@@ -723,11 +770,15 @@ class _DashboardPageState extends State<DashboardPage> {
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
                               dropdownMaxHeight: 250,
-                              value: selectedValueRoles!.isNotEmpty
-                                  ? selectedValueRoles
-                                  : selectedValueRoles == "",
+                              value: currentUserData?['roles'] == "Developer"
+                                  ? selectedValueRoles!.isNotEmpty
+                                      ? selectedValueRoles
+                                      : selectedValueRoles == ""
+                                  : null,
                               buttonDecoration: BoxDecoration(
-                                color: Colors.grey[200],
+                                color: currentUserData?['roles'] == "Developer"
+                                    ? Colors.grey[200]
+                                    : Colors.grey[400],
                                 borderRadius: BorderRadius.circular(14),
                               ),
                               decoration: InputDecoration(
@@ -776,11 +827,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   return 'Please Client Type.';
                                 }
                               },
-                              onChanged: (value) {
-                                selectedValueRoles = value.toString();
+                              onChanged:
+                                  currentUserData?['roles'] == "Developer"
+                                      ? (value) {
+                                          selectedValueRoles = value.toString();
 
-                                //Do something when changing the item if you want.
-                              },
+                                          //Do something when changing the item if you want.
+                                        }
+                                      : null,
                               onSaved: (value) {
                                 selectedValueRoles = value.toString();
                               },
@@ -848,7 +902,6 @@ class _DashboardPageState extends State<DashboardPage> {
                                   onPressed: (() async {
                                     if (_formKey.currentState!.validate()) {
                                       // _formKey.currentState!.save();
-                                      print(_formKey);
 
                                       UserData userData = UserData(
                                         id: userId,

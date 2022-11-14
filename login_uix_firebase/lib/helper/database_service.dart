@@ -35,7 +35,7 @@ class DataService {
     );
   }
 
-  Future<List<UserData>> retrieveUsers() async {
+  Future<List<UserData>> retrieveAllUsers() async {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await _db.collection("users").get();
     return snapshot.docs
@@ -48,5 +48,19 @@ class DataService {
     //     );
     // final docSnap = await ref.get();
     // return docSnap.data();
+  }
+
+  Future<List<UserData>> retrieveClient() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection("users").where("roles", isEqualTo: 'user').get();
+    return snapshot.docs
+        .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<Map<String, dynamic>?> currentUsers(uid) async {
+    var snapshot = await _db.collection("users").doc(uid).get();
+    Map<String, dynamic>? data = snapshot.data();
+    return data;
   }
 }
