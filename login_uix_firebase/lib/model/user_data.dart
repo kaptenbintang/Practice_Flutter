@@ -8,12 +8,12 @@ class UserData {
   final String lastName;
   final String emailUser;
   // final int ageUser;
-  final String clientCode;
-  final String roles;
-  final String imgUrl;
+  final String? clientCode;
+  final String? roles;
+  final String? imgUrl;
   final String doBirth;
   final String phoneNumber;
-  final String clientType;
+  final String? clientType;
 
   UserData({
     this.id,
@@ -21,12 +21,12 @@ class UserData {
     required this.lastName,
     required this.emailUser,
     // required this.ageUser,
-    required this.clientCode,
-    required this.roles,
-    required this.imgUrl,
+    this.clientCode,
+    this.roles,
+    this.imgUrl,
     required this.doBirth,
     required this.phoneNumber,
-    required this.clientType,
+    this.clientType,
   });
 
   Map<String, dynamic> toMap() {
