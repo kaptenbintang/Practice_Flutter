@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
@@ -119,6 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
       url = await ref.getDownloadURL();
       print(email);
       await auth.currentUser?.updateEmail(email);
+
       await db.collection('users').doc(uid).update({
         'firstName': firstName,
         'lastName': lastName,

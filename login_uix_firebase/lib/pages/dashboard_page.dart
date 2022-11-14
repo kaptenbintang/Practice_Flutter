@@ -191,16 +191,16 @@ class _DashboardPageState extends State<DashboardPage> {
                                     _isAscending = false;
                                     // sort the product list in Ascending, order by Price
                                     retrievedUserList!.sort(
-                                        (productA, productB) => productB
-                                            .clientCode
-                                            .compareTo(productA.clientCode));
+                                        (productA, productB) =>
+                                            productB.clientCode!.compareTo(
+                                                productA.clientCode as String));
                                   } else {
                                     _isAscending = true;
                                     // sort the product list in Descending, order by Price
                                     retrievedUserList!.sort(
-                                        (productA, productB) => productA
-                                            .clientCode
-                                            .compareTo(productB.clientCode));
+                                        (productA, productB) =>
+                                            productA.clientCode!.compareTo(
+                                                productB.clientCode as String));
                                   }
                                 });
                               },
@@ -368,7 +368,7 @@ class _DashboardPageState extends State<DashboardPage> {
       },
       cells: [
         DataCell(
-          Text(snapshot.clientCode),
+          Text(snapshot.clientCode as String),
           showEditIcon: true,
         ),
         DataCell(Text(snapshot.firstName)),
@@ -376,8 +376,8 @@ class _DashboardPageState extends State<DashboardPage> {
         DataCell(Text(snapshot.emailUser)),
         DataCell(Text(snapshot.doBirth)),
         DataCell(Text(snapshot.phoneNumber)),
-        DataCell(Text(snapshot.clientType)),
-        DataCell(Text(snapshot.roles)),
+        DataCell(Text(snapshot.clientType as String)),
+        DataCell(Text(snapshot.roles as String)),
         DataCell(
           DropdownButton<String>(
             hint: valuesList![indexs] == null
@@ -402,12 +402,14 @@ class _DashboardPageState extends State<DashboardPage> {
                     dialogEdit(context);
                     setState(() {
                       _emailController.text = snapshot.emailUser;
-                      _clientTypeController.text = snapshot.clientType;
-                      _rolesController.text = snapshot.roles;
+                      _clientTypeController.text =
+                          snapshot.clientType as String;
+                      _rolesController.text = snapshot.roles as String;
                       _firstNameController.text = snapshot.firstName;
                       _lastNameController.text = snapshot.lastName;
                       _ageController.text = snapshot.doBirth;
-                      _clientCodeController.text = snapshot.clientCode;
+                      _clientCodeController.text =
+                          snapshot.clientCode as String;
                       _phoneController.text = snapshot.phoneNumber;
                       userId = snapshot.id;
 
