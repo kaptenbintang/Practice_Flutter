@@ -3,6 +3,7 @@
 import 'dart:html' as html;
 import 'dart:io' as ios;
 import 'dart:typed_data';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
@@ -30,13 +32,23 @@ class _ProfilePageState extends State<ProfilePage> {
   final emailController = TextEditingController();
   // final ageController = TextEditingController();
   final dateofbirthController = TextEditingController();
+  final phonenumberController = TextEditingController();
   final user = FirebaseAuth.instance.currentUser!;
   final auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
   final storage = FirebaseStorage.instance;
 
   var uid;
-  var fName, lName, age, uEmail, img, role, dob;
+  var fName,
+      lName,
+      age,
+      uEmail,
+      img,
+      role,
+      dob,
+      phNumb,
+      clientCode,
+      clientTypes;
   bool imgExist = false;
 
   String? url;
@@ -74,6 +86,9 @@ class _ProfilePageState extends State<ProfilePage> {
         img = data["imageUrl"];
         role = data["roles"];
         dob = data["dateofbirth"];
+        phNumb = data["phoneNumber"];
+        clientCode = data["clientcode"];
+        clientTypes = data["clientType"];
       });
       setState(() {
         if (img != null) {}
@@ -81,6 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
         nameController.text = fName;
         lastsNameController.text = lName;
         dateofbirthController.text = dob;
+        phonenumberController.text = phNumb;
         // ageController.text = age.toString();
       });
     }
@@ -94,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future editUserDetails(String uid, String firstName, String lastName,
-      String email, String dateofbirth) async {
+      String email, String dateofbirth, String phNumb) async {
     if (imgExist) {
       final ref = storage.ref().child('usersImage').child('$uid.jpg');
       // html.File file = ios.File(imgXFile.path);
@@ -110,6 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
         'lastName': lastName,
         'email': email,
         'dateofbirth': dateofbirth,
+        'phoneNumber': phNumb,
         // 'age': age,
         'imageUrl': url,
       }).onError(
@@ -122,6 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
           'lastName': lastName,
           'email': email,
           'dateofbirth': dateofbirth,
+          'phoneNumber': phNumb,
           // 'age': age,
           'imageUrl': '',
         }).onError(
@@ -144,6 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
           lastsNameController.text.trim(),
           emailController.text.trim(),
           dateofbirthController.text.trim(),
+          phonenumberController.text.trim(),
           // int.parse(ageController.text.trim()),
         );
         showDialog(
@@ -325,12 +344,19 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: 10),
           Text('signed in as: ' + user.email.toString()),
           SizedBox(height: 20),
+          Text('Role: ' + role),
+          SizedBox(height: 20),
+          Text('Client Type: ' + clientTypes),
+          SizedBox(height: 20),
+          Text('Client Code: ' + clientCode),
+          SizedBox(height: 20),
           ProfileTextInput(
             textEditingController: nameController,
             hintTextString: 'Enter Name',
             maxLength: 20,
-            labelText: 'Name',
+            labelText: 'First Name',
             obscure: false,
+            readonly: false,
           ),
           SizedBox(height: 20),
           ProfileTextInput(
@@ -339,16 +365,17 @@ class _ProfilePageState extends State<ProfilePage> {
             maxLength: 40,
             labelText: 'Last Name',
             obscure: false,
+            readonly: false,
           ),
           SizedBox(height: 20),
-          ProfileTextInput(
-            textEditingController: emailController,
-            hintTextString: 'Enter Email',
-            maxLength: 20,
-            labelText: 'Email',
-            obscure: false,
-          ),
-          SizedBox(height: 20),
+          // ProfileTextInput(
+          //   textEditingController: emailController,
+          //   hintTextString: 'Enter Email',
+          //   maxLength: 20,
+          //   labelText: 'Email',
+          //   obscure: false,
+          // ),
+          // SizedBox(height: 20),
 
           ProfileTextInput(
             textEditingController: dateofbirthController,
@@ -356,6 +383,7 @@ class _ProfilePageState extends State<ProfilePage> {
             maxLength: 20,
             labelText: 'Date of Birth',
             obscure: false,
+            readonly: true,
             fungsitap: () async {
               DateTime? pickedDate = await showDatePicker(
                   context: context,
@@ -391,6 +419,44 @@ class _ProfilePageState extends State<ProfilePage> {
           //   obscure: false,
           // ),
           SizedBox(height: 20),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: IntlPhoneField(
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(11)
+              ],
+              controller: phonenumberController,
+              showCountryFlag: true,
+              showDropdownIcon: true,
+              initialCountryCode: 'MY',
+              disableLengthCheck: true,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              decoration: InputDecoration(
+                labelText: "Phone Number",
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(12)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(12)),
+                fillColor: Colors.grey[200],
+                filled: true,
+              ),
+              validator: (value) {
+                if (value!.toString().isEmpty) {
+                  return "Enter correct phone number";
+                } else {
+                  return null;
+                }
+              },
+            ),
+          ),
+
+          SizedBox(height: 20),
+
           ElevatedButton(
             onPressed: () {
               editUserData();
@@ -415,21 +481,21 @@ class _ProfilePageState extends State<ProfilePage> {
           // SizedBox(
           //   height: 20,
           // ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return changePasswordPage();
-                    },
-                  ),
-                );
-              },
-              child: const Text('Change Password')),
-          SizedBox(
-            height: 20,
-          ),
+          // ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) {
+          //             return changePasswordPage();
+          //           },
+          //         ),
+          //       );
+          //     },
+          //     child: const Text('Change Password')),
+          // SizedBox(
+          //   height: 20,
+          // ),
           ElevatedButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
@@ -449,7 +515,10 @@ class _ProfilePageState extends State<ProfilePage> {
     lastsNameController.dispose();
     emailController.dispose();
     dateofbirthController.dispose();
+    phonenumberController.dispose();
     // ageController.dispose();
     super.dispose();
   }
 }
+
+//testing branch baru
