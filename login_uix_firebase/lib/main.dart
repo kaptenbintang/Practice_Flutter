@@ -2,10 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:login_uix_firebase/pages/change_pw_page.dart';
+import 'package:login_uix_firebase/pages/check_email_page.dart';
+import 'package:login_uix_firebase/pages/dashboard_page.dart';
+import 'package:login_uix_firebase/pages/delete_account_page.dart';
+import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
 import 'package:login_uix_firebase/pages/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
+import 'package:login_uix_firebase/pages/main_page.dart';
+import 'package:login_uix_firebase/pages/profile_page.dart';
+import 'package:login_uix_firebase/pages/register_page.dart';
+import 'package:login_uix_firebase/pages/user_table_page.dart';
+import 'package:login_uix_firebase/routes/page_route.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +41,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: navigatorKey,
-      debugShowCheckedModeBanner: false,
-      home: ControllerPage(),
-    );
+        navigatorKey: navigatorKey,
+        debugShowCheckedModeBanner: false,
+        home: ControllerPage(),
+        // initialRoute: ControllerPage(),
+        routes: {
+          MainPage.routeName: (context) => const MainPage(),
+          DashboardPage.routeName: (context) => const DashboardPage(),
+          LoginPage.routeName: (context) => LoginPage(
+              showRegisterPage:
+                  ModalRoute.of(context)?.settings.arguments as VoidCallback),
+          RegisterPage.routeName: (context) => RegisterPage(
+                showLoginPage:
+                    ModalRoute.of(context)?.settings.arguments as VoidCallback,
+              ),
+          DeleteAccount.routeName: (context) => const DeleteAccount(),
+          CheckEmailView.routeName: (context) => const CheckEmailView(),
+          changePasswordPage.routeName: (context) => const changePasswordPage(),
+          ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
+          ProfilePage.routeName: (context) => const ProfilePage(),
+          UserTablePage.routeName: (context) => const UserTablePage(),
+        });
   }
 }

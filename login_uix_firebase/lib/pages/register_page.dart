@@ -11,6 +11,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
 
 class RegisterPage extends StatefulWidget {
+  static const routeName = '/registerPage';
   final VoidCallback showLoginPage;
   const RegisterPage({super.key, required this.showLoginPage});
 

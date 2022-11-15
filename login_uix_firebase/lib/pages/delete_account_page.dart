@@ -8,6 +8,8 @@ import 'package:login_uix_firebase/main.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
 class DeleteAccount extends StatefulWidget {
+  static const routeName = '/deleteAccountPage';
+
   const DeleteAccount({super.key});
 
   @override

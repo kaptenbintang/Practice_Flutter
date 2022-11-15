@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
@@ -20,6 +21,7 @@ import '../main.dart';
 import 'change_pw_page.dart';
 
 class ProfilePage extends StatefulWidget {
+  static const routeName = '/profilePage';
   const ProfilePage({super.key});
 
   @override
@@ -27,6 +29,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  DataService service = DataService();
+
   final nameController = TextEditingController();
   final lastsNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -91,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
         clientTypes = data["clientType"];
       });
       setState(() {
-        if (img != null) {}
+        // if (img != null) {}
         emailController.text = user.email.toString();
         nameController.text = fName;
         lastsNameController.text = lName;
@@ -118,31 +122,40 @@ class _ProfilePageState extends State<ProfilePage> {
       await ref.putData(webImage);
 
       url = await ref.getDownloadURL();
-      print(email);
-      await auth.currentUser?.updateEmail(email);
 
-      await db.collection('users').doc(uid).update({
-        'firstName': firstName,
-        'lastName': lastName,
-        'email': email,
-        'dateofbirth': dateofbirth,
-        'phoneNumber': phNumb,
-        // 'age': age,
-        'imageUrl': url,
-      }).onError(
-          (error, stackTrace) => print("Error writing document: $error"));
+      await auth.currentUser?.updateEmail(email);
+      UserData userData = UserData(
+          firstName: firstName,
+          lastName: lastName,
+          emailUser: email,
+          doBirth: dateofbirth,
+          phoneNumber: phNumb,
+          imgUrl: url);
+
+      await service.updateUser(userData).onError(
+            (error, stackTrace) => print("Error writing document: $error"),
+          );
+      // await db.collection('users').doc(uid).update({
+      //   'firstName': firstName,
+      //   'lastName': lastName,
+      //   'email': email,
+      //   'dateofbirth': dateofbirth,
+      //   'phoneNumber': phNumb,
+      //   // 'age': age,
+      //   'imageUrl': url,
+      // }).onError(
+      //     (error, stackTrace) => print("Error writing document: $error"));
     } else {
-      print(email);
+      UserData userData = UserData(
+          firstName: firstName,
+          lastName: lastName,
+          emailUser: email,
+          doBirth: dateofbirth,
+          phoneNumber: phNumb,
+          imgUrl: "");
+
       await auth.currentUser?.updateEmail(email).then((value) async {
-        await db.collection('users').doc(uid).update({
-          'firstName': firstName,
-          'lastName': lastName,
-          'email': email,
-          'dateofbirth': dateofbirth,
-          'phoneNumber': phNumb,
-          // 'age': age,
-          'imageUrl': '',
-        }).onError(
+        await service.updateUser(userData).onError(
             (error, stackTrace) => print("Error writing document: $error"));
       });
     }
@@ -220,11 +233,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       radius: 71,
                       backgroundColor: Colors.black,
                       child: CircleAvatar(
-                        child: imgExist
-                            ? kIsWeb
-                                ? Image.memory(webImage)
-                                : Image.file(new ios.File(imgXFile!.path))
-                            : Icon(Icons.person),
+                        child:
+                            // imgExist
+                            // ? kIsWeb
+                            //     ? Image.memory(webImage)
+                            //     : Image.file(new ios.File(imgXFile!.path))
+                            // :
+                            Icon(Icons.person),
                         radius: 65,
                       ),
                     ),

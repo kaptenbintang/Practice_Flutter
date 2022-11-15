@@ -10,6 +10,7 @@ import 'package:login_uix_firebase/pages/login_page.dart';
 import '../main.dart';
 
 class changePasswordPage extends StatefulWidget {
+  static const routeName = '/changePwPage';
   const changePasswordPage({super.key});
 
   @override

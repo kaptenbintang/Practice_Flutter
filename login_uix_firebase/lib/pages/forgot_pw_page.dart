@@ -8,6 +8,7 @@ import '../main.dart';
 import 'check_email_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
+  static const routeName = '/forgatPwPage';
   const ForgotPasswordPage({Key? key}) : super(key: key);
 
   @override
