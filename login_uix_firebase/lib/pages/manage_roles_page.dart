@@ -7,12 +7,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:login_uix_firebase/pages/manage_roles_page.dart';
 
 import '../helper/database_service.dart';
 import '../main.dart';
+import '../widgets/drawer_dashboard.dart';
 
 class ManageRoles extends StatefulWidget {
   static const routeName = '/manageRolesPage';
@@ -24,11 +26,11 @@ class ManageRoles extends StatefulWidget {
 
 class _ManageRolesState extends State<ManageRoles> {
   DataService service = DataService();
-  Future<List<UserData>>? userList;
-  List<UserData>? retrievedUserList;
+  Future<List<RolesData>>? userList;
+  List<RolesData>? retrievedUserList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
-  UserData? dataU;
+  RolesData? dataU;
 
   // final _emailController = TextEditingController();
   // final _clientTypeController = TextEditingController();
@@ -53,6 +55,9 @@ class _ManageRolesState extends State<ManageRoles> {
 
   int _currentSortColumn = 0;
   bool _isAscending = true;
+  bool _isWrite = false;
+  bool _isRead = false;
+  bool _isDelete = false;
 
   List<String> listOfValueRoles = [
     'one',
@@ -113,15 +118,10 @@ class _ManageRolesState extends State<ManageRoles> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerDashBoard(),
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
-        leading: GestureDetector(
-          onTap: () {/* Write listener code here */},
-          child: Icon(
-            Icons.menu, // add custom icons also
-          ),
-        ),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -176,7 +176,7 @@ class _ManageRolesState extends State<ManageRoles> {
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
             future: userList,
-            builder: (context, AsyncSnapshot<List<UserData>> snapshot) {
+            builder: (context, AsyncSnapshot<List<RolesData>> snapshot) {
               // retrievedUserList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return ListView(
@@ -186,37 +186,60 @@ class _ManageRolesState extends State<ManageRoles> {
                         sortColumnIndex: _currentSortColumn,
                         sortAscending: _isAscending,
                         columns: [
+                          // DataColumn(
+                          //     onSort: (columnIndex, ascending) {
+                          //       setState(() {
+                          //         _currentSortColumn = columnIndex;
+                          //         // _currentSortColumn = columnIndex;
+                          //         if (_isAscending == true) {
+                          //           _isAscending = false;
+                          //           // sort the product list in Ascending, order by Price
+                          //           retrievedUserList!.sort(
+                          //               (productA, productB) =>
+                          //                   productB.clientCode!.compareTo(
+                          //                       productA.clientCode as String));
+                          //         } else {
+                          //           _isAscending = true;
+                          //           // sort the product list in Descending, order by Price
+                          //           retrievedUserList!.sort(
+                          //               (productA, productB) =>
+                          //                   productA.clientCode!.compareTo(
+                          //                       productB.clientCode as String));
+                          //         }
+                          //       });
+                          //     },
+                          //     label: Text('CT Code',
+                          //         style: TextStyle(
+                          //             fontSize: 18,
+                          //             fontWeight: FontWeight.bold))),
+                          // DataColumn(
+                          //     label: Text('Id',
+                          //         style: TextStyle(
+                          //             fontSize: 18,
+                          //             fontWeight: FontWeight.bold))),
                           DataColumn(
-                              onSort: (columnIndex, ascending) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  // _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    retrievedUserList!.sort(
-                                        (productA, productB) =>
-                                            productB.clientCode!.compareTo(
-                                                productA.clientCode as String));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    retrievedUserList!.sort(
-                                        (productA, productB) =>
-                                            productA.clientCode!.compareTo(
-                                                productB.clientCode as String));
-                                  }
-                                });
-                              },
-                              label: Text('CT Code',
+                              label: Text('Roles Name',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+
+                          DataColumn(
+                              label: Text('Can Write',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Roles',
+                              label: Text('Can Read',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
+
+                          DataColumn(
+                              label: Text('Can Delete',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+
                           // DataColumn(
                           //     label: Text('Last Name',
                           //         style: TextStyle(
@@ -228,7 +251,7 @@ class _ManageRolesState extends State<ManageRoles> {
                           //             fontSize: 18,
                           //             fontWeight: FontWeight.bold))),
                           // DataColumn(
-                          //     label: Text('Submit',
+                          //     label: Text('Edit Mode',
                           //         style: TextStyle(
                           //             fontSize: 18,
                           //             fontWeight: FontWeight.bold))),
@@ -295,7 +318,7 @@ class _ManageRolesState extends State<ManageRoles> {
     );
   }
 
-  // Widget _buildListUser(BuildContext context, UserData snapshot) {
+  // Widget _buildListUser(BuildContext context, RolesData snapshot) {
   //   return Material(
   //     child: Center(
   //       child: ListTile(
@@ -317,7 +340,7 @@ class _ManageRolesState extends State<ManageRoles> {
   // }
 
   // DataRow _buildTableUser(BuildContext context, DocumentSnapshot snapshot) {
-  //   final record = UserData.fromDocumentSnapshot();
+  //   final record = RolesData.fromDocumentSnapshot();
 
   //   return DataRow(
   //     cells: [
@@ -328,8 +351,9 @@ class _ManageRolesState extends State<ManageRoles> {
   //   );
   // }
 
-  DataRow _buildTableUser(BuildContext context, UserData snapshot,
-      List<UserData>? user, int indexs) {
+  DataRow _buildTableUser(BuildContext context, RolesData snapshot,
+      List<RolesData>? user, int indexs) {
+    // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return DataRow(
       color: MaterialStateProperty.resolveWith<Color?>(
@@ -351,11 +375,52 @@ class _ManageRolesState extends State<ManageRoles> {
       //   });
       // },
       cells: [
+        // DataCell(
+        //   Text(snapshot.clientCode as String),
+        //   // showEditIcon: true,
+        // ),
+        // DataCell(Text(snapshot.id as String)),
+        DataCell(Text(snapshot.rolesName as String)),
         DataCell(
-          Text(snapshot.clientCode as String),
-          // showEditIcon: true,
+          Container(
+              child: Checkbox(
+            value: _isWrite,
+            checkColor: Colors.white,
+            onChanged: (value) {
+              setState(() {
+                _isWrite = value!;
+              });
+            },
+          )),
         ),
-        DataCell(Text(snapshot.roles as String)),
+        DataCell(
+          Container(
+              child: Checkbox(
+            value: _isRead,
+            checkColor: Colors.white,
+            onChanged: (value) {
+              setState(() {
+                _isRead = value!;
+              });
+            },
+          )),
+        ),
+
+        DataCell(
+          Container(
+              child: Checkbox(
+            value: snapshot.canDelete == true
+                ? _isDelete = true
+                : _isDelete = false,
+            checkColor: Colors.white,
+            onChanged: (value) {
+              setState(() {
+                _isDelete = value!;
+              });
+            },
+          )),
+        ),
+        // DataCell(ElevatedButton(onPressed: () {}, child: const Text('Submit')))
       ],
     );
   }

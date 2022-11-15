@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/model/roles_data.dart';
 
 import '../model/user_data.dart';
 
@@ -58,11 +59,11 @@ class DataService {
         .toList();
   }
 
-  Future<List<UserData>> retrieveRoles() async {
+  Future<List<RolesData>> retrieveRoles() async {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await _db.collection("roles").get();
     return snapshot.docs
-        .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
+        .map((docSnapshot) => RolesData.fromDocumentSnapshot(docSnapshot))
         .toList();
   }
 
