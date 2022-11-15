@@ -70,7 +70,6 @@ class _DashboardPageState extends State<DashboardPage> {
   ];
   List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
 
-
   List<bool>? selected;
   List<String>? valuesList;
   final FocusNode dropDownFocus = FocusNode();
@@ -244,6 +243,11 @@ class _DashboardPageState extends State<DashboardPage> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
+                              label: Text('Created Date',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
                               label: Text('Action',
                                   style: TextStyle(
                                       fontSize: 18,
@@ -378,6 +382,7 @@ class _DashboardPageState extends State<DashboardPage> {
         DataCell(Text(snapshot.phoneNumber)),
         DataCell(Text(snapshot.clientType as String)),
         DataCell(Text(snapshot.roles as String)),
+        DataCell(Text(snapshot.createdAt as String)),
         DataCell(
           DropdownButton<String>(
             hint: valuesList![indexs] == null

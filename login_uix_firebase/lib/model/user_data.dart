@@ -14,6 +14,7 @@ class UserData {
   final String doBirth;
   final String phoneNumber;
   final String? clientType;
+  final String? createdAt;
 
   UserData({
     this.id,
@@ -27,6 +28,7 @@ class UserData {
     required this.doBirth,
     required this.phoneNumber,
     this.clientType,
+    this.createdAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +43,7 @@ class UserData {
       "phoneNumber": phoneNumber,
       "dateofbirth": doBirth,
       "clientType": clientType,
+      "createdAt": createdAt,
     };
   }
 
@@ -77,5 +80,6 @@ class UserData {
         imgUrl = doc.data()!["imageUrl"],
         phoneNumber = doc.data()!["phoneNumber"],
         doBirth = doc.data()!["dateofbirth"],
-        clientType = doc.data()!["clientType"];
+        clientType = doc.data()!["clientType"],
+        createdAt = doc.data()!["createdAt"];
 }
