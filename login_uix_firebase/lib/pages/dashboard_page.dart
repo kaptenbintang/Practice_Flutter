@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:login_uix_firebase/pages/manage_roles_page.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 
@@ -52,6 +53,7 @@ class _DashboardPageState extends State<DashboardPage> {
   late String selectedValue2;
   late String initialDropDownVal;
   var newPassword = "";
+  String? rolesType;
 
   int _currentSortColumn = 0;
   bool _isAscending = true;
@@ -102,6 +104,7 @@ class _DashboardPageState extends State<DashboardPage> {
     valuesList = List<String>.generate(
         retrievedUserList!.length, (int index) => 'Action');
     currentUserData = await service.currentUsers(currentUser!.uid);
+    rolesType = currentUserData!["roles"].toString();
     print(currentUserData!["roles"]);
   }
 
@@ -120,22 +123,7 @@ class _DashboardPageState extends State<DashboardPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
-        leading: GestureDetector(
-          onTap: () {/* Write listener code here */},
-          child: Icon(
-            Icons.menu, // add custom icons also
-          ),
-        ),
         actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: _pullRefresh,
-                child: Icon(
-                  Icons.refresh_outlined,
-                  size: 26.0,
-                ),
-              )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -150,6 +138,7 @@ class _DashboardPageState extends State<DashboardPage> {
               child: GestureDetector(
                 onTap: () {
                   FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacementNamed(context, LoginPage.routeName);
                 },
                 child: Icon(Icons.logout),
               )),
@@ -191,7 +180,11 @@ class _DashboardPageState extends State<DashboardPage> {
             future: userList,
             builder: (context, AsyncSnapshot<List<UserData>> snapshot) {
               // retrievedUserList = toMap(snapshot.data);
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              if (snapshot.hasData &&
+                  snapshot.data!.isNotEmpty &&
+                  currentUserData!.isNotEmpty &&
+                  currentUserData!.values.isNotEmpty &&
+                  rolesType!.isNotEmpty) {
                 return ListView(
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
@@ -273,7 +266,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-                          if (currentUserData?['roles'] != "Developer")
+                          if (rolesType! == "Developer")
                             DataColumn(
                                 label: Text('Marked Deleted',
                                     style: TextStyle(
@@ -395,8 +388,8 @@ class _DashboardPageState extends State<DashboardPage> {
         DataCell(Text(snapshot.clientType as String)),
         DataCell(Text(snapshot.roles as String)),
         DataCell(Text(snapshot.createdAt as String)),
-        if (currentUserData?['roles'] != "Developer")
-          DataCell(Text(snapshot.markDeleted.toString())),
+        if (rolesType! == "Developer")
+          DataCell(Text(currentUserData?['roles'])),
         DataCell(
           DropdownButton<String>(
             hint: valuesList![indexs] == null
