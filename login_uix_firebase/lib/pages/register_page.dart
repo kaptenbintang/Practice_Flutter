@@ -126,6 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
           '-' +
           generateRandomString(2),
       'imageUrl': '',
+      'createdAt': DateTime.now().toString()
     });
   }
 
