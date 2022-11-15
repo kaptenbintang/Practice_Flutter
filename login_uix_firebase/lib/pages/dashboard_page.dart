@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:login_uix_firebase/pages/manage_roles_page.dart';
 
 import '../helper/database_service.dart';
+import '../main.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -121,9 +123,11 @@ class _DashboardPageState extends State<DashboardPage> {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Util.routeToWidget(context, ManageRoles());
+                },
                 child: Icon(
-                  Icons.search,
+                  Icons.manage_accounts,
                   size: 26.0,
                 ),
               )),
