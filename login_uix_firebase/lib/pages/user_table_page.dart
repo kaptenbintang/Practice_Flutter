@@ -7,21 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:login_uix_firebase/pages/manage_roles_page.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 
 import '../helper/database_service.dart';
-import '../main.dart';
 
-class DashboardPage extends StatefulWidget {
-  static const routeName = '/dashBoardPage';
-  const DashboardPage({super.key});
+class UserTablePage extends StatefulWidget {
+  static const routeName = '/userTablePage';
+  const UserTablePage({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<UserTablePage> createState() => _UserTablePageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _UserTablePageState extends State<UserTablePage> {
   DataService service = DataService();
   Future<List<UserData>>? userList;
   Map<String, dynamic>? currentUserData;
@@ -95,8 +93,8 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Future<void> _initRetrieval() async {
-    userList = service.retrieveAllUsers();
-    retrievedUserList = await service.retrieveAllUsers();
+    userList = service.retrieveClient();
+    retrievedUserList = await service.retrieveClient();
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
@@ -106,10 +104,10 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveAllUsers();
+    retrievedUserList = await service.retrieveClient();
 
     setState(() {
-      userList = service.retrieveAllUsers();
+      userList = service.retrieveClient();
     });
   }
 
@@ -120,19 +118,13 @@ class _DashboardPageState extends State<DashboardPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
-        leading: GestureDetector(
-          onTap: () {/* Write listener code here */},
-          child: Icon(
-            Icons.menu, // add custom icons also
-          ),
-        ),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: _pullRefresh,
+                onTap: () {},
                 child: Icon(
-                  Icons.refresh_outlined,
+                  Icons.search,
                   size: 26.0,
                 ),
               )),

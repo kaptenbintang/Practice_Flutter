@@ -10,6 +10,7 @@ import 'package:login_uix_firebase/pages/profile_page.dart';
 import '../main.dart';
 
 class MainPage extends StatefulWidget {
+  static const routeName = '/mainPage';
   const MainPage({Key? key}) : super(key: key);
 
   @override
@@ -195,7 +196,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      Util.routeToWidget(context, ProfilePage());
+                      Navigator.pushNamed(context, ProfilePage.routeName);
                     },
                     child: const CircleAvatar(
                       radius: 24,

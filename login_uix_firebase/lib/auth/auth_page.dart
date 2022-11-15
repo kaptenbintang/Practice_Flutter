@@ -3,6 +3,8 @@ import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:login_uix_firebase/pages/register_page.dart';
 
 class AuthPage extends StatefulWidget {
+  static const routeName = '/authPage';
+
   const AuthPage({super.key});
 
   @override

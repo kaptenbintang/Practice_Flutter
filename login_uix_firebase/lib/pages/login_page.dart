@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'forgot_pw_page.dart';
 
 class LoginPage extends StatefulWidget {
+  static const routeName = '/loginPage';
   final VoidCallback showRegisterPage;
   const LoginPage({super.key, required this.showRegisterPage});
 

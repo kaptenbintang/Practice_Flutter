@@ -4,6 +4,8 @@ import 'dart:html' as html;
 import '../main.dart';
 
 class CheckEmailView extends StatelessWidget {
+  static const routeName = '/checkEmailPage';
+
   const CheckEmailView({Key? key}) : super(key: key);
 
   @override
