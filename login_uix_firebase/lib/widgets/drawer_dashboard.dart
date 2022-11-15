@@ -36,7 +36,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
                 context, UserTablePage.routeName),
           ),
           createDrawerBodyItem(
-            icon: Icons.verified_user,
+            icon: Icons.manage_accounts,
             text: 'Manage Roles',
             onTap: () =>
                 Navigator.pushReplacementNamed(context, ManageRoles.routeName),

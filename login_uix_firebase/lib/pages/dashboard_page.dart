@@ -120,12 +120,6 @@ class _DashboardPageState extends State<DashboardPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
-        leading: GestureDetector(
-          onTap: () {/* Write listener code here */},
-          child: Icon(
-            Icons.menu, // add custom icons also
-          ),
-        ),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
