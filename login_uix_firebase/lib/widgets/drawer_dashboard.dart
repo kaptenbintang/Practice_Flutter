@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
+import 'package:login_uix_firebase/pages/manage_roles_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/widgets/drawer_header.dart';
 
@@ -33,7 +34,13 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
             text: 'Client Table',
             onTap: () => Navigator.pushReplacementNamed(
                 context, UserTablePage.routeName),
-          )
+          ),
+          createDrawerBodyItem(
+            icon: Icons.verified_user,
+            text: 'Manage Roles',
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, ManageRoles.routeName),
+          ),
         ],
       ),
     );

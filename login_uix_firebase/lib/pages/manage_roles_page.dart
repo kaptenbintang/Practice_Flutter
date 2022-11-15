@@ -15,6 +15,7 @@ import '../helper/database_service.dart';
 import '../main.dart';
 
 class ManageRoles extends StatefulWidget {
+  static const routeName = '/manageRolesPage';
   const ManageRoles({super.key});
 
   @override
@@ -92,9 +93,9 @@ class _ManageRolesState extends State<ManageRoles> {
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveUsers()).cast<Map<String, dynamic>>();
-    userList = service.retrieveUsers();
-    retrievedUserList = await service.retrieveUsers();
+    // listofColumn = (await service.retrieveRoles()).cast<Map<String, dynamic>>();
+    userList = service.retrieveRoles();
+    retrievedUserList = await service.retrieveRoles();
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
@@ -102,10 +103,10 @@ class _ManageRolesState extends State<ManageRoles> {
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveUsers();
+    retrievedUserList = await service.retrieveRoles();
 
     setState(() {
-      userList = service.retrieveUsers();
+      userList = service.retrieveRoles();
     });
   }
 

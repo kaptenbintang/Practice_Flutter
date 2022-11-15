@@ -12,6 +12,7 @@ import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
+import 'package:login_uix_firebase/pages/manage_roles_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/register_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
           ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
           ProfilePage.routeName: (context) => const ProfilePage(),
           UserTablePage.routeName: (context) => const UserTablePage(),
+          ManageRoles.routeName: (context) => const ManageRoles(),
         });
   }
 }
