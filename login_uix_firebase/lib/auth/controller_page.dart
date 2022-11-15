@@ -47,8 +47,8 @@ class ControllerPage extends StatelessWidget {
                   }
                 },
               );
-            }
-            return AuthPage();
+            } else
+              return LoginPage();
           }),
     );
   }

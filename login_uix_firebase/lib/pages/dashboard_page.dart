@@ -265,6 +265,13 @@ class _DashboardPageState extends State<DashboardPage> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
+                          if (currentUserData?['roles'] != "Developer")
+                            DataColumn(
+                                label: Text('Marked Deleted',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold))),
+
                           DataColumn(
                               label: Text('Action',
                                   style: TextStyle(
@@ -378,10 +385,10 @@ class _DashboardPageState extends State<DashboardPage> {
         DataCell(Text(snapshot.doBirth)),
         DataCell(Text(snapshot.phoneNumber)),
         DataCell(Text(snapshot.clientType as String)),
-        // currentUserData?["roles"] == "Developer"
-        // ?
         DataCell(Text(snapshot.roles as String)),
         DataCell(Text(snapshot.createdAt as String)),
+        if (currentUserData?['roles'] != "Developer")
+          DataCell(Text(snapshot.markDeleted.toString())),
         DataCell(
           DropdownButton<String>(
             hint: valuesList![indexs] == null
@@ -886,7 +893,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                         emailUser: _emailController.text,
                                         clientCode: _clientCodeController.text,
                                         roles: selectedValueRoles as String,
-                                        imgUrl: '',
+                                        // imgUrl: '',
                                         doBirth: _ageController.text,
                                         phoneNumber: _phoneController.text,
                                         clientType: selectedValue as String,

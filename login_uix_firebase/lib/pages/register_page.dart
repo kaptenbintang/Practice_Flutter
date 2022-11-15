@@ -9,11 +9,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
+import 'package:login_uix_firebase/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   static const routeName = '/registerPage';
-  final VoidCallback showLoginPage;
-  const RegisterPage({super.key, required this.showLoginPage});
+  // final VoidCallback showLoginPage;
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -126,7 +127,8 @@ class _RegisterPageState extends State<RegisterPage> {
           '-' +
           generateRandomString(2),
       'imageUrl': '',
-      'createdAt': DateTime.now().toString()
+      'createdAt': DateTime.now().toString(),
+      'markDeleted': false,
     });
   }
 
@@ -581,7 +583,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       GestureDetector(
-                        onTap: widget.showLoginPage,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                              context, LoginPage.routeName);
+                        },
                         child: Text(
                           " Login now!",
                           style: TextStyle(
