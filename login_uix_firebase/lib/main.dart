@@ -14,6 +14,7 @@ import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/register_page.dart';
+import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/routes/page_route.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
           changePasswordPage.routeName: (context) => const changePasswordPage(),
           ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
           ProfilePage.routeName: (context) => const ProfilePage(),
+          UserTablePage.routeName: (context) => const UserTablePage(),
         });
   }
 }

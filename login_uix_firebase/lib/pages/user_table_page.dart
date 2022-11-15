@@ -11,15 +11,15 @@ import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 
 import '../helper/database_service.dart';
 
-class DashboardPage extends StatefulWidget {
-  static const routeName = '/dashBoardPage';
-  const DashboardPage({super.key});
+class UserTablePage extends StatefulWidget {
+  static const routeName = '/userTablePage';
+  const UserTablePage({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<UserTablePage> createState() => _UserTablePageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _UserTablePageState extends State<UserTablePage> {
   DataService service = DataService();
   Future<List<UserData>>? userList;
   Map<String, dynamic>? currentUserData;
@@ -93,8 +93,8 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Future<void> _initRetrieval() async {
-    userList = service.retrieveAllUsers();
-    retrievedUserList = await service.retrieveAllUsers();
+    userList = service.retrieveClient();
+    retrievedUserList = await service.retrieveClient();
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
@@ -104,10 +104,10 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveAllUsers();
+    retrievedUserList = await service.retrieveClient();
 
     setState(() {
-      userList = service.retrieveAllUsers();
+      userList = service.retrieveClient();
     });
   }
 

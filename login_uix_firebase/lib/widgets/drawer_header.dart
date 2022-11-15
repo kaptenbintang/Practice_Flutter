@@ -6,7 +6,8 @@ Widget createDrawerHeader() {
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.fill, image: AssetImage('images/relationary.png'))),
+              fit: BoxFit.fill,
+              image: AssetImage('lib/images/relationary.png'))),
       child: Stack(children: <Widget>[
         Positioned(
             bottom: 12.0,
