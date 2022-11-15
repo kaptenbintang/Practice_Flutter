@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:login_uix_firebase/pages/manage_roles_page.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 
 import '../helper/database_service.dart';
+import '../main.dart';
 
 class DashboardPage extends StatefulWidget {
   static const routeName = '/dashBoardPage';
@@ -118,13 +120,19 @@ class _DashboardPageState extends State<DashboardPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
+        leading: GestureDetector(
+          onTap: () {/* Write listener code here */},
+          child: Icon(
+            Icons.menu, // add custom icons also
+          ),
+        ),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: _pullRefresh,
                 child: Icon(
-                  Icons.search,
+                  Icons.refresh_outlined,
                   size: 26.0,
                 ),
               )),
