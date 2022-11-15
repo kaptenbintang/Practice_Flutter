@@ -886,7 +886,7 @@ class _UserTablePageState extends State<UserTablePage> {
                                         emailUser: _emailController.text,
                                         clientCode: _clientCodeController.text,
                                         roles: selectedValueRoles as String,
-                                        imgUrl: '',
+                                        // imgUrl: '',
                                         doBirth: _ageController.text,
                                         phoneNumber: _phoneController.text,
                                         clientType: selectedValue as String,
