@@ -139,18 +139,18 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.blueAccent,
-        items: <Widget>[
-          Icon(Icons.home_outlined, size: 30),
-          Icon(Icons.calendar_month_outlined, size: 30),
-          Icon(Icons.chat_bubble_outline, size: 30),
-          Icon(Icons.notifications_none_outlined, size: 30),
-        ],
-        onTap: (index) {
-          //Handle button tap
-        },
-      ),
+      // bottomNavigationBar: CurvedNavigationBar(
+      //   backgroundColor: Colors.blueAccent,
+      //   items: <Widget>[
+      //     Icon(Icons.home_outlined, size: 30),
+      //     Icon(Icons.calendar_month_outlined, size: 30),
+      //     Icon(Icons.chat_bubble_outline, size: 30),
+      //     Icon(Icons.notifications_none_outlined, size: 30),
+      //   ],
+      //   onTap: (index) {
+      //     //Handle button tap
+      //   },
+      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
