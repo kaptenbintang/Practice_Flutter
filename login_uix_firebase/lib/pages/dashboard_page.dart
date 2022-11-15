@@ -139,15 +139,6 @@ class _DashboardPageState extends State<DashboardPage> {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: _pullRefresh,
-                child: Icon(
-                  Icons.refresh_outlined,
-                  size: 26.0,
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
                 onTap: () {
                   FirebaseAuth.instance.signOut();
                 },
