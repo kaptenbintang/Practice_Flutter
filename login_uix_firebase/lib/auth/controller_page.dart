@@ -9,6 +9,8 @@ import '../pages/profile_page.dart';
 import 'auth_page.dart';
 
 class ControllerPage extends StatelessWidget {
+  static const routeName = '/controllerPage';
+
   const ControllerPage({super.key});
 
   @override
@@ -27,8 +29,13 @@ class ControllerPage extends StatelessWidget {
                     AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
                     if (snapshot.data?['roles'] != 'user') {
+                      // Navigator.pushReplacementNamed(
+                      //     context, DashboardPage.routeName);
                       return DashboardPage();
                     } else {
+                      // Navigator.pushReplacementNamed(
+                      //     context, MainPage.routeName);
+
                       return MainPage();
                     }
                   } else {

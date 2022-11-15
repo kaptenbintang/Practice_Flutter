@@ -11,6 +11,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import '../helper/database_service.dart';
 
 class DashboardPage extends StatefulWidget {
+  static const routeName = '/dashBoardPage';
   const DashboardPage({super.key});
 
   @override

@@ -21,6 +21,7 @@ import '../main.dart';
 import 'change_pw_page.dart';
 
 class ProfilePage extends StatefulWidget {
+  static const routeName = '/profilePage';
   const ProfilePage({super.key});
 
   @override
@@ -94,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
         clientTypes = data["clientType"];
       });
       setState(() {
-        if (img != null) {}
+        // if (img != null) {}
         emailController.text = user.email.toString();
         nameController.text = fName;
         lastsNameController.text = lName;
@@ -232,11 +233,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       radius: 71,
                       backgroundColor: Colors.black,
                       child: CircleAvatar(
-                        child: imgExist
-                            ? kIsWeb
-                                ? Image.memory(webImage)
-                                : Image.file(new ios.File(imgXFile!.path))
-                            : Icon(Icons.person),
+                        child:
+                            // imgExist
+                            // ? kIsWeb
+                            //     ? Image.memory(webImage)
+                            //     : Image.file(new ios.File(imgXFile!.path))
+                            // :
+                            Icon(Icons.person),
                         radius: 65,
                       ),
                     ),
