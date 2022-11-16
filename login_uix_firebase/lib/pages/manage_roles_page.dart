@@ -1,19 +1,10 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:html' as html;
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
-import 'package:login_uix_firebase/model/user_data.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:login_uix_firebase/pages/manage_roles_page.dart';
 
 import '../helper/database_service.dart';
-import '../main.dart';
 import '../widgets/drawer_dashboard.dart';
 
 class ManageRoles extends StatefulWidget {
@@ -27,12 +18,13 @@ class ManageRoles extends StatefulWidget {
 class _ManageRolesState extends State<ManageRoles> {
   DataService service = DataService();
   Future<List<RolesData>>? RolesList;
+  Map<String, dynamic>? currentRolesData;
   List<RolesData>? retrievedRolesList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   RolesData? dataU;
 
-  // final _emailController = TextEditingController();
+  final _rolesNameController = TextEditingController();
   // final _clientTypeController = TextEditingController();
   // final _rolesController = TextEditingController();
   // final _firstNameController = TextEditingController();
@@ -46,6 +38,7 @@ class _ManageRolesState extends State<ManageRoles> {
   // final newConfirmPasswordController = TextEditingController();
   final currentUser = FirebaseAuth.instance.currentUser;
   String? userId;
+  String? _isRoles;
 
   String? selectedValueRoles;
   String? selectedValue;
@@ -55,9 +48,9 @@ class _ManageRolesState extends State<ManageRoles> {
 
   int _currentSortColumn = 0;
   bool _isAscending = true;
-  bool _isWrite = false;
-  bool _isRead = false;
-  bool _isDelete = false;
+  bool? _isWrite;
+  bool? _isRead;
+  bool? _isDelete;
 
   List<String> listOfValueRoles = [
     'one',
@@ -67,7 +60,8 @@ class _ManageRolesState extends State<ManageRoles> {
     'five',
     'Developer',
     'user',
-    'admin'
+    'admin',
+    'unassigned'
   ];
 
   List<String> listOfValue = [
@@ -84,7 +78,6 @@ class _ManageRolesState extends State<ManageRoles> {
   List<String>? valuesList;
   final FocusNode dropDownFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     // TODO: implement initState
@@ -105,6 +98,8 @@ class _ManageRolesState extends State<ManageRoles> {
         List<bool>.generate(retrievedRolesList!.length, (int index) => false);
     valuesList = List<String>.generate(
         retrievedRolesList!.length, (int index) => 'Action');
+    //        currentRolesData = await service.currentUsers(currentUser!.uid);
+    // print(currentRolesData!["roles"]);
   }
 
   Future<void> _pullRefresh() async {
@@ -240,6 +235,12 @@ class _ManageRolesState extends State<ManageRoles> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
 
+                          DataColumn(
+                              label: Text('Edit Mode',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+
                           // DataColumn(
                           //     label: Text('Last Name',
                           //         style: TextStyle(
@@ -277,6 +278,13 @@ class _ManageRolesState extends State<ManageRoles> {
                         //       )
                         //       .toList(),
                       ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          dialogAddNewRoles(context);
+                        },
+                        tooltip: "Add New Roles",
+                        child: Icon(Icons.add),
+                      )
                     ]);
 
                 //     ListView.builder(
@@ -384,42 +392,273 @@ class _ManageRolesState extends State<ManageRoles> {
         DataCell(
           Container(
               child: Checkbox(
-            value: _isWrite,
+            value: snapshot.canWrite,
             checkColor: Colors.white,
-            onChanged: (value) {
-              setState(() {
-                _isWrite = value!;
-              });
-            },
+            onChanged: (value) {},
           )),
         ),
         DataCell(
           Container(
               child: Checkbox(
-            value: _isRead,
+            value: snapshot.canRead,
             checkColor: Colors.white,
-            onChanged: (value) {
-              setState(() {
-                _isRead = value!;
-              });
-            },
+            onChanged: (value) {},
           )),
         ),
 
         DataCell(
           Container(
               child: Checkbox(
-            value: _isDelete,
+            value: snapshot.canDelete,
             checkColor: Colors.white,
-            onChanged: (value) {
-              setState(() {
-                _isDelete = value!;
-              });
-            },
+            onChanged: (value) {},
           )),
         ),
-        // DataCell(ElevatedButton(onPressed: () {}, child: const Text('Submit')))
+        DataCell(ElevatedButton(
+            onPressed: () {
+              dialogEditRoles(context);
+              setState(() {
+                userId = snapshot.id;
+                _isRoles = snapshot.rolesName;
+                _isWrite = snapshot.canWrite;
+                _isRead = snapshot.canRead;
+                _isDelete = snapshot.canDelete;
+              });
+            },
+            child: const Text('Edit')))
       ],
     );
+  }
+
+  Future<dynamic> dialogEditRoles(BuildContext context) {
+    bool? _selectedValue;
+    List<bool> listOfValue = [true, false];
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -40.0,
+                  top: -40.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          hint: Text(
+                            'Can Write?',
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isWrite = value!;
+                            });
+                          },
+                          // onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          hint: Text(
+                            'Can Read?',
+                          ),
+                          icon: Icon(
+                            Icons.manage_search,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isRead = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          hint: Text(
+                            'Can Delete?',
+                          ),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isDelete = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              RolesData rolesData = RolesData(
+                                  id: userId,
+                                  rolesName: _isRoles,
+                                  canWrite: _isWrite,
+                                  canRead: _isRead,
+                                  canDelete: _isDelete);
+                              await service.updateRoles(rolesData);
+                              Navigator.pop(context);
+                              _pullRefresh();
+                            }
+
+                            // if (_formKey.currentState!.validate()) {
+                            //   _formKey.currentState!.save();
+                            // }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  Future<dynamic> dialogAddNewRoles(BuildContext context) {
+    bool? _selectedValue;
+    List<bool> listOfValue = [true, false];
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -40.0,
+                  top: -40.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: TextFormField(
+                          controller: _rolesNameController,
+                          decoration: InputDecoration(
+                              labelText: "Enter name for new roles",
+                              // prefixIcon: Icon(
+                              //   Icons.role,
+                              //   color: Colors.blue,
+                              // ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(12)),
+                              // hintText: 'Email',
+                              fillColor: Colors.grey[200],
+                              filled: true),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter correct email";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              // RolesData rolesData = RolesData(
+                              //     id: userId,
+                              //     rolesName: _isRoles,
+                              //     canWrite: _isWrite,
+                              //     canRead: _isRead,
+                              //     canDelete: _isDelete);
+                              // await service.updateRoles(rolesData);
+                              Navigator.pop(context);
+                              _pullRefresh();
+                            }
+
+                            // if (_formKey.currentState!.validate()) {
+                            //   _formKey.currentState!.save();
+                            // }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
