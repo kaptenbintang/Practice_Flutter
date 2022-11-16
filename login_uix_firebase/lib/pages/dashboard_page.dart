@@ -25,7 +25,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   DataService service = DataService();
   Future<List<UserData>>? userList;
-  Map<String, dynamic>? currentUserData;
+  // Map<String, dynamic>? currentUserData;
   // String? currentUserData;
   List<UserData>? retrievedUserList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -53,21 +53,12 @@ class _DashboardPageState extends State<DashboardPage> {
   late String selectedValue2;
   late String initialDropDownVal;
   var newPassword = "";
-  String? rolesType;
+  var rolesType, marDeleted, createAt;
 
   int _currentSortColumn = 0;
   bool _isAscending = true;
 
-  List<String> listOfValueRoles = [
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'Developer',
-    'user',
-    'admin'
-  ];
+  List<String> listOfValueRoles = ['Developer', 'user', 'admin', 'superadmin'];
 
   List<String> listOfValue = [
     'satu',
@@ -75,7 +66,8 @@ class _DashboardPageState extends State<DashboardPage> {
     'tiga',
     'enam',
     'sembilan',
-    'none'
+    'none',
+    'unassigned',
   ];
   List<String> dropDownItemValue2 = ['Action', 'Edit', 'Remove'];
 
@@ -93,26 +85,38 @@ class _DashboardPageState extends State<DashboardPage> {
     // selectedValue = listOfValue[0]
 
     _scaffoldKey = GlobalKey();
+    rolesType = 'user'.toString();
+
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    userList = service.retrieveAllUsers();
-    retrievedUserList = await service.retrieveAllUsers();
+    userList = service.retrieveAllUsers(rolesType);
+    retrievedUserList = await service.retrieveAllUsers(rolesType);
+    // currentUserData = await service.currentUsers(currentUser!.uid);
+    // final docRef = db.collection("users").doc(currentUser!.uid);
+    // await docRef.get().then(
+    //   (DocumentSnapshot doc) {
+    //     final data = doc.data() as Map<String, dynamic>;
+    //     setState(() {
+    //       rolesType = data['roles'];
+    //     });
+    //   },
+    //   onError: (e) => print("Error getting document: $e"),
+    // );
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
         retrievedUserList!.length, (int index) => 'Action');
-    currentUserData = await service.currentUsers(currentUser!.uid);
-    rolesType = currentUserData!["roles"].toString();
-    print(currentUserData!["roles"]);
+
+    // print(currentUserData!["roles"]);
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveAllUsers();
+    retrievedUserList = await service.retrieveAllUsers(rolesType);
 
     setState(() {
-      userList = service.retrieveAllUsers();
+      userList = service.retrieveAllUsers(rolesType);
     });
   }
 
@@ -180,11 +184,7 @@ class _DashboardPageState extends State<DashboardPage> {
             future: userList,
             builder: (context, AsyncSnapshot<List<UserData>> snapshot) {
               // retrievedUserList = toMap(snapshot.data);
-              if (snapshot.hasData &&
-                  snapshot.data!.isNotEmpty &&
-                  currentUserData!.isNotEmpty &&
-                  currentUserData!.values.isNotEmpty &&
-                  rolesType!.isNotEmpty) {
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return ListView(
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
@@ -266,7 +266,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-                          if (rolesType! == "Developer")
+                          if (rolesType! == "superadmin")
                             DataColumn(
                                 label: Text('Marked Deleted',
                                     style: TextStyle(
@@ -356,112 +356,224 @@ class _DashboardPageState extends State<DashboardPage> {
 
   DataRow _buildTableUser(BuildContext context, UserData snapshot, int indexs) {
     // int idx = int.parse(dropDownItemValue2[indexs]);
-    return DataRow(
-      color: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        // All rows will have the same selected color.
-        if (states.contains(MaterialState.selected)) {
-          return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-        }
-        // Even rows will have a grey color.
-        if (indexs.isEven) {
-          return Colors.grey.withOpacity(0.3);
-        }
-        return null; // Use default value for other states and odd rows.
-      }),
-      selected: selected![indexs],
-      onSelectChanged: (bool? value) {
-        setState(() {
-          selected![indexs] = value!;
-        });
-      },
-      cells: [
-        DataCell(
-          Text(snapshot.clientCode as String),
-          showEditIcon: true,
-        ),
-        DataCell(Text(snapshot.firstName)),
-        DataCell(Text(snapshot.lastName)),
-        DataCell(Text(snapshot.emailUser)),
-        DataCell(Text(snapshot.doBirth)),
-        DataCell(Text(snapshot.phoneNumber)),
-        DataCell(Text(snapshot.clientType as String)),
-        DataCell(Text(snapshot.roles as String)),
-        DataCell(Text(snapshot.createdAt as String)),
-        if (rolesType! == "Developer")
-          DataCell(Text(currentUserData?['roles'])),
-        DataCell(
-          DropdownButton<String>(
-            hint: valuesList![indexs] == null
-                ? Text("Dropdown")
-                : Text(
-                    valuesList![indexs],
-                    style: TextStyle(color: Colors.blue),
-                  ),
-            focusNode: dropDownFocus,
-            isExpanded: true,
-            elevation: 8,
-            onChanged: (value) {
-              print(value);
-              // if value doesnt contain just close the dropDown
-              if (value == null) {
-                dropDownFocus.unfocus();
-              } else {
-                switch (value) {
-                  case "Remove":
-                    break;
-                  case "Edit":
-                    dialogEdit(context);
-                    setState(() {
-                      _emailController.text = snapshot.emailUser;
-                      _clientTypeController.text =
-                          snapshot.clientType as String;
-                      _rolesController.text = snapshot.roles as String;
-                      _firstNameController.text = snapshot.firstName;
-                      _lastNameController.text = snapshot.lastName;
-                      _ageController.text = snapshot.doBirth;
-                      _clientCodeController.text =
-                          snapshot.clientCode as String;
-                      _phoneController.text = snapshot.phoneNumber;
-                      userId = snapshot.id;
-
-                      selectedValue = snapshot.clientType;
-                      selectedValueRoles = snapshot.roles;
-                    });
-                    break;
-                  case "Change Password":
-                    dialogChangePassword(context);
-
-                    break;
-                  default:
-                }
-              }
-            },
-            // items: List.generate(
-            //     dropDownItemValue2.length,
-            //     (index) => DropdownMenuItem(
-            //           value: dropDownItemValue2[index],
-            //           child: Text(dropDownItemValue2[index]),
-            //         )),
-            items: [
-              DropdownMenuItem(
-                child: Text('Action'),
-                value: "Action",
-              ),
-              DropdownMenuItem(
-                child: Text('Edit'),
-                value: "Edit",
-              ),
-              if (currentUser?.uid.toString != snapshot.id.toString)
-                DropdownMenuItem(
-                  child: Text('Remove'),
-                  value: "Remove",
-                ),
-            ],
+    if (rolesType! != "superadmin") {
+      return DataRow(
+        color: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          // All rows will have the same selected color.
+          if (states.contains(MaterialState.selected)) {
+            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+          }
+          // Even rows will have a grey color.
+          if (indexs.isEven) {
+            return Colors.grey.withOpacity(0.3);
+          }
+          return null; // Use default value for other states and odd rows.
+        }),
+        selected: selected![indexs],
+        onSelectChanged: (bool? value) {
+          setState(() {
+            selected![indexs] = value!;
+          });
+        },
+        cells: [
+          DataCell(
+            Text(snapshot.clientCode as String),
+            showEditIcon: true,
           ),
-        ),
-      ],
-    );
+          DataCell(Text(snapshot.firstName)),
+          DataCell(Text(snapshot.lastName)),
+          DataCell(Text(snapshot.emailUser)),
+          DataCell(Text(snapshot.doBirth)),
+          DataCell(Text(snapshot.phoneNumber)),
+          DataCell(Text(snapshot.clientType as String)),
+          DataCell(Text(snapshot.roles as String)),
+          DataCell(Text(snapshot.createdAt as String)),
+          DataCell(
+            DropdownButton<String>(
+              hint: valuesList![indexs] == null
+                  ? Text("Dropdown")
+                  : Text(
+                      valuesList![indexs],
+                      style: TextStyle(color: Colors.blue),
+                    ),
+              focusNode: dropDownFocus,
+              isExpanded: true,
+              elevation: 8,
+              onChanged: (value) {
+                print(value);
+                // if value doesnt contain just close the dropDown
+                if (value == null) {
+                  dropDownFocus.unfocus();
+                } else {
+                  switch (value) {
+                    case "Remove":
+                      break;
+                    case "Edit":
+                      dialogEdit(context);
+                      setState(() {
+                        _emailController.text = snapshot.emailUser;
+                        _clientTypeController.text =
+                            snapshot.clientType as String;
+                        _rolesController.text = snapshot.roles as String;
+                        _firstNameController.text = snapshot.firstName;
+                        _lastNameController.text = snapshot.lastName;
+                        _ageController.text = snapshot.doBirth;
+                        _clientCodeController.text =
+                            snapshot.clientCode as String;
+                        _phoneController.text = snapshot.phoneNumber;
+                        userId = snapshot.id;
+
+                        selectedValue = snapshot.clientType;
+                        selectedValueRoles = snapshot.roles;
+                        createAt = snapshot.createdAt;
+                        marDeleted = snapshot.markDeleted;
+                      });
+                      break;
+                    case "Change Password":
+                      dialogChangePassword(context);
+
+                      break;
+                    default:
+                  }
+                }
+              },
+              // items: List.generate(
+              //     dropDownItemValue2.length,
+              //     (index) => DropdownMenuItem(
+              //           value: dropDownItemValue2[index],
+              //           child: Text(dropDownItemValue2[index]),
+              //         )),
+              items: [
+                DropdownMenuItem(
+                  child: Text('Action'),
+                  value: "Action",
+                ),
+                DropdownMenuItem(
+                  child: Text('Edit'),
+                  value: "Edit",
+                ),
+                if (currentUser?.uid.toString != snapshot.id.toString)
+                  DropdownMenuItem(
+                    child: Text('Remove'),
+                    value: "Remove",
+                  ),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else {
+      return DataRow(
+        color: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          // All rows will have the same selected color.
+          if (states.contains(MaterialState.selected)) {
+            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+          }
+          // Even rows will have a grey color.
+          if (indexs.isEven) {
+            return Colors.grey.withOpacity(0.3);
+          }
+          return null; // Use default value for other states and odd rows.
+        }),
+        selected: selected![indexs],
+        onSelectChanged: (bool? value) {
+          setState(() {
+            selected![indexs] = value!;
+          });
+        },
+        cells: [
+          DataCell(
+            Text(snapshot.clientCode as String),
+            showEditIcon: true,
+          ),
+          DataCell(Text(snapshot.firstName)),
+          DataCell(Text(snapshot.lastName)),
+          DataCell(Text(snapshot.emailUser)),
+          DataCell(Text(snapshot.doBirth)),
+          DataCell(Text(snapshot.phoneNumber)),
+          DataCell(Text(snapshot.clientType as String)),
+          DataCell(Text(snapshot.roles as String)),
+          DataCell(Text(snapshot.createdAt as String)),
+          DataCell(Text(snapshot.markDeleted.toString())),
+
+          // DataCell(Text(snapshot.markDeleted.toString())),
+          DataCell(
+            DropdownButton<String>(
+              hint: valuesList![indexs] == null
+                  ? Text("Dropdown")
+                  : Text(
+                      valuesList![indexs],
+                      style: TextStyle(color: Colors.blue),
+                    ),
+              focusNode: dropDownFocus,
+              isExpanded: true,
+              elevation: 8,
+              onChanged: (value) {
+                print(value);
+                // if value doesnt contain just close the dropDown
+                if (value == null) {
+                  dropDownFocus.unfocus();
+                } else {
+                  switch (value) {
+                    case "Remove":
+                      break;
+                    case "Edit":
+                      dialogEdit(context);
+                      setState(() {
+                        _emailController.text = snapshot.emailUser;
+                        _clientTypeController.text =
+                            snapshot.clientType as String;
+                        _rolesController.text = snapshot.roles as String;
+                        _firstNameController.text = snapshot.firstName;
+                        _lastNameController.text = snapshot.lastName;
+                        _ageController.text = snapshot.doBirth;
+                        _clientCodeController.text =
+                            snapshot.clientCode as String;
+                        _phoneController.text = snapshot.phoneNumber;
+                        userId = snapshot.id;
+
+                        selectedValue = snapshot.clientType;
+                        selectedValueRoles = snapshot.roles;
+                        createAt = snapshot.createdAt;
+                        marDeleted = snapshot.markDeleted;
+                      });
+                      break;
+                    case "Change Password":
+                      dialogChangePassword(context);
+
+                      break;
+                    default:
+                  }
+                }
+              },
+              // items: List.generate(
+              //     dropDownItemValue2.length,
+              //     (index) => DropdownMenuItem(
+              //           value: dropDownItemValue2[index],
+              //           child: Text(dropDownItemValue2[index]),
+              //         )),
+              items: [
+                DropdownMenuItem(
+                  child: Text('Action'),
+                  value: "Action",
+                ),
+                DropdownMenuItem(
+                  child: Text('Edit'),
+                  value: "Edit",
+                ),
+                if (currentUser?.uid.toString != snapshot.id.toString)
+                  DropdownMenuItem(
+                    child: Text('Remove'),
+                    value: "Remove",
+                  ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   Future<dynamic> dialogEdit(BuildContext context) {
@@ -488,9 +600,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           padding: const EdgeInsets.only(
                               left: 8, right: 8, bottom: 8),
                           child: TextFormField(
-                            enabled: currentUserData?["roles"] == 'Developer'
-                                ? true
-                                : false,
+                            enabled: rolesType == 'superadmin' ? true : false,
                             controller: _clientCodeController,
                             decoration: InputDecoration(
                                 labelText: "Client Code",
@@ -641,13 +751,14 @@ class _DashboardPageState extends State<DashboardPage> {
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
                               dropdownMaxHeight: 250,
-                              value: currentUserData?['roles'] == "Developer"
-                                  ? selectedValue!.isNotEmpty
+                              value:
+                                  // rolesType == "Developer"
+                                  selectedValue!.isNotEmpty
                                       ? selectedValue
-                                      : selectedValue == ""
-                                  : null,
+                                      : selectedValue = "",
+                              // : null,
                               buttonDecoration: BoxDecoration(
-                                color: currentUserData?['roles'] == "Developer"
+                                color: rolesType == "superadmin"
                                     ? Colors.grey[200]
                                     : Colors.grey[400],
                                 borderRadius: BorderRadius.circular(14),
@@ -699,13 +810,16 @@ class _DashboardPageState extends State<DashboardPage> {
                                 }
                               },
                               onChanged:
-                                  currentUserData?['roles'] == "Developer"
-                                      ? (value) {
-                                          selectedValue = value.toString();
+                                  // rolesType == "Developer"
+                                  // ?
+                                  (value) {
+                                setState(() {
+                                  selectedValue = value.toString();
+                                });
 
-                                          //Do something when changing the item if you want.
-                                        }
-                                      : null,
+                                //Do something when changing the item if you want.
+                              },
+                              // : null,
                               onSaved: (value) {
                                 selectedValue = value.toString();
                               },
@@ -754,13 +868,14 @@ class _DashboardPageState extends State<DashboardPage> {
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
                               dropdownMaxHeight: 250,
-                              value: currentUserData?['roles'] == "Developer"
-                                  ? selectedValueRoles!.isNotEmpty
+                              value:
+                                  // rolesType == "Developer"
+                                  selectedValueRoles!.isNotEmpty
                                       ? selectedValueRoles
-                                      : selectedValueRoles == ""
-                                  : null,
+                                      : selectedValueRoles = "",
+                              // : null,
                               buttonDecoration: BoxDecoration(
-                                color: currentUserData?['roles'] == "Developer"
+                                color: rolesType == "superadmin"
                                     ? Colors.grey[200]
                                     : Colors.grey[400],
                                 borderRadius: BorderRadius.circular(14),
@@ -812,13 +927,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                 }
                               },
                               onChanged:
-                                  currentUserData?['roles'] == "Developer"
-                                      ? (value) {
-                                          selectedValueRoles = value.toString();
+                                  // rolesType == "Developer"
+                                  (value) {
+                                setState(() {
+                                  selectedValueRoles = value.toString();
+                                });
 
-                                          //Do something when changing the item if you want.
-                                        }
-                                      : null,
+                                //Do something when changing the item if you want.
+                              },
+                              // : null,
                               onSaved: (value) {
                                 selectedValueRoles = value.toString();
                               },
@@ -895,6 +1012,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                         clientCode: _clientCodeController.text,
                                         roles: selectedValueRoles as String,
                                         // imgUrl: '',
+                                        createdAt: createAt,
+                                        markDeleted: marDeleted,
                                         doBirth: _ageController.text,
                                         phoneNumber: _phoneController.text,
                                         clientType: selectedValue as String,
