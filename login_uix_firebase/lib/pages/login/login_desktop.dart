@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../forgot_pw_page.dart';
+import '../forgot_pw_page.dart';
 
 class LoginDesktop extends StatefulWidget {
   final VoidCallback showRegisterPage;
@@ -67,11 +67,13 @@ class _LoginDesktopState extends State<LoginDesktop> {
     return Row(
       children: [
         Expanded(
-            //<-- Expanded widget
+          child: Container(
             child: Image.asset(
-          'lib/images/relationaryLogo.png',
-          fit: BoxFit.cover,
-        )),
+              'lib/images/mountain.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
         Expanded(
           //<-- Expanded widget
           child: Container(

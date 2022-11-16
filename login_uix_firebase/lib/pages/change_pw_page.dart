@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/auth/auth_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
-import 'package:login_uix_firebase/pages/loginPage/login_page.dart';
 
 import '../main.dart';
 

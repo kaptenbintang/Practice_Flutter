@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_uix_firebase/pages/login/loginWidget/login_desktop.dart';
-import 'package:login_uix_firebase/pages/loginPage/loginWidget/login_mobile_page.dart';
-import 'package:login_uix_firebase/pages/loginPage/login_page.dart';
+import 'package:login_uix_firebase/pages/login/login_desktop.dart';
+import 'package:login_uix_firebase/pages/login/login_mobile_page.dart';
 import 'package:login_uix_firebase/pages/register_page.dart';
 
 class AuthPage extends StatefulWidget {
@@ -25,7 +24,17 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     if (showLoginPage) {
-      return LoginDesktop(showRegisterPage: toggleScreens);
+      return Scaffold(
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < 600) {
+              return LoginMobile(showRegisterPage: toggleScreens);
+            } else {
+              return LoginDesktop(showRegisterPage: toggleScreens);
+            }
+          },
+        ),
+      );
     } else {
       return RegisterPage(showLoginPage: toggleScreens);
     }
