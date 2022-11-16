@@ -26,8 +26,8 @@ class ManageRoles extends StatefulWidget {
 
 class _ManageRolesState extends State<ManageRoles> {
   DataService service = DataService();
-  Future<List<RolesData>>? userList;
-  List<RolesData>? retrievedUserList;
+  Future<List<RolesData>>? RolesList;
+  List<RolesData>? retrievedRolesList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   RolesData? dataU;
@@ -99,19 +99,19 @@ class _ManageRolesState extends State<ManageRoles> {
 
   Future<void> _initRetrieval() async {
     // listofColumn = (await service.retrieveRoles()).cast<Map<String, dynamic>>();
-    userList = service.retrieveRoles();
-    retrievedUserList = await service.retrieveRoles();
+    RolesList = service.retrieveRoles();
+    retrievedRolesList = await service.retrieveRoles();
     selected =
-        List<bool>.generate(retrievedUserList!.length, (int index) => false);
+        List<bool>.generate(retrievedRolesList!.length, (int index) => false);
     valuesList = List<String>.generate(
-        retrievedUserList!.length, (int index) => 'Action');
+        retrievedRolesList!.length, (int index) => 'Action');
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveRoles();
+    retrievedRolesList = await service.retrieveRoles();
 
     setState(() {
-      userList = service.retrieveRoles();
+      RolesList = service.retrieveRoles();
     });
   }
 
@@ -175,9 +175,9 @@ class _ManageRolesState extends State<ManageRoles> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
-            future: userList,
+            future: RolesList,
             builder: (context, AsyncSnapshot<List<RolesData>> snapshot) {
-              // retrievedUserList = toMap(snapshot.data);
+              // retrievedRolesList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return ListView(
                     scrollDirection: Axis.horizontal,
@@ -194,14 +194,14 @@ class _ManageRolesState extends State<ManageRoles> {
                           //         if (_isAscending == true) {
                           //           _isAscending = false;
                           //           // sort the product list in Ascending, order by Price
-                          //           retrievedUserList!.sort(
+                          //           retrievedRolesList!.sort(
                           //               (productA, productB) =>
                           //                   productB.clientCode!.compareTo(
                           //                       productA.clientCode as String));
                           //         } else {
                           //           _isAscending = true;
                           //           // sort the product list in Descending, order by Price
-                          //           retrievedUserList!.sort(
+                          //           retrievedRolesList!.sort(
                           //               (productA, productB) =>
                           //                   productA.clientCode!.compareTo(
                           //                       productB.clientCode as String));
@@ -257,11 +257,11 @@ class _ManageRolesState extends State<ManageRoles> {
                           //             fontWeight: FontWeight.bold))),
                         ],
                         rows: List.generate(
-                            retrievedUserList!.length,
+                            retrievedRolesList!.length,
                             (index) => _buildTableUser(
                                 context,
-                                retrievedUserList![index],
-                                retrievedUserList,
+                                retrievedRolesList![index],
+                                retrievedRolesList,
                                 index)),
 
                         //   listofColumn!
@@ -280,13 +280,13 @@ class _ManageRolesState extends State<ManageRoles> {
                     ]);
 
                 //     ListView.builder(
-                //   itemCount: retrievedUserList!.length,
+                //   itemCount: retrievedRolesList!.length,
                 //   itemBuilder: (context, index) {
-                //     return _buildListUser(context, retrievedUserList![index]);
+                //     return _buildListUser(context, retrievedRolesList![index]);
                 //   },
                 // );
               } else if (snapshot.connectionState == ConnectionState.done &&
-                  retrievedUserList!.isEmpty) {
+                  retrievedRolesList!.isEmpty) {
                 return Center(
                   child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -409,9 +409,7 @@ class _ManageRolesState extends State<ManageRoles> {
         DataCell(
           Container(
               child: Checkbox(
-            value: snapshot.canDelete == true
-                ? _isDelete = true
-                : _isDelete = false,
+            value: _isDelete,
             checkColor: Colors.white,
             onChanged: (value) {
               setState(() {

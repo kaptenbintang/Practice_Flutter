@@ -19,6 +19,13 @@ class DataService {
         .update(employeeData.toMap());
   }
 
+  Future<void> updateRoles(RolesData dataTestRole) async {
+    await _db
+        .collection("roles")
+        .doc(dataTestRole.id)
+        .update(dataTestRole.toMap());
+  }
+
   Future<void> deleteUser(BuildContext context, String documentId) async {
     // await _db.collection("users").doc(documentId).delete();
     final address = _db.collection("users").doc(documentId);
