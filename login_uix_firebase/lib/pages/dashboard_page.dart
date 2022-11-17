@@ -9,6 +9,7 @@ import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:login_uix_firebase/pages/manage_roles_page.dart';
+import 'package:login_uix_firebase/widgets/alert_confirm.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 
 import '../helper/database_service.dart';
@@ -524,7 +525,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 } else {
                   switch (value) {
                     case "Remove":
-                      service.markdeleteUser(context, snapshot.id as String);
+                      // service.markdeleteUser(context, snapshot.id as String);
+                      _dialogBuilder(context, snapshot.id.toString());
                       break;
                     case "Edit":
                       dialogEdit(context);
@@ -592,6 +594,39 @@ class _DashboardPageState extends State<DashboardPage> {
         ],
       );
     }
+  }
+
+  Future _dialogBuilder(BuildContext context, String id) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content: const Text('Are you sure want to delete this account?'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Confirm'),
+              onPressed: () {
+                service.markdeleteUser(context, id);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<dynamic> dialogEdit(BuildContext context) {

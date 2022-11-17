@@ -45,7 +45,7 @@ class DataService {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text("Deleted Account"),
+              content: Text("Account have been deleted"),
             );
           },
         );
@@ -63,7 +63,7 @@ class DataService {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text("Deleted Account"),
+              content: Text("Account have been restored"),
             );
           },
         );
