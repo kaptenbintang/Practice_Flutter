@@ -93,8 +93,8 @@ class _UserTablePageState extends State<UserTablePage> {
   }
 
   Future<void> _initRetrieval() async {
-    userList = service.retrieveClient();
-    retrievedUserList = await service.retrieveClient();
+    userList = service.retrieveClientNotDeleted();
+    retrievedUserList = await service.retrieveClientNotDeleted();
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
@@ -104,10 +104,10 @@ class _UserTablePageState extends State<UserTablePage> {
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveClient();
+    retrievedUserList = await service.retrieveClientNotDeleted();
 
     setState(() {
-      userList = service.retrieveClient();
+      userList = service.retrieveClientNotDeleted();
     });
   }
 

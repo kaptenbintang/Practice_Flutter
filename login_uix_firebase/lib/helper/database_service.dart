@@ -43,9 +43,39 @@ class DataService {
     );
   }
 
-  Future<List<UserData>> retrieveAllUsers() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("users").get();
+  Future<List<UserData>> retrieveAllUsers(String? roles) async {
+    if (roles == 'superadmin') {
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await _db.collection("users").get();
+      return snapshot.docs
+          .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
+          .toList();
+    } else {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+          .collection("users")
+          .where('roles', isNotEqualTo: 'user')
+          // .where('markDeleted', isEqualTo: false)s
+          .get();
+      // ignore: avoid_print
+
+      return snapshot.docs
+          .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
+          .toList();
+    }
+
+    // final ref = _db.collection("users").doc().withConverter(
+    //       fromFirestore: UserData.fromFirestore,
+    //       toFirestore: (UserData data, _) => data.toFireStore(),
+    //     );
+    // final docSnap = await ref.get();
+    // return docSnap.data();
+  }
+
+  Future<List<UserData>> retrieveAllUsersNotDeleted() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("users")
+        .where('markDeleted', isEqualTo: false)
+        .get();
     return snapshot.docs
         .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
         .toList();
@@ -58,7 +88,18 @@ class DataService {
     // return docSnap.data();
   }
 
-  Future<List<UserData>> retrieveClient() async {
+  Future<List<UserData>> retrieveClientNotDeleted() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("users")
+        .where("roles", isEqualTo: 'user')
+        .where('markDeleted', isEqualTo: false)
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<UserData>> retrieveClientAll() async {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await _db.collection("users").where("roles", isEqualTo: 'user').get();
     return snapshot.docs
