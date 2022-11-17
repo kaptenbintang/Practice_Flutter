@@ -430,7 +430,7 @@ class _ManageRolesState extends State<ManageRoles> {
   }
 
   Future<dynamic> dialogEditRoles(BuildContext context) {
-    bool? _selectedValue;
+    // bool? _selectedValue;
     List<bool> listOfValue = [true, false];
     return showDialog(
         context: context,
@@ -459,38 +459,43 @@ class _ManageRolesState extends State<ManageRoles> {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField(
-                          value: _selectedValue,
-                          hint: Text(
-                            'Can Write?',
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            value: _isWrite,
+                            decoration: InputDecoration(
+                              labelText: "Can Write?",
+                            ),
+                            // hint: Text(
+                            //   'Can Write?',
+                            // ),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.blue,
+                            ),
+                            isExpanded: true,
+                            onChanged: (value) {
+                              setState(() {
+                                _isWrite = value!;
+                              });
+                            },
+                            // onSaved: (value) {},
+                            items: listOfValue.map((bool val) {
+                              return DropdownMenuItem(
+                                value: val,
+                                child: Text(
+                                  val.toString(),
+                                ),
+                              );
+                            }).toList(),
                           ),
-                          icon: Icon(
-                            Icons.edit,
-                            color: Colors.blue,
-                          ),
-                          isExpanded: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _isWrite = value!;
-                            });
-                          },
-                          // onSaved: (value) {},
-                          items: listOfValue.map((bool val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(
-                                val.toString(),
-                              ),
-                            );
-                          }).toList(),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: DropdownButtonFormField(
-                          value: _selectedValue,
-                          hint: Text(
-                            'Can Read?',
+                          value: _isRead,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
                           ),
                           icon: Icon(
                             Icons.manage_search,
@@ -516,9 +521,9 @@ class _ManageRolesState extends State<ManageRoles> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: DropdownButtonFormField(
-                          value: _selectedValue,
-                          hint: Text(
-                            'Can Delete?',
+                          value: _isDelete,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
                           ),
                           icon: Icon(
                             Icons.delete,
