@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 
+import '../model/client_data.dart';
 import '../model/user_data.dart';
 
 class DataService {
@@ -14,6 +15,10 @@ class DataService {
 
   addRoles(RolesData dataTestRole) async {
     await _db.collection("roles").add(dataTestRole.toMap());
+  }
+
+  addClientType(ClientData clientDataType) async {
+    await _db.collection("clientType").add(clientDataType.toMap());
   }
 
   Future<void> updateUser(UserData employeeData) async {
@@ -28,6 +33,13 @@ class DataService {
         .collection("roles")
         .doc(dataTestRole.id)
         .update(dataTestRole.toMap());
+  }
+
+  Future<void> updateClientType(ClientData clientDataType) async {
+    await _db
+        .collection("clientType")
+        .doc(clientDataType.id)
+        .update(clientDataType.toMap());
   }
 
   Future<void> deleteUser(BuildContext context, String documentId) async {
@@ -57,6 +69,23 @@ class DataService {
           builder: (context) {
             return AlertDialog(
               content: Text("Deleted Roles"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> deleteClientType(BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("clientType").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Types"),
             );
           },
         );
@@ -133,6 +162,14 @@ class DataService {
         await _db.collection("roles").get();
     return snapshot.docs
         .map((docSnapshot) => RolesData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<ClientData>> retrieveClientType() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection("clientType").get();
+    return snapshot.docs
+        .map((docSnapshot) => ClientData.fromDocumentSnapshot(docSnapshot))
         .toList();
   }
 
