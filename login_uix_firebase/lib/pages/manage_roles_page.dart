@@ -24,67 +24,25 @@ class _ManageRolesState extends State<ManageRoles> {
   RolesData? dataU;
 
   final _rolesNameController = TextEditingController();
-  // final _clientTypeController = TextEditingController();
-  // final _rolesController = TextEditingController();
-  // final _firstNameController = TextEditingController();
-  // final _lastNameController = TextEditingController();
-  // final _ageController = TextEditingController();
-  // final _clientCodeController = TextEditingController();
-  // final _phoneController = TextEditingController();
-  // final searchDropClientType = TextEditingController();
-  // final searchDropRoles = TextEditingController();
-  // final newPasswordController = TextEditingController();
-  // final newConfirmPasswordController = TextEditingController();
-  final currentUser = FirebaseAuth.instance.currentUser;
+
   String? userId;
   String? _isRoles;
 
   String? selectedValueRoles;
   String? selectedValue;
-  late String selectedValue2;
-  late String initialDropDownVal;
-  var newPassword = "";
-
   int _currentSortColumn = 0;
   bool _isAscending = true;
   bool? _isWrite;
   bool? _isRead;
   bool? _isDelete;
 
-  List<String> listOfValueRoles = [
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'Developer',
-    'user',
-    'admin',
-    'unassigned'
-  ];
-
-  List<String> listOfValue = [
-    'satu',
-    'dua',
-    'tiga',
-    'enam',
-    'sembilan',
-    'none'
-  ];
-  List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
-
   List<bool>? selected;
-  List<String>? valuesList;
-  final FocusNode dropDownFocus = FocusNode();
+
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // selectedValue = dropDownItemValue[0];
-    selectedValue2 = dropDownItemValue2[0];
-    // selectedValue = listOfValue[0];
-
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
@@ -95,10 +53,6 @@ class _ManageRolesState extends State<ManageRoles> {
     retrievedRolesList = await service.retrieveRoles();
     selected =
         List<bool>.generate(retrievedRolesList!.length, (int index) => false);
-    valuesList = List<String>.generate(
-        retrievedRolesList!.length, (int index) => 'Action');
-    //        currentRolesData = await service.currentUsers(currentUser!.uid);
-    // print(currentRolesData!["roles"]);
   }
 
   Future<void> _pullRefresh() async {
@@ -120,15 +74,6 @@ class _ManageRolesState extends State<ManageRoles> {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.manage_accounts,
-                  size: 26.0,
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
                 onTap: () {
                   FirebaseAuth.instance.signOut();
                 },
@@ -141,7 +86,6 @@ class _ManageRolesState extends State<ManageRoles> {
           return Future.delayed(
             Duration(seconds: 1),
             () {
-              // html.window.location.reload;
               _pullRefresh();
               _scaffoldKey!.currentState!.showBottomSheet(
                 (context) {
@@ -180,43 +124,11 @@ class _ManageRolesState extends State<ManageRoles> {
                         sortColumnIndex: _currentSortColumn,
                         sortAscending: _isAscending,
                         columns: [
-                          // DataColumn(
-                          //     onSort: (columnIndex, ascending) {
-                          //       setState(() {
-                          //         _currentSortColumn = columnIndex;
-                          //         // _currentSortColumn = columnIndex;
-                          //         if (_isAscending == true) {
-                          //           _isAscending = false;
-                          //           // sort the product list in Ascending, order by Price
-                          //           retrievedRolesList!.sort(
-                          //               (productA, productB) =>
-                          //                   productB.clientCode!.compareTo(
-                          //                       productA.clientCode as String));
-                          //         } else {
-                          //           _isAscending = true;
-                          //           // sort the product list in Descending, order by Price
-                          //           retrievedRolesList!.sort(
-                          //               (productA, productB) =>
-                          //                   productA.clientCode!.compareTo(
-                          //                       productB.clientCode as String));
-                          //         }
-                          //       });
-                          //     },
-                          //     label: Text('CT Code',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
-                          // DataColumn(
-                          //     label: Text('Id',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
                           DataColumn(
                               label: Text('Roles Name',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-
                           DataColumn(
                               label: Text('Can Write',
                                   style: TextStyle(
@@ -227,13 +139,11 @@ class _ManageRolesState extends State<ManageRoles> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-
                           DataColumn(
                               label: Text('Can Delete',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-
                           DataColumn(
                               label: Text('Edit Roles',
                                   style: TextStyle(
@@ -244,22 +154,6 @@ class _ManageRolesState extends State<ManageRoles> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-
-                          // DataColumn(
-                          //     label: Text('Last Name',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
-                          // DataColumn(
-                          //     label: Text('Email',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
-                          // DataColumn(
-                          //     label: Text('Edit Mode',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
                         ],
                         rows: List.generate(
                             retrievedRolesList!.length,
@@ -268,19 +162,6 @@ class _ManageRolesState extends State<ManageRoles> {
                                 retrievedRolesList![index],
                                 retrievedRolesList,
                                 index)),
-
-                        //   listofColumn!
-                        //       .map(
-                        //         ((element) => DataRow(
-                        //               cells: <DataCell>[
-                        //                 DataCell(Text(element["firstName"])),
-                        //                 DataCell(Text(element["lastName"])),
-                        //                 DataCell(Text(element["age"])),
-                        //                 DataCell(Text(element["email"])),
-                        //               ],
-                        //             )),
-                        //       )
-                        //       .toList(),
                       ),
                       FloatingActionButton(
                         onPressed: () {
@@ -291,13 +172,6 @@ class _ManageRolesState extends State<ManageRoles> {
                         // backgroundColor: Colors.green,
                       )
                     ]);
-
-                //     ListView.builder(
-                //   itemCount: retrievedRolesList!.length,
-                //   itemBuilder: (context, index) {
-                //     return _buildListUser(context, retrievedRolesList![index]);
-                //   },
-                // );
               } else if (snapshot.connectionState == ConnectionState.done &&
                   retrievedRolesList!.isEmpty) {
                 return Center(
@@ -320,49 +194,8 @@ class _ManageRolesState extends State<ManageRoles> {
           ),
         ),
       ),
-      //     ElevatedButton(
-      //       child: Text("Log out"),
-      //       onPressed: () {
-      //         FirebaseAuth.instance.signOut();
-      //       },
-      //     )
-      //   ],
-      // ),
     );
   }
-
-  // Widget _buildListUser(BuildContext context, RolesData snapshot) {
-  //   return Material(
-  //     child: Center(
-  //       child: ListTile(
-  //         onTap: () {
-  //           // Navigator.pushNamed(context, ArticlesDetailPage.routeName,
-  //           //     arguments: article);
-  //         },
-  //         contentPadding:
-  //             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-  //         title: Text(snapshot.emailUser),
-  //         subtitle: Text(snapshot.firstName),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // List<DataRow> _buildList(BuildContext context, snapshot) {
-  //   return snapshot.map((data) => _buildTableUser(context, data)).toList();
-  // }
-
-  // DataRow _buildTableUser(BuildContext context, DocumentSnapshot snapshot) {
-  //   final record = RolesData.fromDocumentSnapshot();
-
-  //   return DataRow(
-  //     cells: [
-  //       DataCell(Text(snapshot.firstName)),
-  //       DataCell(Text(snapshot.lastName)),
-  //       DataCell(Text(snapshot.emailUser)),
-  //     ],
-  //   );
-  // }
 
   DataRow _buildTableUser(BuildContext context, RolesData snapshot,
       List<RolesData>? user, int indexs) {
@@ -381,18 +214,7 @@ class _ManageRolesState extends State<ManageRoles> {
         }
         return null; // Use default value for other states and odd rows.
       }),
-      // selected: selected![indexs],
-      // onSelectChanged: (bool? value) {
-      //   setState(() {
-      //     selected![indexs] = value!;
-      //   });
-      // },
       cells: [
-        // DataCell(
-        //   Text(snapshot.clientCode as String),
-        //   // showEditIcon: true,
-        // ),
-        // DataCell(Text(snapshot.id as String)),
         DataCell(Text(snapshot.rolesName as String)),
         DataCell(
           Container(
@@ -410,7 +232,6 @@ class _ManageRolesState extends State<ManageRoles> {
             onChanged: (value) {},
           )),
         ),
-
         DataCell(
           Container(
               child: Checkbox(
@@ -438,14 +259,6 @@ class _ManageRolesState extends State<ManageRoles> {
             onPressed: () async {
               await service.deleteRoles(context, snapshot.id.toString());
               _pullRefresh();
-              // dialogEditRoles(context);
-              // setState(() {
-              //   userId = snapshot.id;
-              //   _isRoles = snapshot.rolesName;
-              //   _isWrite = snapshot.canWrite;
-              //   _isRead = snapshot.canRead;
-              //   _isDelete = snapshot.canDelete;
-              // });
             },
             child: const Text('Delete'))),
       ],
@@ -453,7 +266,6 @@ class _ManageRolesState extends State<ManageRoles> {
   }
 
   Future<dynamic> dialogEditRoles(BuildContext context) {
-    // bool? _selectedValue;
     List<bool> listOfValue = [true, false];
     return showDialog(
         context: context,
