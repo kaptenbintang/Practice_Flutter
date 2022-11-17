@@ -12,6 +12,10 @@ class DataService {
     await _db.collection("users").add(employeeData.toMap());
   }
 
+  addRoles(RolesData dataTestRole) async {
+    await _db.collection("roles").add(dataTestRole.toMap());
+  }
+
   Future<void> updateUser(UserData employeeData) async {
     await _db
         .collection("users")
@@ -36,6 +40,23 @@ class DataService {
           builder: (context) {
             return AlertDialog(
               content: Text("Deleted Account"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> deleteRoles(BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("roles").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Roles"),
             );
           },
         );

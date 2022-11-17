@@ -235,7 +235,12 @@ class _ManageRolesState extends State<ManageRoles> {
                                       fontWeight: FontWeight.bold))),
 
                           DataColumn(
-                              label: Text('Edit Mode',
+                              label: Text('Edit Roles',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Delete Roles',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
@@ -283,6 +288,7 @@ class _ManageRolesState extends State<ManageRoles> {
                         },
                         tooltip: "Add New Roles",
                         child: Icon(Icons.add),
+                        // backgroundColor: Colors.green,
                       )
                     ]);
 
@@ -424,24 +430,42 @@ class _ManageRolesState extends State<ManageRoles> {
                 _isDelete = snapshot.canDelete;
               });
             },
-            child: const Text('Edit')))
+            child: const Text('Edit'))),
+        DataCell(ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red,
+            ),
+            onPressed: () async {
+              await service.deleteRoles(context, snapshot.id.toString());
+              _pullRefresh();
+              // dialogEditRoles(context);
+              // setState(() {
+              //   userId = snapshot.id;
+              //   _isRoles = snapshot.rolesName;
+              //   _isWrite = snapshot.canWrite;
+              //   _isRead = snapshot.canRead;
+              //   _isDelete = snapshot.canDelete;
+              // });
+            },
+            child: const Text('Delete'))),
       ],
     );
   }
 
   Future<dynamic> dialogEditRoles(BuildContext context) {
-    bool? _selectedValue;
+    // bool? _selectedValue;
     List<bool> listOfValue = [true, false];
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            title: const Text("Edit Roles Data"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
                   right: -40.0,
-                  top: -40.0,
+                  top: -80.0,
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -459,38 +483,43 @@ class _ManageRolesState extends State<ManageRoles> {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField(
-                          value: _selectedValue,
-                          hint: Text(
-                            'Can Write?',
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            value: _isWrite,
+                            decoration: InputDecoration(
+                              labelText: "Can Write?",
+                            ),
+                            // hint: Text(
+                            //   'Can Write?',
+                            // ),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.blue,
+                            ),
+                            isExpanded: true,
+                            onChanged: (value) {
+                              setState(() {
+                                _isWrite = value!;
+                              });
+                            },
+                            // onSaved: (value) {},
+                            items: listOfValue.map((bool val) {
+                              return DropdownMenuItem(
+                                value: val,
+                                child: Text(
+                                  val.toString(),
+                                ),
+                              );
+                            }).toList(),
                           ),
-                          icon: Icon(
-                            Icons.edit,
-                            color: Colors.blue,
-                          ),
-                          isExpanded: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _isWrite = value!;
-                            });
-                          },
-                          // onSaved: (value) {},
-                          items: listOfValue.map((bool val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(
-                                val.toString(),
-                              ),
-                            );
-                          }).toList(),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: DropdownButtonFormField(
-                          value: _selectedValue,
-                          hint: Text(
-                            'Can Read?',
+                          value: _isRead,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
                           ),
                           icon: Icon(
                             Icons.manage_search,
@@ -516,9 +545,9 @@ class _ManageRolesState extends State<ManageRoles> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: DropdownButtonFormField(
-                          value: _selectedValue,
-                          hint: Text(
-                            'Can Delete?',
+                          value: _isDelete,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
                           ),
                           icon: Icon(
                             Icons.delete,
@@ -540,6 +569,9 @@ class _ManageRolesState extends State<ManageRoles> {
                             );
                           }).toList(),
                         ),
+                      ),
+                      SizedBox(
+                        height: 40,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -580,12 +612,13 @@ class _ManageRolesState extends State<ManageRoles> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            title: const Text("Add new roles"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
                   right: -40.0,
-                  top: -40.0,
+                  top: -80.0,
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -602,27 +635,15 @@ class _ManageRolesState extends State<ManageRoles> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: EdgeInsets.all(8.0),
                         child: TextFormField(
                           controller: _rolesNameController,
                           decoration: InputDecoration(
-                              labelText: "Enter name for new roles",
-                              // prefixIcon: Icon(
-                              //   Icons.role,
-                              //   color: Colors.blue,
-                              // ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(12)),
-                              // hintText: 'Email',
-                              fillColor: Colors.grey[200],
-                              filled: true),
+                            labelText: "Enter roles name",
+                          ),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Enter correct email";
+                              return "Enter correct roles name";
                             } else {
                               return null;
                             }
@@ -630,18 +651,105 @@ class _ManageRolesState extends State<ManageRoles> {
                         ),
                       ),
                       Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Write?",
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isWrite = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Read?",
+                          ),
+                          icon: Icon(
+                            Icons.manage_search,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isRead = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
+                          ),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isDelete = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              // RolesData rolesData = RolesData(
-                              //     id: userId,
-                              //     rolesName: _isRoles,
-                              //     canWrite: _isWrite,
-                              //     canRead: _isRead,
-                              //     canDelete: _isDelete);
-                              // await service.updateRoles(rolesData);
+                              RolesData rolesData = RolesData(
+                                  id: userId,
+                                  rolesName: _rolesNameController.text,
+                                  canWrite: _isWrite,
+                                  canRead: _isRead,
+                                  canDelete: _isDelete);
+                              await service.addRoles(rolesData);
                               Navigator.pop(context);
                               _pullRefresh();
                             }
