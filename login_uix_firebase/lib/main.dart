@@ -49,13 +49,8 @@ class MyApp extends StatelessWidget {
         routes: {
           MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),
-          LoginPage.routeName: (context) => LoginPage(
-              showRegisterPage:
-                  ModalRoute.of(context)?.settings.arguments as VoidCallback),
-          RegisterPage.routeName: (context) => RegisterPage(
-                showLoginPage:
-                    ModalRoute.of(context)?.settings.arguments as VoidCallback,
-              ),
+          LoginPage.routeName: (context) => LoginPage(),
+          RegisterPage.routeName: (context) => RegisterPage(),
           DeleteAccount.routeName: (context) => const DeleteAccount(),
           CheckEmailView.routeName: (context) => const CheckEmailView(),
           changePasswordPage.routeName: (context) => const changePasswordPage(),

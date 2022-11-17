@@ -10,11 +10,12 @@ class UserData {
   // final int ageUser;
   final String? clientCode;
   final String? roles;
-  final String? imgUrl;
+  // final String? imgUrl;
   final String doBirth;
   final String phoneNumber;
   final String? clientType;
   final String? createdAt;
+  final bool? markDeleted;
 
   UserData({
     this.id,
@@ -24,11 +25,12 @@ class UserData {
     // required this.ageUser,
     this.clientCode,
     this.roles,
-    this.imgUrl,
+    // this.imgUrl,
     required this.doBirth,
     required this.phoneNumber,
     this.clientType,
     this.createdAt,
+    this.markDeleted,
   });
 
   Map<String, dynamic> toMap() {
@@ -39,11 +41,12 @@ class UserData {
       "email": emailUser,
       "clientcode": clientCode,
       "roles": roles,
-      "imageUrl": imgUrl,
+      // "imageUrl": imgUrl,
       "phoneNumber": phoneNumber,
       "dateofbirth": doBirth,
       "clientType": clientType,
       "createdAt": createdAt,
+      "markDeleted": markDeleted,
     };
   }
 
@@ -77,9 +80,10 @@ class UserData {
         // ageUser = doc.data()!["age"],
         clientCode = doc.data()!["clientcode"],
         roles = doc.data()!["roles"],
-        imgUrl = doc.data()!["imageUrl"],
+        // imgUrl = doc.data()!["imageUrl"],
         phoneNumber = doc.data()!["phoneNumber"],
         doBirth = doc.data()!["dateofbirth"],
         clientType = doc.data()!["clientType"],
-        createdAt = doc.data()!["createdAt"];
+        createdAt = doc.data()!["createdAt"],
+        markDeleted = doc.data()!["markDeleted"];
 }

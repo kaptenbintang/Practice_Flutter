@@ -74,9 +74,10 @@ class DataService {
         .toList();
   }
 
-  Future<Map<String, dynamic>?> currentUsers(uid) async {
-    var snapshot = await _db.collection("users").doc(uid).get();
+  Future<Map<String, dynamic>> currentUsers(uid) async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection("users").doc(uid).get();
     Map<String, dynamic>? data = snapshot.data();
-    return data;
+    return data!;
   }
 }
