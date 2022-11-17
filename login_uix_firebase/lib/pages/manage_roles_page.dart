@@ -117,15 +117,15 @@ class _ManageRolesState extends State<ManageRoles> {
       appBar: AppBar(
         title: Text("Dashboard Home"),
         actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.manage_accounts,
-                  size: 26.0,
-                ),
-              )),
+          // Padding(
+          //     padding: EdgeInsets.only(right: 20.0),
+          //     child: GestureDetector(
+          //       onTap: () {},
+          //       child: Icon(
+          //         Icons.manage_accounts,
+          //         size: 26.0,
+          //       ),
+          //     )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
