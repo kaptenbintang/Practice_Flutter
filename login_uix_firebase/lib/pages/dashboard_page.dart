@@ -26,6 +26,7 @@ class _DashboardPageState extends State<DashboardPage> {
   DataService service = DataService();
   Future<List<UserData>>? userList;
   // Map<String, dynamic>? currentUserData;
+  // Future<Map<String, dynamic>>? futureUserData;
   // String? currentUserData;
   List<UserData>? retrievedUserList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -44,7 +45,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final searchDropRoles = TextEditingController();
   final newPasswordController = TextEditingController();
   final newConfirmPasswordController = TextEditingController();
-  final currentUser = FirebaseAuth.instance.currentUser;
+  final currentUser = FirebaseAuth.instance.currentUser!;
   final db = FirebaseFirestore.instance;
   String? userId;
 
@@ -53,7 +54,8 @@ class _DashboardPageState extends State<DashboardPage> {
   late String selectedValue2;
   late String initialDropDownVal;
   var newPassword = "";
-  var rolesType, marDeleted, createAt;
+  var rolesType;
+  var marDeleted, createAt;
 
   int _currentSortColumn = 0;
   bool _isAscending = true;
@@ -79,23 +81,23 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-    // selectedValue = dropDownItemValue[0];
+
     selectedValue2 = dropDownItemValue2[0];
-    // selectedValue = listOfValue[0]
 
     _scaffoldKey = GlobalKey();
-    rolesType = 'user'.toString();
+
+    rolesType = "superadmin";
 
     _initRetrieval();
+    super.initState();
   }
 
   Future<void> _initRetrieval() async {
-    userList = service.retrieveAllUsers(rolesType);
-    retrievedUserList = await service.retrieveAllUsers(rolesType);
-    // currentUserData = await service.currentUsers(currentUser!.uid);
+    // futureUserData = service.currentUsers(currentUser.uid);
+    // currentUserData = await service.currentUsers(currentUser.uid);
+    // rolesType = currentUserData!['roles'];
     // final docRef = db.collection("users").doc(currentUser!.uid);
-    // await docRef.get().then(
+    // docRef.get().then(
     //   (DocumentSnapshot doc) {
     //     final data = doc.data() as Map<String, dynamic>;
     //     setState(() {
@@ -104,6 +106,10 @@ class _DashboardPageState extends State<DashboardPage> {
     //   },
     //   onError: (e) => print("Error getting document: $e"),
     // );
+
+    userList = service.retrieveAllUsers(rolesType);
+    retrievedUserList = await service.retrieveAllUsers(rolesType);
+    // currentUserData = await service.currentUsers(currentUser!.uid);
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
@@ -518,6 +524,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 } else {
                   switch (value) {
                     case "Remove":
+                      service.markdeleteUser(context, snapshot.id as String);
                       break;
                     case "Edit":
                       dialogEdit(context);
@@ -544,6 +551,10 @@ class _DashboardPageState extends State<DashboardPage> {
                       dialogChangePassword(context);
 
                       break;
+                    case "Restore":
+                      service.markdeleteRestoreUser(
+                          context, snapshot.id as String);
+                      break;
                     default:
                   }
                 }
@@ -563,10 +574,17 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: Text('Edit'),
                   value: "Edit",
                 ),
-                if (currentUser?.uid.toString != snapshot.id.toString)
+                if (currentUser.uid.toString != snapshot.id.toString &&
+                    snapshot.markDeleted == false)
                   DropdownMenuItem(
                     child: Text('Remove'),
                     value: "Remove",
+                  ),
+                if (currentUser.uid.toString != snapshot.id.toString &&
+                    snapshot.markDeleted == true)
+                  DropdownMenuItem(
+                    child: Text('Restore'),
+                    value: "Restore",
                   ),
               ],
             ),

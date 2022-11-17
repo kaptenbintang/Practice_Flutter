@@ -36,6 +36,41 @@ class DataService {
     );
   }
 
+  Future<void> markdeleteUser(BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("users").doc(documentId);
+    await address.update({"markDeleted": true}).then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Account"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> markdeleteRestoreUser(
+      BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("users").doc(documentId);
+    await address.update({"markDeleted": false}).then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Account"),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<List<UserData>> retrieveAllUsers(String? roles) async {
     if (roles == 'superadmin') {
       QuerySnapshot<Map<String, dynamic>> snapshot =
