@@ -222,7 +222,12 @@ class _LoginDesktopState extends State<LoginDesktop> {
                   const SizedBox(height: 30),
                   //login button
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        signIn();
+                        return;
+                      }
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.green,
                       padding: const EdgeInsets.symmetric(

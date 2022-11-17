@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
+import 'package:login_uix_firebase/pages/LandingPage/landing_desktop.dart';
+import 'package:login_uix_firebase/pages/LandingPage/landing_mobile.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: ControllerPage(),
+      home: LandingPageDesktopWidget(),
     );
   }
 }

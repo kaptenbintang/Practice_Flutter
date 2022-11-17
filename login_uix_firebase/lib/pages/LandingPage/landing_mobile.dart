@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 
@@ -25,7 +27,6 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0x00FFFFFF),
       drawer: Drawer(
         elevation: 16,
         child: ListView(
@@ -835,7 +836,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Poppins',
-                                          fontSize: 12,
+                                          fontSize: 11,
                                         ),
                                   )),
                                   Container(
