@@ -90,6 +90,7 @@ class _DashboardPageState extends State<DashboardPage> {
     selectedValue2 = dropDownItemValue2[0];
 
     _scaffoldKey = GlobalKey();
+    rolesType = 'superadmin'.toString();
 
     rolesType = "superadmin";
 

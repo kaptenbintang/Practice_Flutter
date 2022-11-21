@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class RolesData {
   final String? id;
   final String? rolesName;
-  late final bool? canWrite;
+  final bool? canWrite;
   final bool? canRead;
   final bool? canDelete;
 

@@ -1,20 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:html' as html;
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
-import 'package:login_uix_firebase/model/user_data.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:login_uix_firebase/pages/manage_roles_page.dart';
-import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
-
 import '../helper/database_service.dart';
-import '../main.dart';
 import '../widgets/drawer_dashboard.dart';
 
 class ManageRoles extends StatefulWidget {
@@ -27,92 +16,50 @@ class ManageRoles extends StatefulWidget {
 
 class _ManageRolesState extends State<ManageRoles> {
   DataService service = DataService();
-  Future<List<RolesData>>? userList;
-  List<RolesData>? retrievedUserList;
+  Future<List<RolesData>>? RolesList;
+  Map<String, dynamic>? currentRolesData;
+  List<RolesData>? retrievedRolesList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   RolesData? dataU;
 
-  // final _emailController = TextEditingController();
-  // final _clientTypeController = TextEditingController();
-  // final _rolesController = TextEditingController();
-  // final _firstNameController = TextEditingController();
-  // final _lastNameController = TextEditingController();
-  // final _ageController = TextEditingController();
-  // final _clientCodeController = TextEditingController();
-  // final _phoneController = TextEditingController();
-  // final searchDropClientType = TextEditingController();
-  // final searchDropRoles = TextEditingController();
-  // final newPasswordController = TextEditingController();
-  // final newConfirmPasswordController = TextEditingController();
-  final currentUser = FirebaseAuth.instance.currentUser;
+  final _rolesNameController = TextEditingController();
+
   String? userId;
+  String? _isRoles;
 
   String? selectedValueRoles;
   String? selectedValue;
-  late String selectedValue2;
-  late String initialDropDownVal;
-  var newPassword = "";
-
   int _currentSortColumn = 0;
   bool _isAscending = true;
-  bool _isWrite = false;
-  bool _isRead = false;
-  bool _isDelete = false;
-
-  List<String> listOfValueRoles = [
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'Developer',
-    'user',
-    'admin'
-  ];
-
-  List<String> listOfValue = [
-    'satu',
-    'dua',
-    'tiga',
-    'enam',
-    'sembilan',
-    'none'
-  ];
-  List<String> dropDownItemValue2 = ['Action', 'Delete', 'Edit'];
+  bool? _isWrite;
+  bool? _isRead;
+  bool? _isDelete;
 
   List<bool>? selected;
-  List<String>? valuesList;
-  final FocusNode dropDownFocus = FocusNode();
-  final _formKey = GlobalKey<FormState>();
 
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // selectedValue = dropDownItemValue[0];
-    selectedValue2 = dropDownItemValue2[0];
-    // selectedValue = listOfValue[0];
-
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
     // listofColumn = (await service.retrieveRoles()).cast<Map<String, dynamic>>();
-    userList = service.retrieveRoles();
-    retrievedUserList = await service.retrieveRoles();
+    RolesList = service.retrieveRoles();
+    retrievedRolesList = await service.retrieveRoles();
     selected =
-        List<bool>.generate(retrievedUserList!.length, (int index) => false);
-    valuesList = List<String>.generate(
-        retrievedUserList!.length, (int index) => 'Action');
+        List<bool>.generate(retrievedRolesList!.length, (int index) => false);
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveRoles();
+    retrievedRolesList = await service.retrieveRoles();
 
     setState(() {
-      userList = service.retrieveRoles();
+      RolesList = service.retrieveRoles();
     });
   }
 
@@ -124,15 +71,6 @@ class _ManageRolesState extends State<ManageRoles> {
       appBar: AppBar(
         title: Text("Dashboard Home"),
         actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.manage_accounts,
-                  size: 26.0,
-                ),
-              )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -148,7 +86,6 @@ class _ManageRolesState extends State<ManageRoles> {
           return Future.delayed(
             Duration(seconds: 1),
             () {
-              // html.window.location.reload;
               _pullRefresh();
               _scaffoldKey!.currentState!.showBottomSheet(
                 (context) {
@@ -176,9 +113,9 @@ class _ManageRolesState extends State<ManageRoles> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
-            future: userList,
+            future: RolesList,
             builder: (context, AsyncSnapshot<List<RolesData>> snapshot) {
-              // retrievedUserList = toMap(snapshot.data);
+              // retrievedRolesList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return ListView(
                     scrollDirection: Axis.horizontal,
@@ -187,43 +124,11 @@ class _ManageRolesState extends State<ManageRoles> {
                         sortColumnIndex: _currentSortColumn,
                         sortAscending: _isAscending,
                         columns: [
-                          // DataColumn(
-                          //     onSort: (columnIndex, ascending) {
-                          //       setState(() {
-                          //         _currentSortColumn = columnIndex;
-                          //         // _currentSortColumn = columnIndex;
-                          //         if (_isAscending == true) {
-                          //           _isAscending = false;
-                          //           // sort the product list in Ascending, order by Price
-                          //           retrievedUserList!.sort(
-                          //               (productA, productB) =>
-                          //                   productB.clientCode!.compareTo(
-                          //                       productA.clientCode as String));
-                          //         } else {
-                          //           _isAscending = true;
-                          //           // sort the product list in Descending, order by Price
-                          //           retrievedUserList!.sort(
-                          //               (productA, productB) =>
-                          //                   productA.clientCode!.compareTo(
-                          //                       productB.clientCode as String));
-                          //         }
-                          //       });
-                          //     },
-                          //     label: Text('CT Code',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
-                          // DataColumn(
-                          //     label: Text('Id',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
                           DataColumn(
                               label: Text('Roles Name',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-
                           DataColumn(
                               label: Text('Can Write',
                                   style: TextStyle(
@@ -234,60 +139,41 @@ class _ManageRolesState extends State<ManageRoles> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-
                           DataColumn(
                               label: Text('Can Delete',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
-
-                          // DataColumn(
-                          //     label: Text('Last Name',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
-                          // DataColumn(
-                          //     label: Text('Email',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
-                          // DataColumn(
-                          //     label: Text('Edit Mode',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Edit Roles',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Delete Roles',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
                         ],
                         rows: List.generate(
-                            retrievedUserList!.length,
+                            retrievedRolesList!.length,
                             (index) => _buildTableUser(
                                 context,
-                                retrievedUserList![index],
-                                retrievedUserList,
+                                retrievedRolesList![index],
+                                retrievedRolesList,
                                 index)),
-
-                        //   listofColumn!
-                        //       .map(
-                        //         ((element) => DataRow(
-                        //               cells: <DataCell>[
-                        //                 DataCell(Text(element["firstName"])),
-                        //                 DataCell(Text(element["lastName"])),
-                        //                 DataCell(Text(element["age"])),
-                        //                 DataCell(Text(element["email"])),
-                        //               ],
-                        //             )),
-                        //       )
-                        //       .toList(),
                       ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          dialogAddNewRoles(context);
+                        },
+                        tooltip: "Add New Roles",
+                        child: Icon(Icons.add),
+                        // backgroundColor: Colors.green,
+                      )
                     ]);
-
-                //     ListView.builder(
-                //   itemCount: retrievedUserList!.length,
-                //   itemBuilder: (context, index) {
-                //     return _buildListUser(context, retrievedUserList![index]);
-                //   },
-                // );
               } else if (snapshot.connectionState == ConnectionState.done &&
-                  retrievedUserList!.isEmpty) {
+                  retrievedRolesList!.isEmpty) {
                 return Center(
                   child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -308,49 +194,8 @@ class _ManageRolesState extends State<ManageRoles> {
           ),
         ),
       ),
-      //     ElevatedButton(
-      //       child: Text("Log out"),
-      //       onPressed: () {
-      //         FirebaseAuth.instance.signOut();
-      //       },
-      //     )
-      //   ],
-      // ),
     );
   }
-
-  // Widget _buildListUser(BuildContext context, RolesData snapshot) {
-  //   return Material(
-  //     child: Center(
-  //       child: ListTile(
-  //         onTap: () {
-  //           // Navigator.pushNamed(context, ArticlesDetailPage.routeName,
-  //           //     arguments: article);
-  //         },
-  //         contentPadding:
-  //             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-  //         title: Text(snapshot.emailUser),
-  //         subtitle: Text(snapshot.firstName),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // List<DataRow> _buildList(BuildContext context, snapshot) {
-  //   return snapshot.map((data) => _buildTableUser(context, data)).toList();
-  // }
-
-  // DataRow _buildTableUser(BuildContext context, DocumentSnapshot snapshot) {
-  //   final record = RolesData.fromDocumentSnapshot();
-
-  //   return DataRow(
-  //     cells: [
-  //       DataCell(Text(snapshot.firstName)),
-  //       DataCell(Text(snapshot.lastName)),
-  //       DataCell(Text(snapshot.emailUser)),
-  //     ],
-  //   );
-  // }
 
   DataRow _buildTableUser(BuildContext context, RolesData snapshot,
       List<RolesData>? user, int indexs) {
@@ -369,60 +214,370 @@ class _ManageRolesState extends State<ManageRoles> {
         }
         return null; // Use default value for other states and odd rows.
       }),
-      // selected: selected![indexs],
-      // onSelectChanged: (bool? value) {
-      //   setState(() {
-      //     selected![indexs] = value!;
-      //   });
-      // },
       cells: [
-        // DataCell(
-        //   Text(snapshot.clientCode as String),
-        //   // showEditIcon: true,
-        // ),
-        // DataCell(Text(snapshot.id as String)),
         DataCell(Text(snapshot.rolesName as String)),
         DataCell(
           Container(
               child: Checkbox(
-            value: _isWrite,
+            value: snapshot.canWrite,
             checkColor: Colors.white,
-            onChanged: (value) {
-              setState(() {
-                _isWrite = value!;
-              });
-            },
+            onChanged: (value) {},
           )),
         ),
         DataCell(
           Container(
               child: Checkbox(
-            value: _isRead,
+            value: snapshot.canRead,
             checkColor: Colors.white,
-            onChanged: (value) {
-              setState(() {
-                _isRead = value!;
-              });
-            },
+            onChanged: (value) {},
           )),
         ),
-
         DataCell(
           Container(
               child: Checkbox(
-            value: snapshot.canDelete == true
-                ? _isDelete = true
-                : _isDelete = false,
+            value: snapshot.canDelete,
             checkColor: Colors.white,
-            onChanged: (value) {
-              setState(() {
-                _isDelete = value!;
-              });
-            },
+            onChanged: (value) {},
           )),
         ),
-        // DataCell(ElevatedButton(onPressed: () {}, child: const Text('Submit')))
+        DataCell(ElevatedButton(
+            onPressed: () {
+              dialogEditRoles(context);
+              setState(() {
+                userId = snapshot.id;
+                _isRoles = snapshot.rolesName;
+                _isWrite = snapshot.canWrite;
+                _isRead = snapshot.canRead;
+                _isDelete = snapshot.canDelete;
+              });
+            },
+            child: const Text('Edit'))),
+        DataCell(ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red,
+            ),
+            onPressed: () async {
+              await service.deleteRoles(context, snapshot.id.toString());
+              _pullRefresh();
+            },
+            child: const Text('Delete'))),
       ],
     );
+  }
+
+  Future<dynamic> dialogEditRoles(BuildContext context) {
+    List<bool> listOfValue = [true, false];
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Edit Roles Data"),
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -40.0,
+                  top: -80.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            value: _isWrite,
+                            decoration: InputDecoration(
+                              labelText: "Can Write?",
+                            ),
+                            // hint: Text(
+                            //   'Can Write?',
+                            // ),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.blue,
+                            ),
+                            isExpanded: true,
+                            onChanged: (value) {
+                              setState(() {
+                                _isWrite = value!;
+                              });
+                            },
+                            // onSaved: (value) {},
+                            items: listOfValue.map((bool val) {
+                              return DropdownMenuItem(
+                                value: val,
+                                child: Text(
+                                  val.toString(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _isRead,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
+                          ),
+                          icon: Icon(
+                            Icons.manage_search,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isRead = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _isDelete,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
+                          ),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isDelete = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              RolesData rolesData = RolesData(
+                                  id: userId,
+                                  rolesName: _isRoles,
+                                  canWrite: _isWrite,
+                                  canRead: _isRead,
+                                  canDelete: _isDelete);
+                              await service.updateRoles(rolesData);
+                              Navigator.pop(context);
+                              _pullRefresh();
+                            }
+
+                            // if (_formKey.currentState!.validate()) {
+                            //   _formKey.currentState!.save();
+                            // }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  Future<dynamic> dialogAddNewRoles(BuildContext context) {
+    bool? _selectedValue;
+    List<bool> listOfValue = [true, false];
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Add new roles"),
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -40.0,
+                  top: -80.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _rolesNameController,
+                          decoration: InputDecoration(
+                            labelText: "Enter roles name",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter correct roles name";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Write?",
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isWrite = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Read?",
+                          ),
+                          icon: Icon(
+                            Icons.manage_search,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isRead = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
+                          ),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isDelete = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              RolesData rolesData = RolesData(
+                                  id: userId,
+                                  rolesName: _rolesNameController.text,
+                                  canWrite: _isWrite,
+                                  canRead: _isRead,
+                                  canDelete: _isDelete);
+                              await service.addRoles(rolesData);
+                              Navigator.pop(context);
+                              _pullRefresh();
+                            }
+
+                            // if (_formKey.currentState!.validate()) {
+                            //   _formKey.currentState!.save();
+                            // }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
