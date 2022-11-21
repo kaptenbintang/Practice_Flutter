@@ -105,6 +105,23 @@ class DataService {
     );
   }
 
+  Future<void> deleteServices(BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("services").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Services"),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<void> markdeleteUser(BuildContext context, String documentId) async {
     // await _db.collection("users").doc(documentId).delete();
     final address = _db.collection("users").doc(documentId);

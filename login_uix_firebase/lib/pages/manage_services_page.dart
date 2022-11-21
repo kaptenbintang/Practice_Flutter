@@ -254,7 +254,7 @@ class _ManageServicesState extends State<ManageServices> {
               primary: Colors.red,
             ),
             onPressed: () async {
-              await service.deleteClientType(context, snapshot.id.toString());
+              await service.deleteServices(context, snapshot.id.toString());
               _pullRefresh();
             },
             child: const Text('Delete'))),
