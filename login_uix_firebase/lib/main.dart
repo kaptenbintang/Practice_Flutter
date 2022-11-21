@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
           UserTablePage.routeName: (context) => const UserTablePage(),
           ManageRoles.routeName: (context) => const ManageRoles(),
           ManageClients.routeName: (context) => const ManageClients(),
+          ControllerPage.routeName: (context) => const ControllerPage(),
         });
   }
 }

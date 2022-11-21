@@ -2,13 +2,16 @@ import 'dart:html' as html;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:login_uix_firebase/pages/manage_roles_page.dart';
+import 'package:login_uix_firebase/widgets/alert_confirm.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 
 import '../helper/database_service.dart';
@@ -26,11 +29,14 @@ class _DashboardPageState extends State<DashboardPage> {
   DataService service = DataService();
   Future<List<UserData>>? userList;
   // Map<String, dynamic>? currentUserData;
+  // Future<Map<String, dynamic>>? futureUserData;
   // String? currentUserData;
   List<UserData>? retrievedUserList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   UserData? dataU;
+
+  final _scrollController = ScrollController();
 
   final _emailController = TextEditingController();
   final _clientTypeController = TextEditingController();
@@ -44,7 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final searchDropRoles = TextEditingController();
   final newPasswordController = TextEditingController();
   final newConfirmPasswordController = TextEditingController();
-  final currentUser = FirebaseAuth.instance.currentUser;
+  final currentUser = FirebaseAuth.instance.currentUser!;
   final db = FirebaseFirestore.instance;
   String? userId;
 
@@ -53,7 +59,8 @@ class _DashboardPageState extends State<DashboardPage> {
   late String selectedValue2;
   late String initialDropDownVal;
   var newPassword = "";
-  var rolesType, marDeleted, createAt;
+  var rolesType;
+  var marDeleted, createAt;
 
   int _currentSortColumn = 0;
   bool _isAscending = true;
@@ -79,23 +86,24 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-    // selectedValue = dropDownItemValue[0];
+
     selectedValue2 = dropDownItemValue2[0];
-    // selectedValue = listOfValue[0]
 
     _scaffoldKey = GlobalKey();
     rolesType = 'superadmin'.toString();
 
+    rolesType = "superadmin";
+
     _initRetrieval();
+    super.initState();
   }
 
   Future<void> _initRetrieval() async {
-    userList = service.retrieveAllUsers(rolesType);
-    retrievedUserList = await service.retrieveAllUsers(rolesType);
-    // currentUserData = await service.currentUsers(currentUser!.uid);
+    // futureUserData = service.currentUsers(currentUser.uid);
+    // currentUserData = await service.currentUsers(currentUser.uid);
+    // rolesType = currentUserData!['roles'];
     // final docRef = db.collection("users").doc(currentUser!.uid);
-    // await docRef.get().then(
+    // docRef.get().then(
     //   (DocumentSnapshot doc) {
     //     final data = doc.data() as Map<String, dynamic>;
     //     setState(() {
@@ -104,12 +112,13 @@ class _DashboardPageState extends State<DashboardPage> {
     //   },
     //   onError: (e) => print("Error getting document: $e"),
     // );
+
+    userList = service.retrieveAllUsers(rolesType);
+    retrievedUserList = await service.retrieveAllUsers(rolesType);
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
         retrievedUserList!.length, (int index) => 'Action');
-
-    // print(currentUserData!["roles"]);
   }
 
   Future<void> _pullRefresh() async {
@@ -141,8 +150,9 @@ class _DashboardPageState extends State<DashboardPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacementNamed(context, LoginPage.routeName);
+                  FirebaseAuth.instance.signOut().then((value) =>
+                      Navigator.pushReplacementNamed(
+                          context, ControllerPage.routeName));
                 },
                 child: Icon(Icons.logout),
               )),
@@ -185,119 +195,112 @@ class _DashboardPageState extends State<DashboardPage> {
             builder: (context, AsyncSnapshot<List<UserData>> snapshot) {
               // retrievedUserList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                return ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      DataTable(
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: _isAscending,
-                        columns: [
-                          DataColumn(
-                              onSort: (columnIndex, ascending) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  // _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    retrievedUserList!.sort(
-                                        (productA, productB) =>
-                                            productB.clientCode!.compareTo(
-                                                productA.clientCode as String));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    retrievedUserList!.sort(
-                                        (productA, productB) =>
-                                            productA.clientCode!.compareTo(
-                                                productB.clientCode as String));
-                                  }
-                                });
-                              },
-                              label: Text('CT Code',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('First Name',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Last Name',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Email',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Birth Date',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Phone Number',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Client Type',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          // currentUserData!.containsKey("roles")
-                          // currentUserData?["roles"] == 'Developer'
-                          // ?
-                          DataColumn(
-                              label: Text('Roles',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          // : DataColumn(
-                          //     label: Text('',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Created Date',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          if (rolesType! == "superadmin")
-                            DataColumn(
-                                label: Text('Marked Deleted',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold))),
-
-                          DataColumn(
-                              label: Text('Action',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                        ],
-                        rows: List.generate(
-                            retrievedUserList!.length,
-                            (index) => _buildTableUser(
-                                context, retrievedUserList![index], index)),
-
-                        //   listofColumn!
-                        //       .map(
-                        //         ((element) => DataRow(
-                        //               cells: <DataCell>[
-                        //                 DataCell(Text(element["firstName"])),
-                        //                 DataCell(Text(element["lastName"])),
-                        //                 DataCell(Text(element["age"])),
-                        //                 DataCell(Text(element["email"])),
-                        //               ],
-                        //             )),
-                        //       )
-                        //       .toList(),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DataTable2(
+                    columnSpacing: 12,
+                    horizontalMargin: 12,
+                    minWidth: 600,
+                    sortColumnIndex: _currentSortColumn,
+                    sortAscending: _isAscending,
+                    columns: [
+                      DataColumn(
+                        onSort: (columnIndex, ascending) {
+                          setState(() {
+                            _currentSortColumn = columnIndex;
+                            // _currentSortColumn = columnIndex;
+                            if (_isAscending == true) {
+                              _isAscending = false;
+                              // sort the product list in Ascending, order by Price
+                              retrievedUserList!.sort((productA, productB) =>
+                                  productB.clientCode!.compareTo(
+                                      productA.clientCode as String));
+                            } else {
+                              _isAscending = true;
+                              // sort the product list in Descending, order by Price
+                              retrievedUserList!.sort((productA, productB) =>
+                                  productA.clientCode!.compareTo(
+                                      productB.clientCode as String));
+                            }
+                          });
+                        },
+                        label: Text(
+                          'CT Code',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ]);
+                      DataColumn(
+                          label: Text('First Name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Last Name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Email',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Birth Date',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Phone Number',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Client Type',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      // currentUserData!.containsKey("roles")
+                      // currentUserData?["roles"] == 'Developer'
+                      // ?
+                      DataColumn(
+                          label: Text('Roles',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      // : DataColumn(
+                      //     label: Text('',
+                      //         style: TextStyle(
+                      //             fontSize: 18,
+                      //             fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Created Date',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      if (rolesType! == "superadmin")
+                        DataColumn(
+                            label: Text('Marked Deleted',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold))),
+
+                      DataColumn(
+                          label: Text('Action',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                    ],
+                    rows: List.generate(
+                        retrievedUserList!.length,
+                        (index) => _buildTableUser(
+                            context, retrievedUserList![index], index)),
+
+                    //   listofColumn!
+                    //       .map(
+                    //         ((element) => DataRow(
+                    //               cells: <DataCell>[
+                    //                 DataCell(Text(element["firstName"])),
+                    //                 DataCell(Text(element["lastName"])),
+                    //                 DataCell(Text(element["age"])),
+                    //                 DataCell(Text(element["email"])),
+                    //               ],
+                    //             )),
+                    //       )
+                    //       .toList(),
+                  ),
+                );
 
                 //     ListView.builder(
                 //   itemCount: retrievedUserList!.length,
@@ -379,7 +382,6 @@ class _DashboardPageState extends State<DashboardPage> {
         cells: [
           DataCell(
             Text(snapshot.clientCode as String),
-            showEditIcon: true,
           ),
           DataCell(Text(snapshot.firstName)),
           DataCell(Text(snapshot.lastName)),
@@ -453,7 +455,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: Text('Edit'),
                   value: "Edit",
                 ),
-                if (currentUser?.uid.toString != snapshot.id.toString)
+                if (currentUser.uid.toString != snapshot.id.toString)
                   DropdownMenuItem(
                     child: Text('Remove'),
                     value: "Remove",
@@ -486,7 +488,6 @@ class _DashboardPageState extends State<DashboardPage> {
         cells: [
           DataCell(
             Text(snapshot.clientCode as String),
-            showEditIcon: true,
           ),
           DataCell(Text(snapshot.firstName)),
           DataCell(Text(snapshot.lastName)),
@@ -518,6 +519,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 } else {
                   switch (value) {
                     case "Remove":
+                      // service.markdeleteUser(context, snapshot.id as String);
+                      _dialogBuilder(context, snapshot.id.toString());
                       break;
                     case "Edit":
                       dialogEdit(context);
@@ -544,6 +547,10 @@ class _DashboardPageState extends State<DashboardPage> {
                       dialogChangePassword(context);
 
                       break;
+                    case "Restore":
+                      service.markdeleteRestoreUser(
+                          context, snapshot.id as String);
+                      break;
                     default:
                   }
                 }
@@ -563,10 +570,17 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: Text('Edit'),
                   value: "Edit",
                 ),
-                if (currentUser?.uid.toString != snapshot.id.toString)
+                if (currentUser.uid.toString != snapshot.id.toString &&
+                    snapshot.markDeleted == false)
                   DropdownMenuItem(
                     child: Text('Remove'),
                     value: "Remove",
+                  ),
+                if (currentUser.uid.toString != snapshot.id.toString &&
+                    snapshot.markDeleted == true)
+                  DropdownMenuItem(
+                    child: Text('Restore'),
+                    value: "Restore",
                   ),
               ],
             ),
@@ -574,6 +588,39 @@ class _DashboardPageState extends State<DashboardPage> {
         ],
       );
     }
+  }
+
+  Future _dialogBuilder(BuildContext context, String id) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content: const Text('Are you sure want to delete this account?'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Confirm'),
+              onPressed: () {
+                service.markdeleteUser(context, id);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<dynamic> dialogEdit(BuildContext context) {
