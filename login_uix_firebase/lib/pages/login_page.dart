@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_uix_firebase/auth/controller_page.dart';
+import 'package:login_uix_firebase/pages/main_page.dart';
 import 'package:login_uix_firebase/pages/register_page.dart';
 
 import 'forgot_pw_page.dart';
@@ -33,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future signIn() async {
 //loading circle
+    FirebaseAuth.instance.signOut();
 
     showDialog(
         context: context,
@@ -41,9 +44,11 @@ class _LoginPageState extends State<LoginPage> {
         });
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim())
+          .then((value) => ControllerPage());
     } on FirebaseAuthException catch (e) {
       print(e);
       await showDialog(

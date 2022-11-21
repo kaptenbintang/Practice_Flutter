@@ -105,16 +105,36 @@ class DataService {
     );
   }
 
-  Future<void> deleteServices(BuildContext context, String documentId) async {
+  Future<void> markdeleteUser(BuildContext context, String documentId) async {
     // await _db.collection("users").doc(documentId).delete();
-    final address = _db.collection("services").doc(documentId);
-    await address.delete().then(
+    final address = _db.collection("users").doc(documentId);
+    await address.update({"markDeleted": true}).then(
       (value) {
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text("Deleted services"),
+              content: Text("Account have been deleted"),
+            );
+          },
+        );
+      },
+    ).onError((error, stackTrace) {
+      print('Error BY: $error');
+    });
+  }
+
+  Future<void> markdeleteRestoreUser(
+      BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("users").doc(documentId);
+    await address.update({"markDeleted": false}).then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Account have been restored"),
             );
           },
         );

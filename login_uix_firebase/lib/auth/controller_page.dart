@@ -30,13 +30,17 @@ class ControllerPage extends StatelessWidget {
                   if (snapshot.hasData && snapshot.data != null) {
                     if (snapshot.data?['roles'] != 'user') {
                       // Navigator.pushReplacementNamed(
-                      //     context, DashboardPage.routeName);
-                      return DashboardPage();
+                      print('aaaaaaaaaaaaaaaaaaaaa');
+                      //     context,
+                      //     DashboardPage.routeName);
+                      return const DashboardPage();
                     } else {
+                      print('bbbbbbbbbbbbbb');
+
                       // Navigator.pushReplacementNamed(
                       //     context, MainPage.routeName);
 
-                      return MainPage();
+                      return const MainPage();
                     }
                   } else {
                     return Material(
@@ -47,8 +51,10 @@ class ControllerPage extends StatelessWidget {
                   }
                 },
               );
-            } else
-              return LoginPage();
+            } else {
+              print('cccccccccccccccc');
+              return const LoginPage();
+            }
           }),
     );
   }

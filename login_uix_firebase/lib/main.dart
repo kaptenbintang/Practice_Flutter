@@ -60,8 +60,9 @@ class MyApp extends StatelessWidget {
           ProfilePage.routeName: (context) => const ProfilePage(),
           UserTablePage.routeName: (context) => const UserTablePage(),
           ManageRoles.routeName: (context) => const ManageRoles(),
-          ManageClients.routeName: (context) => const ManageClients(),
+          ManageClients.routeName: (context) => const ManageClients()
           ManageServices.routeName: (context) => const ManageServices(),
+          ControllerPage.routeName: (context) => const ControllerPage(),
         });
   }
 }
