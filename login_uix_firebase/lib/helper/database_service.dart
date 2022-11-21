@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 
-import '../model/client_data.dart';
+import '../model/clientType_data.dart';
 import '../model/user_data.dart';
 
 class DataService {
