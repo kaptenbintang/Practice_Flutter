@@ -50,7 +50,9 @@ class DataService {
           },
         );
       },
-    );
+    ).onError((error, stackTrace) {
+      print('Error BY: $error');
+    });
   }
 
   Future<void> markdeleteRestoreUser(

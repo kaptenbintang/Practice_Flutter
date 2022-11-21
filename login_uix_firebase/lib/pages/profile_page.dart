@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
@@ -544,7 +545,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     onPressed: () {
                       FirebaseAuth.instance.signOut();
                       Navigator.pushReplacementNamed(
-                          context, LoginPage.routeName);
+                          context, ControllerPage.routeName);
+                      // ControllerPage();
                     },
                     child: const Text('Sign Out'))
               ],
