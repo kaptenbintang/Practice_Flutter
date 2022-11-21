@@ -2,31 +2,31 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_uix_firebase/model/clientType_data.dart';
+import 'package:login_uix_firebase/model/services_data.dart';
 import '../helper/database_service.dart';
 import '../widgets/drawer_dashboard.dart';
 
-class ManageClients extends StatefulWidget {
-  static const routeName = '/ManageClientsTypePage';
-  const ManageClients({super.key});
+class ManageServices extends StatefulWidget {
+  static const routeName = '/ManageServicesPage';
+  const ManageServices({super.key});
 
   @override
-  State<ManageClients> createState() => _ManageClientsState();
+  State<ManageServices> createState() => _ManageServicesState();
 }
 
-class _ManageClientsState extends State<ManageClients> {
+class _ManageServicesState extends State<ManageServices> {
   DataService service = DataService();
-  Future<List<ClientData>>? ClientList;
-  Map<String, dynamic>? currentClientData;
-  List<ClientData>? retrievedClientList;
+  Future<List<ServicesData>>? ServicesList;
+  Map<String, dynamic>? currentServicesData;
+  List<ServicesData>? retrievedServicesList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
-  ClientData? dataU;
+  ServicesData? dataU;
 
   final _clientTypeController = TextEditingController();
 
   String? userId;
-  String? clientTypeName;
+  String? servicesName;
 
   String? selectedValueClient;
   String? selectedValue;
@@ -46,17 +46,17 @@ class _ManageClientsState extends State<ManageClients> {
 
   Future<void> _initRetrieval() async {
     // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
-    ClientList = service.retrieveClientType();
-    retrievedClientList = await service.retrieveClientType();
-    selected =
-        List<bool>.generate(retrievedClientList!.length, (int index) => false);
+    ServicesList = service.retrieveServices();
+    retrievedServicesList = await service.retrieveServices();
+    selected = List<bool>.generate(
+        retrievedServicesList!.length, (int index) => false);
   }
 
   Future<void> _pullRefresh() async {
-    retrievedClientList = await service.retrieveClientType();
+    retrievedServicesList = await service.retrieveServices();
 
     setState(() {
-      ClientList = service.retrieveClientType();
+      ServicesList = service.retrieveServices();
     });
   }
 
@@ -110,9 +110,9 @@ class _ManageClientsState extends State<ManageClients> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
-            future: ClientList,
-            builder: (context, AsyncSnapshot<List<ClientData>> snapshot) {
-              // retrievedClientList = toMap(snapshot.data);
+            future: ServicesList,
+            builder: (context, AsyncSnapshot<List<ServicesData>> snapshot) {
+              // retrievedServicesList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return ListView(
                     scrollDirection: Axis.horizontal,
@@ -122,27 +122,42 @@ class _ManageClientsState extends State<ManageClients> {
                         sortAscending: _isAscending,
                         columns: [
                           DataColumn(
-                              label: Text('Client Type Name',
+                              label: Text('Services Name',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Edit Type',
+                              label: Text('Duration',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Delete Type',
+                              label: Text('Category Name',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Price',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Edit Service',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Delete Service',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                         ],
                         rows: List.generate(
-                            retrievedClientList!.length,
+                            retrievedServicesList!.length,
                             (index) => _buildTableUser(
                                 context,
-                                retrievedClientList![index],
-                                retrievedClientList,
+                                retrievedServicesList![index],
+                                retrievedServicesList,
                                 index)),
                       ),
                       FloatingActionButton(
@@ -155,7 +170,7 @@ class _ManageClientsState extends State<ManageClients> {
                       )
                     ]);
               } else if (snapshot.connectionState == ConnectionState.done &&
-                  retrievedClientList!.isEmpty) {
+                  retrievedServicesList!.isEmpty) {
                 return Center(
                   child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -179,8 +194,8 @@ class _ManageClientsState extends State<ManageClients> {
     );
   }
 
-  DataRow _buildTableUser(BuildContext context, ClientData snapshot,
-      List<ClientData>? user, int indexs) {
+  DataRow _buildTableUser(BuildContext context, ServicesData snapshot,
+      List<ServicesData>? user, int indexs) {
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return DataRow(
@@ -197,7 +212,10 @@ class _ManageClientsState extends State<ManageClients> {
         return null; // Use default value for other states and odd rows.
       }),
       cells: [
-        DataCell(Text(snapshot.ctName as String)),
+        DataCell(Text(snapshot.servicesName as String)),
+        DataCell(Text(snapshot.duration as String)),
+        DataCell(Text(snapshot.categoryName as String)),
+        DataCell(Text(snapshot.price as String)),
         // DataCell(
         //   Container(
         //       child: Checkbox(
@@ -227,7 +245,7 @@ class _ManageClientsState extends State<ManageClients> {
               dialogEditClientType(context);
               setState(() {
                 userId = snapshot.id;
-                clientTypeName = snapshot.ctName;
+                servicesName = snapshot.servicesName;
               });
             },
             child: const Text('Edit'))),
@@ -290,11 +308,11 @@ class _ManageClientsState extends State<ManageClients> {
                           child: Text("Submit"),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              ClientData clientData = ClientData(
+                              ServicesData servicesData = ServicesData(
                                 id: userId,
-                                ctName: _clientTypeController.text,
+                                servicesName: _clientTypeController.text,
                               );
-                              await service.updateClientType(clientData);
+                              await service.updateServices(servicesData);
                               Navigator.pop(context);
                               _pullRefresh();
                             }
@@ -366,10 +384,10 @@ class _ManageClientsState extends State<ManageClients> {
                           child: Text("Submit"),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              ClientData clientData = ClientData(
+                              ServicesData servicesData = ServicesData(
                                   id: userId,
-                                  ctName: _clientTypeController.text);
-                              await service.addClientType(clientData);
+                                  servicesName: _clientTypeController.text);
+                              await service.addServices(servicesData);
                               Navigator.pop(context);
                               _pullRefresh();
                             }

@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
+import 'package:login_uix_firebase/model/services_data.dart';
 
-import '../model/client_data.dart';
+import '../model/clientType_data.dart';
 import '../model/user_data.dart';
 
 class DataService {
@@ -19,6 +20,10 @@ class DataService {
 
   addClientType(ClientData clientDataType) async {
     await _db.collection("clientType").add(clientDataType.toMap());
+  }
+
+  addServices(ServicesData servicesData) async {
+    await _db.collection("services").add(servicesData.toMap());
   }
 
   Future<void> updateUser(UserData employeeData) async {
@@ -40,6 +45,13 @@ class DataService {
         .collection("clientType")
         .doc(clientDataType.id)
         .update(clientDataType.toMap());
+  }
+
+  Future<void> updateServices(ServicesData servicesData) async {
+    await _db
+        .collection("services")
+        .doc(servicesData.id)
+        .update(servicesData.toMap());
   }
 
   Future<void> deleteUser(BuildContext context, String documentId) async {
@@ -207,6 +219,14 @@ class DataService {
         await _db.collection("clientType").get();
     return snapshot.docs
         .map((docSnapshot) => ClientData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<ServicesData>> retrieveServices() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection("services").get();
+    return snapshot.docs
+        .map((docSnapshot) => ServicesData.fromDocumentSnapshot(docSnapshot))
         .toList();
   }
 
