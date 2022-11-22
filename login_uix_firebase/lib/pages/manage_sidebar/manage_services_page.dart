@@ -1,40 +1,44 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_uix_firebase/model/roles_data.dart';
-import '../helper/database_service.dart';
-import '../widgets/drawer_dashboard.dart';
+import 'package:login_uix_firebase/model/services_data.dart';
+import '../../helper/database_service.dart';
+import '../../widgets/drawer_dashboard.dart';
 
-class ManageRoles extends StatefulWidget {
-  static const routeName = '/manageRolesPage';
-  const ManageRoles({super.key});
+class ManageServices extends StatefulWidget {
+  static const routeName = '/ManageServicesPage';
+  const ManageServices({super.key});
 
   @override
-  State<ManageRoles> createState() => _ManageRolesState();
+  State<ManageServices> createState() => _ManageServicesState();
 }
 
-class _ManageRolesState extends State<ManageRoles> {
+class _ManageServicesState extends State<ManageServices> {
   DataService service = DataService();
-  Future<List<RolesData>>? RolesList;
-  Map<String, dynamic>? currentRolesData;
-  List<RolesData>? retrievedRolesList;
+  Future<List<ServicesData>>? ServicesList;
+  Map<String, dynamic>? currentServicesData;
+  List<ServicesData>? retrievedServicesList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
-  RolesData? dataU;
+  ServicesData? dataU;
 
-  final _rolesNameController = TextEditingController();
+  final _categoryNameController = TextEditingController();
+  final _durationController = TextEditingController();
+  final _serviceNameController = TextEditingController();
+  final _priceController = TextEditingController();
 
   String? userId;
-  String? _isRoles;
-
-  String? selectedValueRoles;
+  String? servicesNameID;
+  String? categoryNameID;
+  String? durationID;
+  String? priceID;
+  String? selectedValueClient;
   String? selectedValue;
   int _currentSortColumn = 0;
   bool _isAscending = true;
-  bool? _isWrite;
-  bool? _isRead;
-  bool? _isDelete;
 
   List<bool>? selected;
 
@@ -48,18 +52,18 @@ class _ManageRolesState extends State<ManageRoles> {
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveRoles()).cast<Map<String, dynamic>>();
-    RolesList = service.retrieveRoles();
-    retrievedRolesList = await service.retrieveRoles();
-    selected =
-        List<bool>.generate(retrievedRolesList!.length, (int index) => false);
+    // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
+    ServicesList = service.retrieveServices();
+    retrievedServicesList = await service.retrieveServices();
+    selected = List<bool>.generate(
+        retrievedServicesList!.length, (int index) => false);
   }
 
   Future<void> _pullRefresh() async {
-    retrievedRolesList = await service.retrieveRoles();
+    retrievedServicesList = await service.retrieveServices();
 
     setState(() {
-      RolesList = service.retrieveRoles();
+      ServicesList = service.retrieveServices();
     });
   }
 
@@ -113,9 +117,9 @@ class _ManageRolesState extends State<ManageRoles> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
-            future: RolesList,
-            builder: (context, AsyncSnapshot<List<RolesData>> snapshot) {
-              // retrievedRolesList = toMap(snapshot.data);
+            future: ServicesList,
+            builder: (context, AsyncSnapshot<List<ServicesData>> snapshot) {
+              // retrievedServicesList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return ListView(
                     scrollDirection: Axis.horizontal,
@@ -125,55 +129,55 @@ class _ManageRolesState extends State<ManageRoles> {
                         sortAscending: _isAscending,
                         columns: [
                           DataColumn(
-                              label: Text('Roles Name',
+                              label: Text('Services Name',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Can Write',
+                              label: Text('Duration',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Can Read',
+                              label: Text('Category Name',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Can Delete',
+                              label: Text('Price',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Edit Roles',
+                              label: Text('Edit Service',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Delete Roles',
+                              label: Text('Delete Service',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                         ],
                         rows: List.generate(
-                            retrievedRolesList!.length,
+                            retrievedServicesList!.length,
                             (index) => _buildTableUser(
                                 context,
-                                retrievedRolesList![index],
-                                retrievedRolesList,
+                                retrievedServicesList![index],
+                                retrievedServicesList,
                                 index)),
                       ),
                       FloatingActionButton(
                         onPressed: () {
-                          dialogAddNewRoles(context);
+                          dialogAddNewServices(context);
                         },
-                        tooltip: "Add New Roles",
+                        tooltip: "Add New Client Type",
                         child: Icon(Icons.add),
                         // backgroundColor: Colors.green,
                       )
                     ]);
               } else if (snapshot.connectionState == ConnectionState.done &&
-                  retrievedRolesList!.isEmpty) {
+                  retrievedServicesList!.isEmpty) {
                 return Center(
                   child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -197,8 +201,8 @@ class _ManageRolesState extends State<ManageRoles> {
     );
   }
 
-  DataRow _buildTableUser(BuildContext context, RolesData snapshot,
-      List<RolesData>? user, int indexs) {
+  DataRow _buildTableUser(BuildContext context, ServicesData snapshot,
+      List<ServicesData>? user, int indexs) {
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return DataRow(
@@ -215,40 +219,43 @@ class _ManageRolesState extends State<ManageRoles> {
         return null; // Use default value for other states and odd rows.
       }),
       cells: [
-        DataCell(Text(snapshot.rolesName as String)),
-        DataCell(
-          Container(
-              child: Checkbox(
-            value: snapshot.canWrite,
-            checkColor: Colors.white,
-            onChanged: (value) {},
-          )),
-        ),
-        DataCell(
-          Container(
-              child: Checkbox(
-            value: snapshot.canRead,
-            checkColor: Colors.white,
-            onChanged: (value) {},
-          )),
-        ),
-        DataCell(
-          Container(
-              child: Checkbox(
-            value: snapshot.canDelete,
-            checkColor: Colors.white,
-            onChanged: (value) {},
-          )),
-        ),
+        DataCell(Text(snapshot.servicesName as String)),
+        DataCell(Text(snapshot.duration as String)),
+        DataCell(Text(snapshot.categoryName as String)),
+        DataCell(Text(snapshot.price as String)),
+        // DataCell(
+        //   Container(
+        //       child: Checkbox(
+        //     value: snapshot.canWrite,
+        //     checkColor: Colors.white,
+        //     onChanged: (value) {},
+        //   )),
+        // ),
+        // DataCell(
+        //   Container(
+        //       child: Checkbox(
+        //     value: snapshot.canRead,
+        //     checkColor: Colors.white,
+        //     onChanged: (value) {},
+        //   )),
+        // ),
+        // DataCell(
+        //   Container(
+        //       child: Checkbox(
+        //     value: snapshot.canDelete,
+        //     checkColor: Colors.white,
+        //     onChanged: (value) {},
+        //   )),
+        // ),
         DataCell(ElevatedButton(
             onPressed: () {
-              dialogEditRoles(context);
+              dialogEditServices(context);
               setState(() {
                 userId = snapshot.id;
-                _isRoles = snapshot.rolesName;
-                _isWrite = snapshot.canWrite;
-                _isRead = snapshot.canRead;
-                _isDelete = snapshot.canDelete;
+                servicesNameID = snapshot.servicesName;
+                durationID = snapshot.duration;
+                categoryNameID = snapshot.categoryName;
+                priceID = snapshot.price;
               });
             },
             child: const Text('Edit'))),
@@ -257,7 +264,7 @@ class _ManageRolesState extends State<ManageRoles> {
               primary: Colors.red,
             ),
             onPressed: () async {
-              await service.deleteRoles(context, snapshot.id.toString());
+              await service.deleteServices(context, snapshot.id.toString());
               _pullRefresh();
             },
             child: const Text('Delete'))),
@@ -265,166 +272,15 @@ class _ManageRolesState extends State<ManageRoles> {
     );
   }
 
-  Future<dynamic> dialogEditRoles(BuildContext context) {
-    List<bool> listOfValue = [true, false];
+  Future<dynamic> dialogEditServices(BuildContext context) {
+    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
+        .collection('servicesCategory')
+        .snapshots(includeMetadataChanges: true);
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Edit Roles Data"),
-            content: Stack(
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                Positioned(
-                  right: -40.0,
-                  top: -80.0,
-                  child: InkResponse(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: CircleAvatar(
-                      child: Icon(Icons.close),
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField(
-                            value: _isWrite,
-                            decoration: InputDecoration(
-                              labelText: "Can Write?",
-                            ),
-                            // hint: Text(
-                            //   'Can Write?',
-                            // ),
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.blue,
-                            ),
-                            isExpanded: true,
-                            onChanged: (value) {
-                              setState(() {
-                                _isWrite = value!;
-                              });
-                            },
-                            // onSaved: (value) {},
-                            items: listOfValue.map((bool val) {
-                              return DropdownMenuItem(
-                                value: val,
-                                child: Text(
-                                  val.toString(),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField(
-                          value: _isRead,
-                          decoration: InputDecoration(
-                            labelText: "Can Delete?",
-                          ),
-                          icon: Icon(
-                            Icons.manage_search,
-                            color: Colors.blue,
-                          ),
-                          isExpanded: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _isRead = value!;
-                            });
-                          },
-                          onSaved: (value) {},
-                          items: listOfValue.map((bool val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(
-                                val.toString(),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField(
-                          value: _isDelete,
-                          decoration: InputDecoration(
-                            labelText: "Can Delete?",
-                          ),
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.blue,
-                          ),
-                          isExpanded: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _isDelete = value!;
-                            });
-                          },
-                          onSaved: (value) {},
-                          items: listOfValue.map((bool val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(
-                                val.toString(),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              RolesData rolesData = RolesData(
-                                  id: userId,
-                                  rolesName: _isRoles,
-                                  canWrite: _isWrite,
-                                  canRead: _isRead,
-                                  canDelete: _isDelete);
-                              await service.updateRoles(rolesData);
-                              Navigator.pop(context);
-                              _pullRefresh();
-                            }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
-  }
-
-  Future<dynamic> dialogAddNewRoles(BuildContext context) {
-    bool? _selectedValue;
-    List<bool> listOfValue = [true, false];
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Add new roles"),
+            title: const Text("Edit Services"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
@@ -449,101 +305,72 @@ class _ManageRolesState extends State<ManageRoles> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
-                          controller: _rolesNameController,
+                          controller: _serviceNameController,
                           decoration: InputDecoration(
-                            labelText: "Enter roles name",
+                            labelText: "Service Name",
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter correct roles name";
-                            } else {
-                              return null;
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _durationController,
+                          decoration: InputDecoration(
+                            labelText: "Duration",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: _categoryStream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('Something went wrong');
                             }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text("Loading");
+                            }
+                            return Container(
+                                child: DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                disabledItemFn: (String s) => s.startsWith('I'),
+                              ),
+                              items: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return data["categoryName"];
+                                  })
+                                  .toList()
+                                  .cast<String>(),
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Select Category",
+                                  hintText: "list of category",
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  categoryNameID = value!;
+                                });
+                              },
+                              selectedItem: categoryNameID,
+                            ));
                           },
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField(
-                          value: _selectedValue,
+                        child: TextFormField(
+                          controller: _priceController,
                           decoration: InputDecoration(
-                            labelText: "Can Write?",
+                            labelText: "Price",
                           ),
-                          icon: Icon(
-                            Icons.edit,
-                            color: Colors.blue,
-                          ),
-                          isExpanded: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _isWrite = value!;
-                            });
-                          },
-                          onSaved: (value) {},
-                          items: listOfValue.map((bool val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(
-                                val.toString(),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField(
-                          value: _selectedValue,
-                          decoration: InputDecoration(
-                            labelText: "Can Read?",
-                          ),
-                          icon: Icon(
-                            Icons.manage_search,
-                            color: Colors.blue,
-                          ),
-                          isExpanded: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _isRead = value!;
-                            });
-                          },
-                          onSaved: (value) {},
-                          items: listOfValue.map((bool val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(
-                                val.toString(),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField(
-                          value: _selectedValue,
-                          decoration: InputDecoration(
-                            labelText: "Can Delete?",
-                          ),
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.blue,
-                          ),
-                          isExpanded: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _isDelete = value!;
-                            });
-                          },
-                          onSaved: (value) {},
-                          items: listOfValue.map((bool val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(
-                                val.toString(),
-                              ),
-                            );
-                          }).toList(),
                         ),
                       ),
                       SizedBox(
@@ -555,13 +382,171 @@ class _ManageRolesState extends State<ManageRoles> {
                           child: Text("Submit"),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              RolesData rolesData = RolesData(
+                              ServicesData servicesData = ServicesData(
+                                id: userId,
+                                servicesName: _serviceNameController.text,
+                                duration: _durationController.text,
+                                categoryName: categoryNameID,
+                                price: _priceController.text,
+                              );
+                              await service.updateServices(servicesData);
+                              Navigator.pop(context);
+                              _pullRefresh();
+                            }
+
+                            // if (_formKey.currentState!.validate()) {
+                            //   _formKey.currentState!.save();
+                            // }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  Future<dynamic> dialogAddNewServices(BuildContext context) {
+    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
+        .collection('servicesCategory')
+        .snapshots(includeMetadataChanges: true);
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Add new services"),
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -40.0,
+                  top: -80.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _serviceNameController,
+                          decoration: InputDecoration(
+                            labelText: "Enter Service Name",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter correct service name";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _durationController,
+                          decoration: InputDecoration(
+                            labelText: "Enter duration services",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter correct duration";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: _categoryStream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('Something went wrong');
+                            }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text("Loading");
+                            }
+                            return Container(
+                                child: DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                disabledItemFn: (String s) => s.startsWith('I'),
+                              ),
+                              items: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return data["categoryName"];
+                                  })
+                                  .toList()
+                                  .cast<String>(),
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Select Category",
+                                  hintText: "list of category",
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  categoryNameID = value!;
+                                });
+                              },
+                              // selectedItem: categoryNameID,
+                            ));
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _priceController,
+                          decoration: InputDecoration(
+                            labelText: "Enter price service",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter price";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              ServicesData servicesData = ServicesData(
                                   id: userId,
-                                  rolesName: _rolesNameController.text,
-                                  canWrite: _isWrite,
-                                  canRead: _isRead,
-                                  canDelete: _isDelete);
-                              await service.addRoles(rolesData);
+                                  servicesName: _serviceNameController.text,
+                                  duration: _durationController.text,
+                                  categoryName: categoryNameID,
+                                  price: _priceController.text);
+                              await service.addServices(servicesData);
                               Navigator.pop(context);
                               _pullRefresh();
                             }
