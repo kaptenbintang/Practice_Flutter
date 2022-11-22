@@ -7,12 +7,16 @@ class AlertDialogConfirm extends StatefulWidget {
   final String type;
   final String id;
   final BuildContext contexts;
+  final String textDesc;
+  final String? title;
 
-  const AlertDialogConfirm(
+  AlertDialogConfirm(
       {super.key,
       required this.type,
       required this.id,
-      required this.contexts});
+      required this.contexts,
+      required this.textDesc,
+      this.title});
 
   @override
   State<AlertDialogConfirm> createState() => _AlertDialogConfirmState();
@@ -24,8 +28,11 @@ class _AlertDialogConfirmState extends State<AlertDialogConfirm> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Confirmation'),
-      content: Text('Are you sure want to delete this account?'),
+      title: widget.title != null
+          ? Text(widget.title.toString())
+          : const Text('Confirmation'),
+      content: Text(widget.textDesc),
+      elevation: 24.0,
       actions: [
         TextButton(
           style: TextButton.styleFrom(
