@@ -171,7 +171,7 @@ class _ManageServicesState extends State<ManageServices> {
                         onPressed: () {
                           dialogAddNewServices(context);
                         },
-                        tooltip: "Add New Client Type",
+                        tooltip: "Add new services",
                         child: Icon(Icons.add),
                         // backgroundColor: Colors.green,
                       )

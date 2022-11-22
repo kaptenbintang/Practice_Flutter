@@ -167,7 +167,7 @@ class _ManageRolesState extends State<ManageRoles> {
                         onPressed: () {
                           dialogAddNewRoles(context);
                         },
-                        tooltip: "Add New Roles",
+                        tooltip: "Add new roles",
                         child: Icon(Icons.add),
                         // backgroundColor: Colors.green,
                       )
