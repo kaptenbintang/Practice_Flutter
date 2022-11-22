@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
-import 'package:login_uix_firebase/pages/manage_client_type_page.dart';
-import 'package:login_uix_firebase/pages/manage_roles_page.dart';
-import 'package:login_uix_firebase/pages/manage_services_page.dart';
+import 'package:login_uix_firebase/pages/manage_sidebar/manage_client_type_page.dart';
+import 'package:login_uix_firebase/pages/manage_sidebar/manage_roles_page.dart';
+import 'package:login_uix_firebase/pages/manage_sidebar/manage_servicesCategory_page.dart';
+import 'package:login_uix_firebase/pages/manage_sidebar/manage_services_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/widgets/drawer_header.dart';
 
@@ -46,9 +47,15 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
             onTap: () => Navigator.pushNamed(context, ManageClients.routeName),
           ),
           createDrawerBodyItem(
-            icon: Icons.manage_search,
+            icon: Icons.medical_services,
             text: 'Manage Services',
             onTap: () => Navigator.pushNamed(context, ManageServices.routeName),
+          ),
+          createDrawerBodyItem(
+            icon: Icons.category,
+            text: 'Manage Services Category',
+            onTap: () =>
+                Navigator.pushNamed(context, ManageServiceCategory.routeName),
           ),
         ],
       ),

@@ -12,9 +12,10 @@ import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
-import 'package:login_uix_firebase/pages/manage_client_type_page.dart';
-import 'package:login_uix_firebase/pages/manage_roles_page.dart';
-import 'package:login_uix_firebase/pages/manage_services_page.dart';
+import 'package:login_uix_firebase/pages/manage_sidebar/manage_client_type_page.dart';
+import 'package:login_uix_firebase/pages/manage_sidebar/manage_roles_page.dart';
+import 'package:login_uix_firebase/pages/manage_sidebar/manage_servicesCategory_page.dart';
+import 'package:login_uix_firebase/pages/manage_sidebar/manage_services_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/register_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
@@ -62,6 +63,8 @@ class MyApp extends StatelessWidget {
           ManageRoles.routeName: (context) => const ManageRoles(),
           ManageClients.routeName: (context) => const ManageClients(),
           ManageServices.routeName: (context) => const ManageServices(),
+          ManageServiceCategory.routeName: (context) =>
+              const ManageServiceCategory(),
           ControllerPage.routeName: (context) => const ControllerPage(),
         });
   }
