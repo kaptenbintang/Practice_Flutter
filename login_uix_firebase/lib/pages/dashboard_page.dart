@@ -92,7 +92,7 @@ class _DashboardPageState extends State<DashboardPage> {
     _scaffoldKey = GlobalKey();
     rolesType = 'superadmin'.toString();
 
-    rolesType = "superadmin";
+    // rolesType = "superadmin";
 
     _initRetrieval();
     super.initState();
@@ -519,8 +519,26 @@ class _DashboardPageState extends State<DashboardPage> {
                 } else {
                   switch (value) {
                     case "Remove":
-                      // service.markdeleteUser(context, snapshot.id as String);
-                      _dialogBuilder(context, snapshot.id.toString());
+                      showDialog(
+                        context: context,
+                        builder: (contextm) {
+                          return AlertDialogConfirm(
+                              type: value,
+                              id: snapshot.id as String,
+                              contexts: context,
+                              textDesc: 'Are you sure?');
+                        },
+                      ).whenComplete(
+                        () => Future.delayed(
+                          Duration(seconds: 2),
+                          () {
+                            _pullRefresh();
+                          },
+                        ),
+                      );
+
+                      // _dialogBuilder(_scaffoldKey!.currentState!.context,
+                      //     snapshot.id.toString());
                       break;
                     case "Edit":
                       dialogEdit(context);
@@ -548,8 +566,17 @@ class _DashboardPageState extends State<DashboardPage> {
 
                       break;
                     case "Restore":
-                      service.markdeleteRestoreUser(
-                          context, snapshot.id as String);
+                      service
+                          .markdeleteRestoreUser(context, snapshot.id as String)
+                          .whenComplete(
+                            () => Future.delayed(
+                              Duration(seconds: 2),
+                              () {
+                                _pullRefresh();
+                              },
+                            ),
+                          );
+
                       break;
                     default:
                   }
@@ -590,41 +617,8 @@ class _DashboardPageState extends State<DashboardPage> {
     }
   }
 
-  Future _dialogBuilder(BuildContext context, String id) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirmation'),
-          content: const Text('Are you sure want to delete this account?'),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Confirm'),
-              onPressed: () {
-                service.markdeleteUser(context, id);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<dynamic> dialogEdit(BuildContext context) {
-    return showDialog(
+  Future<dynamic> dialogEdit(BuildContext context) async {
+    return await showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) {

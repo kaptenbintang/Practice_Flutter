@@ -27,7 +27,9 @@ class ControllerPage extends StatelessWidget {
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  if (snapshot.hasData && snapshot.data != null) {
+                  if (snapshot.hasData &&
+                      snapshot.data != null &&
+                      snapshot.data?['markDeleted'] == false) {
                     if (snapshot.data?['roles'] != 'user') {
                       // Navigator.pushReplacementNamed(
                       print('aaaaaaaaaaaaaaaaaaaaa');
