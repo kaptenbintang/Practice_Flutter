@@ -12,9 +12,9 @@ Widget createDrawerHeader() {
         Positioned(
             bottom: 12.0,
             left: 16.0,
-            child: Text("Welcome to Flutter",
+            child: Text("Staff Dashboard",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 20.0,
                     fontWeight: FontWeight.w500))),
       ]));
