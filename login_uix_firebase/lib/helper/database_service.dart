@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
+import 'package:login_uix_firebase/model/serviceCategory_data.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
 
 import '../model/clientType_data.dart';
@@ -24,6 +25,10 @@ class DataService {
 
   addServices(ServicesData servicesData) async {
     await _db.collection("services").add(servicesData.toMap());
+  }
+
+  addServicesCategory(serviceCategoryClass servicesDataCategory) async {
+    await _db.collection("servicesCategory").add(servicesDataCategory.toMap());
   }
 
   Future<void> updateUser(UserData employeeData) async {
@@ -52,6 +57,14 @@ class DataService {
         .collection("services")
         .doc(servicesData.id)
         .update(servicesData.toMap());
+  }
+
+  Future<void> updateServicesCategory(
+      serviceCategoryClass servicesDataCategory) async {
+    await _db
+        .collection("servicesCategory")
+        .doc(servicesDataCategory.id)
+        .update(servicesDataCategory.toMap());
   }
 
   Future<void> deleteUser(BuildContext context, String documentId) async {
@@ -115,6 +128,24 @@ class DataService {
           builder: (context) {
             return AlertDialog(
               content: Text("Deleted Services"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> deleteServicesCategory(
+      BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("servicesCategory").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Services Category"),
             );
           },
         );
@@ -236,6 +267,15 @@ class DataService {
         await _db.collection("clientType").get();
     return snapshot.docs
         .map((docSnapshot) => ClientData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<serviceCategoryClass>> retrieveServiceCategory() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection("servicesCategory").get();
+    return snapshot.docs
+        .map((docSnapshot) =>
+            serviceCategoryClass.fromDocumentSnapshot(docSnapshot))
         .toList();
   }
 
