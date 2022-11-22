@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
@@ -23,11 +25,16 @@ class _ManageServicesState extends State<ManageServices> {
   List<Map<String, dynamic>>? listofColumn;
   ServicesData? dataU;
 
-  final _clientTypeController = TextEditingController();
+  final _categoryNameController = TextEditingController();
+  final _durationController = TextEditingController();
+  final _serviceNameController = TextEditingController();
+  final _priceController = TextEditingController();
 
   String? userId;
-  String? servicesName;
-
+  String? servicesNameID;
+  String? categoryNameID;
+  String? durationID;
+  String? priceID;
   String? selectedValueClient;
   String? selectedValue;
   int _currentSortColumn = 0;
@@ -162,7 +169,7 @@ class _ManageServicesState extends State<ManageServices> {
                       ),
                       FloatingActionButton(
                         onPressed: () {
-                          dialogAddNewClientType(context);
+                          dialogAddNewServices(context);
                         },
                         tooltip: "Add New Client Type",
                         child: Icon(Icons.add),
@@ -242,10 +249,13 @@ class _ManageServicesState extends State<ManageServices> {
         // ),
         DataCell(ElevatedButton(
             onPressed: () {
-              dialogEditClientType(context);
+              dialogEditServices(context);
               setState(() {
                 userId = snapshot.id;
-                servicesName = snapshot.servicesName;
+                servicesNameID = snapshot.servicesName;
+                durationID = snapshot.duration;
+                categoryNameID = snapshot.categoryName;
+                priceID = snapshot.price;
               });
             },
             child: const Text('Edit'))),
@@ -262,13 +272,15 @@ class _ManageServicesState extends State<ManageServices> {
     );
   }
 
-  Future<dynamic> dialogEditClientType(BuildContext context) {
-    List<bool> listOfValue = [true, false];
+  Future<dynamic> dialogEditServices(BuildContext context) {
+    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
+        .collection('servicesCategory')
+        .snapshots(includeMetadataChanges: true);
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Edit Client Type"),
+            title: const Text("Edit Services"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
@@ -293,9 +305,71 @@ class _ManageServicesState extends State<ManageServices> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
-                          controller: _clientTypeController,
+                          controller: _serviceNameController,
                           decoration: InputDecoration(
-                            labelText: "Client Type",
+                            labelText: "Service Name",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _durationController,
+                          decoration: InputDecoration(
+                            labelText: "Duration",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: _categoryStream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('Something went wrong');
+                            }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text("Loading");
+                            }
+                            return Container(
+                                child: DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                disabledItemFn: (String s) => s.startsWith('I'),
+                              ),
+                              items: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return data["categoryName"];
+                                  })
+                                  .toList()
+                                  .cast<String>(),
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Select Category",
+                                  hintText: "list of category",
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  categoryNameID = value!;
+                                });
+                              },
+                              selectedItem: categoryNameID,
+                            ));
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _priceController,
+                          decoration: InputDecoration(
+                            labelText: "Price",
                           ),
                         ),
                       ),
@@ -310,7 +384,10 @@ class _ManageServicesState extends State<ManageServices> {
                             if (_formKey.currentState!.validate()) {
                               ServicesData servicesData = ServicesData(
                                 id: userId,
-                                servicesName: _clientTypeController.text,
+                                servicesName: _serviceNameController.text,
+                                duration: _durationController.text,
+                                categoryName: categoryNameID,
+                                price: _priceController.text,
                               );
                               await service.updateServices(servicesData);
                               Navigator.pop(context);
@@ -332,12 +409,15 @@ class _ManageServicesState extends State<ManageServices> {
         });
   }
 
-  Future<dynamic> dialogAddNewClientType(BuildContext context) {
+  Future<dynamic> dialogAddNewServices(BuildContext context) {
+    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
+        .collection('servicesCategory')
+        .snapshots(includeMetadataChanges: true);
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Add new client type"),
+            title: const Text("Add new services"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
@@ -362,13 +442,89 @@ class _ManageServicesState extends State<ManageServices> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
-                          controller: _clientTypeController,
+                          controller: _serviceNameController,
                           decoration: InputDecoration(
-                            labelText: "Enter client type name",
+                            labelText: "Enter Service Name",
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Enter correct client type name";
+                              return "Enter correct service name";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _durationController,
+                          decoration: InputDecoration(
+                            labelText: "Enter duration services",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter correct duration";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: _categoryStream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('Something went wrong');
+                            }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text("Loading");
+                            }
+                            return Container(
+                                child: DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                disabledItemFn: (String s) => s.startsWith('I'),
+                              ),
+                              items: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return data["categoryName"];
+                                  })
+                                  .toList()
+                                  .cast<String>(),
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Select Category",
+                                  hintText: "list of category",
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  categoryNameID = value!;
+                                });
+                              },
+                              // selectedItem: categoryNameID,
+                            ));
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _priceController,
+                          decoration: InputDecoration(
+                            labelText: "Enter price service",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter price";
                             } else {
                               return null;
                             }
@@ -386,7 +542,10 @@ class _ManageServicesState extends State<ManageServices> {
                             if (_formKey.currentState!.validate()) {
                               ServicesData servicesData = ServicesData(
                                   id: userId,
-                                  servicesName: _clientTypeController.text);
+                                  servicesName: _serviceNameController.text,
+                                  duration: _durationController.text,
+                                  categoryName: categoryNameID,
+                                  price: _priceController.text);
                               await service.addServices(servicesData);
                               Navigator.pop(context);
                               _pullRefresh();
