@@ -10,15 +10,16 @@ import 'auth_page.dart';
 
 class ControllerPage extends StatelessWidget {
   static const routeName = '/controllerPage';
+  // BuildContext? contexts;
 
-  const ControllerPage({super.key});
+  ControllerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
+          builder: (context0, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return StreamBuilder<DocumentSnapshot>(
                 stream: FirebaseFirestore.instance
@@ -44,6 +45,21 @@ class ControllerPage extends StatelessWidget {
 
                       return const MainPage();
                     }
+                  } else if (snapshot.data?['markDeleted'] == true) {
+                    FirebaseAuth.instance.signOut().whenComplete(
+                      () {
+                        showDialog(
+                          context: context0,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: Text("Account Have Been Removed"),
+                            );
+                          },
+                        );
+                      },
+                    );
+
+                    return LoginPage();
                   } else {
                     return Material(
                       child: Center(

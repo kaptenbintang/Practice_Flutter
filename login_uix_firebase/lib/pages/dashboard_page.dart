@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
+import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:login_uix_firebase/pages/login_page.dart';
@@ -35,6 +36,8 @@ class _DashboardPageState extends State<DashboardPage> {
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   UserData? dataU;
+
+  List<RolesData>? rolesList;
 
   final _scrollController = ScrollController();
 
@@ -65,7 +68,8 @@ class _DashboardPageState extends State<DashboardPage> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
 
-  List<String> listOfValueRoles = ['Developer', 'user', 'admin', 'superadmin'];
+  List<String> listOfValueRoles = ['user'];
+  // ['Developer', 'user', 'admin', 'superadmin'];
 
   List<String> listOfValue = [
     'satu',
@@ -85,14 +89,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     selectedValue2 = dropDownItemValue2[0];
 
     _scaffoldKey = GlobalKey();
     rolesType = 'superadmin'.toString();
-
-    // rolesType = "superadmin";
 
     _initRetrieval();
     super.initState();
@@ -112,13 +112,17 @@ class _DashboardPageState extends State<DashboardPage> {
     //   },
     //   onError: (e) => print("Error getting document: $e"),
     // );
-
     userList = service.retrieveAllUsers(rolesType);
     retrievedUserList = await service.retrieveAllUsers(rolesType);
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
         retrievedUserList!.length, (int index) => 'Action');
+    rolesList = await service.retrieveRoles();
+    rolesList?.forEach((element) {
+      listOfValueRoles.add(element.rolesName.toString());
+    });
+    print(listOfValueRoles);
   }
 
   Future<void> _pullRefresh() async {
@@ -254,18 +258,10 @@ class _DashboardPageState extends State<DashboardPage> {
                           label: Text('Client Type',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
-                      // currentUserData!.containsKey("roles")
-                      // currentUserData?["roles"] == 'Developer'
-                      // ?
                       DataColumn(
                           label: Text('Roles',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
-                      // : DataColumn(
-                      //     label: Text('',
-                      //         style: TextStyle(
-                      //             fontSize: 18,
-                      //             fontWeight: FontWeight.bold))),
                       DataColumn(
                           label: Text('Created Date',
                               style: TextStyle(
@@ -276,7 +272,6 @@ class _DashboardPageState extends State<DashboardPage> {
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold))),
-
                       DataColumn(
                           label: Text('Action',
                               style: TextStyle(
