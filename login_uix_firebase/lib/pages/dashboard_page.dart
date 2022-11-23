@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:html' as html;
 import 'dart:math';
 
@@ -76,7 +78,12 @@ class _DashboardPageState extends State<DashboardPage> {
     'none',
     'unassigned',
   ];
-  List<String> dropDownItemValue2 = ['Action', 'Edit', 'Remove'];
+  List<String> dropDownItemValue2 = [
+    'Action',
+    'Edit',
+    'Remove',
+    'ResetPassword'
+  ];
 
   List<bool>? selected;
   List<String>? valuesList;
@@ -432,9 +439,11 @@ class _DashboardPageState extends State<DashboardPage> {
                         marDeleted = snapshot.markDeleted;
                       });
                       break;
-                    case "Change Password":
-                      dialogChangePassword(context);
-
+                    case "ResetPassword":
+                      dialogResetPassword(context);
+                      setState(() {
+                        _emailController.text = snapshot.emailUser;
+                      });
                       break;
                     default:
                   }
@@ -460,6 +469,10 @@ class _DashboardPageState extends State<DashboardPage> {
                     child: Text('Remove'),
                     value: "Remove",
                   ),
+                DropdownMenuItem(
+                  child: Text('Change Password'),
+                  value: "ResetPassword",
+                ),
               ],
             ),
           ),
@@ -561,9 +574,11 @@ class _DashboardPageState extends State<DashboardPage> {
                         marDeleted = snapshot.markDeleted;
                       });
                       break;
-                    case "Change Password":
-                      dialogChangePassword(context);
-
+                    case "ResetPassword":
+                      dialogResetPassword(context);
+                      setState(() {
+                        _emailController.text = snapshot.emailUser;
+                      });
                       break;
                     case "Restore":
                       service
@@ -596,6 +611,10 @@ class _DashboardPageState extends State<DashboardPage> {
                 DropdownMenuItem(
                   child: Text('Edit'),
                   value: "Edit",
+                ),
+                DropdownMenuItem(
+                  child: Text('Reset Password'),
+                  value: "ResetPassword",
                 ),
                 if (currentUser.uid.toString != snapshot.id.toString &&
                     snapshot.markDeleted == false)
@@ -1078,14 +1097,14 @@ class _DashboardPageState extends State<DashboardPage> {
         });
   }
 
-  Future<dynamic> dialogChangePassword(BuildContext context) {
+  Future<dynamic> dialogResetPassword(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: const Text("Create new pasword for this user"),
+            title: const Text("Send a link reset password"),
             content: SingleChildScrollView(
                 child: ListBody(
               children: [
@@ -1100,60 +1119,28 @@ class _DashboardPageState extends State<DashboardPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                            controller: newPasswordController,
-                            obscureText: true,
+                            controller: _emailController,
+                            // maxLines: 1,
+                            // maxLength: 6,
                             decoration: InputDecoration(
-                              labelText: "New Password",
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
+                              hintText: "Enter your email address",
+                              hintStyle: TextStyle(color: Color(0xFF6f6f6f)),
+                              counterText: '',
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(12)),
-                              fillColor: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(15.0),
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                                borderSide: BorderSide(
+                                  color: Color(0xFFf3f5f6),
+                                  width: 2.0,
+                                ),
+                              ),
+                              fillColor: Colors.white,
                               filled: true,
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter password';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        FlutterPwValidator(
-                            width: 350,
-                            height: 110,
-                            minLength: 6,
-                            uppercaseCharCount: 1,
-                            numericCharCount: 1,
-                            specialCharCount: 1,
-                            onSuccess: () {
-                              print("submitted");
-                            },
-                            controller: newPasswordController),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: newConfirmPasswordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              labelText: "Confirm Password",
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(12)),
-                              fillColor: Colors.grey[200],
-                              filled: true,
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter password';
-                              }
-                              return null;
-                            },
+                            readOnly: true,
                           ),
                         ),
                         Row(
@@ -1175,15 +1162,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        newPassword =
-                                            newPasswordController.text;
-                                      });
-                                      changePassword();
-                                    }
-                                  },
+                                  onPressed: passwordReset,
                                   child: const Text('Confirm'),
                                 ),
                               ),
@@ -1200,22 +1179,28 @@ class _DashboardPageState extends State<DashboardPage> {
         });
   }
 
-  changePassword() async {
-    if (passwordConfirmed()) {
-      try {
-        await this.currentUser!.updatePassword(selectedValue2);
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Text("Change Password Successfully"),
-              );
-            });
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //   backgroundColor: Colors.black26,
-        //   content: Text("Your password has been changed & login again!"),
-        // ));
-      } catch (error) {}
+  Future passwordReset() async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: _emailController.text.trim());
+      Navigator.pop(context);
+      // Util.routeToWidget(context, CheckEmailView());
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text('Password reset link sent! Please check email!'),
+            );
+          });
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(e.message.toString()),
+            );
+          });
     }
   }
 
