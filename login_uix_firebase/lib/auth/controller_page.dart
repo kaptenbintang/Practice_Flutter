@@ -3,11 +3,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/pages/LandingPage/landing_page.dart';
+import 'package:login_uix_firebase/pages/login/login_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
 
 import '../pages/dashboard_page.dart';
 import '../pages/profile_page.dart';
-import 'auth_page.dart';
 
 class ControllerPage extends StatelessWidget {
   const ControllerPage({super.key});
@@ -42,7 +43,7 @@ class ControllerPage extends StatelessWidget {
                 },
               );
             }
-            return AuthPage();
+            return LandingPage();
           }),
     );
   }

@@ -6,6 +6,7 @@ import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_widgets.dart';
 
 import 'package:flip_card/flip_card.dart';
+import 'package:login_uix_firebase/route.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
@@ -22,142 +23,189 @@ class LandingPageMobileWidget extends StatefulWidget {
 class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
   PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+//  Navigator.pushNamed(context, RouteName.loginPage);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       drawer: Drawer(
-        elevation: 16,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          scrollDirection: Axis.vertical,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.person,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                Container(
-                  width: 20,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
+          elevation: 16,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                child: InkWell(
+                  onTap: () =>
+                      Navigator.pushNamed(context, RouteName.loginPage),
+                  child: Container(
+                    width: 50,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Color(0x00FFFFFF),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: 40,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                          child: SelectionArea(
+                              child: Text(
+                            'Log In',
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 20,
+                                    ),
+                          )),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                SelectionArea(
-                    child: Text(
-                  'Log In',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                )),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.star,
-                  color: Colors.black,
-                  size: 40,
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: 50,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Color(0x00FFFFFF),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.black,
+                          size: 40,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                          child: SelectionArea(
+                              child: Text(
+                            'Start Now',
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 20,
+                                    ),
+                          )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                Container(
-                  width: 20,
-                  height: 80,
-                  decoration: BoxDecoration(),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: 50,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Color(0x00FFFFFF),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.event,
+                          color: Colors.black,
+                          size: 40,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                          child: SelectionArea(
+                              child: Text(
+                            'Events',
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 20,
+                                    ),
+                          )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                SelectionArea(
-                    child: Text(
-                  'Start Now',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                )),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.event,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                Container(
-                  width: 20,
-                  height: 80,
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+                child: Container(
+                  width: 100,
+                  height: 30,
                   decoration: BoxDecoration(
                     color: Color(0x00FFFFFF),
                   ),
+                  child: SelectionArea(
+                      child: Text(
+                    'Follow Us',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
+                  )),
                 ),
-                SelectionArea(
-                    child: Text(
-                  'Events',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                )),
-              ],
-            ),
-            Container(
-              width: 100,
-              height: 30,
-              decoration: BoxDecoration(
-                color: Color(0x00FFFFFF),
               ),
-              child: SelectionArea(
-                  child: Text(
-                'Follow Us',
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Poppins',
-                      fontSize: 18,
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.face,
+                      color: Colors.black,
+                      size: 40,
                     ),
-              )),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.face,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                Icon(
-                  Icons.check_circle,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                Icon(
-                  Icons.photo,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                Icon(
-                  Icons.ondemand_video,
-                  color: Colors.black,
-                  size: 40,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.check_circle,
+                      color: Colors.black,
+                      size: 40,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.photo,
+                      color: Colors.black,
+                      size: 40,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.ondemand_video,
+                      color: Colors.black,
+                      size: 40,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          )),
       body: NestedScrollView(
         headerSliverBuilder: (context, _) => [
           SliverAppBar(
@@ -175,11 +223,26 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                   ),
             )),
             actions: [
-              Image.asset(
-                'assets/images/Signature-Logo.png',
-                width: 100,
-                height: 100,
-                fit: BoxFit.contain,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    borderRadius: BorderRadius.circular(5),
+                    shape: BoxShape.rectangle,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(2, 0, 2, 0),
+                    child: Image.asset(
+                      'assets/images/Signature-Logo.png',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
             ],
             centerTitle: false,
@@ -209,6 +272,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     PageController(initialPage: 0),
                                 scrollDirection: Axis.horizontal,
                                 children: [
+                                  //Pageview0
                                   Stack(
                                     children: [
                                       Image.asset(
@@ -221,17 +285,41 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                         alignment:
                                             AlignmentDirectional(-0.03, -0.51),
                                         child: SelectionArea(
-                                            child: Text(
-                                          'Personal',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title1
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: Color(0xFF68EBDC),
+                                            child: Stack(
+                                          children: <Widget>[
+                                            // Stroked text as border.
+                                            Text(
+                                              'Business',
+                                              style: TextStyle(
                                                 fontSize: 50,
+                                                foreground: Paint()
+                                                  ..style = PaintingStyle.stroke
+                                                  ..strokeWidth = 3
+                                                  ..color = Colors.black,
                                               ),
-                                        )),
+                                            ),
+                                            // Solid text as fill.
+                                            Text(
+                                              'Business',
+                                              style: TextStyle(
+                                                fontSize: 50,
+                                                color: Color(0xFF68EBDC),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                            //     Text(
+                                            //   'Personal',
+                                            //   textAlign: TextAlign.center,
+                                            //   style: FlutterFlowTheme.of(context)
+                                            //       .title1
+                                            //       .override(
+                                            //         fontFamily: 'Poppins',
+                                            //         color: Color(0xFF68EBDC),
+                                            //         fontSize: 50,
+                                            //       ),
+                                            // )
+                                            ),
                                       ),
                                       Align(
                                         alignment: AlignmentDirectional(0, 1),
@@ -352,6 +440,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                       ),
                                     ],
                                   ),
+                                  //Pageview1
                                   Stack(
                                     children: [
                                       Image.asset(
@@ -364,17 +453,41 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                         alignment:
                                             AlignmentDirectional(-0.03, -0.51),
                                         child: SelectionArea(
-                                            child: Text(
-                                          'Personal',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title1
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: Color(0xFF68EBDC),
+                                            child: Stack(
+                                          children: <Widget>[
+                                            // Stroked text as border.
+                                            Text(
+                                              'Personal',
+                                              style: TextStyle(
                                                 fontSize: 50,
+                                                foreground: Paint()
+                                                  ..style = PaintingStyle.stroke
+                                                  ..strokeWidth = 3
+                                                  ..color = Colors.black,
                                               ),
-                                        )),
+                                            ),
+                                            // Solid text as fill.
+                                            Text(
+                                              'Personal',
+                                              style: TextStyle(
+                                                fontSize: 50,
+                                                color: Color(0xFF68EBDC),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                            // Text(
+                                            //   'Personal',
+                                            //   textAlign: TextAlign.center,
+                                            //   style: FlutterFlowTheme.of(context)
+                                            //       .title1
+                                            //       .override(
+                                            //         fontFamily: 'Poppins',
+                                            //         color: Color(0xFF68EBDC),
+                                            //         fontSize: 50,
+                                            //       ),
+                                            // )
+                                            ),
                                       ),
                                       Align(
                                         alignment: AlignmentDirectional(0, 1),
@@ -905,7 +1018,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                         .title3
                                         .override(
                                           fontFamily: 'Poppins',
-                                          fontSize: 15,
+                                          fontSize: 13,
                                         ),
                                   )),
                                   Container(
@@ -1635,31 +1748,34 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                               color: Color(0x00FFFFFF),
                             ),
                           ),
-                          FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
-                            text: 'Book a free phone consultation',
-                            icon: Icon(
-                              Icons.phone,
-                              size: 18,
-                            ),
-                            options: FFButtonOptions(
-                              width: 250,
-                              height: 50,
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Oswald',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryColor,
-                                  ),
-                              borderSide: BorderSide(
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                              },
+                              text: 'Book a free phone consultation',
+                              icon: Icon(
+                                Icons.phone,
+                                size: 18,
+                              ),
+                              options: FFButtonOptions(
+                                width: 250,
+                                height: 50,
                                 color:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                width: 1,
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Oswald',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryColor,
+                                    ),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryColor,
+                                  width: 1,
+                                ),
                               ),
                             ),
                           ),

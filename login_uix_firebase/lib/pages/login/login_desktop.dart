@@ -6,8 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../forgot_pw_page.dart';
 
 class LoginDesktop extends StatefulWidget {
-  final VoidCallback showRegisterPage;
-  const LoginDesktop({super.key, required this.showRegisterPage});
+  const LoginDesktop({super.key});
 
   @override
   State<LoginDesktop> createState() => _LoginDesktopState();
@@ -253,7 +252,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       GestureDetector(
-                        onTap: widget.showRegisterPage,
+                        onTap: () {},
                         child: Text(
                           " Register now!",
                           style: TextStyle(

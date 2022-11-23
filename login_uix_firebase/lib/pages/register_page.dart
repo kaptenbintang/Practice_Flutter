@@ -11,8 +11,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
 
 class RegisterPage extends StatefulWidget {
-  final VoidCallback showLoginPage;
-  const RegisterPage({super.key, required this.showLoginPage});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -579,7 +578,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       GestureDetector(
-                        onTap: widget.showLoginPage,
+                        onTap: () {},
                         child: Text(
                           " Login now!",
                           style: TextStyle(

@@ -2,6 +2,7 @@ import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:login_uix_firebase/route.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
@@ -29,84 +30,95 @@ class _LandingPageDesktopWidgetState extends State<LandingPageDesktopWidget> {
           padding: EdgeInsets.zero,
           scrollDirection: Axis.vertical,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.person,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                Container(
-                  width: 20,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, RouteName.loginPage);
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: Colors.black,
+                    size: 40,
                   ),
-                ),
-                SelectionArea(
-                    child: Text(
-                  'Log In',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                )),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.star,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                Container(
-                  width: 20,
-                  height: 80,
-                  decoration: BoxDecoration(),
-                ),
-                SelectionArea(
-                    child: Text(
-                  'Start Now',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                )),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.event,
-                  color: Colors.black,
-                  size: 40,
-                ),
-                Container(
-                  width: 20,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Color(0x00FFFFFF),
+                  Container(
+                    width: 20,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                    ),
                   ),
-                ),
-                SelectionArea(
-                    child: Text(
-                  'Events',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                )),
-              ],
+                  SelectionArea(
+                      child: Text(
+                    'Log In',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                        ),
+                  )),
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {},
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.black,
+                    size: 40,
+                  ),
+                  Container(
+                    width: 20,
+                    height: 80,
+                    decoration: BoxDecoration(),
+                  ),
+                  SelectionArea(
+                      child: Text(
+                    'Start Now',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                        ),
+                  )),
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {},
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.event,
+                    color: Colors.black,
+                    size: 40,
+                  ),
+                  Container(
+                    width: 20,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Color(0x00FFFFFF),
+                    ),
+                  ),
+                  SelectionArea(
+                      child: Text(
+                    'Events',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                        ),
+                  )),
+                ],
+              ),
             ),
             Container(
               width: 100,
@@ -129,25 +141,37 @@ class _LandingPageDesktopWidgetState extends State<LandingPageDesktopWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.face,
-                  color: Colors.black,
-                  size: 40,
+                InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.face,
+                    color: Colors.black,
+                    size: 40,
+                  ),
                 ),
-                Icon(
-                  Icons.check_circle,
-                  color: Colors.black,
-                  size: 40,
+                InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.check_circle,
+                    color: Colors.black,
+                    size: 40,
+                  ),
                 ),
-                Icon(
-                  Icons.photo,
-                  color: Colors.black,
-                  size: 40,
+                InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.photo,
+                    color: Colors.black,
+                    size: 40,
+                  ),
                 ),
-                Icon(
-                  Icons.ondemand_video,
-                  color: Colors.black,
-                  size: 40,
+                InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.ondemand_video,
+                    color: Colors.black,
+                    size: 40,
+                  ),
                 ),
               ],
             ),
@@ -171,11 +195,26 @@ class _LandingPageDesktopWidgetState extends State<LandingPageDesktopWidget> {
                   ),
             )),
             actions: [
-              Image.asset(
-                'assets/images/Signature-Logo.png',
-                width: 100,
-                height: 100,
-                fit: BoxFit.contain,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    borderRadius: BorderRadius.circular(5),
+                    shape: BoxShape.rectangle,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(2, 0, 2, 0),
+                    child: Image.asset(
+                      'assets/images/Signature-Logo.png',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
             ],
             centerTitle: false,
@@ -192,6 +231,7 @@ class _LandingPageDesktopWidgetState extends State<LandingPageDesktopWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      //PageView
                       Container(
                         width: double.infinity,
                         height: 500,
@@ -201,10 +241,12 @@ class _LandingPageDesktopWidgetState extends State<LandingPageDesktopWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
                               child: PageView(
+                                physics: const NeverScrollableScrollPhysics(),
                                 controller: pageViewController ??=
                                     PageController(initialPage: 0),
                                 scrollDirection: Axis.horizontal,
                                 children: [
+                                  //PageView0
                                   Stack(
                                     children: [
                                       Image.asset(
@@ -351,6 +393,7 @@ class _LandingPageDesktopWidgetState extends State<LandingPageDesktopWidget> {
                                       ),
                                     ],
                                   ),
+                                  //PageView1
                                   Stack(
                                     children: [
                                       Image.asset(
@@ -525,8 +568,8 @@ class _LandingPageDesktopWidgetState extends State<LandingPageDesktopWidget> {
                                     expansionFactor: 2,
                                     spacing: 8,
                                     radius: 16,
-                                    dotWidth: 16,
-                                    dotHeight: 16,
+                                    dotWidth: 30,
+                                    dotHeight: 30,
                                     dotColor: Color(0xFF292121),
                                     activeDotColor: FlutterFlowTheme.of(context)
                                         .primaryColor,
@@ -1685,33 +1728,36 @@ class _LandingPageDesktopWidgetState extends State<LandingPageDesktopWidget> {
                               ],
                             ),
                           ),
-                          FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
-                            text: 'Book a free phone consultation',
-                            icon: Icon(
-                              Icons.phone,
-                              size: 18,
-                            ),
-                            options: FFButtonOptions(
-                              width: 250,
-                              height: 50,
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Oswald',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryColor,
-                                  ),
-                              borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                width: 1,
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                              },
+                              text: 'Book a free phone consultation',
+                              icon: Icon(
+                                Icons.phone,
+                                size: 18,
                               ),
-                              borderRadius: 0,
+                              options: FFButtonOptions(
+                                width: 250,
+                                height: 50,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Oswald',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryColor,
+                                    ),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryColor,
+                                  width: 1,
+                                ),
+                                borderRadius: 0,
+                              ),
                             ),
                           ),
                         ],

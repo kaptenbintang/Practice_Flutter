@@ -9,8 +9,7 @@ import 'package:login_uix_firebase/pages/register_page.dart';
 import '../forgot_pw_page.dart';
 
 class LoginMobile extends StatefulWidget {
-  final VoidCallback showRegisterPage;
-  const LoginMobile({super.key, required this.showRegisterPage});
+  const LoginMobile({super.key});
 
   @override
   State<LoginMobile> createState() => _LoginMobileState();
@@ -254,7 +253,7 @@ class _LoginMobileState extends State<LoginMobile> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           GestureDetector(
-                            onTap: widget.showRegisterPage,
+                            onTap: () {},
                             child: Text(
                               " Register now!",
                               style: TextStyle(
