@@ -33,6 +33,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
@@ -42,8 +43,8 @@ class _MainPageState extends State<MainPage> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Image.network(
-              'https://relationary.com/wp-content/uploads/2021/11/Logo-Slogan-BL-H400-W1080.png',
+            Image.asset(
+              'lib/images/Logo-Slogan-BL-H400-W1080.png',
               width: 250,
               height: double.infinity,
               fit: BoxFit.scaleDown,
@@ -202,8 +203,8 @@ class _MainPageState extends State<MainPage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.network(
-                                  'https://relationary.com/wp-content/uploads/2021/05/Adjustment-Icon-7.png',
+                                child: Image.asset(
+                                  'lib/images/Adjustment-Icon-7.png',
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
@@ -212,8 +213,8 @@ class _MainPageState extends State<MainPage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.network(
-                                  'https://relationary.com/wp-content/uploads/2021/05/7.png',
+                                child: Image.asset(
+                                  'lib/images/7.png',
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
@@ -222,8 +223,8 @@ class _MainPageState extends State<MainPage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.network(
-                                  'https://relationary.com/wp-content/uploads/2021/05/9.png',
+                                child: Image.asset(
+                                  'lib/images/9.png',
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
@@ -232,8 +233,8 @@ class _MainPageState extends State<MainPage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.network(
-                                  'https://relationary.com/wp-content/uploads/2021/05/10.png',
+                                child: Image.asset(
+                                  'lib/images/10.png',
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
@@ -292,9 +293,11 @@ class _MainPageState extends State<MainPage> {
                                               Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(40, 40, 40, 40),
-                                                child: Image.network(
-                                                  'https://relationary.com/wp-content/uploads/2019/07/Ammar-Abuzahra-27667863-400x250.jpg',
-                                                  fit: BoxFit.fitHeight,
+                                                child: Image.asset(
+                                                  'lib/images/Ammar-Abuzahra-27667863-400x250.jpg',
+                                                  height: 180,
+                                                  // width: 400,
+                                                  // fit: BoxFit.fitHeight,
                                                 ),
                                               ),
                                               FFButtonWidget(
@@ -352,9 +355,11 @@ class _MainPageState extends State<MainPage> {
                                               Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(40, 40, 40, 40),
-                                                child: Image.network(
-                                                  'https://relationary.com/wp-content/uploads/2019/07/Ammar-Abuzahra-27667863-400x250.jpg',
-                                                  fit: BoxFit.fitHeight,
+                                                child: Image.asset(
+                                                  'lib/images/Ammar-Abuzahra-27667863-400x250.jpg',
+                                                  height: 180,
+                                                  // width: 400,
+                                                  // fit: BoxFit.fitHeight,
                                                 ),
                                               ),
                                               FFButtonWidget(
@@ -412,9 +417,11 @@ class _MainPageState extends State<MainPage> {
                                               Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(40, 40, 40, 40),
-                                                child: Image.network(
-                                                  'https://relationary.com/wp-content/uploads/2019/07/Ammar-Abuzahra-27667863-400x250.jpg',
-                                                  fit: BoxFit.fitHeight,
+                                                child: Image.asset(
+                                                  'lib/images/Ammar-Abuzahra-27667863-400x250.jpg',
+                                                  height: 180,
+                                                  // width: 400,
+                                                  // fit: BoxFit.fitHeight,
                                                 ),
                                               ),
                                               FFButtonWidget(
