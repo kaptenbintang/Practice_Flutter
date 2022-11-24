@@ -6,6 +6,7 @@ class RolesData {
   final String? id;
   final String? rolesName;
   final bool? canWrite;
+  final bool? canWriteAll;
   final bool? canRead;
   final bool? canDelete;
 
@@ -13,6 +14,7 @@ class RolesData {
     this.id,
     this.rolesName,
     this.canWrite,
+    this.canWriteAll,
     this.canRead,
     this.canDelete,
   });
@@ -21,6 +23,7 @@ class RolesData {
     return {
       "rolesName": rolesName,
       "canWrite": canWrite,
+      "canWriteAll": canWriteAll,
       "canRead": canRead,
       "canDelete": canDelete,
     };
@@ -30,6 +33,7 @@ class RolesData {
       : id = doc.id,
         rolesName = doc.data()!["rolesName"],
         canWrite = doc.data()!["canWrite"],
+        canWriteAll = doc.data()!["canWriteAll"],
         canRead = doc.data()!["canRead"],
         canDelete = doc.data()!["canDelete"];
 }
