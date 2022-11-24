@@ -190,10 +190,12 @@ class DataService {
     );
   }
 
-  Future<List<UserData>> retrieveAllUsers(String? roles) async {
+  Future<List<UserData>> retrieveAllStaff(String? roles) async {
     if (roles == 'superadmin') {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
-          await _db.collection("users").get();
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+          .collection("users")
+          .where('roles', isNotEqualTo: 'user')
+          .get();
       return snapshot.docs
           .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
           .toList();
@@ -201,31 +203,13 @@ class DataService {
       QuerySnapshot<Map<String, dynamic>> snapshot = await _db
           .collection("users")
           .where('roles', isNotEqualTo: 'user')
-          // .where('markDeleted', isEqualTo: false)s
+          .where('markDeleted', isEqualTo: false)
           .get();
-      // ignore: avoid_print
 
       return snapshot.docs
           .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
           .toList();
     }
-
-    // final ref = _db.collection("users").doc().withConverter(
-    //       fromFirestore: UserData.fromFirestore,
-    //       toFirestore: (UserData data, _) => data.toFireStore(),
-    //     );
-    // final docSnap = await ref.get();
-    // return docSnap.data();
-  }
-
-  Future<List<UserData>> retrieveAllUsersNotDeleted() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
-        .collection("users")
-        .where('markDeleted', isEqualTo: false)
-        .get();
-    return snapshot.docs
-        .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
-        .toList();
 
     // final ref = _db.collection("users").doc().withConverter(
     //       fromFirestore: UserData.fromFirestore,
@@ -290,7 +274,7 @@ class DataService {
   Future<Map<String, dynamic>> currentUsers(uid) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _db.collection("users").doc(uid).get();
-    Map<String, dynamic>? data = snapshot.data();
-    return data!;
+    // Map<String, dynamic> data = snapshot.data()!;
+    return snapshot.data()!;
   }
 }
