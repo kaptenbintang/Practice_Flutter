@@ -1,406 +1,467 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 
-import '../main.dart';
+import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/mainPage';
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class DoctorItem extends StatelessWidget {
-  final String image;
-  final String name;
-  final String specialist;
-  const DoctorItem({
-    Key? key,
-    required this.image,
-    required this.name,
-    required this.specialist,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Container(
-        width: 160,
-        decoration: BoxDecoration(
-            color: const Color.fromARGB(95, 179, 173, 173),
-            borderRadius: BorderRadius.circular(15.0)),
-        padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage(image),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              "$name",
-              overflow: TextOverflow.fade,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              specialist,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.black54),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SpecialistItem extends StatelessWidget {
-  final String imagePath;
-  final String imageName;
-  const SpecialistItem({
-    Key? key,
-    required this.imagePath,
-    required this.imageName,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(95, 179, 173, 173),
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Row(
-        children: [
-          Image.asset(
-            imagePath,
-            width: 32,
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          Text(
-            imageName,
-            style: const TextStyle(fontSize: 14),
-          )
-        ],
-      ),
-    );
-  }
+  _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  // final user = FirebaseAuth.instance.currentUser!;
-  // final auth = FirebaseAuth.instance;
-  // final db = FirebaseFirestore.instance;
-  // var uid;
-  // var fName, lName, age;
+  TextEditingController? textController;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Future<void> getDataFromDb() async {
-  //   if (auth.currentUser != null) {
-  //     uid = auth.currentUser?.uid;
-  //     await db.collection("users").doc(uid).get().then((DocumentSnapshot doc) {
-  //       final data = doc.data() as Map<String, dynamic>;
-  //       fName = data["firstName"];
-  //       lName = data["lastName"];
-  //       age = data["age"];
-  //     });
-  //   }
-  // }
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController();
+  }
 
-  // @override
-  // void initState() {
-  //   getDataFromDb();
-  //   super.initState();
-  // }
-
-  // CollectionReference _getUsername =
-  //     FirebaseFirestore.instance.collection('users');
+  @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      // bottomNavigationBar: CurvedNavigationBar(
-      //   backgroundColor: Colors.blueAccent,
-      //   items: <Widget>[
-      //     Icon(Icons.home_outlined, size: 30),
-      //     Icon(Icons.calendar_month_outlined, size: 30),
-      //     Icon(Icons.chat_bubble_outline, size: 30),
-      //     Icon(Icons.notifications_none_outlined, size: 30),
-      //   ],
-      //   onTap: (index) {
-      //     //Handle button tap
-      //   },
-      // ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Hello,",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
+      key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
+        automaticallyImplyLeading: false,
+        leading: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Image.network(
+              'https://relationary.com/wp-content/uploads/2021/11/Logo-Slogan-BL-H400-W1080.png',
+              width: 250,
+              height: double.infinity,
+              fit: BoxFit.scaleDown,
+            ),
+          ],
+        ),
+        title: Align(
+          alignment: AlignmentDirectional(1, 0),
+          child: Container(
+            width: 200,
+            decoration: BoxDecoration(),
+            child: Container(
+              width: double.infinity,
+              child: TextFormField(
+                controller: textController,
+                autofocus: true,
+                obscureText: false,
+                decoration: InputDecoration(
+                  isDense: true,
+                  hintText: 'Search something..',
+                  hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      width: 1,
                     ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  // StreamBuilder<QuerySnapshot>(
-                  //     stream: _getUsername.snapshots(),
-                  //     builder: ((BuildContext context, AsyncSnapshot snapshot) {
-                  //       if (snapshot.hasError) {
-                  //         return Center(child: Text(snapshot.error.toString()));
-                  //       }
-                  //       if (snapshot.connectionState ==
-                  //           ConnectionState.active) {
-                  //         QuerySnapshot querySnapshot = snapshot.data;
-                  //       }
-                  //       return Center(child: CircularProgressIndicator());
-                  //     })),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 150),
-                    child: Text(
-                      "Welcome Back!",
-                      style: TextStyle(
-                        color: Colors.black,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      width: 1,
                     ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  MaterialButton(
-                    onPressed: () {
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                  ),
+                ),
+                style: FlutterFlowTheme.of(context).bodyText1,
+                textAlign: TextAlign.start,
+              ),
+            ),
+          ),
+        ),
+        actions: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                  child: Text(
+                    'Home',
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                  child: Text(
+                    'Contact us',
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                  child: Text(
+                    'About Us',
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                  child: InkWell(
+                    onTap: () {
                       Navigator.pushNamed(context, ProfilePage.routeName);
                     },
-                    child: const CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Colors.grey,
-                      child: CircleAvatar(
-                        radius: 22,
-                        backgroundImage: AssetImage("lib/icons/user.png"),
-                      ),
+                    child: Icon(
+                      Icons.account_circle,
+                      color: Colors.black,
+                      size: 60,
                     ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
+                  ),
                 ),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(95, 179, 173, 173),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset(
-                      "lib/icons/consultation.png",
-                      width: 92,
-                      height: 100,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              ],
+            ),
+          ),
+        ],
+        centerTitle: false,
+        toolbarHeight: 100,
+      ),
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: double.infinity,
+                  constraints: BoxConstraints(
+                    maxHeight: double.infinity,
+                  ),
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryColor,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text(
-                          "How do you feel?",
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        const SizedBox(
-                          width: 120,
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                           child: Text(
-                            "Fill out your medical right now",
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 12,
-                            ),
+                            'Hello World',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 40,
+                                ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
+                        Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                          child: Text(
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. giwighegjowjogweogjoiwejgwejogoiwegjoiewjofefef',
+                            textAlign: TextAlign.justify,
+                            style:
+                                FlutterFlowTheme.of(context).subtitle1.override(
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 20, 20, 20),
+                                child: Image.network(
+                                  'https://relationary.com/wp-content/uploads/2021/05/Adjustment-Icon-7.png',
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 20, 20, 20),
+                                child: Image.network(
+                                  'https://relationary.com/wp-content/uploads/2021/05/7.png',
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 20, 20, 20),
+                                child: Image.network(
+                                  'https://relationary.com/wp-content/uploads/2021/05/9.png',
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 20, 20, 20),
+                                child: Image.network(
+                                  'https://relationary.com/wp-content/uploads/2021/05/10.png',
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         Container(
-                          width: 150,
-                          height: 35,
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                              color: Colors.blueAccent,
-                              borderRadius: BorderRadius.circular(12.0)),
-                          child: const Center(
-                            child: Text(
-                              "Get Started",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
+                          width: double.infinity,
+                          height: 500,
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(0),
+                                    bottomRight: Radius.circular(0),
+                                    topLeft: Radius.circular(60),
+                                    topRight: Radius.circular(60),
+                                  ),
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            60, 0, 60, 0),
+                                        child: Container(
+                                          width: 400,
+                                          height: 300,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .lineColor,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 12,
+                                                color: Color(0x33000000),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            shape: BoxShape.rectangle,
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(40, 40, 40, 40),
+                                                child: Image.network(
+                                                  'https://relationary.com/wp-content/uploads/2019/07/Ammar-Abuzahra-27667863-400x250.jpg',
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                              ),
+                                              FFButtonWidget(
+                                                onPressed: () {
+                                                  print('Button pressed ...');
+                                                },
+                                                text: 'See more detail..',
+                                                options: FFButtonOptions(
+                                                  width: 130,
+                                                  height: 40,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color: Colors.white,
+                                                      ),
+                                                  borderSide: BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius: 8,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            150, 0, 0, 0),
+                                        child: Container(
+                                          width: 400,
+                                          height: 300,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .lineColor,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 12,
+                                                color: Color(0x33000000),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            shape: BoxShape.rectangle,
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(40, 40, 40, 40),
+                                                child: Image.network(
+                                                  'https://relationary.com/wp-content/uploads/2019/07/Ammar-Abuzahra-27667863-400x250.jpg',
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                              ),
+                                              FFButtonWidget(
+                                                onPressed: () {
+                                                  print('Button pressed ...');
+                                                },
+                                                text: 'See more detail..',
+                                                options: FFButtonOptions(
+                                                  width: 130,
+                                                  height: 40,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color: Colors.white,
+                                                      ),
+                                                  borderSide: BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius: 8,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            200, 0, 0, 0),
+                                        child: Container(
+                                          width: 400,
+                                          height: 300,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .lineColor,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 12,
+                                                color: Color(0x33000000),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            shape: BoxShape.rectangle,
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(40, 40, 40, 40),
+                                                child: Image.network(
+                                                  'https://relationary.com/wp-content/uploads/2019/07/Ammar-Abuzahra-27667863-400x250.jpg',
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                              ),
+                                              FFButtonWidget(
+                                                onPressed: () {
+                                                  print('Button pressed ...');
+                                                },
+                                                text: 'See more detail..',
+                                                options: FFButtonOptions(
+                                                  width: 130,
+                                                  height: 40,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color: Colors.white,
+                                                      ),
+                                                  borderSide: BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius: 8,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.only(left: 16),
-                height: 64,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(95, 179, 173, 173),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  children: const [
-                    Icon(
-                      Icons.search,
-                      size: 32,
-                      color: Colors.black54,
-                    ),
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Text(
-                      "How can we help you?",
-                      style: TextStyle(
-                        color: Colors.black54,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 60,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    SpecialistItem(
-                      imagePath: "lib/icons/calendar.png",
-                      imageName: "Booking",
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    SpecialistItem(
-                      imagePath: "lib/icons/calendar.png",
-                      imageName: "Booking",
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    SpecialistItem(
-                      imagePath: "lib/icons/calendar.png",
-                      imageName: "Booking",
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    SpecialistItem(
-                      imagePath: "lib/icons/calendar.png",
-                      imageName: "Booking",
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Consultant list",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
                   ),
-                  Text(
-                    "See all",
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 200,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    DoctorItem(
-                      image: "lib/images/doctor.png",
-                      name: "Bintang",
-                      specialist: "Consultant",
-                    ),
-                    DoctorItem(
-                      image: "lib/images/doctor.png",
-                      name: "Gilland",
-                      specialist: "Consultant",
-                    ),
-                    DoctorItem(
-                      image: "lib/images/doctor.png",
-                      name: "Zul",
-                      specialist: "Consultant",
-                    ),
-                    DoctorItem(
-                      image: "lib/images/doctor.png",
-                      name: "test",
-                      specialist: "Consultant",
-                    ),
-                  ],
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
-//test123
