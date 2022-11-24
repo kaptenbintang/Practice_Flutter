@@ -87,7 +87,6 @@ class _DashboardPageState extends State<DashboardPage> {
     selectedValue2 = dropDownItemValue2[0];
 
     _scaffoldKey = GlobalKey();
-    // rolesType = 'admin'.toString();
 
     _initRetrieval();
     super.initState();
@@ -319,14 +318,6 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
       ),
-      //     ElevatedButton(
-      //       child: Text("Log out"),
-      //       onPressed: () {
-      //         FirebaseAuth.instance.signOut();
-      //       },
-      //     )
-      //   ],
-      // ),
     );
   }
 
@@ -377,7 +368,6 @@ class _DashboardPageState extends State<DashboardPage> {
               elevation: 8,
               onChanged: (value) {
                 print(value);
-                // if value doesnt contain just close the dropDown
                 if (value == null) {
                   dropDownFocus.unfocus();
                 } else {
@@ -473,8 +463,6 @@ class _DashboardPageState extends State<DashboardPage> {
           DataCell(Text(snapshot.roles as String)),
           DataCell(Text(snapshot.createdAt as String)),
           DataCell(Text(snapshot.markDeleted.toString())),
-
-          // DataCell(Text(snapshot.markDeleted.toString())),
           DataCell(
             DropdownButton<String>(
               hint: valuesList![indexs] == null
@@ -736,38 +724,6 @@ class _DashboardPageState extends State<DashboardPage> {
                                 filled: true),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: TextFormField(
-                        //     controller: _rolesController,
-                        //     decoration: InputDecoration(
-                        //         labelText: "Roles",
-                        //         enabledBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide(color: Colors.white),
-                        //             borderRadius: BorderRadius.circular(12)),
-                        //         focusedBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide(color: Colors.blue),
-                        //             borderRadius: BorderRadius.circular(12)),
-                        //         fillColor: Colors.grey[200],
-                        //         filled: true),
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8),
-                        //   child: TextFormField(
-                        //     controller: _clientTypeController,
-                        //     decoration: InputDecoration(
-                        //         labelText: "Client Type",
-                        //         enabledBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide(color: Colors.white),
-                        //             borderRadius: BorderRadius.circular(12)),
-                        //         focusedBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide(color: Colors.blue),
-                        //             borderRadius: BorderRadius.circular(12)),
-                        //         fillColor: Colors.grey[200],
-                        //         filled: true),
-                        //   ),
-                        // ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: DropdownButtonHideUnderline(
