@@ -37,6 +37,8 @@ class _DashboardPageState extends State<DashboardPage> {
   List<Map<String, dynamic>>? listofColumn;
   UserData? dataU;
 
+  late UserData _userData;
+
   List<RolesData>? rolesList;
 
   final _emailController = TextEditingController();
@@ -55,6 +57,8 @@ class _DashboardPageState extends State<DashboardPage> {
   final db = FirebaseFirestore.instance;
   String? userId;
 
+  List<UserData> selectedUser = [];
+
   String? selectedValueRoles;
   String? selectedValue;
   late String selectedValue2;
@@ -64,8 +68,11 @@ class _DashboardPageState extends State<DashboardPage> {
   var marDeleted, createAt;
   var authoRoles;
 
-  int _currentSortColumn = 0;
-  bool _isAscending = true;
+  int? _currentSortColumn;
+  bool _isAscending = false;
+
+  // bool _sortAscending = true;
+  // int? _sortColumnIndex;
 
   List<String> listOfValueRoles = [];
   // ['Developer', 'user', 'admin', 'superadmin'];
@@ -91,9 +98,11 @@ class _DashboardPageState extends State<DashboardPage> {
   final FocusNode dropDownFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
+  final controllerSearch = TextEditingController();
+
   @override
   void initState() {
-    selectedValue2 = dropDownItemValue2[0];
+    // selectedValue2 = dropDownItemValue2[0];
 
     _scaffoldKey = GlobalKey();
 
@@ -123,8 +132,8 @@ class _DashboardPageState extends State<DashboardPage> {
       listOfValueRoles.add(element.rolesName.toString());
     });
 
-    print(listOfValueRoles);
-    print(rolesPriv);
+    // print(listOfValueRoles);
+    // print(rolesPriv);
   }
 
   Future<void> _pullRefresh() async {
@@ -141,8 +150,90 @@ class _DashboardPageState extends State<DashboardPage> {
       drawer: const DrawerDashBoard(),
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("Dashboard Home"),
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            Text("Dashboard Home"),
+            // SizedBox(
+            //   width: 10.0,
+            // ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: controllerSearch,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Search',
+                      focusedBorder: OutlineInputBorder()),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.search),
+            ),
+          ],
+        ),
         actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  // final names = selectedUser.map((e) => e.firstName).join(', ');
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(
+                  //     duration: const Duration(milliseconds: 1500),
+                  //     width: 300.0,
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 8.0,
+                  //     ),
+                  //     behavior: SnackBarBehavior.floating,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //     ),
+                  //     content: Text(
+                  //       'Selected User: $names',
+                  //     ),
+                  //   ),
+                  // );
+                  showDialog(
+                    context: context,
+                    builder: (contextm) {
+                      return AlertDialogConfirm(
+                          type: 'Remove',
+                          ids: selectedUser.map((e) => e.id!).toList(),
+                          contexts: context,
+                          textDesc: 'Are you sure?');
+                    },
+                  ).whenComplete(
+                    () => Future.delayed(
+                      Duration(seconds: 2),
+                      () {
+                        _pullRefresh();
+                        setState(() {
+                          selectedUser = [];
+                        });
+                      },
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete_sweep_outlined,
+                      size: 26.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Visibility(
+                        visible: selectedUser.isNotEmpty ? true : false,
+                        child: Text(
+                            'Selected ${selectedUser.length} Users out of ${retrievedUserList?.length}')),
+                  ],
+                ),
+              )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -204,6 +295,27 @@ class _DashboardPageState extends State<DashboardPage> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: DataTable2(
+                    onSelectAll: (value) {
+                      setState(() =>
+                          selectedUser = value! ? retrievedUserList! : []);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(milliseconds: 1500),
+                          width: 300.0,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          content: Text(
+                            'All user selected: $value',
+                          ),
+                        ),
+                      );
+                    },
                     columnSpacing: 12,
                     horizontalMargin: 12,
                     minWidth: 600,
@@ -212,24 +324,9 @@ class _DashboardPageState extends State<DashboardPage> {
                     columns: [
                       DataColumn(
                         onSort: (columnIndex, ascending) {
-                          setState(() {
-                            _currentSortColumn = columnIndex;
-                            // _currentSortColumn = columnIndex;
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                              // sort the product list in Ascending, order by Price
-                              retrievedUserList!.sort((productA, productB) =>
-                                  productB.clientCode!.compareTo(
-                                      productA.clientCode as String));
-                            } else {
-                              _isAscending = true;
-                              // sort the product list in Descending, order by Price
-                              retrievedUserList!.sort((productA, productB) =>
-                                  productA.clientCode!.compareTo(
-                                      productB.clientCode as String));
-                            }
-                          });
+                          onSort(columnIndex, ascending);
                         },
+                        // onSort,
                         label: Text(
                           'CT Code',
                           style: TextStyle(
@@ -237,6 +334,8 @@ class _DashboardPageState extends State<DashboardPage> {
                         ),
                       ),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('First Name',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
@@ -245,6 +344,8 @@ class _DashboardPageState extends State<DashboardPage> {
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('Email',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
@@ -257,19 +358,27 @@ class _DashboardPageState extends State<DashboardPage> {
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('Client Type',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('Roles',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('Created Date',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       if (authoRoles['canDelete'] != false)
                         DataColumn(
+                            onSort: (columnIndex, ascending) =>
+                                onSort(columnIndex, ascending),
                             label: Text('Marked Deleted',
                                 style: TextStyle(
                                     fontSize: 18,
@@ -334,22 +443,26 @@ class _DashboardPageState extends State<DashboardPage> {
     // int idx = int.parse(dropDownItemValue2[indexs]);
     if (rolesType! != "superadmin") {
       return DataRow(
-        color: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-          // All rows will have the same selected color.
-          if (states.contains(MaterialState.selected)) {
-            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-          }
-          // Even rows will have a grey color.
-          if (indexs.isEven) {
-            return Colors.grey.withOpacity(0.3);
-          }
-          return null; // Use default value for other states and odd rows.
-        }),
-        selected: selected![indexs],
-        onSelectChanged: (bool? value) {
+        // color: MaterialStateProperty.resolveWith<Color?>(
+        //     (Set<MaterialState> states) {
+        //   // All rows will have the same selected color.
+        //   if (states.contains(MaterialState.selected)) {
+        //     return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+        //   }
+        //   // Even rows will have a grey color.
+        //   if (indexs.isEven) {
+        //     return Colors.grey.withOpacity(0.3);
+        //   }
+        //   return null; // Use default value for other states and odd rows.
+        // }),
+        selected: selectedUser.contains(snapshot),
+        onSelectChanged: (isSelected) {
           setState(() {
-            selected![indexs] = value!;
+            final isAdding = isSelected != null && isSelected;
+
+            isAdding
+                ? selectedUser.add(snapshot)
+                : selectedUser.remove(snapshot);
           });
         },
         cells: [
@@ -459,10 +572,20 @@ class _DashboardPageState extends State<DashboardPage> {
           }
           return null; // Use default value for other states and odd rows.
         }),
-        selected: selected![indexs],
-        onSelectChanged: (bool? value) {
+        // selected: selected![indexs],
+        // onSelectChanged: (bool? value) {
+        //   setState(() {
+        //     selected![indexs] = value!;
+        //   });
+        // },
+        selected: selectedUser.contains(snapshot),
+        onSelectChanged: (isSelected) {
           setState(() {
-            selected![indexs] = value!;
+            final isAdding = isSelected != null && isSelected;
+
+            isAdding
+                ? selectedUser.add(snapshot)
+                : selectedUser.remove(snapshot);
           });
         },
         cells: [
@@ -1171,4 +1294,33 @@ class _DashboardPageState extends State<DashboardPage> {
     _formKey.currentState?.dispose();
     super.dispose();
   }
+
+  void onSort(int columnIndex, bool ascending) {
+    if (columnIndex == 0) {
+      retrievedUserList!.sort((user1, user2) =>
+          compareString(ascending, user1.clientCode, user2.clientCode));
+    } else if (columnIndex == 1) {
+      retrievedUserList!.sort((user1, user2) =>
+          compareString(ascending, user1.firstName, user2.firstName));
+    } else if (columnIndex == 3) {
+      retrievedUserList!.sort((user1, user2) =>
+          compareString(ascending, user1.emailUser, user2.emailUser));
+    } else if (columnIndex == 8) {
+      retrievedUserList!.sort((user1, user2) =>
+          compareString(ascending, '${user1.createdAt}', '${user2.createdAt}'));
+    } else if (columnIndex == 9) {
+      retrievedUserList!.sort((user1, user2) => compareString(
+          ascending, '${user1.markDeleted}', '${user2.markDeleted}'));
+    }
+
+    setState(() {
+      _currentSortColumn = columnIndex;
+      _isAscending = ascending;
+    });
+  }
+
+  int compareString(bool ascending, String? clientCode, String? clientCode2) =>
+      ascending
+          ? clientCode!.compareTo(clientCode2!)
+          : clientCode2!.compareTo(clientCode!);
 }
