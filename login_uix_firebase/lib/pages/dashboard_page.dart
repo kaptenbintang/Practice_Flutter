@@ -718,7 +718,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           child: TextFormField(
                             controller: _ageController,
                             decoration: InputDecoration(
-                                labelText: "Age",
+                                labelText: "Date of Birth",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                     borderRadius: BorderRadius.circular(12)),
@@ -752,12 +752,9 @@ class _DashboardPageState extends State<DashboardPage> {
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
                               dropdownMaxHeight: 250,
-                              value:
-                                  // authoRoles['canWriteAll'] != false
-                                  selectedValue!.isNotEmpty
-                                      ? selectedValue
-                                      : selectedValue = "",
-                              // : null,
+                              value: selectedValue!.isNotEmpty
+                                  ? selectedValue
+                                  : selectedValue = "",
                               buttonDecoration: BoxDecoration(
                                 color: authoRoles['canWriteAll'] != false
                                     ? Colors.grey[200]
@@ -810,17 +807,13 @@ class _DashboardPageState extends State<DashboardPage> {
                                   return 'Please Client Type.';
                                 }
                               },
-                              onChanged:
-                                  // rolesType == "Developer"
-                                  // ?
-                                  //   (value) {
-                                  authoRoles['canWriteAll'] != false
-                                      ? (value) {
-                                          setState(() {
-                                            selectedValue = value.toString();
-                                          });
-                                        }
-                                      : null,
+                              onChanged: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      setState(() {
+                                        selectedValue = value.toString();
+                                      });
+                                    }
+                                  : null,
 
                               onSaved: (value) {
                                 selectedValue = value.toString();
@@ -928,21 +921,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   return 'Please Client Type.';
                                 }
                               },
-                              onChanged:
-                                  // rolesType == "Developer"
+                              onChanged: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      setState(() {
+                                        selectedValueRoles = value.toString();
+                                      });
+                                    }
+                                  : null,
 
-                                  authoRoles['canWriteAll'] != false
-                                      ? (value) {
-                                          setState(() {
-                                            selectedValueRoles =
-                                                value.toString();
-                                          });
-                                        }
-                                      : null,
-
-                              //Do something when changing the item if you want.
-
-                              // : null,
                               onSaved: (value) {
                                 selectedValueRoles = value.toString();
                               },
@@ -1169,7 +1155,6 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     searchDropRoles.dispose();
     searchDropClientType.dispose();
     _ageController.dispose();
