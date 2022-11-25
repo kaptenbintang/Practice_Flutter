@@ -1,5 +1,6 @@
 import 'package:login_uix_firebase/pages/profile_page.dart';
 
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -8,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/mainPage';
+
   const MainPage({Key? key}) : super(key: key);
 
   @override
@@ -33,125 +35,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
-        automaticallyImplyLeading: false,
-        leading: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Image.asset(
-              'lib/images/Logo-Slogan-BL-H400-W1080.png',
-              width: 250,
-              height: double.infinity,
-              fit: BoxFit.scaleDown,
-            ),
-          ],
-        ),
-        title: Align(
-          alignment: AlignmentDirectional(1, 0),
-          child: Container(
-            width: 200,
-            decoration: BoxDecoration(),
-            child: Container(
-              width: double.infinity,
-              child: TextFormField(
-                controller: textController,
-                autofocus: true,
-                obscureText: false,
-                decoration: InputDecoration(
-                  isDense: true,
-                  hintText: 'Search something..',
-                  hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  prefixIcon: Icon(
-                    Icons.search,
-                  ),
-                ),
-                style: FlutterFlowTheme.of(context).bodyText1,
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-        ),
-        actions: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                  child: Text(
-                    'Home',
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                  child: Text(
-                    'Contact us',
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                  child: Text(
-                    'About Us',
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, ProfilePage.routeName);
-                    },
-                    child: Icon(
-                      Icons.account_circle,
-                      color: Colors.black,
-                      size: 60,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-        centerTitle: false,
-        toolbarHeight: 100,
-      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -172,27 +57,181 @@ class _MainPageState extends State<MainPage> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-                          child: Text(
-                            'Hello World',
-                            style: FlutterFlowTheme.of(context).title1.override(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 40,
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-0.95, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    100, 40, 0, 100),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  decoration: BoxDecoration(),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  20, 20, 20, 20),
+                                          child: InkWell(
+                                            onTap: () {},
+                                            child: Text(
+                                              'Home',
+                                              textAlign: TextAlign.justify,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            20, 20, 20, 20),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context, ProfilePage.routeName);
+                                          },
+                                          child: Text(
+                                            'Profile',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            20, 20, 20, 20),
+                                        child: InkWell(
+                                          onTap: () {},
+                                          child: Text(
+                                            'Appointment',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: TextFormField(
+                                          controller: textController,
+                                          autofocus: true,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            hintText: 'Search Something here..',
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText2,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            prefixIcon: Icon(
+                                              Icons.search,
+                                            ),
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                          ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, 40, 100, 100),
+                              child: InkWell(
+                                onTap: () {},
+                                child: Image.network(
+                                  'lib/images/Logo-Slogan-BL-H400-W1080.png',
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.12,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                          child: Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. giwighegjowjogweogjoiwejgwejogoiwegjoiewjofefef',
-                            textAlign: TextAlign.justify,
-                            style:
-                                FlutterFlowTheme.of(context).subtitle1.override(
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                        SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
+                                child: Text(
+                                  'Hello, Welcome..',
+                                  style: FlutterFlowTheme.of(context)
+                                      .title1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 40,
+                                      ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 20, 20, 20),
+                                child: Text(
+                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. giwighegjowjogweogjoiwejgwejogoiwegjoiewjofefef',
+                                  textAlign: TextAlign.justify,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SingleChildScrollView(
@@ -203,7 +242,7 @@ class _MainPageState extends State<MainPage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.asset(
+                                child: Image.network(
                                   'lib/images/Adjustment-Icon-7.png',
                                   width: 100,
                                   height: 100,
@@ -213,7 +252,7 @@ class _MainPageState extends State<MainPage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.asset(
+                                child: Image.network(
                                   'lib/images/7.png',
                                   width: 100,
                                   height: 100,
@@ -223,7 +262,7 @@ class _MainPageState extends State<MainPage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.asset(
+                                child: Image.network(
                                   'lib/images/9.png',
                                   width: 100,
                                   height: 100,
@@ -233,7 +272,7 @@ class _MainPageState extends State<MainPage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.asset(
+                                child: Image.network(
                                   'lib/images/10.png',
                                   width: 100,
                                   height: 100,
@@ -254,6 +293,13 @@ class _MainPageState extends State<MainPage> {
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 12,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(0),
                                     bottomRight: Radius.circular(0),
@@ -267,18 +313,43 @@ class _MainPageState extends State<MainPage> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0, -0.75),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  20, 0, 0, 0),
+                                          child: Text(
+                                            'Practioner..',
+                                            textAlign: TextAlign.justify,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 24,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            60, 0, 60, 0),
+                                            0, 150, 40, 150),
                                         child: Container(
-                                          width: 400,
-                                          height: 300,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              1,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .lineColor,
                                             boxShadow: [
                                               BoxShadow(
-                                                blurRadius: 12,
+                                                blurRadius: 8,
                                                 color: Color(0x33000000),
                                                 offset: Offset(0, 2),
                                               )
@@ -289,25 +360,62 @@ class _MainPageState extends State<MainPage> {
                                           ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
                                             children: [
+                                              Text(
+                                                'Dr. Bintang',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .title1,
+                                              ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(40, 40, 40, 40),
-                                                child: Image.asset(
-                                                  'lib/images/Ammar-Abuzahra-27667863-400x250.jpg',
-                                                  height: 180,
-                                                  // width: 400,
-                                                  // fit: BoxFit.fitHeight,
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Image.network(
+                                                  'lib/images/doctor.png',
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.12,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.08,
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 5, 0, 0),
+                                                child: Text(
+                                                  '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \"',
+                                                  textAlign: TextAlign.justify,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 12,
+                                                        fontStyle:
+                                                            FontStyle.italic,
+                                                      ),
                                                 ),
                                               ),
                                               FFButtonWidget(
                                                 onPressed: () {
                                                   print('Button pressed ...');
                                                 },
-                                                text: 'See more detail..',
+                                                text:
+                                                    'Click to see more detail..',
+                                                icon: Icon(
+                                                  Icons.navigate_next,
+                                                  size: 15,
+                                                ),
                                                 options: FFButtonOptions(
                                                   width: 130,
-                                                  height: 40,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
@@ -318,6 +426,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontFamily: 'Poppins',
                                                         color: Colors.white,
                                                       ),
+                                                  elevation: 20,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
                                                     width: 1,
@@ -331,16 +440,22 @@ class _MainPageState extends State<MainPage> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            150, 0, 0, 0),
+                                            0, 150, 40, 150),
                                         child: Container(
-                                          width: 400,
-                                          height: 300,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              1,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .lineColor,
                                             boxShadow: [
                                               BoxShadow(
-                                                blurRadius: 12,
+                                                blurRadius: 8,
                                                 color: Color(0x33000000),
                                                 offset: Offset(0, 2),
                                               )
@@ -351,25 +466,62 @@ class _MainPageState extends State<MainPage> {
                                           ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
                                             children: [
+                                              Text(
+                                                'Dr. Bintang',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .title1,
+                                              ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(40, 40, 40, 40),
-                                                child: Image.asset(
-                                                  'lib/images/Ammar-Abuzahra-27667863-400x250.jpg',
-                                                  height: 180,
-                                                  // width: 400,
-                                                  // fit: BoxFit.fitHeight,
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Image.network(
+                                                  'lib/images/doctor.png',
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.12,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.08,
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 5, 0, 0),
+                                                child: Text(
+                                                  '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \"',
+                                                  textAlign: TextAlign.justify,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 12,
+                                                        fontStyle:
+                                                            FontStyle.italic,
+                                                      ),
                                                 ),
                                               ),
                                               FFButtonWidget(
                                                 onPressed: () {
                                                   print('Button pressed ...');
                                                 },
-                                                text: 'See more detail..',
+                                                text:
+                                                    'Click to see more detail..',
+                                                icon: Icon(
+                                                  Icons.navigate_next,
+                                                  size: 15,
+                                                ),
                                                 options: FFButtonOptions(
                                                   width: 130,
-                                                  height: 40,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
@@ -380,6 +532,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontFamily: 'Poppins',
                                                         color: Colors.white,
                                                       ),
+                                                  elevation: 20,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
                                                     width: 1,
@@ -393,16 +546,22 @@ class _MainPageState extends State<MainPage> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            200, 0, 0, 0),
+                                            0, 150, 40, 150),
                                         child: Container(
-                                          width: 400,
-                                          height: 300,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              1,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .lineColor,
                                             boxShadow: [
                                               BoxShadow(
-                                                blurRadius: 12,
+                                                blurRadius: 8,
                                                 color: Color(0x33000000),
                                                 offset: Offset(0, 2),
                                               )
@@ -413,25 +572,62 @@ class _MainPageState extends State<MainPage> {
                                           ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
                                             children: [
+                                              Text(
+                                                'Dr. Bintang',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .title1,
+                                              ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(40, 40, 40, 40),
-                                                child: Image.asset(
-                                                  'lib/images/Ammar-Abuzahra-27667863-400x250.jpg',
-                                                  height: 180,
-                                                  // width: 400,
-                                                  // fit: BoxFit.fitHeight,
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Image.network(
+                                                  'lib/images/doctor.png',
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.12,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.08,
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 5, 0, 0),
+                                                child: Text(
+                                                  '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \"',
+                                                  textAlign: TextAlign.justify,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 12,
+                                                        fontStyle:
+                                                            FontStyle.italic,
+                                                      ),
                                                 ),
                                               ),
                                               FFButtonWidget(
                                                 onPressed: () {
                                                   print('Button pressed ...');
                                                 },
-                                                text: 'See more detail..',
+                                                text:
+                                                    'Click to see more detail..',
+                                                icon: Icon(
+                                                  Icons.navigate_next,
+                                                  size: 15,
+                                                ),
                                                 options: FFButtonOptions(
                                                   width: 130,
-                                                  height: 40,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
@@ -442,6 +638,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontFamily: 'Poppins',
                                                         color: Colors.white,
                                                       ),
+                                                  elevation: 20,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
                                                     width: 1,
@@ -452,6 +649,24 @@ class _MainPageState extends State<MainPage> {
                                             ],
                                           ),
                                         ),
+                                      ),
+                                      FlutterFlowIconButton(
+                                        borderColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        borderRadius: 40,
+                                        borderWidth: 2,
+                                        buttonSize: 60,
+                                        icon: Icon(
+                                          Icons.navigate_next_sharp,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 30,
+                                        ),
+                                        // showLoadingIndicator: true,
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
+                                        },
                                       ),
                                     ],
                                   ),
@@ -463,6 +678,54 @@ class _MainPageState extends State<MainPage> {
                       ],
                     ),
                   ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(-0.95, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                          child: Text(
+                            'On going appointment',
+                            style: FlutterFlowTheme.of(context).title1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(0),
+                          bottomRight: Radius.circular(0),
+                          topLeft: Radius.circular(60),
+                          topRight: Radius.circular(60),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            'footer here',
+                            style: FlutterFlowTheme.of(context).title1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
