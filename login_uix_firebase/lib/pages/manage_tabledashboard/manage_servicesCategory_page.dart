@@ -2,31 +2,31 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_uix_firebase/model/clientType_data.dart';
 import '../../helper/database_service.dart';
+import '../../model/serviceCategory_data.dart';
 import '../../widgets/drawer_dashboard.dart';
 
-class ManageClients extends StatefulWidget {
-  static const routeName = '/ManageClientsTypePage';
-  const ManageClients({super.key});
+class ManageServiceCategory extends StatefulWidget {
+  static const routeName = '/ManageServiceCategoryPage';
+  const ManageServiceCategory({super.key});
 
   @override
-  State<ManageClients> createState() => _ManageClientsState();
+  State<ManageServiceCategory> createState() => _ManageServiceCategoryState();
 }
 
-class _ManageClientsState extends State<ManageClients> {
+class _ManageServiceCategoryState extends State<ManageServiceCategory> {
   DataService service = DataService();
-  Future<List<ClientData>>? ClientList;
-  Map<String, dynamic>? currentClientData;
-  List<ClientData>? retrievedClientList;
+  Future<List<serviceCategoryClass>>? sCategoryList;
+  Map<String, dynamic>? currentserviceCategoryClass;
+  List<serviceCategoryClass>? retrievedsCategoryList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
-  ClientData? dataU;
+  serviceCategoryClass? dataU;
 
-  final _clientTypeController = TextEditingController();
+  final _categoryNameController = TextEditingController();
 
   String? userId;
-  String? clientTypeName;
+  String? categoryNameID;
 
   String? selectedValueClient;
   String? selectedValue;
@@ -45,18 +45,18 @@ class _ManageClientsState extends State<ManageClients> {
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
-    ClientList = service.retrieveClientType();
-    retrievedClientList = await service.retrieveClientType();
-    selected =
-        List<bool>.generate(retrievedClientList!.length, (int index) => false);
+    // listofColumn = (await service.retrieveServiceCategory()).cast<Map<String, dynamic>>();
+    sCategoryList = service.retrieveServiceCategory();
+    retrievedsCategoryList = await service.retrieveServiceCategory();
+    selected = List<bool>.generate(
+        retrievedsCategoryList!.length, (int index) => false);
   }
 
   Future<void> _pullRefresh() async {
-    retrievedClientList = await service.retrieveClientType();
+    retrievedsCategoryList = await service.retrieveServiceCategory();
 
     setState(() {
-      ClientList = service.retrieveClientType();
+      sCategoryList = service.retrieveServiceCategory();
     });
   }
 
@@ -110,9 +110,10 @@ class _ManageClientsState extends State<ManageClients> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
-            future: ClientList,
-            builder: (context, AsyncSnapshot<List<ClientData>> snapshot) {
-              // retrievedClientList = toMap(snapshot.data);
+            future: sCategoryList,
+            builder:
+                (context, AsyncSnapshot<List<serviceCategoryClass>> snapshot) {
+              // retrievedsCategoryList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return ListView(
                     scrollDirection: Axis.horizontal,
@@ -122,40 +123,40 @@ class _ManageClientsState extends State<ManageClients> {
                         sortAscending: _isAscending,
                         columns: [
                           DataColumn(
-                              label: Text('Client Type Name',
+                              label: Text('Services Category',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Edit Type',
+                              label: Text('Edit category',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Delete Type',
+                              label: Text('Delete category',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                         ],
                         rows: List.generate(
-                            retrievedClientList!.length,
+                            retrievedsCategoryList!.length,
                             (index) => _buildTableUser(
                                 context,
-                                retrievedClientList![index],
-                                retrievedClientList,
+                                retrievedsCategoryList![index],
+                                retrievedsCategoryList,
                                 index)),
                       ),
                       FloatingActionButton(
                         onPressed: () {
-                          dialogAddNewClientType(context);
+                          dialogAddNewCategory(context);
                         },
-                        tooltip: "Add New Client Type",
+                        tooltip: "Add New category",
                         child: Icon(Icons.add),
                         // backgroundColor: Colors.green,
                       )
                     ]);
               } else if (snapshot.connectionState == ConnectionState.done &&
-                  retrievedClientList!.isEmpty) {
+                  retrievedsCategoryList!.isEmpty) {
                 return Center(
                   child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -179,8 +180,8 @@ class _ManageClientsState extends State<ManageClients> {
     );
   }
 
-  DataRow _buildTableUser(BuildContext context, ClientData snapshot,
-      List<ClientData>? user, int indexs) {
+  DataRow _buildTableUser(BuildContext context, serviceCategoryClass snapshot,
+      List<serviceCategoryClass>? user, int indexs) {
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return DataRow(
@@ -197,7 +198,7 @@ class _ManageClientsState extends State<ManageClients> {
         return null; // Use default value for other states and odd rows.
       }),
       cells: [
-        DataCell(Text(snapshot.ctName as String)),
+        DataCell(Text(snapshot.categoryName as String)),
         // DataCell(
         //   Container(
         //       child: Checkbox(
@@ -224,10 +225,10 @@ class _ManageClientsState extends State<ManageClients> {
         // ),
         DataCell(ElevatedButton(
             onPressed: () {
-              dialogEditClientType(context);
+              dialogEditCategoryName(context);
               setState(() {
                 userId = snapshot.id;
-                clientTypeName = snapshot.ctName;
+                categoryNameID = snapshot.categoryName;
               });
             },
             child: const Text('Edit'))),
@@ -236,7 +237,8 @@ class _ManageClientsState extends State<ManageClients> {
               primary: Colors.red,
             ),
             onPressed: () async {
-              await service.deleteClientType(context, snapshot.id.toString());
+              await service.deleteServicesCategory(
+                  context, snapshot.id.toString());
               _pullRefresh();
             },
             child: const Text('Delete'))),
@@ -244,13 +246,12 @@ class _ManageClientsState extends State<ManageClients> {
     );
   }
 
-  Future<dynamic> dialogEditClientType(BuildContext context) {
-    List<bool> listOfValue = [true, false];
+  Future<dynamic> dialogEditCategoryName(BuildContext context) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Edit Client Type"),
+            title: const Text("Edit category"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
@@ -275,9 +276,9 @@ class _ManageClientsState extends State<ManageClients> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
-                          controller: _clientTypeController,
+                          controller: _categoryNameController,
                           decoration: InputDecoration(
-                            labelText: "Client Type",
+                            labelText: "category",
                           ),
                         ),
                       ),
@@ -290,11 +291,13 @@ class _ManageClientsState extends State<ManageClients> {
                           child: Text("Submit"),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              ClientData clientData = ClientData(
+                              serviceCategoryClass servicesDataCategory =
+                                  serviceCategoryClass(
                                 id: userId,
-                                ctName: _clientTypeController.text,
+                                categoryName: _categoryNameController.text,
                               );
-                              await service.updateClientType(clientData);
+                              await service
+                                  .updateServicesCategory(servicesDataCategory);
                               Navigator.pop(context);
                               _pullRefresh();
                             }
@@ -314,12 +317,12 @@ class _ManageClientsState extends State<ManageClients> {
         });
   }
 
-  Future<dynamic> dialogAddNewClientType(BuildContext context) {
+  Future<dynamic> dialogAddNewCategory(BuildContext context) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Add new client type"),
+            title: const Text("Add category"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
@@ -344,13 +347,13 @@ class _ManageClientsState extends State<ManageClients> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
-                          controller: _clientTypeController,
+                          controller: _categoryNameController,
                           decoration: InputDecoration(
-                            labelText: "Enter client type name",
+                            labelText: "Enter category name",
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Enter correct client type name";
+                              return "Enter correct category name";
                             } else {
                               return null;
                             }
@@ -366,10 +369,13 @@ class _ManageClientsState extends State<ManageClients> {
                           child: Text("Submit"),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              ClientData clientData = ClientData(
-                                  id: userId,
-                                  ctName: _clientTypeController.text);
-                              await service.addClientType(clientData);
+                              serviceCategoryClass servicesDataCategory =
+                                  serviceCategoryClass(
+                                      id: userId,
+                                      categoryName:
+                                          _categoryNameController.text);
+                              await service
+                                  .addServicesCategory(servicesDataCategory);
                               Navigator.pop(context);
                               _pullRefresh();
                             }
@@ -389,3 +395,5 @@ class _ManageClientsState extends State<ManageClients> {
         });
   }
 }
+
+//test

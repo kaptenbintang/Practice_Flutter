@@ -33,6 +33,7 @@ class _ManageRolesState extends State<ManageRoles> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
   bool? _isWrite;
+  bool? _isWriteAll;
   bool? _isRead;
   bool? _isDelete;
 
@@ -135,6 +136,11 @@ class _ManageRolesState extends State<ManageRoles> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
+                              label: Text('Can Write All',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
                               label: Text('Can Read',
                                   style: TextStyle(
                                       fontSize: 18,
@@ -167,7 +173,7 @@ class _ManageRolesState extends State<ManageRoles> {
                         onPressed: () {
                           dialogAddNewRoles(context);
                         },
-                        tooltip: "Add New Roles",
+                        tooltip: "Add new roles",
                         child: Icon(Icons.add),
                         // backgroundColor: Colors.green,
                       )
@@ -227,6 +233,14 @@ class _ManageRolesState extends State<ManageRoles> {
         DataCell(
           Container(
               child: Checkbox(
+            value: snapshot.canWriteAll,
+            checkColor: Colors.white,
+            onChanged: (value) {},
+          )),
+        ),
+        DataCell(
+          Container(
+              child: Checkbox(
             value: snapshot.canRead,
             checkColor: Colors.white,
             onChanged: (value) {},
@@ -247,6 +261,7 @@ class _ManageRolesState extends State<ManageRoles> {
                 userId = snapshot.id;
                 _isRoles = snapshot.rolesName;
                 _isWrite = snapshot.canWrite;
+                _isWriteAll = snapshot.canWriteAll;
                 _isRead = snapshot.canRead;
                 _isDelete = snapshot.canDelete;
               });
@@ -312,6 +327,39 @@ class _ManageRolesState extends State<ManageRoles> {
                             onChanged: (value) {
                               setState(() {
                                 _isWrite = value!;
+                              });
+                            },
+                            // onSaved: (value) {},
+                            items: listOfValue.map((bool val) {
+                              return DropdownMenuItem(
+                                value: val,
+                                child: Text(
+                                  val.toString(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            value: _isWriteAll,
+                            decoration: InputDecoration(
+                              labelText: "Can Write All?",
+                            ),
+                            // hint: Text(
+                            //   'Can Write?',
+                            // ),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.blue,
+                            ),
+                            isExpanded: true,
+                            onChanged: (value) {
+                              setState(() {
+                                _isWriteAll = value!;
                               });
                             },
                             // onSaved: (value) {},
@@ -395,6 +443,7 @@ class _ManageRolesState extends State<ManageRoles> {
                                   id: userId,
                                   rolesName: _isRoles,
                                   canWrite: _isWrite,
+                                  canWriteAll: _isWriteAll,
                                   canRead: _isRead,
                                   canDelete: _isDelete);
                               await service.updateRoles(rolesData);
@@ -495,6 +544,34 @@ class _ManageRolesState extends State<ManageRoles> {
                         child: DropdownButtonFormField(
                           value: _selectedValue,
                           decoration: InputDecoration(
+                            labelText: "Can Write All?",
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isWriteAll = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
                             labelText: "Can Read?",
                           ),
                           icon: Icon(
@@ -559,6 +636,7 @@ class _ManageRolesState extends State<ManageRoles> {
                                   id: userId,
                                   rolesName: _rolesNameController.text,
                                   canWrite: _isWrite,
+                                  canWriteAll: _isWriteAll,
                                   canRead: _isRead,
                                   canDelete: _isDelete);
                               await service.addRoles(rolesData);

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
-import 'package:login_uix_firebase/pages/manage_sidebar/manage_client_type_page.dart';
-import 'package:login_uix_firebase/pages/manage_sidebar/manage_roles_page.dart';
-import 'package:login_uix_firebase/pages/manage_sidebar/manage_servicesCategory_page.dart';
-import 'package:login_uix_firebase/pages/manage_sidebar/manage_services_page.dart';
+import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_client_type_page.dart';
+import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
+import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_servicesCategory_page.dart';
+import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/widgets/drawer_header.dart';
 
