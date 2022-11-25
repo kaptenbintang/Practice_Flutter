@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           ManageServices.routeName: (context) => const ManageServices(),
           ManageServiceCategory.routeName: (context) =>
               const ManageServiceCategory(),
-          ControllerPage.routeName: (context) => const ControllerPage(),
+          ControllerPage.routeName: (context) => ControllerPage(),
         });
   }
 }

@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
+import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:login_uix_firebase/pages/login_page.dart';
@@ -17,7 +18,7 @@ import 'package:login_uix_firebase/widgets/alert_confirm.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 
 import '../helper/database_service.dart';
-import '../main.dart';
+import '../helper/user_privilege.dart';
 
 class DashboardPage extends StatefulWidget {
   static const routeName = '/dashBoardPage';
@@ -28,17 +29,15 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  PowerChecker rolePriv = PowerChecker();
   DataService service = DataService();
   Future<List<UserData>>? userList;
-  // Map<String, dynamic>? currentUserData;
-  // Future<Map<String, dynamic>>? futureUserData;
-  // String? currentUserData;
   List<UserData>? retrievedUserList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   UserData? dataU;
 
-  final _scrollController = ScrollController();
+  List<RolesData>? rolesList;
 
   final _emailController = TextEditingController();
   final _clientTypeController = TextEditingController();
@@ -63,11 +62,13 @@ class _DashboardPageState extends State<DashboardPage> {
   var newPassword = "";
   var rolesType;
   var marDeleted, createAt;
+  var authoRoles;
 
   int _currentSortColumn = 0;
   bool _isAscending = true;
 
-  List<String> listOfValueRoles = ['Developer', 'user', 'admin', 'superadmin'];
+  List<String> listOfValueRoles = [];
+  // ['Developer', 'user', 'admin', 'superadmin'];
 
   List<String> listOfValue = [
     'satu',
@@ -92,47 +93,45 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     selectedValue2 = dropDownItemValue2[0];
 
     _scaffoldKey = GlobalKey();
-    rolesType = 'superadmin'.toString();
-
-    // rolesType = "superadmin";
 
     _initRetrieval();
     super.initState();
   }
 
-  Future<void> _initRetrieval() async {
-    // futureUserData = service.currentUsers(currentUser.uid);
-    // currentUserData = await service.currentUsers(currentUser.uid);
-    // rolesType = currentUserData!['roles'];
-    // final docRef = db.collection("users").doc(currentUser!.uid);
-    // docRef.get().then(
-    //   (DocumentSnapshot doc) {
-    //     final data = doc.data() as Map<String, dynamic>;
-    //     setState(() {
-    //       rolesType = data['roles'];
-    //     });
-    //   },
-    //   onError: (e) => print("Error getting document: $e"),
-    // );
+  Future _initRetrieval() async {
+    Map<String, dynamic> currentUserData =
+        await service.currentUsers(currentUser.uid);
 
-    userList = service.retrieveAllUsers(rolesType);
-    retrievedUserList = await service.retrieveAllUsers(rolesType);
+    setState(() {
+      rolesType = currentUserData['roles'];
+    });
+    Map<String, dynamic> rolesPriv = await rolePriv.getRoles(rolesType);
+    setState(() {
+      authoRoles = rolesPriv;
+    });
+    userList = service.retrieveAllStaff(rolesType);
+    retrievedUserList = await service.retrieveAllStaff(rolesType);
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
         retrievedUserList!.length, (int index) => 'Action');
+    rolesList = await service.retrieveRoles();
+    rolesList?.forEach((element) {
+      listOfValueRoles.add(element.rolesName.toString());
+    });
+
+    print(listOfValueRoles);
+    print(rolesPriv);
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveAllUsers(rolesType);
+    retrievedUserList = await service.retrieveAllStaff(rolesType);
 
     setState(() {
-      userList = service.retrieveAllUsers(rolesType);
+      userList = service.retrieveAllStaff(rolesType);
     });
   }
 
@@ -185,7 +184,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
-                          children: [const Text('Done')],
+                          children: [Text('Done')],
                         ),
                       ),
                     ),
@@ -261,29 +260,20 @@ class _DashboardPageState extends State<DashboardPage> {
                           label: Text('Client Type',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
-                      // currentUserData!.containsKey("roles")
-                      // currentUserData?["roles"] == 'Developer'
-                      // ?
                       DataColumn(
                           label: Text('Roles',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
-                      // : DataColumn(
-                      //     label: Text('',
-                      //         style: TextStyle(
-                      //             fontSize: 18,
-                      //             fontWeight: FontWeight.bold))),
                       DataColumn(
                           label: Text('Created Date',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
-                      if (rolesType! == "superadmin")
+                      if (authoRoles['canDelete'] != false)
                         DataColumn(
                             label: Text('Marked Deleted',
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold))),
-
                       DataColumn(
                           label: Text('Action',
                               style: TextStyle(
@@ -337,32 +327,8 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
       ),
-      //     ElevatedButton(
-      //       child: Text("Log out"),
-      //       onPressed: () {
-      //         FirebaseAuth.instance.signOut();
-      //       },
-      //     )
-      //   ],
-      // ),
     );
   }
-
-  // List<DataRow> _buildList(BuildContext context, snapshot) {
-  //   return snapshot.map((data) => _buildTableUser(context, data)).toList();
-  // }
-
-  // DataRow _buildTableUser(BuildContext context, DocumentSnapshot snapshot) {
-  //   final record = UserData.fromDocumentSnapshot();
-
-  //   return DataRow(
-  //     cells: [
-  //       DataCell(Text(snapshot.firstName)),
-  //       DataCell(Text(snapshot.lastName)),
-  //       DataCell(Text(snapshot.emailUser)),
-  //     ],
-  //   );
-  // }
 
   DataRow _buildTableUser(BuildContext context, UserData snapshot, int indexs) {
     // int idx = int.parse(dropDownItemValue2[indexs]);
@@ -411,7 +377,6 @@ class _DashboardPageState extends State<DashboardPage> {
               elevation: 8,
               onChanged: (value) {
                 print(value);
-                // if value doesnt contain just close the dropDown
                 if (value == null) {
                   dropDownFocus.unfocus();
                 } else {
@@ -460,15 +425,17 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: Text('Action'),
                   value: "Action",
                 ),
-                DropdownMenuItem(
-                  child: Text('Edit'),
-                  value: "Edit",
-                ),
-                if (currentUser.uid.toString != snapshot.id.toString)
+                if (authoRoles['canWrite'] != false)
                   DropdownMenuItem(
-                    child: Text('Remove'),
-                    value: "Remove",
+                    child: Text('Edit'),
+                    value: "Edit",
                   ),
+                // if (currentUser.uid.toString != snapshot.id.toString &&
+                //     authoRoles!['canDelete'] != false)
+                //   DropdownMenuItem(
+                //     child: Text('Remove'),
+                //     value: "Remove",
+                //   ),
                 DropdownMenuItem(
                   child: Text('Change Password'),
                   value: "ResetPassword",
@@ -511,8 +478,6 @@ class _DashboardPageState extends State<DashboardPage> {
           DataCell(Text(snapshot.roles as String)),
           DataCell(Text(snapshot.createdAt as String)),
           DataCell(Text(snapshot.markDeleted.toString())),
-
-          // DataCell(Text(snapshot.markDeleted.toString())),
           DataCell(
             DropdownButton<String>(
               hint: valuesList![indexs] == null
@@ -660,17 +625,25 @@ class _DashboardPageState extends State<DashboardPage> {
                           padding: const EdgeInsets.only(
                               left: 8, right: 8, bottom: 8),
                           child: TextFormField(
-                            enabled: rolesType == 'superadmin' ? true : false,
+                            enabled: authoRoles['canWriteAll'] != false
+                                ? true
+                                : false,
                             controller: _clientCodeController,
                             decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
                                 labelText: "Client Code",
                                 enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
+                                    borderSide:
+                                        BorderSide(color: Colors.orange),
                                     borderRadius: BorderRadius.circular(12)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
                                     borderRadius: BorderRadius.circular(12)),
-                                fillColor: Colors.grey[200],
+                                fillColor: authoRoles['canWriteAll'] != false
+                                    ? Colors.grey[200]
+                                    : Colors.grey[400],
                                 filled: true),
                           ),
                         ),
@@ -745,7 +718,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           child: TextFormField(
                             controller: _ageController,
                             decoration: InputDecoration(
-                                labelText: "Age",
+                                labelText: "Date of Birth",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                     borderRadius: BorderRadius.circular(12)),
@@ -772,38 +745,6 @@ class _DashboardPageState extends State<DashboardPage> {
                                 filled: true),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: TextFormField(
-                        //     controller: _rolesController,
-                        //     decoration: InputDecoration(
-                        //         labelText: "Roles",
-                        //         enabledBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide(color: Colors.white),
-                        //             borderRadius: BorderRadius.circular(12)),
-                        //         focusedBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide(color: Colors.blue),
-                        //             borderRadius: BorderRadius.circular(12)),
-                        //         fillColor: Colors.grey[200],
-                        //         filled: true),
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8),
-                        //   child: TextFormField(
-                        //     controller: _clientTypeController,
-                        //     decoration: InputDecoration(
-                        //         labelText: "Client Type",
-                        //         enabledBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide(color: Colors.white),
-                        //             borderRadius: BorderRadius.circular(12)),
-                        //         focusedBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide(color: Colors.blue),
-                        //             borderRadius: BorderRadius.circular(12)),
-                        //         fillColor: Colors.grey[200],
-                        //         filled: true),
-                        //   ),
-                        // ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: DropdownButtonHideUnderline(
@@ -811,14 +752,11 @@ class _DashboardPageState extends State<DashboardPage> {
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
                               dropdownMaxHeight: 250,
-                              value:
-                                  // rolesType == "Developer"
-                                  selectedValue!.isNotEmpty
-                                      ? selectedValue
-                                      : selectedValue = "",
-                              // : null,
+                              value: selectedValue!.isNotEmpty
+                                  ? selectedValue
+                                  : selectedValue = "",
                               buttonDecoration: BoxDecoration(
-                                color: rolesType == "superadmin"
+                                color: authoRoles['canWriteAll'] != false
                                     ? Colors.grey[200]
                                     : Colors.grey[400],
                                 borderRadius: BorderRadius.circular(14),
@@ -869,17 +807,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   return 'Please Client Type.';
                                 }
                               },
-                              onChanged:
-                                  // rolesType == "Developer"
-                                  // ?
-                                  (value) {
-                                setState(() {
-                                  selectedValue = value.toString();
-                                });
+                              onChanged: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      setState(() {
+                                        selectedValue = value.toString();
+                                      });
+                                    }
+                                  : null,
 
-                                //Do something when changing the item if you want.
-                              },
-                              // : null,
                               onSaved: (value) {
                                 selectedValue = value.toString();
                               },
@@ -986,16 +921,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   return 'Please Client Type.';
                                 }
                               },
-                              onChanged:
-                                  // rolesType == "Developer"
-                                  (value) {
-                                setState(() {
-                                  selectedValueRoles = value.toString();
-                                });
+                              onChanged: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      setState(() {
+                                        selectedValueRoles = value.toString();
+                                      });
+                                    }
+                                  : null,
 
-                                //Do something when changing the item if you want.
-                              },
-                              // : null,
                               onSaved: (value) {
                                 selectedValueRoles = value.toString();
                               },
@@ -1222,7 +1155,6 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     searchDropRoles.dispose();
     searchDropClientType.dispose();
     _ageController.dispose();
