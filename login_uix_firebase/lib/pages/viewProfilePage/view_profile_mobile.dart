@@ -1,5 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
+import 'dart:html' as html;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cross_file/cross_file.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_widgets.dart';
@@ -7,6 +13,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/route.dart';
+
+import '../../helper/database_service.dart';
+import '../../model/user_data.dart';
 
 class ProfilePageMobileWidget extends StatefulWidget {
   const ProfilePageMobileWidget({Key? key}) : super(key: key);
@@ -18,6 +27,200 @@ class ProfilePageMobileWidget extends StatefulWidget {
 
 class _ProfilePageMobileWidgetState extends State<ProfilePageMobileWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  DataService service = DataService();
+
+  final nameController = TextEditingController();
+  final lastsNameController = TextEditingController();
+  final emailController = TextEditingController();
+  // final ageController = TextEditingController();
+  final dateofbirthController = TextEditingController();
+  final phonenumberController = TextEditingController();
+  final user = FirebaseAuth.instance.currentUser!;
+  final auth = FirebaseAuth.instance;
+  final db = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
+  Future<Map<String, dynamic>>? currentUserData;
+  Map<String, dynamic>? retrievedUserData;
+
+  var uid;
+  var fName,
+      lName,
+      age,
+      uEmail,
+      img,
+      role,
+      dob,
+      phNumb,
+      clientCode,
+      clientTypes;
+  bool imgExist = false;
+
+  String? url;
+
+  html.File? fImage;
+
+  XFile? imgXFile;
+
+  Uint8List webImage = Uint8List(10);
+
+  Future<void> getDataFromDb() async {
+    if (auth.currentUser != null) {
+      uid = auth.currentUser?.uid;
+
+      // var a = await db.collection("users").doc(uid).get();
+      // return a.data();
+      // then((DocumentSnapshot doc) {
+      // final data = doc.data() as Map<String, dynamic>;
+      // String fName = data['first name'];
+      // print(uid + 'UID');
+      // return data;
+      // showDialog(
+      //   context: context,
+      //   builder: (context) {
+      //     return AlertDialog(
+      //       content: Text('halo: $fName'),
+      //     );
+      //   },
+      // );
+      await db.collection("users").doc(uid).get().then((DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        fName = data["firstName"];
+        lName = data["lastName"];
+        age = data["age"];
+        img = data["imageUrl"];
+        role = data["roles"];
+        dob = data["dateofbirth"];
+        phNumb = data["phoneNumber"];
+        clientCode = data["clientcode"];
+        clientTypes = data["clientType"];
+      });
+      setState(() {
+        // if (img != null) {}
+        emailController.text = user.email.toString();
+        nameController.text = fName;
+        lastsNameController.text = lName;
+        dateofbirthController.text = dob;
+        phonenumberController.text = phNumb;
+        // ageController.text = age.toString();
+      });
+    }
+    ;
+  }
+
+  @override
+  void initState() {
+    _initRetrieval();
+    // getDataFromDb();
+    super.initState();
+  }
+
+  Future<void> _initRetrieval() async {
+    currentUserData = service.currentUsers(user.uid);
+    retrievedUserData = await service.currentUsers(user.uid);
+    // print(retrievedUserData!['id']);
+    fName = retrievedUserData!["firstName"];
+    lName = retrievedUserData!["lastName"];
+    age = retrievedUserData!["age"];
+    img = retrievedUserData!["imageUrl"];
+    role = retrievedUserData!["roles"];
+    dob = retrievedUserData!["dateofbirth"];
+    phNumb = retrievedUserData!["phoneNumber"];
+    clientCode = retrievedUserData!["clientcode"];
+    clientTypes = retrievedUserData!["clientType"];
+
+    emailController.text = user.email.toString();
+    nameController.text = fName;
+    lastsNameController.text = lName;
+    dateofbirthController.text = dob;
+    phonenumberController.text = phNumb;
+  }
+
+  Future editUserDetails(String uid, String firstName, String lastName,
+      String email, String dateofbirth, String phNumb) async {
+    if (imgExist) {
+      final ref = storage.ref().child('usersImage').child('$uid.jpg');
+      // html.File file = ios.File(imgXFile.path);
+
+      await ref.putData(webImage);
+
+      url = await ref.getDownloadURL();
+
+      await auth.currentUser?.updateEmail(email);
+      UserData userData = UserData(
+        firstName: firstName,
+        lastName: lastName,
+        emailUser: email,
+        doBirth: dateofbirth,
+        phoneNumber: phNumb,
+        // imgUrl: url
+      );
+
+      await service.updateUser(userData).onError(
+            (error, stackTrace) => print("Error writing document: $error"),
+          );
+    } else {
+      UserData userData = UserData(
+        firstName: firstName,
+        lastName: lastName,
+        emailUser: email,
+        doBirth: dateofbirth,
+        phoneNumber: phNumb,
+        // imgUrl: ""
+      );
+
+      await auth.currentUser?.updateEmail(email).then((value) async {
+        await service.updateUser(userData).onError(
+            (error, stackTrace) => print("Error writing document: $error"));
+      });
+    }
+  }
+
+  Future editUserData() async {
+    auth.authStateChanges().listen((User? user) {
+      if (user == null) {
+        SnackBar(
+          content: const Text('There is no User Login'),
+        );
+      } else {
+        uid = auth.currentUser?.uid;
+        editUserDetails(
+          uid,
+          nameController.text.trim(),
+          lastsNameController.text.trim(),
+          emailController.text.trim(),
+          dateofbirthController.text.trim(),
+          phonenumberController.text.trim(),
+          // int.parse(ageController.text.trim()),
+        );
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text("Your personal details has been updated"),
+              );
+            });
+        print("aku");
+      }
+    });
+  }
+
+  Future<String?> pickImageCamera() async {
+    final ImagePicker picker = ImagePicker();
+    XFile? pickedImage = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 100,
+        maxHeight: 100,
+        maxWidth: 100);
+
+    var f = await pickedImage!.readAsBytes();
+
+    setState(() {
+      imgXFile = pickedImage;
+      webImage = f;
+      imgExist = true;
+    });
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,40 +289,96 @@ class _ProfilePageMobileWidgetState extends State<ProfilePageMobileWidget> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Elaine Edwards',
-                              style:
-                                  FlutterFlowTheme.of(context).title3.override(
-                                        fontFamily: 'Urbanist',
-                                        color: Color(0xFF101213),
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                              child: Text(
-                                'elaine.edwards@google.com',
+                      // Generated code for this Column Widget...
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                fName.toString(),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText2
+                                    .title3
                                     .override(
-                                      fontFamily: 'Outfit',
-                                      color: Color(0xFF897DEE),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
+                                      fontFamily: 'Urbanist',
+                                      color: Color(0xFF101213),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
                                     ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  user.email.toString(),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText2
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF897DEE),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 4, 0, 0),
+                                    child: Text(
+                                      role.toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 4, 0, 0),
+                                    child: Text(
+                                      clientTypes.toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 4, 0, 0),
+                                    child: Text(
+                                      clientCode.toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),

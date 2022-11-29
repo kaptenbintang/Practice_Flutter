@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_uix_firebase/route.dart';
 
 import '../forgot_pw_page.dart';
 
@@ -252,7 +253,9 @@ class _LoginDesktopState extends State<LoginDesktop> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, RouteName.registerPage);
+                        },
                         child: Text(
                           " Register now!",
                           style: TextStyle(

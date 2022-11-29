@@ -13,7 +13,8 @@ import 'package:login_uix_firebase/pages/check_email_page.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_page.dart';
 import 'package:login_uix_firebase/pages/login/login_page.dart';
-import 'package:login_uix_firebase/pages/register_page.dart';
+import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
+
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/responsive_login_template.dart';
 import 'package:login_uix_firebase/route.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
           RouteName.landingPage: (context) => const LandingPage(),
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
+          RouteName.controllerPage: (context) => const ControllerPage(),
         });
   }
 }

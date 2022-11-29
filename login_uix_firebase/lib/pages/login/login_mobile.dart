@@ -4,7 +4,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:login_uix_firebase/pages/register_page.dart';
+import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
+import 'package:login_uix_firebase/route.dart';
 
 import '../forgot_pw_page.dart';
 
@@ -253,7 +254,10 @@ class _LoginMobileState extends State<LoginMobile> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RouteName.registerPage);
+                            },
                             child: Text(
                               " Register now!",
                               style: TextStyle(

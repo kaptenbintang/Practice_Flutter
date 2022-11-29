@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
 import 'dart:html' as html;

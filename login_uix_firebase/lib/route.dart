@@ -10,4 +10,5 @@ class RouteName {
   static const editProfilePage = '/editProfile';
   static const deleteProfilePage = '/deleteProfile';
   static const landingPage = '/landing';
+  static const controllerPage = '/controller';
 }

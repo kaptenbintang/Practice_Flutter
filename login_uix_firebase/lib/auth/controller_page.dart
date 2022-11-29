@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_import
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,11 +27,22 @@ class ControllerPage extends StatelessWidget {
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  if (snapshot.hasData && snapshot.data != null) {
+                  if (snapshot.hasData &&
+                      snapshot.data != null &&
+                      snapshot.data?['markDeleted'] == false) {
                     if (snapshot.data?['roles'] != 'user') {
-                      return DashboardPage();
+                      // Navigator.pushReplacementNamed(
+                      print('aaaaaaaaaaaaaaaaaaaaa');
+                      //     context,
+                      //     DashboardPage.routeName);
+                      return const DashboardPage();
                     } else {
-                      return MainPage();
+                      print('bbbbbbbbbbbbbb');
+
+                      // Navigator.pushReplacementNamed(
+                      //     context, MainPage.routeName);
+
+                      return const MainPage();
                     }
                   } else {
                     return Material(
@@ -42,8 +53,10 @@ class ControllerPage extends StatelessWidget {
                   }
                 },
               );
+            } else {
+              print('cccccccccccccccc');
+              return const LandingPage();
             }
-            return LandingPage();
           }),
     );
   }

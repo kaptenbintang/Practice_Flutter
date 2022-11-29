@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_initializing_formals, prefer_const_constructors
+
 import '../../assets_audio_player.dart';
 import 'package:flutter/widgets.dart';
 
