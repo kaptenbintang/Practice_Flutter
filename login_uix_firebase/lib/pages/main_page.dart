@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
+import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -6,6 +9,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../helper/database_service.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/mainPage';
@@ -19,10 +24,17 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  DataService service = DataService();
+  Future<List<PractionerData>>? PractionerList;
+  Map<String, dynamic>? currentServicesData;
+  List<PractionerData>? retrievedPractionerList;
+  List<Map<String, dynamic>>? listofColumn;
+  PractionerData? dataU;
 
   @override
   void initState() {
     super.initState();
+    _initRetrieval();
     textController = TextEditingController();
   }
 
@@ -30,6 +42,12 @@ class _MainPageState extends State<MainPage> {
   void dispose() {
     textController?.dispose();
     super.dispose();
+  }
+
+  Future<void> _initRetrieval() async {
+    // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
+    PractionerList = service.retrievePractionerAll();
+    retrievedPractionerList = await service.retrievePractionerAll();
   }
 
   @override
@@ -282,399 +300,114 @@ class _MainPageState extends State<MainPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          width: double.infinity,
-                          height: 500,
-                          child: Stack(
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 12,
-                                      color: Color(0x33000000),
-                                      offset: Offset(0, 2),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(0),
-                                    bottomRight: Radius.circular(0),
-                                    topLeft: Radius.circular(60),
-                                    topRight: Radius.circular(60),
-                                  ),
-                                  shape: BoxShape.rectangle,
-                                ),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
+                        FutureBuilder(
+                            future: PractionerList,
+                            builder: (context,
+                                AsyncSnapshot<List<PractionerData>> snapshot) {
+                              if (snapshot.hasData &&
+                                  snapshot.data!.isNotEmpty) {
+                                return Container(
+                                  width: double.infinity,
+                                  height: 500,
+                                  child: Stack(
                                     children: [
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(0, -0.75),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  20, 0, 0, 0),
-                                          child: Text(
-                                            'Practioner..',
-                                            textAlign: TextAlign.justify,
-                                            style: FlutterFlowTheme.of(context)
-                                                .title1
-                                                .override(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 24,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 150, 40, 150),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.25,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              1,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .lineColor,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 8,
-                                                color: Color(0x33000000),
-                                                offset: Offset(0, 2),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            shape: BoxShape.rectangle,
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: [
-                                              Text(
-                                                'Dr. Bintang',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title1,
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 0, 0),
-                                                child: Image.network(
-                                                  'lib/images/doctor.png',
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.12,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.08,
-                                                  fit: BoxFit.fitHeight,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 0),
-                                                child: Text(
-                                                  '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \"',
-                                                  textAlign: TextAlign.justify,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 12,
-                                                        fontStyle:
-                                                            FontStyle.italic,
-                                                      ),
-                                                ),
-                                              ),
-                                              FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
-                                                text:
-                                                    'Click to see more detail..',
-                                                icon: Icon(
-                                                  Icons.navigate_next,
-                                                  size: 15,
-                                                ),
-                                                options: FFButtonOptions(
-                                                  width: 130,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color: Colors.white,
-                                                      ),
-                                                  elevation: 20,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius: 8,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 150, 40, 150),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.25,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              1,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .lineColor,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 8,
-                                                color: Color(0x33000000),
-                                                offset: Offset(0, 2),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            shape: BoxShape.rectangle,
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: [
-                                              Text(
-                                                'Dr. Bintang',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title1,
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 0, 0),
-                                                child: Image.network(
-                                                  'lib/images/doctor.png',
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.12,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.08,
-                                                  fit: BoxFit.fitHeight,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 0),
-                                                child: Text(
-                                                  '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \"',
-                                                  textAlign: TextAlign.justify,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 12,
-                                                        fontStyle:
-                                                            FontStyle.italic,
-                                                      ),
-                                                ),
-                                              ),
-                                              FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
-                                                text:
-                                                    'Click to see more detail..',
-                                                icon: Icon(
-                                                  Icons.navigate_next,
-                                                  size: 15,
-                                                ),
-                                                options: FFButtonOptions(
-                                                  width: 130,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color: Colors.white,
-                                                      ),
-                                                  elevation: 20,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius: 8,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 150, 40, 150),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.25,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              1,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .lineColor,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 8,
-                                                color: Color(0x33000000),
-                                                offset: Offset(0, 2),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            shape: BoxShape.rectangle,
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: [
-                                              Text(
-                                                'Dr. Bintang',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title1,
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 0, 0),
-                                                child: Image.network(
-                                                  'lib/images/doctor.png',
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.12,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.08,
-                                                  fit: BoxFit.fitHeight,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 0),
-                                                child: Text(
-                                                  '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \"',
-                                                  textAlign: TextAlign.justify,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 12,
-                                                        fontStyle:
-                                                            FontStyle.italic,
-                                                      ),
-                                                ),
-                                              ),
-                                              FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
-                                                text:
-                                                    'Click to see more detail..',
-                                                icon: Icon(
-                                                  Icons.navigate_next,
-                                                  size: 15,
-                                                ),
-                                                options: FFButtonOptions(
-                                                  width: 130,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color: Colors.white,
-                                                      ),
-                                                  elevation: 20,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius: 8,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      FlutterFlowIconButton(
-                                        borderColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                        borderRadius: 40,
-                                        borderWidth: 2,
-                                        buttonSize: 60,
-                                        icon: Icon(
-                                          Icons.navigate_next_sharp,
+                                      Container(
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 30,
+                                              .secondaryBackground,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 12,
+                                              color: Color(0x33000000),
+                                              offset: Offset(0, 2),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(0),
+                                            bottomRight: Radius.circular(0),
+                                            topLeft: Radius.circular(60),
+                                            topRight: Radius.circular(60),
+                                          ),
+                                          shape: BoxShape.rectangle,
                                         ),
-                                        // showLoadingIndicator: true,
-                                        onPressed: () {
-                                          print('IconButton pressed ...');
-                                        },
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    0, -0.75),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 0, 0),
+                                                  child: Text(
+                                                    'Practioner..',
+                                                    textAlign:
+                                                        TextAlign.justify,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .title1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: 24,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                              GridView.builder(
+                                                physics: ScrollPhysics(),
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                shrinkWrap: true,
+                                                itemCount:
+                                                    retrievedPractionerList!
+                                                        .length,
+                                                gridDelegate:
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  // crossAxisSpacing: 10.0,
+                                                  // mainAxisSpacing: 10,
+                                                ),
+                                                itemBuilder: (context, index) {
+                                                  return tableDepanPractioner(
+                                                      context,
+                                                      retrievedPractionerList![
+                                                          index],
+                                                      retrievedPractionerList,
+                                                      index);
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                                );
+                              } else if (snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  retrievedPractionerList!.isEmpty) {
+                                return Center(
+                                  child: ListView(
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
+                                    children: const <Widget>[
+                                      Align(
+                                        alignment: AlignmentDirectional.center,
+                                        child: Text('No Data Availble'),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            }),
                       ],
                     ),
                   ),
@@ -731,6 +464,88 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget tableDepanPractioner(BuildContext context, PractionerData snapshot,
+      List<PractionerData>? user, int indexs) {
+    print(snapshot.firstName);
+    print(indexs);
+    print(user);
+    // print(_isChecked);
+    // int idx = int.parse(dropDownItemValue2[indexs]);
+    // return Text(snapshot.firstName as String);
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.25,
+      height: MediaQuery.of(context).size.height * 1,
+      decoration: BoxDecoration(
+        color: FlutterFlowTheme.of(context).lineColor,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 8,
+            color: Color(0x33000000),
+            offset: Offset(0, 2),
+          )
+        ],
+        borderRadius: BorderRadius.circular(20),
+        shape: BoxShape.rectangle,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            snapshot.firstName as String,
+            style: FlutterFlowTheme.of(context).title1,
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+            child: Image.network(
+              'lib/images/doctor.png',
+              width: MediaQuery.of(context).size.width * 0.12,
+              height: MediaQuery.of(context).size.height * 0.08,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+            child: Text(
+              '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \"',
+              textAlign: TextAlign.justify,
+              style: FlutterFlowTheme.of(context).bodyText1.override(
+                    fontFamily: 'Poppins',
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
+                  ),
+            ),
+          ),
+          FFButtonWidget(
+            onPressed: () {
+              print('Button pressed ...');
+            },
+            text: 'Click to see more detail..',
+            icon: Icon(
+              Icons.navigate_next,
+              size: 15,
+            ),
+            options: FFButtonOptions(
+              width: 130,
+              color: FlutterFlowTheme.of(context).primaryColor,
+              textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.white,
+                  ),
+              elevation: 20,
+              borderSide: BorderSide(
+                color: Colors.transparent,
+                width: 1,
+              ),
+              borderRadius: 8,
+            ),
+          ),
+        ],
       ),
     );
   }
