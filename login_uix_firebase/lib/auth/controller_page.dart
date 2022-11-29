@@ -5,14 +5,11 @@ import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
 
 import '../pages/dashboard_page.dart';
-import '../pages/profile_page.dart';
-import 'auth_page.dart';
 
 class ControllerPage extends StatelessWidget {
   static const routeName = '/controllerPage';
-  // BuildContext? contexts;
 
-  ControllerPage({super.key});
+  const ControllerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +30,11 @@ class ControllerPage extends StatelessWidget {
                       snapshot.data?['markDeleted'] == false) {
                     if (snapshot.data?['roles'] != 'user') {
                       // Navigator.pushReplacementNamed(
-                      print('aaaaaaaaaaaaaaaaaaaaa');
+
                       //     context,
                       //     DashboardPage.routeName);
                       return const DashboardPage();
                     } else {
-                      print('bbbbbbbbbbbbbb');
-
                       // Navigator.pushReplacementNamed(
                       //     context, MainPage.routeName);
 
@@ -51,7 +46,7 @@ class ControllerPage extends StatelessWidget {
                         showDialog(
                           context: context0,
                           builder: (context) {
-                            return AlertDialog(
+                            return const AlertDialog(
                               content: Text("Account Have Been Removed"),
                             );
                           },
@@ -61,7 +56,7 @@ class ControllerPage extends StatelessWidget {
 
                     return LoginPage();
                   } else {
-                    return Material(
+                    return const Material(
                       child: Center(
                         child: CircularProgressIndicator(),
                       ),
@@ -70,7 +65,6 @@ class ControllerPage extends StatelessWidget {
                 },
               );
             } else {
-              print('cccccccccccccccc');
               return const LoginPage();
             }
           }),

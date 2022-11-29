@@ -11,6 +11,7 @@ import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/widgets/alert_confirm.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 import 'package:recase/recase.dart';
@@ -56,8 +57,6 @@ class _DashboardPageState extends State<DashboardPage> {
 
   String? selectedValueRoles;
   String? selectedValue;
-  late String selectedValue2;
-  late String initialDropDownVal;
   var newPassword = "";
   var rolesType;
   var marDeleted, createAt;
@@ -186,6 +185,15 @@ class _DashboardPageState extends State<DashboardPage> {
           ],
         ),
         actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.pushNamed(context, AddUserPage.routeName);
+              },
+            ),
+          ),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(

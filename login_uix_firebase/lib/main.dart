@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
           ManageServiceCategory.routeName: (context) =>
               const ManageServiceCategory(),
           ControllerPage.routeName: (context) => ControllerPage(),
+          AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }
 }
