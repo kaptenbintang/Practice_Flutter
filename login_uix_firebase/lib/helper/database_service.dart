@@ -277,4 +277,10 @@ class DataService {
     // Map<String, dynamic> data = snapshot.data()!;
     return snapshot.data()!;
   }
+
+  Future<List<UserData>> searchUser(String name) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection('users').where('firstName', isEqualTo: name).get();
+    return snapshot.docs.map((e) => UserData.fromDocumentSnapshot(e)).toList();
+  }
 }
