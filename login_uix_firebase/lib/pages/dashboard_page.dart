@@ -7,15 +7,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:login_uix_firebase/pages/login_page.dart';
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
 import 'package:login_uix_firebase/widgets/alert_confirm.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
+import 'package:recase/recase.dart';
 
 import '../helper/database_service.dart';
 import '../helper/user_privilege.dart';
@@ -36,9 +34,6 @@ class _DashboardPageState extends State<DashboardPage> {
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   UserData? dataU;
-
-  late UserData _userData;
-
   List<RolesData>? rolesList;
 
   final _emailController = TextEditingController();
@@ -131,9 +126,6 @@ class _DashboardPageState extends State<DashboardPage> {
     rolesList?.forEach((element) {
       listOfValueRoles.add(element.rolesName.toString());
     });
-
-    // print(listOfValueRoles);
-    // print(rolesPriv);
   }
 
   Future<void> _pullRefresh() async {
@@ -141,6 +133,14 @@ class _DashboardPageState extends State<DashboardPage> {
 
     setState(() {
       userList = service.retrieveAllStaff(rolesType);
+    });
+  }
+
+  Future search() async {
+    retrievedUserList =
+        await service.searchUser(controllerSearch.text.sentenceCase);
+    setState(() {
+      userList = service.searchUser(controllerSearch.text.sentenceCase);
     });
   }
 
@@ -154,23 +154,33 @@ class _DashboardPageState extends State<DashboardPage> {
         title: Row(
           children: [
             Text("Dashboard Home"),
-            // SizedBox(
-            //   width: 10.0,
-            // ),
-            Expanded(
+            SizedBox(
+              width: 50.0,
+            ),
+            SizedBox(
+              width: 400,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   controller: controllerSearch,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Search',
-                      focusedBorder: OutlineInputBorder()),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    hintText: 'Search',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () =>
+                  controllerSearch.text.isNotEmpty ? search() : _pullRefresh(),
               icon: Icon(Icons.search),
             ),
           ],
@@ -210,7 +220,9 @@ class _DashboardPageState extends State<DashboardPage> {
                     () => Future.delayed(
                       Duration(seconds: 2),
                       () {
-                        _pullRefresh();
+                        controllerSearch.text.isNotEmpty
+                            ? search()
+                            : _pullRefresh();
                         setState(() {
                           selectedUser = [];
                         });
@@ -275,7 +287,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
-                          children: [Text('Done')],
+                          children: const [Text('Done')],
                         ),
                       ),
                     ),
@@ -428,8 +440,26 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                 );
               } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return ColoredBox(
+                  color: Colors.white.withAlpha(128),
+                  child: Center(
+                    child: Container(
+                      color: Colors.blue,
+                      padding: const EdgeInsets.all(8),
+                      width: 150,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                          Text('Loading'),
+                        ],
+                      ),
+                    ),
+                  ),
                 );
               }
             },
@@ -494,8 +524,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   dropDownFocus.unfocus();
                 } else {
                   switch (value) {
-                    case "Remove":
-                      break;
                     case "Edit":
                       dialogEdit(context);
                       setState(() {
@@ -633,7 +661,9 @@ class _DashboardPageState extends State<DashboardPage> {
                         () => Future.delayed(
                           Duration(seconds: 2),
                           () {
-                            _pullRefresh();
+                            controllerSearch.text.isNotEmpty
+                                ? search()
+                                : _pullRefresh();
                           },
                         ),
                       );
@@ -675,7 +705,9 @@ class _DashboardPageState extends State<DashboardPage> {
                             () => Future.delayed(
                               Duration(seconds: 2),
                               () {
-                                _pullRefresh();
+                                controllerSearch.text.isNotEmpty
+                                    ? search()
+                                    : _pullRefresh();
                               },
                             ),
                           );
@@ -1218,7 +1250,9 @@ class _DashboardPageState extends State<DashboardPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
-                                  onPressed: passwordReset,
+                                  onPressed: () {
+                                    passwordReset(context);
+                                  },
                                   child: const Text('Confirm'),
                                 ),
                               ),
@@ -1235,7 +1269,7 @@ class _DashboardPageState extends State<DashboardPage> {
         });
   }
 
-  Future passwordReset() async {
+  Future passwordReset(context) async {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
