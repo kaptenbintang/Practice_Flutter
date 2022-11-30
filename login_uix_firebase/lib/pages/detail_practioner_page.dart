@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:login_uix_firebase/pages/main_page.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -104,11 +106,18 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   20, 20, 20, 20),
-                                          child: Text(
-                                            'Home',
-                                            textAlign: TextAlign.justify,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                  context, MainPage.routeName);
+                                            },
+                                            child: Text(
+                                              'Home',
+                                              textAlign: TextAlign.justify,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1,
+                                            ),
                                           ),
                                         ),
                                       ),

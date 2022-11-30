@@ -28,6 +28,10 @@ class DataService {
     await _db.collection("services").add(servicesData.toMap());
   }
 
+  addPractioners(PractionerData practionerData) async {
+    await _db.collection("practioners").add(practionerData.toMap());
+  }
+
   addServicesCategory(serviceCategoryClass servicesDataCategory) async {
     await _db.collection("servicesCategory").add(servicesDataCategory.toMap());
   }
@@ -58,6 +62,13 @@ class DataService {
         .collection("services")
         .doc(servicesData.id)
         .update(servicesData.toMap());
+  }
+
+  Future<void> updatePractioners(PractionerData practionerData) async {
+    await _db
+        .collection("practioners")
+        .doc(practionerData.id)
+        .update(practionerData.toMap());
   }
 
   Future<void> updateServicesCategory(
@@ -129,6 +140,24 @@ class DataService {
           builder: (context) {
             return AlertDialog(
               content: Text("Deleted Services"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> deletePractioners(
+      BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("practioners").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Practioner"),
             );
           },
         );
@@ -275,7 +304,7 @@ class DataService {
   Future<List<PractionerData>> retrievePractionerAll() async {
     QuerySnapshot<Map<String, dynamic>> snapshot = await _db
         .collection("practioners")
-        .where("displayMain", isEqualTo: true)
+        // .where("displayMain", isEqualTo: true)
         .get();
     return snapshot.docs
         .map((docSnapshot) => PractionerData.fromDocumentSnapshot(docSnapshot))
