@@ -6,14 +6,18 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({Key? key}) : super(key: key);
+import '../model/practioner_data.dart';
+
+class DetailPagePractioner extends StatefulWidget {
+  static const routeName = '/detailPage';
+  final PractionerData? dataU;
+  const DetailPagePractioner({super.key, required this.dataU});
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _DetailPagePractionerState createState() => _DetailPagePractionerState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _DetailPagePractionerState extends State<DetailPagePractioner> {
   TextEditingController? textController1;
   TextEditingController? textController2;
   TextEditingController? textController3;
