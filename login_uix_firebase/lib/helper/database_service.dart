@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/serviceCategory_data.dart';
@@ -282,5 +283,25 @@ class DataService {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await _db.collection('users').where('firstName', isEqualTo: name).get();
     return snapshot.docs.map((e) => UserData.fromDocumentSnapshot(e)).toList();
+  }
+
+  static Future<UserCredential> register(
+    String email,
+    String password,
+  ) async {
+    FirebaseApp app = await Firebase.initializeApp(
+        name: 'Secondary', options: Firebase.app().options);
+    try {
+      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      // Do something with exception. This try/catch is here to make sure
+      // that even if the user creation fails, app.delete() runs, if is not,
+      // next time Firebase.initializeApp() will fail as the previous one was
+      // not deleted.
+    }
+
+    await app.delete();
+    return Future.sync(() => userCredential);
   }
 }

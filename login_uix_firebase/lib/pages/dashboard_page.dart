@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
@@ -15,6 +16,7 @@ import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/widgets/alert_confirm.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 import 'package:recase/recase.dart';
+import 'package:intl/intl.dart';
 
 import '../helper/database_service.dart';
 import '../helper/user_privilege.dart';
@@ -52,6 +54,8 @@ class _DashboardPageState extends State<DashboardPage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final db = FirebaseFirestore.instance;
   String? userId;
+
+  bool isEmail(String input) => EmailValidator.validate(input);
 
   List<UserData> selectedUser = [];
 
@@ -518,7 +522,7 @@ class _DashboardPageState extends State<DashboardPage> {
           DataCell(
             DropdownButton<String>(
               hint: valuesList![indexs] == null
-                  ? Text("Dropdown")
+                  ? Text("Action")
                   : Text(
                       valuesList![indexs],
                       style: TextStyle(color: Colors.blue),
@@ -833,6 +837,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                               BorderRadius.circular(12)),
                                       fillColor: Colors.grey[200],
                                       filled: true),
+                                  validator: (value) {
+                                    if (value!.isEmpty ||
+                                        RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]')
+                                            .hasMatch(value)) {
+                                      return "Enter correct name";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
                                 ),
                               ),
                             ),
@@ -855,6 +868,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                               BorderRadius.circular(12)),
                                       fillColor: Colors.grey[200],
                                       filled: true),
+                                  validator: (value) {
+                                    if (value!.isEmpty ||
+                                        RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]')
+                                            .hasMatch(value)) {
+                                      return "Enter correct name";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
                                 ),
                               ),
                             ),
@@ -874,6 +896,13 @@ class _DashboardPageState extends State<DashboardPage> {
                                     borderRadius: BorderRadius.circular(12)),
                                 fillColor: Colors.grey[200],
                                 filled: true),
+                            validator: (value) {
+                              if (value!.isEmpty || !isEmail(value)) {
+                                return "Enter correct email";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
                         ),
                         Padding(
@@ -881,15 +910,57 @@ class _DashboardPageState extends State<DashboardPage> {
                           child: TextFormField(
                             controller: _ageController,
                             decoration: InputDecoration(
-                                labelText: "Date of Birth",
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
-                                fillColor: Colors.grey[200],
-                                filled: true),
+                              labelText: "Date of Birth",
+                              prefixIcon: Icon(
+                                Icons.calendar_today,
+                                color: Colors.blue,
+                              ),
+                              // icon: Icon(
+                              //   Icons.calendar_today,
+                              //   color: Colors.blue,
+                              // ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(12)),
+                              fillColor: Colors.grey[200],
+                              filled: true,
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter correct date of birth";
+                              } else {
+                                return null;
+                              }
+                            },
+                            readOnly: true,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(
+                                      1950), //DateTime.now() - not to allow to choose before today.
+                                  lastDate: DateTime.now());
+
+                              if (pickedDate != null) {
+                                print(
+                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                print(
+                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //you can implement different kind of Date Format here according to your requirement
+
+                                setState(() {
+                                  _ageController.text =
+                                      formattedDate; //set output date to TextField value.
+                                });
+                              } else {
+                                print("Date is not selected");
+                              }
+                            },
                           ),
                         ),
                         Padding(
@@ -965,11 +1036,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                         ),
                                       ))
                                   .toList(),
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please Client Type.';
-                                }
-                              },
+                              validator: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      if (value == null) {
+                                        return 'Please Client Type.';
+                                      }
+                                      return null;
+                                    }
+                                  : null,
                               onChanged: authoRoles['canWriteAll'] != false
                                   ? (value) {
                                       setState(() {
@@ -1079,11 +1153,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                         ),
                                       ))
                                   .toList(),
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please Client Type.';
-                                }
-                              },
+                              validator: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      if (value == null) {
+                                        return 'Please Client Type.';
+                                      }
+                                      return null;
+                                    }
+                                  : null,
                               onChanged: authoRoles['canWriteAll'] != false
                                   ? (value) {
                                       setState(() {
@@ -1152,6 +1229,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                               ),
                             ),
+                            //https://stackoverflow.com/questions/54412712/flutter-firebase-authentication-create-user-without-logging-in
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -1174,7 +1252,22 @@ class _DashboardPageState extends State<DashboardPage> {
                                         phoneNumber: _phoneController.text,
                                         clientType: selectedValue as String,
                                       );
-                                      await service.updateUser(userData);
+                                      await service
+                                          .updateUser(userData)
+                                          .then((value) {
+                                        Navigator.pop(context);
+                                        controllerSearch.text.isNotEmpty
+                                            ? search()
+                                            : _pullRefresh();
+                                      }).whenComplete(() => showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    content: Text(
+                                                        'Data have been updated'),
+                                                  );
+                                                },
+                                              ));
                                     }
                                   }),
                                   child: const Text('Confirm'),
