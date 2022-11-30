@@ -97,11 +97,18 @@ class _MainPageState extends State<MainPage> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   20, 20, 20, 20),
-                                          child: Text(
-                                            'Home',
-                                            textAlign: TextAlign.justify,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                  context, MainPage.routeName);
+                                            },
+                                            child: Text(
+                                              'Home',
+                                              textAlign: TextAlign.justify,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -212,7 +219,7 @@ class _MainPageState extends State<MainPage> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
                                 child: Text(
-                                  'Hello World',
+                                  'Begin your 1st Session!',
                                   style: FlutterFlowTheme.of(context)
                                       .title1
                                       .override(
@@ -225,7 +232,7 @@ class _MainPageState extends State<MainPage> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
                                 child: Text(
-                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. giwighegjowjogweogjoiwejgwejogoiwegjoiewjofefef',
+                                  'We believe anyone can attain true happiness, whether adults, children, youth, male and female.',
                                   textAlign: TextAlign.justify,
                                   style: FlutterFlowTheme.of(context)
                                       .subtitle1
@@ -537,9 +544,9 @@ class _MainPageState extends State<MainPage> {
 
   Widget tableDepanPractioner(BuildContext context, PractionerData snapshot,
       List<PractionerData>? user, int indexs) {
-    print(snapshot.firstName);
-    print(indexs);
-    print(user);
+    // print(snapshot.firstName);
+    // print(indexs);
+    // print(user);
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     // return Text(snapshot.firstName as String);
@@ -569,7 +576,9 @@ class _MainPageState extends State<MainPage> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
                 child: Text(
-                  snapshot.firstName as String,
+                  snapshot.firstName.toString() +
+                      ' ' +
+                      snapshot.lastName.toString(),
                   style: FlutterFlowTheme.of(context).title1,
                 ),
               ),
@@ -588,7 +597,7 @@ class _MainPageState extends State<MainPage> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                 child: Text(
-                  '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"',
+                  snapshot.myBackground as String,
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'Poppins',

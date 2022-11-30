@@ -15,6 +15,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_client_type_page.dart';
+import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_servicesCategory_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_page.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
                 dataU: ModalRoute.of(context)?.settings.arguments
                     as PractionerData,
               ),
+          ManagePractioners.routeName: (context) => const ManagePractioners(),
           ControllerPage.routeName: (context) => ControllerPage(),
         });
   }
