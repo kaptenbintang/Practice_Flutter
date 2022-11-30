@@ -88,6 +88,7 @@ class _EditProfileMobileWidgetState extends State<EditProfileMobileWidget> {
                                 ),
                                 onPressed: () {
                                   print('IconButton pressed ...');
+                                  Navigator.pop(context);
                                 },
                               ),
                             ),

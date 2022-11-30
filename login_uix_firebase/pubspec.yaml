@@ -85,6 +85,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   form_builder_validators: ^8.4.0
+  social_media_flutter: ^0.0.2
 
 dev_dependencies:
   flutter_test:
