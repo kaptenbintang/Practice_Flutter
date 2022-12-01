@@ -271,164 +271,186 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(20, 20, 20, 20),
-                                                  child: ListView(
-                                                    padding: EdgeInsets.zero,
-                                                    shrinkWrap: true,
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    10, 10, 10),
-                                                        child: Text(
-                                                          'Name: ' +
-                                                              widget.dataU!
-                                                                  .firstName
-                                                                  .toString() +
-                                                              ' ' +
-                                                              widget.dataU!
-                                                                  .lastName
-                                                                  .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    10, 10, 10),
-                                                        child: Text(
-                                                          'My Approach: ' +
-                                                              widget.dataU!
-                                                                  .myApproach
-                                                                  .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    10, 10, 10),
-                                                        child: Text(
-                                                          'My Backgrounds: ' +
-                                                              widget.dataU!
-                                                                  .myBackground
-                                                                  .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    10, 10, 10),
-                                                        child: Text(
-                                                          'My Qualifications: ' +
-                                                              widget.dataU!
-                                                                  .myQualifications
-                                                                  .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    10, 10, 10),
-                                                        child: Text(
-                                                          'My Specialty: ' +
-                                                              widget.dataU!
-                                                                  .mySpecialty
-                                                                  .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    10, 10, 10),
-                                                        child: Text(
-                                                          'My Roles: ' +
-                                                              widget.dataU!
-                                                                  .myRoles
-                                                                  .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(0, 20,
-                                                                    0, 0),
-                                                        child: FFButtonWidget(
-                                                          onPressed: () {
-                                                            print(
-                                                                'Button pressed ...');
-                                                          },
-                                                          text:
-                                                              'Make an appointment!',
-                                                          options:
-                                                              FFButtonOptions(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20,
-                                                                        20,
-                                                                        20,
-                                                                        20),
-                                                            color: FlutterFlowTheme
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                20, 20, 20, 20),
+                                                    child: ListView(
+                                                      padding: EdgeInsets.zero,
+                                                      shrinkWrap: true,
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      10),
+                                                          child: Text(
+                                                            'Name: ' +
+                                                                widget.dataU!
+                                                                    .firstName
+                                                                    .toString() +
+                                                                ' ' +
+                                                                widget.dataU!
+                                                                    .lastName
+                                                                    .toString(),
+                                                            style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .primaryColor,
-                                                            textStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .subtitle2
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Poppins',
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: 8,
+                                                                .bodyText1,
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      10),
+                                                          child: Text(
+                                                            'My Approach: ' +
+                                                                widget.dataU!
+                                                                    .myApproach
+                                                                    .toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      10),
+                                                          child: Text(
+                                                            'My Backgrounds: ' +
+                                                                widget.dataU!
+                                                                    .myBackground
+                                                                    .toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      10),
+                                                          child: Text(
+                                                            'My Qualifications: ' +
+                                                                widget.dataU!
+                                                                    .myQualifications
+                                                                    .toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      10),
+                                                          child: Text(
+                                                            'My Specialty: ' +
+                                                                widget.dataU!
+                                                                    .mySpecialty
+                                                                    .toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      10),
+                                                          child: Text(
+                                                            'My Roles: ' +
+                                                                widget.dataU!
+                                                                    .myRoles
+                                                                    .toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      20, 0, 0),
+                                                          child: FFButtonWidget(
+                                                            onPressed: () {
+                                                              print(
+                                                                  'Button pressed ...');
+                                                            },
+                                                            text:
+                                                                'Make an appointment!',
+                                                            options:
+                                                                FFButtonOptions(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          20,
+                                                                          20,
+                                                                          20,
+                                                                          20),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryColor,
+                                                              textStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .subtitle2
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Poppins',
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .transparent,
+                                                                width: 1,
+                                                              ),
+                                                              borderRadius: 8,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
