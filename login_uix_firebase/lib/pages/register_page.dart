@@ -326,6 +326,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   // ),
 
                   SizedBox(height: 10),
+                  //Date of Birth
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextFormField(
@@ -386,7 +387,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   SizedBox(height: 10),
-
+                  
+                  //Phone Number
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: IntlPhoneField(

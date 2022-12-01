@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_client_type_page.dart';
+import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_servicesCategory_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_page.dart';
@@ -61,6 +62,12 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
             text: 'Manage Services Category',
             onTap: () => Navigator.pushReplacementNamed(
                 context, ManageServiceCategory.routeName),
+          ),
+          createDrawerBodyItem(
+            icon: Icons.person_pin,
+            text: 'Manage Practioners',
+            onTap: () =>
+                Navigator.pushNamed(context, ManagePractioners.routeName),
           ),
         ],
       ),

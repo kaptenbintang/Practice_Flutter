@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/serviceCategory_data.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
@@ -26,6 +27,10 @@ class DataService {
 
   addServices(ServicesData servicesData) async {
     await _db.collection("services").add(servicesData.toMap());
+  }
+
+  addPractioners(PractionerData practionerData) async {
+    await _db.collection("practioners").add(practionerData.toMap());
   }
 
   addServicesCategory(serviceCategoryClass servicesDataCategory) async {
@@ -58,6 +63,13 @@ class DataService {
         .collection("services")
         .doc(servicesData.id)
         .update(servicesData.toMap());
+  }
+
+  Future<void> updatePractioners(PractionerData practionerData) async {
+    await _db
+        .collection("practioners")
+        .doc(practionerData.id)
+        .update(practionerData.toMap());
   }
 
   Future<void> updateServicesCategory(
@@ -129,6 +141,24 @@ class DataService {
           builder: (context) {
             return AlertDialog(
               content: Text("Deleted Services"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> deletePractioners(
+      BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("practioners").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Practioner"),
             );
           },
         );
@@ -269,6 +299,16 @@ class DataService {
         await _db.collection("services").get();
     return snapshot.docs
         .map((docSnapshot) => ServicesData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<PractionerData>> retrievePractionerAll() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("practioners")
+        // .where("displayMain", isEqualTo: true)
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => PractionerData.fromDocumentSnapshot(docSnapshot))
         .toList();
   }
 
