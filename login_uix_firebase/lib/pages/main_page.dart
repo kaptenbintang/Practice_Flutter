@@ -570,42 +570,44 @@ class _MainPageState extends State<MainPage> {
             borderRadius: BorderRadius.circular(20),
             shape: BoxShape.rectangle,
           ),
-          child: Column(
-            // mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                child: Text(
-                  snapshot.firstName.toString() +
-                      ' ' +
-                      snapshot.lastName.toString(),
-                  style: FlutterFlowTheme.of(context).title1,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
-                    'lib/images/doctor.png',
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    fit: BoxFit.scaleDown,
+          child: SingleChildScrollView(
+            child: Column(
+              // mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                  child: Text(
+                    snapshot.firstName.toString() +
+                        ' ' +
+                        snapshot.lastName.toString(),
+                    style: FlutterFlowTheme.of(context).title1,
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                child: Text(
-                  snapshot.myBackground as String,
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.italic,
-                      ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      'lib/images/doctor.png',
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  child: Text(
+                    snapshot.myBackground as String,
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontStyle: FontStyle.italic,
+                        ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
