@@ -188,90 +188,6 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                             ),
                           ],
                         ),
-                        SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
-                                child: Text(
-                                  'Hello World',
-                                  style: FlutterFlowTheme.of(context)
-                                      .title1
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 40,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 20, 20, 20),
-                                child: Text(
-                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. giwighegjowjogweogjoiwejgwejogoiwegjoiewjofefef',
-                                  textAlign: TextAlign.justify,
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 20, 20, 20),
-                                child: Image.asset(
-                                  'lib/images/Adjustment-Icon-7.png',
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 20, 20, 20),
-                                child: Image.asset(
-                                  'lib/images/7.png',
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 20, 20, 20),
-                                child: Image.asset(
-                                  'lib/images/9.png',
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 20, 20, 20),
-                                child: Image.asset(
-                                  'lib/images/9.png',
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         Container(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.8,
@@ -311,20 +227,25 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: Image.asset(
-                                              'https://picsum.photos/seed/964/600',
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.25,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.4,
-                                              fit: BoxFit.cover,
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 20, 0, 0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: Image.asset(
+                                                'lib/images/doctor.png',
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.25,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.4,
+                                                fit: BoxFit.scaleDown,
+                                              ),
                                             ),
                                           ),
                                           Container(
@@ -335,7 +256,7 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.5,
+                                                0.6,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -359,7 +280,7 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(40, 40, 40, 40),
+                                                      .fromSTEB(20, 20, 20, 20),
                                                   child: ListView(
                                                     padding: EdgeInsets.zero,
                                                     shrinkWrap: true,
@@ -369,110 +290,139 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
+                                                                .fromSTEB(10,
+                                                                    10, 10, 10),
                                                         child: Text(
-                                                          'Name',
+                                                          'Name: ' +
+                                                              widget.dataU!
+                                                                  .firstName
+                                                                  .toString() +
+                                                              ' ' +
+                                                              widget.dataU!
+                                                                  .lastName
+                                                                  .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .subtitle1,
+                                                              .bodyText1,
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
+                                                                .fromSTEB(10,
+                                                                    10, 10, 10),
                                                         child: Text(
-                                                          'My Approach',
+                                                          'My Approach: ' +
+                                                              widget.dataU!
+                                                                  .myApproach
+                                                                  .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .subtitle1,
+                                                              .bodyText1,
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
+                                                                .fromSTEB(10,
+                                                                    10, 10, 10),
                                                         child: Text(
-                                                          'My Backgrounds',
+                                                          'My Backgrounds: ' +
+                                                              widget.dataU!
+                                                                  .myBackground
+                                                                  .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .subtitle1,
+                                                              .bodyText1,
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
+                                                                .fromSTEB(10,
+                                                                    10, 10, 10),
                                                         child: Text(
-                                                          'My Qualifications',
+                                                          'My Qualifications: ' +
+                                                              widget.dataU!
+                                                                  .myQualifications
+                                                                  .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .subtitle1,
+                                                              .bodyText1,
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
+                                                                .fromSTEB(10,
+                                                                    10, 10, 10),
                                                         child: Text(
-                                                          'My Specialty',
+                                                          'My Specialty: ' +
+                                                              widget.dataU!
+                                                                  .mySpecialty
+                                                                  .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .subtitle1,
+                                                              .bodyText1,
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
+                                                                .fromSTEB(10,
+                                                                    10, 10, 10),
                                                         child: Text(
-                                                          'My Roles',
+                                                          'My Roles: ' +
+                                                              widget.dataU!
+                                                                  .myRoles
+                                                                  .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .subtitle1,
+                                                              .bodyText1,
                                                         ),
                                                       ),
-                                                      FFButtonWidget(
-                                                        onPressed: () {
-                                                          print(
-                                                              'Button pressed ...');
-                                                        },
-                                                        text: 'Submit',
-                                                        options:
-                                                            FFButtonOptions(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      20,
-                                                                      20,
-                                                                      20,
-                                                                      20),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .subtitle2
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Poppins',
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors
-                                                                .transparent,
-                                                            width: 1,
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 20,
+                                                                    0, 0),
+                                                        child: FFButtonWidget(
+                                                          onPressed: () {
+                                                            print(
+                                                                'Button pressed ...');
+                                                          },
+                                                          text:
+                                                              'Make an appointment!',
+                                                          options:
+                                                              FFButtonOptions(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        20,
+                                                                        20,
+                                                                        20,
+                                                                        20),
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryColor,
+                                                            textStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Poppins',
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              width: 1,
+                                                            ),
+                                                            borderRadius: 8,
                                                           ),
-                                                          borderRadius: 8,
                                                         ),
                                                       ),
                                                     ],
@@ -500,12 +450,12 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-0.8, -0.75),
+                                alignment: AlignmentDirectional(-0.8, -0.9),
                                 child: Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.14,
                                   height:
-                                      MediaQuery.of(context).size.height * 0.1,
+                                      MediaQuery.of(context).size.height * 0.14,
                                   decoration: BoxDecoration(),
                                   child: SingleChildScrollView(
                                     child: Column(
@@ -514,19 +464,22 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Text(
-                                          'Dr. Bintang',
+                                          widget.dataU!.firstName.toString(),
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .title1,
                                         ),
                                         Text(
-                                          '(Speaks English, Melayu, Indonesia)',
+                                          '(Speaks ' +
+                                              widget.dataU!.languages
+                                                  .toString() +
+                                              ')',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle1,
                                         ),
                                         Text(
-                                          'Registered Counselor @ LKM S-19; Couples and Relationships Specialist, Trained by the Gottman Institute (Completed All Levels)',
+                                          widget.dataU!.titleMain.toString(),
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,

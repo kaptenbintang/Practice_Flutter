@@ -11,6 +11,8 @@ class PractionerData {
   final String? myQualifications;
   final String? myRoles;
   final String? mySpecialty;
+  final String? languages;
+  final String? titleMain;
 
   PractionerData({
     this.id,
@@ -21,6 +23,8 @@ class PractionerData {
     this.myQualifications,
     this.myRoles,
     this.mySpecialty,
+    this.languages,
+    this.titleMain,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,6 +36,8 @@ class PractionerData {
       "myQualifications": myQualifications,
       "myRoles": myRoles,
       "mySpecialty": mySpecialty,
+      "languages": languages,
+      "titleMain": titleMain,
     };
   }
 
@@ -66,5 +72,7 @@ class PractionerData {
         myBackground = doc.data()!["myBackground"],
         myQualifications = doc.data()!["myQualifications"],
         myRoles = doc.data()!["myRoles"],
-        mySpecialty = doc.data()!["mySpecialty"];
+        mySpecialty = doc.data()!["mySpecialty"],
+        languages = doc.data()!["languages"],
+        titleMain = doc.data()!["titleMain"];
 }

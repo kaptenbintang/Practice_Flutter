@@ -33,6 +33,8 @@ class _ManagePractionersState extends State<ManagePractioners> {
   final _myQualificationsPractioner = TextEditingController();
   final _mySpecialtyPractioner = TextEditingController();
   final _myRolesPractioner = TextEditingController();
+  final _languagesPractioner = TextEditingController();
+  final _titleMainPractioner = TextEditingController();
 
   String? userId;
   String? firstNameID;
@@ -42,6 +44,8 @@ class _ManagePractionersState extends State<ManagePractioners> {
   String? myQualificationsID;
   String? mySpecialtyID;
   String? myRolesID;
+  String? languagesID;
+  String? titleMainID;
   String? selectedValueClient;
   String? selectedValue;
   int _currentSortColumn = 0;
@@ -171,6 +175,16 @@ class _ManagePractionersState extends State<ManagePractioners> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold))),
                           DataColumn(
+                              label: Text('Languages',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('titleMain',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
                               label: Text('Edit Practioners',
                                   style: TextStyle(
                                       fontSize: 18,
@@ -248,6 +262,8 @@ class _ManagePractionersState extends State<ManagePractioners> {
         DataCell(Text(snapshot.myQualifications as String)),
         DataCell(Text(snapshot.mySpecialty as String)),
         DataCell(Text(snapshot.myRoles as String)),
+        DataCell(Text(snapshot.languages as String)),
+        DataCell(Text(snapshot.titleMain as String)),
         DataCell(ElevatedButton(
             onPressed: () {
               dialogEditPractioner(context);
@@ -260,6 +276,8 @@ class _ManagePractionersState extends State<ManagePractioners> {
                 myQualificationsID = snapshot.myQualifications;
                 mySpecialtyID = snapshot.mySpecialty;
                 myRolesID = snapshot.myRoles;
+                languagesID = snapshot.languages;
+                titleMainID = snapshot.titleMain;
               });
             },
             child: const Text('Edit'))),
@@ -369,6 +387,24 @@ class _ManagePractionersState extends State<ManagePractioners> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _languagesPractioner,
+                          decoration: InputDecoration(
+                            labelText: "Languages",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _titleMainPractioner,
+                          decoration: InputDecoration(
+                            labelText: "Title Main",
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 40,
                       ),
@@ -388,6 +424,8 @@ class _ManagePractionersState extends State<ManagePractioners> {
                                     _myQualificationsPractioner.text,
                                 mySpecialty: _mySpecialtyPractioner.text,
                                 myRoles: _myRolesPractioner.text,
+                                languages: _languagesPractioner.text,
+                                titleMain: _titleMainPractioner.text,
                               );
                               await service.updatePractioners(practionerData);
                               Navigator.pop(context);
@@ -551,6 +589,38 @@ class _ManagePractionersState extends State<ManagePractioners> {
                           },
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _languagesPractioner,
+                          decoration: InputDecoration(
+                            labelText: "Enter my languges",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter languages";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _titleMainPractioner,
+                          decoration: InputDecoration(
+                            labelText: "Enter title main",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter title main";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
                       SizedBox(
                         height: 40,
                       ),
@@ -570,6 +640,8 @@ class _ManagePractionersState extends State<ManagePractioners> {
                                     _myQualificationsPractioner.text,
                                 mySpecialty: _mySpecialtyPractioner.text,
                                 myRoles: _myRolesPractioner.text,
+                                languages: _languagesPractioner.text,
+                                titleMain: _titleMainPractioner.text,
                               );
                               await service.addPractioners(practionerData);
                               Navigator.pop(context);
