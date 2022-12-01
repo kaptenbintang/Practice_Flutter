@@ -285,23 +285,23 @@ class DataService {
     return snapshot.docs.map((e) => UserData.fromDocumentSnapshot(e)).toList();
   }
 
-  static Future<UserCredential> register(
-    String email,
-    String password,
-  ) async {
-    FirebaseApp app = await Firebase.initializeApp(
-        name: 'Secondary', options: Firebase.app().options);
-    try {
-      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
-          .createUserWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      // Do something with exception. This try/catch is here to make sure
-      // that even if the user creation fails, app.delete() runs, if is not,
-      // next time Firebase.initializeApp() will fail as the previous one was
-      // not deleted.
-    }
+  // static Future<UserCredential> register(
+  //   String email,
+  //   String password,
+  // ) async {
+  //   FirebaseApp app = await Firebase.initializeApp(
+  //       name: 'Secondary', options: Firebase.app().options);
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  //   } on FirebaseAuthException catch (e) {
+  //     // Do something with exception. This try/catch is here to make sure
+  //     // that even if the user creation fails, app.delete() runs, if is not,
+  //     // next time Firebase.initializeApp() will fail as the previous one was
+  //     // not deleted.
+  //   }
 
-    await app.delete();
-    return Future.sync(() => userCredential);
-  }
+  //   await app.delete();
+  //   return Future.sync(() => userCredential);
+  // }
 }

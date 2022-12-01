@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
@@ -29,7 +30,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -48,8 +49,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        home: ControllerPage(),
-        // initialRoute: ControllerPage(),
+        // home: ControllerPage(),
+        initialRoute: ControllerPage.routeName,
         routes: {
           MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),

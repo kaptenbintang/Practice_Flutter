@@ -83,7 +83,7 @@ class _AddUserPageState extends State<AddUserPage> {
             return Center(child: CircularProgressIndicator());
           });
 
-      DataService.register();
+      // DataService.register();
       try {
         //create user
         await FirebaseAuth.instance.createUserWithEmailAndPassword(

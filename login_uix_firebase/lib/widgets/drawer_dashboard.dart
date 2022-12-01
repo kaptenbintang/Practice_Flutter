@@ -29,33 +29,38 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
           createDrawerBodyItem(
             icon: Icons.book_outlined,
             text: 'Staff Table',
-            onTap: () => Navigator.pushNamed(context, DashboardPage.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, DashboardPage.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.verified_user,
             text: 'Client Table',
-            onTap: () => Navigator.pushNamed(context, UserTablePage.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, UserTablePage.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.manage_accounts,
             text: 'Manage Roles',
-            onTap: () => Navigator.pushNamed(context, ManageRoles.routeName),
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, ManageRoles.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.manage_search,
             text: 'Manage Client Type',
-            onTap: () => Navigator.pushNamed(context, ManageClients.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, ManageClients.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.medical_services,
             text: 'Manage Services',
-            onTap: () => Navigator.pushNamed(context, ManageServices.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, ManageServices.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.category,
             text: 'Manage Services Category',
-            onTap: () =>
-                Navigator.pushNamed(context, ManageServiceCategory.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, ManageServiceCategory.routeName),
           ),
         ],
       ),

@@ -57,19 +57,19 @@ class _ProfilePageState extends State<ProfilePage> {
       phNumb,
       clientCode,
       clientTypes;
-  bool imgExist = false;
+  // bool imgExist = false;
 
-  String? url;
+  // String? url;
 
-  html.File? fImage;
+  // html.File? fImage;
 
-  XFile? imgXFile;
+  // XFile? imgXFile;
 
-  Uint8List webImage = Uint8List(10);
+  // Uint8List webImage = Uint8List(10);
 
   Future<void> getDataFromDb() async {
     if (auth.currentUser != null) {
-      uid = auth.currentUser?.uid;
+      uid = auth.currentUser!.uid;
 
       // var a = await db.collection("users").doc(uid).get();
       // return a.data();
@@ -108,7 +108,6 @@ class _ProfilePageState extends State<ProfilePage> {
         // ageController.text = age.toString();
       });
     }
-    ;
   }
 
   @override
@@ -121,16 +120,21 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _initRetrieval() async {
     currentUserData = service.currentUsers(user.uid);
     retrievedUserData = await service.currentUsers(user.uid);
+    if (currentUserData == null) {
+      print('null' + currentUserData.toString());
+    } else {
+      print('not null' + currentUserData.toString());
+    }
     // print(retrievedUserData!['id']);
-    fName = retrievedUserData!["firstName"];
-    lName = retrievedUserData!["lastName"];
-    age = retrievedUserData!["age"];
-    img = retrievedUserData!["imageUrl"];
-    role = retrievedUserData!["roles"];
-    dob = retrievedUserData!["dateofbirth"];
-    phNumb = retrievedUserData!["phoneNumber"];
-    clientCode = retrievedUserData!["clientcode"];
-    clientTypes = retrievedUserData!["clientType"];
+    fName = retrievedUserData?["firstName"];
+    lName = retrievedUserData?["lastName"];
+    age = retrievedUserData?["age"];
+    img = retrievedUserData?["imageUrl"];
+    role = retrievedUserData?["roles"];
+    dob = retrievedUserData?["dateofbirth"];
+    phNumb = retrievedUserData?["phoneNumber"];
+    clientCode = retrievedUserData?["clientcode"];
+    clientTypes = retrievedUserData?["clientType"];
 
     emailController.text = user.email.toString();
     nameController.text = fName;
@@ -141,42 +145,42 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future editUserDetails(String uid, String firstName, String lastName,
       String email, String dateofbirth, String phNumb) async {
-    if (imgExist) {
-      final ref = storage.ref().child('usersImage').child('$uid.jpg');
-      // html.File file = ios.File(imgXFile.path);
+    // if (imgExist) {
+    //   final ref = storage.ref().child('usersImage').child('$uid.jpg');
+    //   // html.File file = ios.File(imgXFile.path);
 
-      await ref.putData(webImage);
+    //   await ref.putData(webImage);
 
-      url = await ref.getDownloadURL();
+    //   url = await ref.getDownloadURL();
 
-      await auth.currentUser?.updateEmail(email);
-      UserData userData = UserData(
-        firstName: firstName,
-        lastName: lastName,
-        emailUser: email,
-        doBirth: dateofbirth,
-        phoneNumber: phNumb,
-        // imgUrl: url
-      );
+    //   await auth.currentUser?.updateEmail(email);
+    //   UserData userData = UserData(
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     emailUser: email,
+    //     doBirth: dateofbirth,
+    //     phoneNumber: phNumb,
+    //     // imgUrl: url
+    //   );
 
+    //   await service.updateUser(userData).onError(
+    //         (error, stackTrace) => print("Error writing document: $error"),
+    //       );
+    // } else {
+    UserData userData = UserData(
+      firstName: firstName,
+      lastName: lastName,
+      emailUser: email,
+      doBirth: dateofbirth,
+      phoneNumber: phNumb,
+      // imgUrl: ""
+    );
+
+    await auth.currentUser!.updateEmail(email).then((value) async {
       await service.updateUser(userData).onError(
-            (error, stackTrace) => print("Error writing document: $error"),
-          );
-    } else {
-      UserData userData = UserData(
-        firstName: firstName,
-        lastName: lastName,
-        emailUser: email,
-        doBirth: dateofbirth,
-        phoneNumber: phNumb,
-        // imgUrl: ""
-      );
-
-      await auth.currentUser?.updateEmail(email).then((value) async {
-        await service.updateUser(userData).onError(
-            (error, stackTrace) => print("Error writing document: $error"));
-      });
-    }
+          (error, stackTrace) => print("Error writing document: $error"));
+    });
+    // }
   }
 
   Future editUserData() async {
@@ -186,7 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
           content: const Text('There is no User Login'),
         );
       } else {
-        uid = auth.currentUser?.uid;
+        uid = auth.currentUser!.uid;
         editUserDetails(
           uid,
           nameController.text.trim(),
@@ -208,23 +212,23 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  Future<String?> pickImageCamera() async {
-    final ImagePicker picker = ImagePicker();
-    XFile? pickedImage = await picker.pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 100,
-        maxHeight: 100,
-        maxWidth: 100);
+  // Future<String?> pickImageCamera() async {
+  //   final ImagePicker picker = ImagePicker();
+  //   XFile? pickedImage = await picker.pickImage(
+  //       source: ImageSource.gallery,
+  //       imageQuality: 100,
+  //       maxHeight: 100,
+  //       maxWidth: 100);
 
-    var f = await pickedImage!.readAsBytes();
+  //   var f = await pickedImage!.readAsBytes();
 
-    setState(() {
-      imgXFile = pickedImage;
-      webImage = f;
-      imgExist = true;
-    });
-    Navigator.pop(context);
-  }
+  //   setState(() {
+  //     imgXFile = pickedImage;
+  //     webImage = f;
+  //     imgExist = true;
+  //   });
+  //   Navigator.pop(context);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -286,13 +290,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                       child: ListBody(
                                         children: [
                                           InkWell(
-                                            onTap: () async {
-                                              String path =
-                                                  pickImageCamera().toString();
-                                              Uint8List imageData =
-                                                  await XFile(path)
-                                                      .readAsBytes();
-                                            },
+                                            // onTap: () async {
+                                            //   String path =
+                                            //       pickImageCamera().toString();
+                                            //   Uint8List imageData =
+                                            //       await XFile(path)
+                                            //           .readAsBytes();
+                                            // },
                                             splashColor: Colors.purpleAccent,
                                             child: Row(
                                               children: [
@@ -340,12 +344,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                             ),
                                           ),
                                           InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                imgXFile = null;
-                                                imgExist = false;
-                                              });
-                                            },
+                                            // onTap: () {
+                                            //   setState(() {
+                                            //     imgXFile = null;
+                                            //     imgExist = false;
+                                            //   });
+                                            // },
                                             splashColor: Colors.purpleAccent,
                                             child: Row(
                                               children: [
@@ -551,8 +555,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: const Text('Sign Out'))
               ],
             );
-          } else if (snapshot.connectionState == ConnectionState.done &&
-              retrievedUserData!.isEmpty) {
+          } else if (snapshot.connectionState == ConnectionState.done) {
             return Center(
               child: ListView(
                 physics: const AlwaysScrollableScrollPhysics(),
