@@ -518,54 +518,54 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                     ),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-0.95, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                          child: Text(
-                            'On going appointment',
-                            style: FlutterFlowTheme.of(context).title1,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Stack(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(0),
-                          topLeft: Radius.circular(60),
-                          topRight: Radius.circular(60),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            'footer here',
-                            style: FlutterFlowTheme.of(context).title1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   height: MediaQuery.of(context).size.height * 0.5,
+                //   decoration: BoxDecoration(
+                //     color: FlutterFlowTheme.of(context).secondaryBackground,
+                //   ),
+                //   child: Column(
+                //     mainAxisSize: MainAxisSize.max,
+                //     children: [
+                //       Align(
+                //         alignment: AlignmentDirectional(-0.95, 0),
+                //         child: Padding(
+                //           padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                //           child: Text(
+                //             'On going appointment',
+                //             style: FlutterFlowTheme.of(context).title1,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Stack(
+                //   children: [
+                //     Container(
+                //       width: MediaQuery.of(context).size.width,
+                //       height: MediaQuery.of(context).size.height * 0.5,
+                //       decoration: BoxDecoration(
+                //         color: FlutterFlowTheme.of(context).secondaryColor,
+                //         borderRadius: BorderRadius.only(
+                //           bottomLeft: Radius.circular(0),
+                //           bottomRight: Radius.circular(0),
+                //           topLeft: Radius.circular(60),
+                //           topRight: Radius.circular(60),
+                //         ),
+                //       ),
+                //       child: Column(
+                //         mainAxisSize: MainAxisSize.max,
+                //         children: [
+                //           Text(
+                //             'footer here',
+                //             style: FlutterFlowTheme.of(context).title1,
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),
