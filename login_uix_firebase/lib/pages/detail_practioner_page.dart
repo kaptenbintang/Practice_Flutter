@@ -1,3 +1,5 @@
+import 'package:login_uix_firebase/pages/appointment_page.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../model/practioner_data.dart';
+import '../route.dart';
 import 'main_page.dart';
 
 class DetailPagePractioner extends StatefulWidget {
@@ -100,10 +103,16 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             20, 20, 20, 20),
-                                        child: Text(
-                                          'About us',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                RouteName.viewProfilePage);
+                                          },
+                                          child: Text(
+                                            'Profile',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -409,6 +418,10 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                       20, 0, 0),
                                                           child: FFButtonWidget(
                                                             onPressed: () {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  appointmentPage
+                                                                      .routeName);
                                                               print(
                                                                   'Button pressed ...');
                                                             },
