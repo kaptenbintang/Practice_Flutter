@@ -17,8 +17,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(StartNowPage());
     case EventsRoute:
       return _getPageRoute(EventPage());
-    default:
+    case LoginRoute:
       return _getPageRoute(LoginPage());
+    default:
+      return _getPageRoute(LandingPage());
   }
 }
 
