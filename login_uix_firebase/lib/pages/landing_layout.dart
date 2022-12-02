@@ -13,14 +13,14 @@ import '../widgets/top_nav.dart';
 
 class LandingLayout extends StatelessWidget {
   LandingLayout({super.key});
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      key: _scaffoldKey,
       extendBodyBehindAppBar: true,
-      appBar: topNavigationBar(context, scaffoldKey),
+      appBar: topNavigationBar(context, _scaffoldKey),
       drawer: Drawer(
         child: SideMenu(),
       ),

@@ -58,9 +58,7 @@ class SideMenu extends StatelessWidget {
                 .map((itemName) => SideMenuItem(
                       itemName: itemName == LoginRoute ? "Log In" : itemName,
                       onTap: () {
-                        if (itemName == LoginRoute) {
-                          Navigator.pushNamed(context, RouteName.loginPage);
-                        }
+                        if (itemName == LoginRoute) {}
 
                         if (!menuController.isActive(itemName)) {
                           menuController.changeActiveitemTo(itemName);
@@ -74,12 +72,9 @@ class SideMenu extends StatelessWidget {
                 .toList(),
           ),
           // Generated code for this Column Widget...
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 5),
-                child: Row(
+          ResponsiveWidget.isSmallScreen(context) ||
+                  ResponsiveWidget.isLargeScreen(context)
+              ? Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -147,22 +142,96 @@ class SideMenu extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-              ),
-              // Padding(
-              //   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 5),
-              //   child: SelectionArea(
-              //       child: Text(
-              //     'Follow Us',
-              //     textAlign: TextAlign.center,
-              //     style: FlutterFlowTheme.of(context).bodyText1.override(
-              //         fontFamily: 'Poppins',
-              //         fontSize: 16,
-              //         color: Color.fromARGB(255, 78, 177, 165)),
-              //   )),
-              // ),
-            ],
-          )
+                )
+              : Row(
+                  children: [
+                    Container(
+                      child: Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: SocialWidget(
+                                    placeholderText:
+                                        'Facebook', //text visible to viewers
+                                    iconData: SocialIconsFlutter
+                                        .facebook_box, //use the respective social logo
+                                    iconColor:
+                                        Color.fromARGB(255, 26, 119, 196),
+                                    iconSize: 28, //(optional, default - grey)
+                                    link:
+                                        'https://www.facebook.com/pg/TheRelationary/', //provide the link
+                                    placeholderStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18), //placeholder text style
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                child: SocialWidget(
+                                  placeholderText:
+                                      'Twitter', //text visible to viewers
+                                  iconData: SocialIconsFlutter
+                                      .instagram, //use the respective social logo
+                                  iconColor: Colors.pink,
+                                  iconSize: 28, //(optional, default - grey)
+                                  link:
+                                      'https://twitter.com/TheRelationary', //provide the link
+                                  placeholderStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18), //placeholder text style
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                child: SocialWidget(
+                                  placeholderText:
+                                      'Instagram', //text visible to viewers
+                                  iconData: SocialIconsFlutter
+                                      .twitter, //use the respective social logo
+                                  iconColor: Colors.blueAccent,
+                                  iconSize: 28, //(optional, default - grey)
+                                  link:
+                                      'https://www.instagram.com/therelationary/', //provide the link
+                                  placeholderStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18), //placeholder text style
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                child: SocialWidget(
+                                  placeholderText:
+                                      'Youtube', //text visible to viewers
+                                  iconData: SocialIconsFlutter
+                                      .youtube, //use the respective social logo
+                                  iconColor: Color.fromARGB(255, 235, 25, 25),
+                                  iconSize: 28, //(optional, default - grey)
+                                  link:
+                                      'https://www.youtube.com/channel/UCJDgsezvoL79bTAycsJtTog', //provide the link
+                                  placeholderStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18), //placeholder text style
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
         ],
       ),
     );

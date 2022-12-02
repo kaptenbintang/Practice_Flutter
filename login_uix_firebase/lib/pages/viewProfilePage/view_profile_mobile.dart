@@ -14,7 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/route.dart';
 
+import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../helper/database_service.dart';
+import '../../main.dart';
 import '../../model/user_data.dart';
 
 class ProfilePageMobileWidget extends StatefulWidget {
@@ -230,18 +232,33 @@ class _ProfilePageMobileWidgetState extends State<ProfilePageMobileWidget> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 20,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.black,
+              size: 20,
+            ),
+            onPressed: () {
+              print('IconButton pressed ...');
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
             'Profile',
             style: FlutterFlowTheme.of(context).title1.override(
                   fontFamily: 'Urbanist',
                   color: Color(0xFF101213),
-                  fontSize: 32,
+                  fontSize: 25,
                   fontWeight: FontWeight.w600,
                 ),
           ),
           actions: [],
-          centerTitle: false,
-          elevation: 0,
+          centerTitle: true,
+          elevation: 1,
         ),
         body: FutureBuilder(
           future: currentUserData,
@@ -551,8 +568,10 @@ class _ProfilePageMobileWidgetState extends State<ProfilePageMobileWidget> {
                             FFButtonWidget(
                               onPressed: () async {
                                 FirebaseAuth.instance.signOut();
-                                Navigator.pushReplacementNamed(
+                                Navigator.popAndPushNamed(
                                     context, RouteName.controllerPage);
+                                navigatorKey.currentState!
+                                    .popUntil((route) => route.isFirst);
                               },
                               text: 'Log Out',
                               options: FFButtonOptions(

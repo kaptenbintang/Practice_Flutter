@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/LandingPage/landing_page.dart';
 import 'package:login_uix_firebase/pages/landing_layout.dart';
+import 'package:login_uix_firebase/pages/login/login_page.dart';
 
 import 'package:login_uix_firebase/pages/main_page.dart';
+import 'package:login_uix_firebase/widgets/small_screen.dart';
 
 import '../pages/dashboard_page.dart';
 import '../pages/profile_page.dart';

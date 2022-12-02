@@ -14,7 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/route.dart';
 
+import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../helper/database_service.dart';
+import '../../main.dart';
 import '../../model/user_data.dart';
 
 class ProfilePageDesktopWidget extends StatefulWidget {
@@ -227,21 +229,55 @@ class _ProfilePageDesktopWidgetState extends State<ProfilePageDesktopWidget> {
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFFF1F4F8),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Profile',
-            style: FlutterFlowTheme.of(context).title1.override(
-                  fontFamily: 'Urbanist',
-                  color: Color(0xFF101213),
-                  fontSize: 40,
-                  fontWeight: FontWeight.w600,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100),
+          child: AppBar(
+            backgroundColor: Colors.white,
+            automaticallyImplyLeading: false,
+            leading: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 50,
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.black,
+                size: 50,
+              ),
+              onPressed: () {
+                print('IconButton pressed ...');
+                Navigator.pop(context);
+              },
+            ),
+            flexibleSpace: FlexibleSpaceBar(
+              title: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                      child: Text(
+                        'Profile',
+                        style: FlutterFlowTheme.of(context).title2.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.black,
+                              fontSize: 30,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+              centerTitle: true,
+              expandedTitleScale: 1.0,
+            ),
+            actions: [],
+            centerTitle: true,
+            elevation: 2,
           ),
-          actions: [],
-          centerTitle: false,
-          elevation: 0,
         ),
         body: FutureBuilder(
           future: currentUserData,
@@ -506,8 +542,10 @@ class _ProfilePageDesktopWidgetState extends State<ProfilePageDesktopWidget> {
                             FFButtonWidget(
                               onPressed: () async {
                                 FirebaseAuth.instance.signOut();
-                                Navigator.pushReplacementNamed(
+                                Navigator.popAndPushNamed(
                                     context, RouteName.controllerPage);
+                                navigatorKey.currentState!
+                                    .popUntil((route) => route.isFirst);
                               },
                               text: 'Log Out',
                               options: FFButtonOptions(
