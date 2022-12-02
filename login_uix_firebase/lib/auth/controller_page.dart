@@ -5,6 +5,7 @@ import 'package:login_uix_firebase/pages/login_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
 
 import '../pages/dashboard_page.dart';
+import '../pages/landing_layout.dart';
 import '../pages/profile_page.dart';
 import 'auth_page.dart';
 
@@ -59,7 +60,7 @@ class ControllerPage extends StatelessWidget {
                       },
                     );
 
-                    return LoginPage();
+                    return LandingLayout();
                   } else {
                     return Material(
                       child: Center(
@@ -71,7 +72,7 @@ class ControllerPage extends StatelessWidget {
               );
             } else {
               print('cccccccccccccccc');
-              return const LoginPage();
+              return LandingLayout();
             }
           }),
     );
