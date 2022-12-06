@@ -26,12 +26,16 @@ class _appointmentPageState extends State<appointmentPage> {
   TextEditingController? textController1;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _myBox = Hive.box('myBox');
 
   @override
   void initState() {
     super.initState();
     textController1 = TextEditingController();
-    textController2 = TextEditingController();
+    setState(() {
+      textController2?.text = _myBox.get('name');
+    });
+
     textController3 = TextEditingController();
     textController4 = TextEditingController();
   }
@@ -47,7 +51,6 @@ class _appointmentPageState extends State<appointmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _myBox = Hive.box('myBox');
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
