@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
+import 'package:login_uix_firebase/pages/appointment_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
@@ -83,6 +84,7 @@ class MyApp extends StatelessWidget {
                 dataU: ModalRoute.of(context)?.settings.arguments
                     as PractionerData,
               ),
+          appointmentPage.routeName: (context) => const appointmentPage(),
           ManagePractioners.routeName: (context) => const ManagePractioners(),
           ControllerPage.routeName: (context) => ControllerPage(),
           RouteName.changePWPage: (context) => const changePasswordPage(),
