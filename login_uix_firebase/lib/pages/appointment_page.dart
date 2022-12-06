@@ -906,10 +906,77 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                 textController3,
                                                             autofocus: true,
                                                             obscureText: false,
+                                                            readOnly: true,
+                                                            onTap: () async {
+                                                              DateTime?
+                                                                  pickedDate =
+                                                                  await showDatePicker(
+                                                                      context:
+                                                                          context,
+                                                                      initialDate:
+                                                                          DateTime
+                                                                              .now(),
+                                                                      firstDate:
+                                                                          DateTime(
+                                                                              2022), //DateTime.now() - not to allow to choose before today.
+                                                                      lastDate:
+                                                                          DateTime(
+                                                                              2023));
+
+                                                              var time = await showTimePicker(
+                                                                  context:
+                                                                      context,
+                                                                  initialTime:
+                                                                      TimeOfDay
+                                                                          .now());
+
+                                                              if (pickedDate !=
+                                                                      null &&
+                                                                  time !=
+                                                                      null) {
+                                                                print(
+                                                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                                                String
+                                                                    formattedDate =
+                                                                    DateFormat(
+                                                                            'yyyy-MM-dd')
+                                                                        .format(
+                                                                            pickedDate);
+                                                                print(
+                                                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                                                //you can implement different kind of Date Format here according to your requirement
+
+                                                                setState(() {
+                                                                  textController3
+                                                                          ?.text =
+                                                                      formattedDate +
+                                                                          " " +
+                                                                          "${time.hour}:${time.minute}";
+
+                                                                  //set output date to TextField value.
+                                                                });
+                                                                // setState(() {
+                                                                //   textController3
+                                                                //           ?.text =
+                                                                //       "${time.hour}:${time.minute}";
+
+                                                                //   //set output date to TextField value.
+                                                                // });
+                                                              } else {
+                                                                print(
+                                                                    "Date is not selected");
+                                                              }
+                                                            },
                                                             decoration:
                                                                 InputDecoration(
-                                                              hintText:
-                                                                  '[Some hint text...]',
+                                                              labelText:
+                                                                  "Select date/time",
+                                                              prefixIcon: Icon(
+                                                                Icons
+                                                                    .calendar_today,
+                                                                color:
+                                                                    Colors.blue,
+                                                              ),
                                                               hintStyle:
                                                                   FlutterFlowTheme.of(
                                                                           context)
