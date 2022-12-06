@@ -805,77 +805,71 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                 AsyncSnapshot<
                                                                         QuerySnapshot>
                                                                     snapshot) {
-                                                              if (snapshot
-                                                                  .hasError) {
-                                                                return Text(
-                                                                    'Something went wrong');
-                                                              } else if (snapshot
-                                                                      .connectionState ==
-                                                                  ConnectionState
-                                                                      .waiting) {
-                                                                return Text(
-                                                                    "Loading");
-                                                              } else {
-                                                                return FlutterFlowDropDown(
-                                                                  options: snapshot
-                                                                      .data!
-                                                                      .docs
-                                                                      .map((DocumentSnapshot
-                                                                          document) {
-                                                                        Map<String,
-                                                                                dynamic>
-                                                                            data =
-                                                                            document.data()!
-                                                                                as Map<String, dynamic>;
-                                                                        return data[
-                                                                            "categoryName"];
-                                                                      })
-                                                                      .toList()
-                                                                      .cast<
-                                                                          String>(),
-                                                                  onChanged: (val) =>
-                                                                      setState(() =>
-                                                                          dropDownValue =
-                                                                              val),
-                                                                  initialOption:
-                                                                      dropDownValue,
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.2,
-                                                                  height: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .height *
-                                                                      0.06,
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .subtitle1,
-                                                                  hintText:
-                                                                      'Please select..',
-                                                                  fillColor: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .lineColor,
-                                                                  elevation: 0,
-                                                                  borderColor:
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                  borderWidth:
-                                                                      1,
-                                                                  borderRadius:
-                                                                      8,
-                                                                  margin: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          12,
-                                                                          4,
-                                                                          12,
-                                                                          4),
-                                                                  hidesUnderline:
-                                                                      true,
-                                                                );
-                                                              }
+                                                              // if (snapshot
+                                                              //         .connectionState ==
+                                                              //     ConnectionState
+                                                              //         .waiting) {
+                                                              //   return Text(
+                                                              //       'Loading');
+                                                              // }
+                                                              return FlutterFlowDropDown(
+                                                                options: snapshot
+                                                                    .data!.docs
+                                                                    .map((DocumentSnapshot
+                                                                        document) {
+                                                                      Map<String,
+                                                                              dynamic>
+                                                                          data =
+                                                                          document.data()! as Map<
+                                                                              String,
+                                                                              dynamic>;
+                                                                      return data[
+                                                                          "categoryName"];
+                                                                    })
+                                                                    .toList()
+                                                                    .cast<
+                                                                        String>(),
+                                                                onChanged: (val) =>
+                                                                    setState(() =>
+                                                                        dropDownValue =
+                                                                            val),
+                                                                initialOption:
+                                                                    dropDownValue,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.2,
+                                                                height: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height *
+                                                                    0.06,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle1,
+                                                                hintText:
+                                                                    'Please select..',
+                                                                fillColor: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .lineColor,
+                                                                elevation: 0,
+                                                                borderColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                borderWidth: 1,
+                                                                borderRadius: 8,
+                                                                margin:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12,
+                                                                            4,
+                                                                            12,
+                                                                            4),
+                                                                hidesUnderline:
+                                                                    true,
+                                                              );
                                                             }),
                                                       ),
                                                     ],
@@ -1083,73 +1077,72 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                   AsyncSnapshot<
                                                                           QuerySnapshot>
                                                                       snapshot) {
-                                                                if (snapshot
-                                                                    .hasError) {
-                                                                  return Text(
-                                                                      'Something went wrong');
-                                                                } else if (snapshot
-                                                                        .connectionState ==
-                                                                    ConnectionState
-                                                                        .waiting) {
-                                                                  return Text(
-                                                                      "Loading");
-                                                                } else {
-                                                                  return FlutterFlowDropDown(
-                                                                    options: snapshot
-                                                                        .data!
-                                                                        .docs
-                                                                        .map((DocumentSnapshot
-                                                                            document) {
-                                                                          Map<String, dynamic>
-                                                                              data =
-                                                                              document.data()! as Map<String, dynamic>;
-                                                                          return data[
-                                                                              "type"];
-                                                                        })
-                                                                        .toList()
-                                                                        .cast<
-                                                                            String>(),
-                                                                    onChanged: (val) =>
-                                                                        setState(() =>
-                                                                            dropDownValue =
-                                                                                val),
-                                                                    initialOption:
-                                                                        dropDownValue,
-                                                                    width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.2,
-                                                                    height: MediaQuery.of(context)
-                                                                            .size
-                                                                            .height *
-                                                                        0.06,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .subtitle1,
-                                                                    hintText:
-                                                                        'Please select..',
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .lineColor,
-                                                                    elevation:
-                                                                        0,
-                                                                    borderColor:
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                    borderWidth:
-                                                                        1,
-                                                                    borderRadius:
-                                                                        8,
-                                                                    margin: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            12,
-                                                                            4,
-                                                                            12,
-                                                                            4),
-                                                                    hidesUnderline:
-                                                                        true,
-                                                                  );
-                                                                }
+                                                                // if (snapshot
+                                                                //         .connectionState ==
+                                                                //     ConnectionState
+                                                                //         .waiting) {
+                                                                //   return Text(
+                                                                //       'Loading');
+                                                                // }
+                                                                return FlutterFlowDropDown(
+                                                                  options: snapshot
+                                                                      .data!
+                                                                      .docs
+                                                                      .map((DocumentSnapshot
+                                                                          document) {
+                                                                        Map<String,
+                                                                                dynamic>
+                                                                            data =
+                                                                            document.data()!
+                                                                                as Map<String, dynamic>;
+                                                                        return data[
+                                                                            "type"];
+                                                                      })
+                                                                      .toList()
+                                                                      .cast<
+                                                                          String>(),
+                                                                  onChanged: (val) =>
+                                                                      setState(() =>
+                                                                          dropDownValue =
+                                                                              val),
+                                                                  initialOption:
+                                                                      dropDownValue,
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.2,
+                                                                  height: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height *
+                                                                      0.06,
+                                                                  textStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .subtitle1,
+                                                                  hintText:
+                                                                      'Please select..',
+                                                                  fillColor: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .lineColor,
+                                                                  elevation: 0,
+                                                                  borderColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                  borderWidth:
+                                                                      1,
+                                                                  borderRadius:
+                                                                      8,
+                                                                  margin: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12,
+                                                                          4,
+                                                                          12,
+                                                                          4),
+                                                                  hidesUnderline:
+                                                                      true,
+                                                                );
                                                               }),
                                                         ),
                                                       ),
