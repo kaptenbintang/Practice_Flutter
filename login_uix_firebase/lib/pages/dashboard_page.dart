@@ -513,7 +513,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           DataCell(Text(snapshot.firstName)),
           DataCell(Text(snapshot.lastName)),
-          DataCell(Text(snapshot.emailUser)),
+          DataCell(Text(snapshot.emailUser as String)),
           DataCell(Text(snapshot.doBirth)),
           DataCell(Text(snapshot.phoneNumber)),
           DataCell(Text(snapshot.clientType as String)),
@@ -539,7 +539,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     case "Edit":
                       dialogEdit(context);
                       setState(() {
-                        _emailController.text = snapshot.emailUser;
+                        _emailController.text = snapshot.emailUser as String;
                         _clientTypeController.text =
                             snapshot.clientType as String;
                         _rolesController.text = snapshot.roles as String;
@@ -560,7 +560,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     case "ResetPassword":
                       dialogResetPassword(context);
                       setState(() {
-                        _emailController.text = snapshot.emailUser;
+                        _emailController.text = snapshot.emailUser as String;
                       });
                       break;
                     default:
@@ -634,7 +634,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           DataCell(Text(snapshot.firstName)),
           DataCell(Text(snapshot.lastName)),
-          DataCell(Text(snapshot.emailUser)),
+          DataCell(Text(snapshot.emailUser as String)),
           DataCell(Text(snapshot.doBirth)),
           DataCell(Text(snapshot.phoneNumber)),
           DataCell(Text(snapshot.clientType as String)),
@@ -686,7 +686,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     case "Edit":
                       dialogEdit(context);
                       setState(() {
-                        _emailController.text = snapshot.emailUser;
+                        _emailController.text = snapshot.emailUser as String;
                         _clientTypeController.text =
                             snapshot.clientType as String;
                         _rolesController.text = snapshot.roles as String;
@@ -707,7 +707,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     case "ResetPassword":
                       dialogResetPassword(context);
                       setState(() {
-                        _emailController.text = snapshot.emailUser;
+                        _emailController.text = snapshot.emailUser as String;
                       });
                       break;
                     case "Restore":

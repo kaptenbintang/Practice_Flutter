@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
@@ -21,6 +22,7 @@ import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_servicesCategory_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
+import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/register_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/routes/page_route.dart';
@@ -43,15 +45,17 @@ class Util {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        // home: ControllerPage(),
+        // home: Consumer(builder: (context, ref, child) {
+
+        // },),
         initialRoute: ControllerPage.routeName,
         routes: {
           MainPage.routeName: (context) => const MainPage(),
@@ -63,6 +67,8 @@ class MyApp extends StatelessWidget {
           changePasswordPage.routeName: (context) => const changePasswordPage(),
           ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
           ProfilePage.routeName: (context) => const ProfilePage(),
+          ProfileRiverpodPage.routeName: (context) =>
+              const ProfileRiverpodPage(),
           UserTablePage.routeName: (context) => const UserTablePage(),
           ManageRoles.routeName: (context) => const ManageRoles(),
           ManageClients.routeName: (context) => const ManageClients(),
