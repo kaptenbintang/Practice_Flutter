@@ -15,6 +15,8 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 
 import 'package:login_uix_firebase/route.dart';
 
+import '../../constant/controllers.dart';
+import '../../routing/routes.dart';
 import '../forgot_pw_page.dart';
 
 class RegisterMobile extends StatefulWidget {
@@ -589,7 +591,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, RouteName.loginPage);
+                          navigationController.navigateTo(sideMenuItems[3]);
                         },
                         child: Text(
                           " Login now!",

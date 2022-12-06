@@ -22,7 +22,8 @@ import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_servicesCategory_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
-import 'package:login_uix_firebase/pages/register_page.dart';
+import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
+
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
           MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),
           LoginPage.routeName: (context) => LoginPage(),
-          RegisterPage.routeName: (context) => RegisterPage(),
+          // RegisterPage.routeName: (context) => RegisterPage(),
           DeleteAccount.routeName: (context) => const DeleteAccount(),
           CheckEmailView.routeName: (context) => const CheckEmailView(),
           changePasswordPage.routeName: (context) => const changePasswordPage(),

@@ -30,6 +30,8 @@ class MenuController extends GetxController {
         return _customIcon(Icons.event, itemName);
       case LoginRoute:
         return _customIcon(Icons.person, itemName);
+      case RegisterRoute:
+        return _customIcon(Icons.app_registration_sharp, itemName);
       default:
         return _customIcon(Icons.home, itemName);
     }

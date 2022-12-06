@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/routing/routes.dart';
 
 import '../../auth/controller_page.dart';
+import '../../constant/controllers.dart';
 import '../forgot_pw_page.dart';
 
 class LoginDesktop extends StatefulWidget {
@@ -261,8 +263,8 @@ class _LoginDesktopState extends State<LoginDesktop> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.registerPage);
+                                navigationController
+                                    .navigateTo(sideMenuItems[4]);
                               },
                               child: Text(
                                 " Register now!",

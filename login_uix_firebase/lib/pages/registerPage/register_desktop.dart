@@ -12,7 +12,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/src/intl/date_format.dart';
 
+import '../../constant/controllers.dart';
 import '../../route.dart';
+import '../../routing/routes.dart';
 import '../forgot_pw_page.dart';
 
 class RegisterDesktop extends StatefulWidget {
@@ -596,7 +598,7 @@ class _RegisterDesktopState extends State<RegisterDesktop> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, RouteName.loginPage);
+                          navigationController.navigateTo(sideMenuItems[3]);
                         },
                         child: Text(
                           " Login now!",
