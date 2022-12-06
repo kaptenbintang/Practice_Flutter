@@ -1,3 +1,4 @@
+import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
@@ -590,10 +591,17 @@ class _MainPageState extends State<MainPage> {
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     // return Text(snapshot.firstName as String);
+    final _myBox = Hive.box('myBox');
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
       child: InkWell(
         onTap: () {
+          _myBox.put(
+              'name',
+              snapshot.firstName.toString() +
+                  " " +
+                  snapshot.lastName.toString());
+          print(_myBox.get('name'));
           Navigator.pushNamed(context, DetailPagePractioner.routeName,
               arguments: snapshot);
         },

@@ -1,3 +1,4 @@
+import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -422,8 +423,13 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                   context,
                                                                   appointmentPage
                                                                       .routeName);
-                                                              print(
-                                                                  'Button pressed ...');
+                                                              // print(
+                                                              //     'Button pressed ...');
+                                                              // final _myBox =
+                                                              //     Hive.box(
+                                                              //         'myBox');
+                                                              // print(_myBox
+                                                              //     .get('name'));
                                                             },
                                                             text:
                                                                 'Make an appointment!',

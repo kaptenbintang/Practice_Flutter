@@ -1,3 +1,5 @@
+import 'package:hive/hive.dart';
+
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -45,6 +47,7 @@ class _appointmentPageState extends State<appointmentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _myBox = Hive.box('myBox');
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -687,13 +690,16 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                 textController2,
                                                             autofocus: true,
                                                             obscureText: false,
+                                                            readOnly: true,
                                                             decoration:
                                                                 InputDecoration(
-                                                              hintText: '....',
+                                                              hintText: _myBox
+                                                                  .get('name'),
+                                                              // enabled: false,
                                                               hintStyle:
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText2,
+                                                                      .bodyText1,
                                                               enabledBorder:
                                                                   OutlineInputBorder(
                                                                 borderSide:
@@ -1036,6 +1042,11 @@ class _appointmentPageState extends State<appointmentPage> {
                                                           0, 0),
                                                   child: FFButtonWidget(
                                                     onPressed: () {
+                                                      setState(() {
+                                                        textController2?.text =
+                                                            _myBox.get('name');
+                                                      });
+                                                      print(_myBox.get('name'));
                                                       print(
                                                           'Button pressed ...');
                                                     },
