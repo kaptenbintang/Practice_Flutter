@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 
 import '../flutter_flow/flutter_flow_drop_down.dart';
@@ -51,6 +52,9 @@ class _appointmentPageState extends State<appointmentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
+        .collection('servicesCategory')
+        .snapshots(includeMetadataChanges: true);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -789,46 +793,87 @@ class _appointmentPageState extends State<appointmentPage> {
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(123,
                                                                     20, 20, 20),
-                                                        child:
-                                                            FlutterFlowDropDown(
-                                                          options: ['Option 1'],
-                                                          onChanged: (val) =>
-                                                              setState(() =>
-                                                                  dropDownValue =
-                                                                      val),
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.2,
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height *
-                                                              0.06,
-                                                          textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .subtitle1,
-                                                          hintText:
-                                                              'Please select..',
-                                                          fillColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .lineColor,
-                                                          elevation: 0,
-                                                          borderColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primaryText,
-                                                          borderWidth: 1,
-                                                          borderRadius: 8,
-                                                          margin:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(12,
-                                                                      4, 12, 4),
-                                                          hidesUnderline: true,
-                                                        ),
+                                                        child: StreamBuilder<
+                                                                QuerySnapshot>(
+                                                            stream:
+                                                                _categoryStream,
+                                                            builder: (BuildContext
+                                                                    context,
+                                                                AsyncSnapshot<
+                                                                        QuerySnapshot>
+                                                                    snapshot) {
+                                                              // if (snapshot
+                                                              //     .hasError) {
+                                                              //   return Text(
+                                                              //       'Something went wrong');
+                                                              // }
+
+                                                              // if (snapshot
+                                                              //         .connectionState ==
+                                                              //     ConnectionState
+                                                              //         .waiting) {
+                                                              //   return Text(
+                                                              //       "Loading");
+                                                              // }
+                                                              return FlutterFlowDropDown(
+                                                                options: snapshot
+                                                                    .data!.docs
+                                                                    .map((DocumentSnapshot
+                                                                        document) {
+                                                                      Map<String,
+                                                                              dynamic>
+                                                                          data =
+                                                                          document.data()! as Map<
+                                                                              String,
+                                                                              dynamic>;
+                                                                      return data[
+                                                                          "categoryName"];
+                                                                    })
+                                                                    .toList()
+                                                                    .cast<
+                                                                        String>(),
+                                                                onChanged: (val) =>
+                                                                    setState(() =>
+                                                                        dropDownValue =
+                                                                            val),
+                                                                initialOption:
+                                                                    dropDownValue,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.2,
+                                                                height: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height *
+                                                                    0.06,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle1,
+                                                                hintText:
+                                                                    'Please select..',
+                                                                fillColor: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .lineColor,
+                                                                elevation: 0,
+                                                                borderColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                borderWidth: 1,
+                                                                borderRadius: 8,
+                                                                margin:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12,
+                                                                            4,
+                                                                            12,
+                                                                            4),
+                                                                hidesUnderline:
+                                                                    true,
+                                                              );
+                                                            }),
                                                       ),
                                                     ],
                                                   ),
