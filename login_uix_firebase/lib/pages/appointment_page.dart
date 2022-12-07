@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
+import 'package:login_uix_firebase/model/appointment_data.dart';
+
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -5,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../helper/database_service.dart';
 import '../route.dart';
 import 'main_page.dart';
 
@@ -17,34 +22,44 @@ class appointmentPage extends StatefulWidget {
 }
 
 class _appointmentPageState extends State<appointmentPage> {
-  String? dropDownValue;
-  TextEditingController? textController2;
-  TextEditingController? textController3;
-  TextEditingController? textController4;
-  TextEditingController? textController1;
+  String? userId;
+  String? dropDownServices;
+  String? dropDownLocation;
+  TextEditingController? pnameController;
+  TextEditingController? dateandtimeController;
+  TextEditingController? searchController;
+  DataService service = DataService();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _myBox = Hive.box('myBox');
 
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
-    textController4 = TextEditingController();
+    searchController = TextEditingController();
+    setState(() {
+      pnameController?.text = _myBox.get('name');
+      userId = _myBox.get('id');
+    });
+    dateandtimeController = TextEditingController();
   }
 
   @override
   void dispose() {
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
-    textController4?.dispose();
+    searchController?.dispose();
+    pnameController?.dispose();
+    dateandtimeController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
+        .collection('servicesCategory')
+        .snapshots(includeMetadataChanges: true);
+    final Stream<QuerySnapshot> _locationStream = FirebaseFirestore.instance
+        .collection('location')
+        .snapshots(includeMetadataChanges: true);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -135,7 +150,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                       ),
                                       Expanded(
                                         child: TextFormField(
-                                          controller: textController1,
+                                          controller: searchController,
                                           autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -684,16 +699,19 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       20),
                                                           child: TextFormField(
                                                             controller:
-                                                                textController2,
+                                                                pnameController,
                                                             autofocus: true,
                                                             obscureText: false,
+                                                            readOnly: true,
                                                             decoration:
                                                                 InputDecoration(
-                                                              hintText: '....',
+                                                              hintText: _myBox
+                                                                  .get('name'),
+                                                              // enabled: false,
                                                               hintStyle:
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText2,
+                                                                      .subtitle2,
                                                               enabledBorder:
                                                                   OutlineInputBorder(
                                                                 borderSide:
@@ -780,46 +798,81 @@ class _appointmentPageState extends State<appointmentPage> {
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(123,
                                                                     20, 20, 20),
-                                                        child:
-                                                            FlutterFlowDropDown(
-                                                          options: ['Option 1'],
-                                                          onChanged: (val) =>
-                                                              setState(() =>
-                                                                  dropDownValue =
-                                                                      val),
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.2,
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height *
-                                                              0.06,
-                                                          textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .subtitle1,
-                                                          hintText:
-                                                              'Please select..',
-                                                          fillColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .lineColor,
-                                                          elevation: 0,
-                                                          borderColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primaryText,
-                                                          borderWidth: 1,
-                                                          borderRadius: 8,
-                                                          margin:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(12,
-                                                                      4, 12, 4),
-                                                          hidesUnderline: true,
-                                                        ),
+                                                        child: StreamBuilder<
+                                                                QuerySnapshot>(
+                                                            stream:
+                                                                _categoryStream,
+                                                            builder: (BuildContext
+                                                                    context,
+                                                                AsyncSnapshot<
+                                                                        QuerySnapshot>
+                                                                    snapshot) {
+                                                              // if (snapshot
+                                                              //         .connectionState ==
+                                                              //     ConnectionState
+                                                              //         .waiting) {
+                                                              //   return Text(
+                                                              //       'Loading');
+                                                              // }
+                                                              return FlutterFlowDropDown(
+                                                                options: snapshot
+                                                                    .data!.docs
+                                                                    .map((DocumentSnapshot
+                                                                        document) {
+                                                                      Map<String,
+                                                                              dynamic>
+                                                                          data =
+                                                                          document.data()! as Map<
+                                                                              String,
+                                                                              dynamic>;
+                                                                      return data[
+                                                                          "categoryName"];
+                                                                    })
+                                                                    .toList()
+                                                                    .cast<
+                                                                        String>(),
+                                                                onChanged: (val) =>
+                                                                    setState(() =>
+                                                                        dropDownServices =
+                                                                            val),
+                                                                initialOption:
+                                                                    dropDownServices,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.2,
+                                                                height: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height *
+                                                                    0.06,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle1,
+                                                                hintText:
+                                                                    'Please select..',
+                                                                fillColor: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .lineColor,
+                                                                elevation: 0,
+                                                                borderColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                borderWidth: 1,
+                                                                borderRadius: 8,
+                                                                margin:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12,
+                                                                            4,
+                                                                            12,
+                                                                            4),
+                                                                hidesUnderline:
+                                                                    true,
+                                                              );
+                                                            }),
                                                       ),
                                                     ],
                                                   ),
@@ -849,13 +902,80 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       20),
                                                           child: TextFormField(
                                                             controller:
-                                                                textController3,
+                                                                dateandtimeController,
                                                             autofocus: true,
                                                             obscureText: false,
+                                                            readOnly: true,
+                                                            onTap: () async {
+                                                              DateTime?
+                                                                  pickedDate =
+                                                                  await showDatePicker(
+                                                                      context:
+                                                                          context,
+                                                                      initialDate:
+                                                                          DateTime
+                                                                              .now(),
+                                                                      firstDate:
+                                                                          DateTime(
+                                                                              2022), //DateTime.now() - not to allow to choose before today.
+                                                                      lastDate:
+                                                                          DateTime(
+                                                                              2023));
+
+                                                              var time = await showTimePicker(
+                                                                  context:
+                                                                      context,
+                                                                  initialTime:
+                                                                      TimeOfDay
+                                                                          .now());
+
+                                                              if (pickedDate !=
+                                                                      null &&
+                                                                  time !=
+                                                                      null) {
+                                                                print(
+                                                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                                                String
+                                                                    formattedDate =
+                                                                    DateFormat(
+                                                                            'yyyy-MM-dd')
+                                                                        .format(
+                                                                            pickedDate);
+                                                                print(
+                                                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                                                //you can implement different kind of Date Format here according to your requirement
+
+                                                                setState(() {
+                                                                  dateandtimeController
+                                                                          ?.text =
+                                                                      formattedDate +
+                                                                          " " +
+                                                                          "${time.hour}:${time.minute}";
+
+                                                                  //set output date to TextField value.
+                                                                });
+                                                                // setState(() {
+                                                                //   dateandtimeController
+                                                                //           ?.text =
+                                                                //       "${time.hour}:${time.minute}";
+
+                                                                //   //set output date to TextField value.
+                                                                // });
+                                                              } else {
+                                                                print(
+                                                                    "Date is not selected");
+                                                              }
+                                                            },
                                                             decoration:
                                                                 InputDecoration(
-                                                              hintText:
-                                                                  '[Some hint text...]',
+                                                              labelText:
+                                                                  "Select date/time",
+                                                              prefixIcon: Icon(
+                                                                Icons
+                                                                    .calendar_today,
+                                                                color:
+                                                                    Colors.blue,
+                                                              ),
                                                               hintStyle:
                                                                   FlutterFlowTheme.of(
                                                                           context)
@@ -946,85 +1066,86 @@ class _appointmentPageState extends State<appointmentPage> {
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      120,
+                                                                      123,
                                                                       20,
                                                                       20,
                                                                       20),
-                                                          child: TextFormField(
-                                                            controller:
-                                                                textController4,
-                                                            autofocus: true,
-                                                            obscureText: false,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              hintText:
-                                                                  '[Some hint text...]',
-                                                              hintStyle:
-                                                                  FlutterFlowTheme.of(
+                                                          child: StreamBuilder<
+                                                                  QuerySnapshot>(
+                                                              stream:
+                                                                  _locationStream,
+                                                              builder: (BuildContext
+                                                                      context,
+                                                                  AsyncSnapshot<
+                                                                          QuerySnapshot>
+                                                                      snapshot) {
+                                                                // if (snapshot
+                                                                //         .connectionState ==
+                                                                //     ConnectionState
+                                                                //         .waiting) {
+                                                                //   return Text(
+                                                                //       'Loading');
+                                                                // }
+                                                                return FlutterFlowDropDown(
+                                                                  options: snapshot
+                                                                      .data!
+                                                                      .docs
+                                                                      .map((DocumentSnapshot
+                                                                          document) {
+                                                                        Map<String,
+                                                                                dynamic>
+                                                                            data =
+                                                                            document.data()!
+                                                                                as Map<String, dynamic>;
+                                                                        return data[
+                                                                            "type"];
+                                                                      })
+                                                                      .toList()
+                                                                      .cast<
+                                                                          String>(),
+                                                                  onChanged: (val) =>
+                                                                      setState(() =>
+                                                                          dropDownLocation =
+                                                                              val),
+                                                                  initialOption:
+                                                                      dropDownLocation,
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.2,
+                                                                  height: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height *
+                                                                      0.06,
+                                                                  textStyle: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText2,
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
+                                                                      .subtitle1,
+                                                                  hintText:
+                                                                      'Please select..',
+                                                                  fillColor: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryText,
-                                                                  width: 1,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                              ),
-                                                              focusedBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  width: 1,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                              ),
-                                                              errorBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: Color(
-                                                                      0x00000000),
-                                                                  width: 1,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                              ),
-                                                              focusedErrorBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: Color(
-                                                                      0x00000000),
-                                                                  width: 1,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                              ),
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .subtitle1,
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .datetime,
-                                                          ),
+                                                                      .lineColor,
+                                                                  elevation: 0,
+                                                                  borderColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                  borderWidth:
+                                                                      1,
+                                                                  borderRadius:
+                                                                      8,
+                                                                  margin: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12,
+                                                                          4,
+                                                                          12,
+                                                                          4),
+                                                                  hidesUnderline:
+                                                                      true,
+                                                                );
+                                                              }),
                                                         ),
                                                       ),
                                                     ],
@@ -1035,7 +1156,38 @@ class _appointmentPageState extends State<appointmentPage> {
                                                       AlignmentDirectional(
                                                           0, 0),
                                                   child: FFButtonWidget(
-                                                    onPressed: () {
+                                                    onPressed: () async {
+                                                      if (formKey.currentState!
+                                                          .validate()) {
+                                                        // setState(() {
+                                                        //   pnameController
+                                                        //           ?.text =
+                                                        //       _myBox
+                                                        //           .get('name');
+                                                        //   userId =
+                                                        //       _myBox.get('id');
+                                                        // });
+                                                        AppointmentData
+                                                            appointmentData =
+                                                            AppointmentData(
+                                                                id:
+                                                                    _myBox.get(
+                                                                        'id'),
+                                                                practionerName:
+                                                                    _myBox.get(
+                                                                        'name'),
+                                                                services:
+                                                                    dropDownServices,
+                                                                dateandtime:
+                                                                    dateandtimeController
+                                                                        ?.text,
+                                                                location:
+                                                                    dropDownLocation);
+                                                        await service
+                                                            .addAppointment(
+                                                                appointmentData);
+                                                      }
+                                                      print(_myBox.get('name'));
                                                       print(
                                                           'Button pressed ...');
                                                     },
