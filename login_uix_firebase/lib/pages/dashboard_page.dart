@@ -16,8 +16,9 @@ import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/widgets/alert_confirm.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 import 'package:recase/recase.dart';
+import 'package:login_uix_firebase/route.dart';
+import '../../main.dart';
 import 'package:intl/intl.dart';
-
 import '../helper/database_service.dart';
 import '../helper/user_privilege.dart';
 
@@ -271,9 +272,9 @@ class _DashboardPageState extends State<DashboardPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  FirebaseAuth.instance.signOut().then((value) =>
-                      Navigator.pushReplacementNamed(
-                          context, ControllerPage.routeName));
+                  FirebaseAuth.instance.signOut();
+                  Navigator.popAndPushNamed(context, RouteName.controllerPage);
+                  navigatorKey.currentState!.popUntil((route) => route.isFirst);
                 },
                 child: Icon(Icons.logout),
               )),

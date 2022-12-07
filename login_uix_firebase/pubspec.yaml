@@ -83,6 +83,13 @@ dependencies:
   dropdown_button2: ^1.8.9
   dropdown_search: ^5.0.3
   recase: ^4.1.0
+  get: ^4.1.4
+  social_media_flutter: ^0.0.2
+  flip_card: ^0.6.0
+  smooth_page_indicator: 1.0.0+2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  build_runner: ^2.3.2
   flutter_riverpod: ^2.1.1
 
   
@@ -113,6 +120,7 @@ flutter:
   assets:
     - lib/images/
     - lib/icons/
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,3 +1,6 @@
+import 'package:hive/hive.dart';
+import 'package:login_uix_firebase/pages/appointment_page.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -5,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../model/practioner_data.dart';
+import '../route.dart';
 import 'main_page.dart';
 
 class DetailPagePractioner extends StatefulWidget {
@@ -100,10 +104,16 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             20, 20, 20, 20),
-                                        child: Text(
-                                          'About us',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                RouteName.viewProfilePage);
+                                          },
+                                          child: Text(
+                                            'Profile',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -409,8 +419,17 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                       20, 0, 0),
                                                           child: FFButtonWidget(
                                                             onPressed: () {
-                                                              print(
-                                                                  'Button pressed ...');
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  appointmentPage
+                                                                      .routeName);
+                                                              // print(
+                                                              //     'Button pressed ...');
+                                                              // final _myBox =
+                                                              //     Hive.box(
+                                                              //         'myBox');
+                                                              // print(_myBox
+                                                              //     .get('name'));
                                                             },
                                                             text:
                                                                 'Make an appointment!',
@@ -518,54 +537,54 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                     ),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-0.95, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                          child: Text(
-                            'On going appointment',
-                            style: FlutterFlowTheme.of(context).title1,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Stack(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(0),
-                          topLeft: Radius.circular(60),
-                          topRight: Radius.circular(60),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            'footer here',
-                            style: FlutterFlowTheme.of(context).title1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   height: MediaQuery.of(context).size.height * 0.5,
+                //   decoration: BoxDecoration(
+                //     color: FlutterFlowTheme.of(context).secondaryBackground,
+                //   ),
+                //   child: Column(
+                //     mainAxisSize: MainAxisSize.max,
+                //     children: [
+                //       Align(
+                //         alignment: AlignmentDirectional(-0.95, 0),
+                //         child: Padding(
+                //           padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                //           child: Text(
+                //             'On going appointment',
+                //             style: FlutterFlowTheme.of(context).title1,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Stack(
+                //   children: [
+                //     Container(
+                //       width: MediaQuery.of(context).size.width,
+                //       height: MediaQuery.of(context).size.height * 0.5,
+                //       decoration: BoxDecoration(
+                //         color: FlutterFlowTheme.of(context).secondaryColor,
+                //         borderRadius: BorderRadius.only(
+                //           bottomLeft: Radius.circular(0),
+                //           bottomRight: Radius.circular(0),
+                //           topLeft: Radius.circular(60),
+                //           topRight: Radius.circular(60),
+                //         ),
+                //       ),
+                //       child: Column(
+                //         mainAxisSize: MainAxisSize.max,
+                //         children: [
+                //           Text(
+                //             'footer here',
+                //             style: FlutterFlowTheme.of(context).title1,
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

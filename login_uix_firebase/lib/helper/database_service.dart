@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/serviceCategory_data.dart';
@@ -31,6 +32,10 @@ class DataService {
 
   addPractioners(PractionerData practionerData) async {
     await _db.collection("practioners").add(practionerData.toMap());
+  }
+
+  addAppointment(AppointmentData appointmentData) async {
+    await _db.collection("appointment").add(appointmentData.toMap());
   }
 
   addServicesCategory(serviceCategoryClass servicesDataCategory) async {
