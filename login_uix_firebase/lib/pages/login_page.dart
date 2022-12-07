@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
-import 'package:login_uix_firebase/pages/main_page.dart';
+
 import 'package:login_uix_firebase/pages/register_page.dart';
 
 import 'forgot_pw_page.dart';

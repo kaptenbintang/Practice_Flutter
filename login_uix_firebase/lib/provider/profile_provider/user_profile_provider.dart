@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 
@@ -75,5 +74,41 @@ final userDetailProvider = FutureProvider.autoDispose<Map?>(
     // });
 
     // return result.data()!;
+  },
+);
+
+final userDetailProvider1 = StreamProvider.autoDispose<Map>(
+  (ref) {
+    // final userProvider = ref.watch(currentCityProvider);
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // final auth = FirebaseAuth.instance;
+
+    final controller = StreamController<Map>();
+
+    final sub = FirebaseFirestore.instance
+        .collection(
+          'users',
+        )
+        .doc(userId)
+        .snapshots()
+        .listen(
+      (snapshots) {
+        final posts = snapshots.data();
+        // controller.stream.asyncMap(
+        //   (event) => event = posts as Iterable<Map>,
+        // );
+        controller.sink.add(posts as Map);
+      },
+    );
+    ref.onDispose(() {
+      sub.cancel();
+      controller.close();
+    });
+
+    return controller.stream;
+
+    // final userId = FirebaseAuth.instance.currentUser!.uid;
+    // return ref.watch(apiProvider).currentUsers(userId);
   },
 );

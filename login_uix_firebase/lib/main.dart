@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -32,7 +32,7 @@ import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
-import 'package:login_uix_firebase/routes/page_route.dart';
+
 import 'controllers/menu_controller.dart';
 import 'controllers/navigation_controller.dart';
 import 'firebase_options.dart';
@@ -74,6 +74,9 @@ class MyApp extends ConsumerWidget {
 
         // },),
         initialRoute: ControllerPage.routeName,
+        // home: Consumer(builder: (context, ref, child) {
+        //   ref.listen<bool>(provider, (previous, next) { })
+        // },),
         routes: {
           MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),

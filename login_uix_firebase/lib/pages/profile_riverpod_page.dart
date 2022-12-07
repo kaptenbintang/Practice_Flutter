@@ -6,8 +6,8 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
-import 'package:login_uix_firebase/provider/profile_provider.dart/edit_user_provider.dart';
-import 'package:login_uix_firebase/provider/profile_provider.dart/user_profile_provider.dart';
+import 'package:login_uix_firebase/provider/profile_provider/edit_user_provider.dart';
+import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
 class ProfileRiverpodPage extends ConsumerWidget {
@@ -29,15 +29,15 @@ class ProfileRiverpodPage extends ConsumerWidget {
       body: Consumer(
         builder: (context, ref, child) {
           final userData = ref.watch(
-            userDetailProvider,
+            userDetailProvider1,
           );
           return Center(
             child: userData.when(
               data: (data) {
-                String? namef = data?['firstName'];
-                String? namel = data?['lastName'];
-                String? phone = data?['phoneNumber'];
-                String? dob = data?['dateofbirth'];
+                String? namef = data['firstName'];
+                String? namel = data['lastName'];
+                String? phone = data['phoneNumber'];
+                String? dob = data['dateofbirth'];
 
                 nameController.text = namef ?? '';
                 lastsNameController.text = namel ?? '';
@@ -201,13 +201,13 @@ class ProfileRiverpodPage extends ConsumerWidget {
                       ],
                     ),
                     SizedBox(height: 10),
-                    Text('signed in as: ' + data?['email']),
+                    Text('signed in as: ' + data['email']),
                     SizedBox(height: 20),
-                    Text('Role: ' + data?['roles']),
+                    Text('Role: ' + data['roles']),
                     SizedBox(height: 20),
-                    Text('Client Type: ' + data?['clientType']),
+                    Text('Client Type: ' + data['clientType']),
                     SizedBox(height: 20),
-                    Text('Client Code: ' + data?['clientcode']),
+                    Text('Client Code: ' + data['clientcode']),
                     SizedBox(height: 20),
                     ProfileTextInput(
                       textEditingController: nameController,

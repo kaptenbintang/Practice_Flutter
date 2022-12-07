@@ -7,7 +7,7 @@ import 'package:login_uix_firebase/pages/main_page.dart';
 import '../pages/dashboard_page.dart';
 import '../pages/landing_layout.dart';
 import '../pages/profile_page.dart';
-import 'auth_page.dart';
+import 'authenticator.dart';
 
 class ControllerPage extends StatelessWidget {
   static const routeName = '/controllerPage';

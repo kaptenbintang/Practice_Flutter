@@ -1,16 +1,13 @@
 import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
-import 'package:login_uix_firebase/pages/profile_page.dart';
-import 'package:login_uix_firebase/route.dart';
+
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:flutter/material.dart';
+
 import '../model/practioner_data.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,7 +15,9 @@ class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
+  // State<LoginPage> createState() => _LoginPageState();
+
 }
 
 class _MainPageState extends State<MainPage> {
