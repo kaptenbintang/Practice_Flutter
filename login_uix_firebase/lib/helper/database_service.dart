@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
@@ -41,8 +42,14 @@ class DataService {
     await _db.collection("servicesCategory").add(servicesDataCategory.toMap());
   }
 
+  static Future<void> updateUserI(UserData employeeData) async =>
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(employeeData.id)
+          .update(employeeData.toMap());
+
   Future<void> updateUser(UserData employeeData) async {
-    await _db
+    await FirebaseFirestore.instance
         .collection("users")
         .doc(employeeData.id)
         .update(employeeData.toMap());
@@ -328,4 +335,24 @@ class DataService {
         await _db.collection('users').where('firstName', isEqualTo: name).get();
     return snapshot.docs.map((e) => UserData.fromDocumentSnapshot(e)).toList();
   }
+
+  // static Future<UserCredential> register(
+  //   String email,
+  //   String password,
+  // ) async {
+  //   FirebaseApp app = await Firebase.initializeApp(
+  //       name: 'Secondary', options: Firebase.app().options);
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  //   } on FirebaseAuthException catch (e) {
+  //     // Do something with exception. This try/catch is here to make sure
+  //     // that even if the user creation fails, app.delete() runs, if is not,
+  //     // next time Firebase.initializeApp() will fail as the previous one was
+  //     // not deleted.
+  //   }
+
+  //   await app.delete();
+  //   return Future.sync(() => userCredential);
+  // }
 }

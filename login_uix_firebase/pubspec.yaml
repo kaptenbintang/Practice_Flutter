@@ -90,6 +90,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   build_runner: ^2.3.2
+  flutter_riverpod: ^2.1.1
 
   
 
