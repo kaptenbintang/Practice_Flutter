@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
+import 'package:login_uix_firebase/model/appointment_data.dart';
 
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../helper/database_service.dart';
 import '../route.dart';
 import 'main_page.dart';
 
@@ -20,11 +22,13 @@ class appointmentPage extends StatefulWidget {
 }
 
 class _appointmentPageState extends State<appointmentPage> {
-  String? dropDownValue;
-  TextEditingController? textController2;
-  TextEditingController? textController3;
-  TextEditingController? textController4;
-  TextEditingController? textController1;
+  String? userId;
+  String? dropDownServices;
+  String? dropDownLocation;
+  TextEditingController? pnameController;
+  TextEditingController? dateandtimeController;
+  TextEditingController? searchController;
+  DataService service = DataService();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _myBox = Hive.box('myBox');
@@ -32,21 +36,19 @@ class _appointmentPageState extends State<appointmentPage> {
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
+    searchController = TextEditingController();
     setState(() {
-      textController2?.text = _myBox.get('name');
+      pnameController?.text = _myBox.get('name');
+      userId = _myBox.get('id');
     });
-
-    textController3 = TextEditingController();
-    textController4 = TextEditingController();
+    dateandtimeController = TextEditingController();
   }
 
   @override
   void dispose() {
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
-    textController4?.dispose();
+    searchController?.dispose();
+    pnameController?.dispose();
+    dateandtimeController?.dispose();
     super.dispose();
   }
 
@@ -148,7 +150,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                       ),
                                       Expanded(
                                         child: TextFormField(
-                                          controller: textController1,
+                                          controller: searchController,
                                           autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -697,7 +699,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       20),
                                                           child: TextFormField(
                                                             controller:
-                                                                textController2,
+                                                                pnameController,
                                                             autofocus: true,
                                                             obscureText: false,
                                                             readOnly: true,
@@ -831,10 +833,10 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                         String>(),
                                                                 onChanged: (val) =>
                                                                     setState(() =>
-                                                                        dropDownValue =
+                                                                        dropDownServices =
                                                                             val),
                                                                 initialOption:
-                                                                    dropDownValue,
+                                                                    dropDownServices,
                                                                 width: MediaQuery.of(
                                                                             context)
                                                                         .size
@@ -900,7 +902,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       20),
                                                           child: TextFormField(
                                                             controller:
-                                                                textController3,
+                                                                dateandtimeController,
                                                             autofocus: true,
                                                             obscureText: false,
                                                             readOnly: true,
@@ -944,7 +946,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                 //you can implement different kind of Date Format here according to your requirement
 
                                                                 setState(() {
-                                                                  textController3
+                                                                  dateandtimeController
                                                                           ?.text =
                                                                       formattedDate +
                                                                           " " +
@@ -953,7 +955,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                   //set output date to TextField value.
                                                                 });
                                                                 // setState(() {
-                                                                //   textController3
+                                                                //   dateandtimeController
                                                                 //           ?.text =
                                                                 //       "${time.hour}:${time.minute}";
 
@@ -1103,10 +1105,10 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                           String>(),
                                                                   onChanged: (val) =>
                                                                       setState(() =>
-                                                                          dropDownValue =
+                                                                          dropDownLocation =
                                                                               val),
                                                                   initialOption:
-                                                                      dropDownValue,
+                                                                      dropDownLocation,
                                                                   width: MediaQuery.of(
                                                                               context)
                                                                           .size
@@ -1154,11 +1156,37 @@ class _appointmentPageState extends State<appointmentPage> {
                                                       AlignmentDirectional(
                                                           0, 0),
                                                   child: FFButtonWidget(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        textController2?.text =
-                                                            _myBox.get('name');
-                                                      });
+                                                    onPressed: () async {
+                                                      if (formKey.currentState!
+                                                          .validate()) {
+                                                        // setState(() {
+                                                        //   pnameController
+                                                        //           ?.text =
+                                                        //       _myBox
+                                                        //           .get('name');
+                                                        //   userId =
+                                                        //       _myBox.get('id');
+                                                        // });
+                                                        AppointmentData
+                                                            appointmentData =
+                                                            AppointmentData(
+                                                                id:
+                                                                    _myBox.get(
+                                                                        'id'),
+                                                                practionerName:
+                                                                    _myBox.get(
+                                                                        'name'),
+                                                                services:
+                                                                    dropDownServices,
+                                                                dateandtime:
+                                                                    dateandtimeController
+                                                                        ?.text,
+                                                                location:
+                                                                    dropDownLocation);
+                                                        await service
+                                                            .addAppointment(
+                                                                appointmentData);
+                                                      }
                                                       print(_myBox.get('name'));
                                                       print(
                                                           'Button pressed ...');

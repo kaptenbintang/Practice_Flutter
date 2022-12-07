@@ -601,7 +601,9 @@ class _MainPageState extends State<MainPage> {
               snapshot.firstName.toString() +
                   " " +
                   snapshot.lastName.toString());
+          _myBox.put('id', snapshot.id);
           print(_myBox.get('name'));
+          print(_myBox.get('id'));
           Navigator.pushNamed(context, DetailPagePractioner.routeName,
               arguments: snapshot);
         },
