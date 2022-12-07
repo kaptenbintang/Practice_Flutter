@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
+import 'package:login_uix_firebase/pages/appointment_page.dart';
+import '../../flutter_flow/flutter_flow.dart';
 import '../../helper/database_service.dart';
 import '../../widgets/drawer_dashboard.dart';
 
@@ -35,6 +38,7 @@ class _ManagePractionersState extends State<ManagePractioners> {
   final _myRolesPractioner = TextEditingController();
   final _languagesPractioner = TextEditingController();
   final _titleMainPractioner = TextEditingController();
+  final _schedulePractioner = TextEditingController();
 
   String? userId;
   String? firstNameID;
@@ -46,6 +50,7 @@ class _ManagePractionersState extends State<ManagePractioners> {
   String? myRolesID;
   String? languagesID;
   String? titleMainID;
+  String? schedulePractionerID;
   String? selectedValueClient;
   String? selectedValue;
   int _currentSortColumn = 0;
@@ -132,86 +137,84 @@ class _ManagePractionersState extends State<ManagePractioners> {
             builder: (context, AsyncSnapshot<List<PractionerData>> snapshot) {
               // retrievedPractionerList = toMap(snapshot.data);
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                return ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      DataTable(
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: _isAscending,
-                        columns: [
-                          DataColumn(
-                              label: Text('First Name',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Last Name',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('My Approach',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('My Backgrounds',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('My Qualifications',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('My Specialty',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('My Roles',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Languages',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('titleMain',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Edit Practioners',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Delete Service',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold))),
-                        ],
-                        rows: List.generate(
-                            retrievedPractionerList!.length,
-                            (index) => _buildTableUser(
-                                context,
-                                retrievedPractionerList![index],
-                                retrievedPractionerList,
-                                index)),
-                      ),
-                      FloatingActionButton(
-                        onPressed: () {
-                          dialogaddPractioner(context);
-                        },
-                        tooltip: "Add new Practioners",
-                        child: Icon(Icons.add),
-                        // backgroundColor: Colors.green,
-                      )
-                    ]);
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DataTable2(
+                    sortColumnIndex: _currentSortColumn,
+                    sortAscending: _isAscending,
+                    columns: [
+                      DataColumn(
+                          label: Text('First Name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Last Name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('My Approach',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('My Backgrounds',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('My Qualifications',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('My Specialty',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('My Roles',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Languages',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('titleMain',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Schedule',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Add Practioners',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Edit Practioners',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Delete Service',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold))),
+                    ],
+                    rows: List.generate(
+                        retrievedPractionerList!.length,
+                        (index) => _buildTableUser(
+                            context,
+                            retrievedPractionerList![index],
+                            retrievedPractionerList,
+                            index)),
+                  ),
+                );
+
+                //  FloatingActionButton(
+                //     onPressed: () {
+                //       dialogaddPractioner(context);
+                //     },
+                //     tooltip: "Add new Practioners",
+                //     child: Icon(Icons.add),
+                //     // backgroundColor: Colors.green,
+                //   )
+
               } else if (snapshot.connectionState == ConnectionState.done &&
                   retrievedPractionerList!.isEmpty) {
                 return Center(
@@ -264,6 +267,16 @@ class _ManagePractionersState extends State<ManagePractioners> {
         DataCell(Text(snapshot.myRoles as String)),
         DataCell(Text(snapshot.languages as String)),
         DataCell(Text(snapshot.titleMain as String)),
+        DataCell(Text(snapshot.practionerSchedule as String)),
+        DataCell(ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.green,
+            ),
+            onPressed: () {
+              dialogaddPractioner(context);
+              _pullRefresh();
+            },
+            child: const Text('Add'))),
         DataCell(ElevatedButton(
             onPressed: () {
               dialogEditPractioner(context);
@@ -278,6 +291,7 @@ class _ManagePractionersState extends State<ManagePractioners> {
                 myRolesID = snapshot.myRoles;
                 languagesID = snapshot.languages;
                 titleMainID = snapshot.titleMain;
+                schedulePractionerID = snapshot.practionerSchedule;
               });
             },
             child: const Text('Edit'))),
@@ -298,6 +312,7 @@ class _ManagePractionersState extends State<ManagePractioners> {
     final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
         .collection('servicesCategory')
         .snapshots(includeMetadataChanges: true);
+
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -405,6 +420,56 @@ class _ManagePractionersState extends State<ManagePractioners> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(
+                                    2022), //DateTime.now() - not to allow to choose before today.
+                                lastDate: DateTime(2023));
+
+                            var time = await showTimePicker(
+                                context: context, initialTime: TimeOfDay.now());
+
+                            // DateTimeRange? pickedRange =
+                            //     await showDateRangePicker(
+                            //   context: context,
+                            //   firstDate: DateTime.now(),
+                            //   lastDate: DateTime(2023),
+                            //   // initialDateRange: dateRange.value
+                            // );
+
+                            if (pickedDate != null &&
+                                // pickedRange != null &&
+                                time != null) {
+                              print(
+                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                              String formattedDate =
+                                  DateFormat('yyyy-MM-dd').format(pickedDate);
+                              print(
+                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                              //you can implement different kind of Date Format here according to your requirement
+                              setState(() {
+                                _schedulePractioner?.text = formattedDate +
+                                    " " +
+                                    "${time.hour}:${time.minute}";
+
+                                //set output date to TextField value.
+                              });
+                            } else {
+                              print("Date is not selected");
+                            }
+                          },
+                          controller: _schedulePractioner,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            labelText: "Schedule",
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 40,
                       ),
@@ -415,18 +480,18 @@ class _ManagePractionersState extends State<ManagePractioners> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               PractionerData practionerData = PractionerData(
-                                id: userId,
-                                firstName: _firstNamePractioner.text,
-                                lastName: _lastNamePractioner.text,
-                                myApproach: _myApproachPractioner.text,
-                                myBackground: _myBackgroundPractioner.text,
-                                myQualifications:
-                                    _myQualificationsPractioner.text,
-                                mySpecialty: _mySpecialtyPractioner.text,
-                                myRoles: _myRolesPractioner.text,
-                                languages: _languagesPractioner.text,
-                                titleMain: _titleMainPractioner.text,
-                              );
+                                  id: userId,
+                                  firstName: _firstNamePractioner.text,
+                                  lastName: _lastNamePractioner.text,
+                                  myApproach: _myApproachPractioner.text,
+                                  myBackground: _myBackgroundPractioner.text,
+                                  myQualifications:
+                                      _myQualificationsPractioner.text,
+                                  mySpecialty: _mySpecialtyPractioner.text,
+                                  myRoles: _myRolesPractioner.text,
+                                  languages: _languagesPractioner.text,
+                                  titleMain: _titleMainPractioner.text,
+                                  practionerSchedule: _schedulePractioner.text);
                               await service.updatePractioners(practionerData);
                               Navigator.pop(context);
                               _pullRefresh();

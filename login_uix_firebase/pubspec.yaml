@@ -90,6 +90,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   build_runner: ^2.3.2
+  syncfusion_flutter_datepicker: ^20.3.60
+  syncfusion_flutter_calendar: ^20.3.60
 
   
 
