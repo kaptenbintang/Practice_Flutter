@@ -47,7 +47,7 @@ class UserData {
       "clientType": clientType,
       "createdAt": createdAt,
       "markDeleted": markDeleted,
-    };
+    }..removeWhere((key, value) => value == null);
   }
 
   // factory UserData.fromFirestore(

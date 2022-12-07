@@ -318,17 +318,16 @@ class ProfileRiverpodPage extends ConsumerWidget {
                     ElevatedButton(
                       onPressed: () async {
                         UserData userData = UserData(
+                          id: FirebaseAuth.instance.currentUser!.uid,
                           firstName: nameController.text,
                           lastName: lastsNameController.text,
                           doBirth: dateofbirthController.text,
                           phoneNumber: phonenumberController.text,
-                          // imgUrl: ""
                         );
-                        // editUserData();
                         await ref
                             .read(editUserProvider.notifier)
                             .editUser(userData: userData);
-                        print('eeeeeeeeeeeee');
+                        print(userData.toMap());
                       },
                       child: const Text('Update'),
                     ),

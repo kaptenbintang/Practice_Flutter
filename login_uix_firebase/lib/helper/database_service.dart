@@ -37,8 +37,14 @@ class DataService {
     await _db.collection("servicesCategory").add(servicesDataCategory.toMap());
   }
 
+  static Future<void> updateUserI(UserData employeeData) async =>
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(employeeData.id)
+          .update(employeeData.toMap());
+
   Future<void> updateUser(UserData employeeData) async {
-    await _db
+    await FirebaseFirestore.instance
         .collection("users")
         .doc(employeeData.id)
         .update(employeeData.toMap());
