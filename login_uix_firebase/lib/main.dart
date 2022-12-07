@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
+import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
@@ -25,8 +27,8 @@ import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_servicesCategory_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
+import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
-
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
@@ -49,7 +51,7 @@ void main() async {
 
   var box = await Hive.openBox('myBox');
 
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -60,16 +62,18 @@ class Util {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GetMaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        home: ControllerPage(),
-        // initialRoute: ControllerPage(),
+        // home: Consumer(builder: (context, ref, child) {
+
+        // },),
+        initialRoute: ControllerPage.routeName,
         routes: {
           MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),
@@ -80,6 +84,8 @@ class MyApp extends StatelessWidget {
           changePasswordPage.routeName: (context) => const changePasswordPage(),
           ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
           ProfilePage.routeName: (context) => const ProfilePage(),
+          ProfileRiverpodPage.routeName: (context) =>
+              const ProfileRiverpodPage(),
           UserTablePage.routeName: (context) => const UserTablePage(),
           ManageRoles.routeName: (context) => const ManageRoles(),
           ManageClients.routeName: (context) => const ManageClients(),
@@ -102,6 +108,7 @@ class MyApp extends StatelessWidget {
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
           RouteName.controllerPage: (context) => ControllerPage(),
+          AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }
 }

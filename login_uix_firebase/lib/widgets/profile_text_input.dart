@@ -35,7 +35,7 @@ class _ProfileTextInputState extends State<ProfileTextInput> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: TextField(
+      child: TextFormField(
         obscureText: widget.obscure,
         controller: widget.textEditingController,
         decoration: InputDecoration(
