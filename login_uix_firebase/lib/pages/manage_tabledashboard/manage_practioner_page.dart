@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
+import 'package:login_uix_firebase/pages/schedule_calendar_page.dart';
 import '../../flutter_flow/flutter_flow.dart';
 import '../../helper/database_service.dart';
+import '../../main.dart';
 import '../../widgets/drawer_dashboard.dart';
 
 class ManagePractioners extends StatefulWidget {
@@ -423,45 +425,8 @@ class _ManagePractionersState extends State<ManagePractioners> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(
-                                    2022), //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2023));
-
-                            var time = await showTimePicker(
-                                context: context, initialTime: TimeOfDay.now());
-
-                            // DateTimeRange? pickedRange =
-                            //     await showDateRangePicker(
-                            //   context: context,
-                            //   firstDate: DateTime.now(),
-                            //   lastDate: DateTime(2023),
-                            //   // initialDateRange: dateRange.value
-                            // );
-
-                            if (pickedDate != null &&
-                                // pickedRange != null &&
-                                time != null) {
-                              print(
-                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
-                              //you can implement different kind of Date Format here according to your requirement
-                              setState(() {
-                                _schedulePractioner?.text = formattedDate +
-                                    " " +
-                                    "${time.hour}:${time.minute}";
-
-                                //set output date to TextField value.
-                              });
-                            } else {
-                              print("Date is not selected");
-                            }
+                          onTap: () {
+                            Util.routeToWidget(context, ScheduleCalendar());
                           },
                           controller: _schedulePractioner,
                           readOnly: true,
