@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:login_uix_firebase/controllers/side_bar_admin_controller.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
@@ -12,10 +13,10 @@ import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_page.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
-import 'package:login_uix_firebase/pages/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
+import 'package:login_uix_firebase/pages/login/login_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_client_type_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
@@ -29,6 +30,7 @@ import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
 import 'package:login_uix_firebase/routes/page_route.dart';
+import 'package:login_uix_firebase/widgets/side_bar_admin.dart';
 import 'controllers/menu_controller.dart';
 import 'controllers/navigation_controller.dart';
 import 'firebase_options.dart';
@@ -39,6 +41,7 @@ import 'pages/LandingPage/landing_page.dart';
 void main() async {
   Get.put(MenuController());
   Get.put(NavigationController());
+  Get.put(SideBarAdminController());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -67,7 +70,7 @@ class MyApp extends StatelessWidget {
         routes: {
           MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),
-          LoginPage.routeName: (context) => LoginPage(),
+
           // RegisterPage.routeName: (context) => RegisterPage(),
           DeleteAccount.routeName: (context) => const DeleteAccount(),
           CheckEmailView.routeName: (context) => const CheckEmailView(),
