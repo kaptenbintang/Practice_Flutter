@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:login_uix_firebase/model/auth/auth_result.dart';
+import 'package:login_uix_firebase/auth/models/auth_result.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
 
 class Authenticator {
@@ -34,6 +34,34 @@ class Authenticator {
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
         return AuthResult.failure;
+      }
+      return AuthResult.failure;
+    }
+  }
+
+  Future<AuthResult> createWithEmailandPassword(
+      String email, String password) async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return AuthResult.success;
+    } on FirebaseAuthException catch (e) {
+      final email = e.email;
+
+      switch (e.code) {
+        case 'email-already-in-use':
+          print('$email invalid email');
+          return AuthResult.failure;
+
+        case 'invalid-email':
+          print('$email this email not exist');
+          return AuthResult.failure;
+
+        case 'weak-password':
+          print('Password is wrong for this $email');
+          return AuthResult.failure;
       }
       return AuthResult.failure;
     }

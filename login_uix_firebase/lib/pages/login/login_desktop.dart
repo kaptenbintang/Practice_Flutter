@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_uix_firebase/auth/authenticator.dart';
 import 'package:login_uix_firebase/helper/user_privilege.dart';
 import 'package:login_uix_firebase/provider/login_page/auth_state_provider.dart';
 import 'package:login_uix_firebase/route.dart';
@@ -11,6 +12,11 @@ import 'package:login_uix_firebase/routing/routes.dart';
 import '../../auth/controller_page.dart';
 import '../../constant/controllers.dart';
 import '../forgot_pw_page.dart';
+import 'dart:developer' as devtools show log;
+
+extension Log on Object {
+  void log() => devtools.log(toString());
+}
 
 class LoginDesktop extends StatefulWidget {
   const LoginDesktop({super.key});
@@ -474,16 +480,23 @@ class LoginDesktop2 extends ConsumerWidget {
                         const SizedBox(height: 30),
                         //login button
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               // signIn();
-                              ref
-                                  .read(authStateProvider.notifier)
-                                  .loginWithEmailPassword(
-                                    emailController.text,
-                                    passwordController.text,
-                                  )
-                                  .then((value) => ControllerPage());
+                              // ref
+                              //     .read(authStateProvider.notifier)
+                              //     .loginWithEmailPassword(
+                              //       emailController.text,
+                              //       passwordController.text,
+                              //     )
+                              //     .then((value) => ControllerPage());
+
+                              final result =
+                                  await Authenticator().loginWithEmailPassword(
+                                emailController.text,
+                                passwordController.text,
+                              );
+                              result.log();
                             }
                             return;
                           },

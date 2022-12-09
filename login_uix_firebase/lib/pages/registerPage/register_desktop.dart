@@ -11,6 +11,7 @@ import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/src/intl/date_format.dart';
+import 'package:login_uix_firebase/auth/authenticator.dart';
 
 import '../../constant/controllers.dart';
 import '../../route.dart';
@@ -564,9 +565,15 @@ class _RegisterDesktopState extends State<RegisterDesktop> {
                   const SizedBox(height: 30),
                   //Register Button
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        signUp();
+                        // signUp();
+                        final result =
+                            await Authenticator().createWithEmailandPassword(
+                          _emailController.text,
+                          _passwordController.text,
+                        );
+                        print(result);
                         return;
                       }
                     },
