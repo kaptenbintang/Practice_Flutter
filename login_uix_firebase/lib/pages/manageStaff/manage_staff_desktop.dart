@@ -670,7 +670,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        snapshot.emailUser,
+                        snapshot.emailUser!,
                         style: FlutterFlowTheme.of(context).bodyText1,
                       ),
                     ),
@@ -707,7 +707,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               print('Button pressed ...');
                               dialogEdit(context);
                               setState(() {
-                                _emailController.text = snapshot.emailUser;
+                                _emailController.text = snapshot.emailUser!;
                                 _clientTypeController.text =
                                     snapshot.clientType as String;
                                 _rolesController.text =
@@ -755,7 +755,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               print('Button pressed ...');
                               dialogResetPassword(context);
                               setState(() {
-                                _emailController.text = snapshot.emailUser;
+                                _emailController.text = snapshot.emailUser!;
                               });
                             },
                             text: 'ResetPassword',
@@ -867,7 +867,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        snapshot.emailUser,
+                        snapshot.emailUser!,
                         style: FlutterFlowTheme.of(context).bodyText1,
                       ),
                     ),
@@ -904,7 +904,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               print('Button pressed ...');
                               dialogEdit(context);
                               setState(() {
-                                _emailController.text = snapshot.emailUser;
+                                _emailController.text = snapshot.emailUser!;
                                 _clientTypeController.text =
                                     snapshot.clientType as String;
                                 _rolesController.text =
@@ -998,7 +998,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               print('Button pressed ...');
                               dialogResetPassword(context);
                               setState(() {
-                                _emailController.text = snapshot.emailUser;
+                                _emailController.text = snapshot.emailUser!;
                               });
                             },
                             text: 'Reset Password',

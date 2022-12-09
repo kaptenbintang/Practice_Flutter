@@ -453,7 +453,7 @@ class _ManagePractionersState extends State<ManagePractioners> {
                                   formattedDate); //formatted date output using intl package =>  2021-03-16
                               //you can implement different kind of Date Format here according to your requirement
                               setState(() {
-                                _schedulePractioner?.text = formattedDate +
+                                _schedulePractioner.text = formattedDate +
                                     " " +
                                     "${time.hour}:${time.minute}";
 

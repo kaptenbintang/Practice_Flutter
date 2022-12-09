@@ -729,7 +729,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
                                 child: Text(
-                                  snapshot.emailUser,
+                                  snapshot.emailUser!,
                                   style: FlutterFlowTheme.of(context).bodyText2,
                                 ),
                               ),
@@ -763,7 +763,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 case "Edit":
                                   dialogEdit(context);
                                   setState(() {
-                                    _emailController.text = snapshot.emailUser;
+                                    _emailController.text = snapshot.emailUser!;
                                     _clientTypeController.text =
                                         snapshot.clientType as String;
                                     _rolesController.text =
@@ -788,7 +788,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 case "ResetPassword":
                                   dialogResetPassword(context);
                                   setState(() {
-                                    _emailController.text = snapshot.emailUser;
+                                    _emailController.text = snapshot.emailUser!;
                                   });
                                   break;
                                 default:
@@ -903,7 +903,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
                                 child: Text(
-                                  snapshot.emailUser,
+                                  snapshot.emailUser!,
                                   style: FlutterFlowTheme.of(context).bodyText2,
                                 ),
                               ),
@@ -963,7 +963,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 case "Edit":
                                   dialogEdit(context);
                                   setState(() {
-                                    _emailController.text = snapshot.emailUser;
+                                    _emailController.text = snapshot.emailUser!;
                                     _clientTypeController.text =
                                         snapshot.clientType as String;
                                     _rolesController.text =
@@ -988,7 +988,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 case "ResetPassword":
                                   dialogResetPassword(context);
                                   setState(() {
-                                    _emailController.text = snapshot.emailUser;
+                                    _emailController.text = snapshot.emailUser!;
                                   });
                                   break;
                                 case "Restore":
