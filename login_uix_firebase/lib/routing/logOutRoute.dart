@@ -8,7 +8,7 @@ import '../route.dart';
 
 Future<dynamic> logOutRoute() async {
   FirebaseAuth.instance.signOut();
-  navigatorKey.currentState!.popUntil(ModalRoute.withName('/'));
+  navigatorKey.currentState!.popUntil(ModalRoute.withName('/controllerPage'));
   NavigationController.instance.navigationKey.currentState!
-      .popUntil(ModalRoute.withName('/'));
+      .popUntil(ModalRoute.withName('/controllerPage'));
 }
