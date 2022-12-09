@@ -6,7 +6,7 @@ class UserData {
   final String? id;
   final String firstName;
   final String lastName;
-  final String emailUser;
+  final String? emailUser;
   // final int ageUser;
   final String? clientCode;
   final String? roles;
@@ -21,7 +21,7 @@ class UserData {
     this.id,
     required this.firstName,
     required this.lastName,
-    required this.emailUser,
+    this.emailUser,
     // required this.ageUser,
     this.clientCode,
     this.roles,
@@ -47,7 +47,7 @@ class UserData {
       "clientType": clientType,
       "createdAt": createdAt,
       "markDeleted": markDeleted,
-    };
+    }..removeWhere((key, value) => value == null);
   }
 
   // factory UserData.fromFirestore(

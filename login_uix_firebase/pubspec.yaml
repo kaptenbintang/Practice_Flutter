@@ -88,6 +88,12 @@ dependencies:
   flip_card: ^0.6.0
   smooth_page_indicator: 1.0.0+2
   flutter_multi_select_items: ^0.4.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  build_runner: ^2.3.2
+  syncfusion_flutter_datepicker: ^20.3.60
+  syncfusion_flutter_calendar: ^20.3.60
+  flutter_riverpod: ^2.1.1
 
   
 

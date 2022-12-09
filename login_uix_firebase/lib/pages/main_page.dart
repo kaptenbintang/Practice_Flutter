@@ -1,7 +1,9 @@
+import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -119,7 +121,7 @@ class _MainPageState extends State<MainPage> {
                                         child: InkWell(
                                           onTap: () {
                                             Navigator.pushNamed(context,
-                                                RouteName.viewProfilePage);
+                                                ProfileRiverpodPage.routeName);
                                           },
                                           child: Text(
                                             'Profile',
@@ -590,10 +592,19 @@ class _MainPageState extends State<MainPage> {
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     // return Text(snapshot.firstName as String);
+    final _myBox = Hive.box('myBox');
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
       child: InkWell(
         onTap: () {
+          _myBox.put(
+              'name',
+              snapshot.firstName.toString() +
+                  " " +
+                  snapshot.lastName.toString());
+          _myBox.put('id', snapshot.id);
+          print(_myBox.get('name'));
+          print(_myBox.get('id'));
           Navigator.pushNamed(context, DetailPagePractioner.routeName,
               arguments: snapshot);
         },
