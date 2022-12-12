@@ -111,8 +111,8 @@ class _appointmentPageState extends State<appointmentPage> {
                                                   20, 20, 20, 20),
                                           child: InkWell(
                                             onTap: () {
-                                              Navigator.pushNamed(
-                                                  context, MainPage.routeName);
+                                              Navigator.pushNamed(context,
+                                                  RouteName.MainPagesPage);
                                             },
                                             child: Text(
                                               'Home',
