@@ -889,7 +889,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                         MainAxisSize.max,
                                                     children: [
                                                       Text(
-                                                        'Date/Time: ',
+                                                        'Date: ',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -900,7 +900,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      95,
+                                                                      165,
                                                                       20,
                                                                       20,
                                                                       20),
