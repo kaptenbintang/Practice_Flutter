@@ -40,7 +40,7 @@ class Authenticator {
   }
 
   Future<AuthResult> createWithEmailandPassword(
-      String email, String password) async {
+      String email, String password, String firstName) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,

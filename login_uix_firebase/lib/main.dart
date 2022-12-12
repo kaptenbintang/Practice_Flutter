@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:login_uix_firebase/auth/provider/is_logged_in_provider.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 import 'package:login_uix_firebase/pages/add_user_page.dart';
@@ -16,7 +17,8 @@ import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_page.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
-import 'package:login_uix_firebase/pages/login_page.dart';
+import 'package:login_uix_firebase/pages/landing_layout.dart';
+import 'package:login_uix_firebase/pages/login/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
@@ -73,14 +75,21 @@ class MyApp extends ConsumerWidget {
         // home: Consumer(builder: (context, ref, child) {
 
         // },),
-        initialRoute: ControllerPage.routeName,
-        // home: Consumer(builder: (context, ref, child) {
-        //   ref.listen<bool>(provider, (previous, next) { })
-        // },),
+        // initialRoute: ControllerPage.routeName,
+        home: Consumer(
+          builder: (context, ref, child) {
+            final isLoggedin = ref.watch(isLoggedInProvider);
+            if (isLoggedin) {
+              return const MainPage();
+            } else {
+              return LandingLayout();
+            }
+          },
+        ),
         routes: {
           MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),
-          LoginPage.routeName: (context) => LoginPage(),
+          // LoginPage.routeName: (context) => LoginPage(),
           // RegisterPage.routeName: (context) => RegisterPage(),
           DeleteAccount.routeName: (context) => const DeleteAccount(),
           CheckEmailView.routeName: (context) => const CheckEmailView(),

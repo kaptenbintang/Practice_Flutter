@@ -68,7 +68,8 @@ class UserInfoStorage {
           .collection(
             FirebaseCollectionName.users,
           )
-          .add(payload);
+          .doc(userId)
+          .set(payload);
       return true;
     } catch (_) {
       return false;

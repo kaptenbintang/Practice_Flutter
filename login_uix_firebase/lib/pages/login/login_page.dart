@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
         body: LayoutBuilder(
           builder: (context, constraints) {
             if (constraints.maxWidth > 600) {
-              return LoginDesktop();
+              return LoginDesktop2();
             } else {
               return LoginMobile();
             }

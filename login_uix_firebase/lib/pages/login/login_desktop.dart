@@ -3,15 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:login_uix_firebase/auth/authenticator.dart';
-import 'package:login_uix_firebase/helper/user_privilege.dart';
-import 'package:login_uix_firebase/provider/login_page/auth_state_provider.dart';
-import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/auth/backend/authenticator.dart';
+import 'package:login_uix_firebase/auth/provider/auth_state_provider.dart';
 import 'package:login_uix_firebase/routing/routes.dart';
 
 import '../../auth/controller_page.dart';
 import '../../constant/controllers.dart';
-import '../forgot_pw_page.dart';
+
 import 'dart:developer' as devtools show log;
 
 extension Log on Object {
@@ -235,9 +233,10 @@ class _LoginDesktopState extends State<LoginDesktop> {
                         const SizedBox(height: 30),
                         //login button
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               // signIn();
+
                             }
                             return;
                           },
@@ -298,25 +297,33 @@ class _LoginDesktopState extends State<LoginDesktop> {
   }
 }
 
+class HiddenPass extends StateNotifier<bool?> {
+  HiddenPass() : super(false);
+  void change() => state = state == false ? true : false;
+}
+
+class RememberNotifier extends StateNotifier<bool?> {
+  RememberNotifier() : super(false);
+}
+
+final hiddenPassProvider = StateNotifierProvider<HiddenPass, bool?>((ref) {
+  return HiddenPass();
+});
+
+final rememberProvider = StateNotifierProvider<RememberNotifier, bool?>((ref) {
+  return RememberNotifier();
+});
+
 class LoginDesktop2 extends ConsumerWidget {
   const LoginDesktop2({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isChecked = false;
     //text controllers
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
     bool isEmail(String input) => EmailValidator.validate(input);
-    bool isHidden = true;
-    void _togglePasswordView() {
-      isHidden = !isHidden;
-    }
-
-    void onChanged(bool? value) {
-      isChecked = value!;
-    }
 
     return SafeArea(
       child: Center(
@@ -398,44 +405,55 @@ class LoginDesktop2 extends ConsumerWidget {
                         const SizedBox(height: 20),
                         //password textfield
 
-                        TextFormField(
-                          controller: passwordController,
-                          obscureText: isHidden,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            hintText: '********',
-                            labelStyle: GoogleFonts.inter(
-                              fontSize: 14,
-                              color: Colors.black,
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                                width: 1,
+                        Consumer(
+                          builder: (context, ref, child) {
+                            final hidden = ref.watch(hiddenPassProvider)!;
+                            return TextFormField(
+                              controller: passwordController,
+                              obscureText: hidden,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                hintText: '********',
+                                labelStyle: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                                // hintText: 'Password',
+                                fillColor: Colors.grey[200],
+                                filled: true,
+                                suffix: InkWell(
+                                  onTap: ref
+                                      .read(hiddenPassProvider.notifier)
+                                      .change,
+                                  child: Consumer(
+                                    builder: (context, ref, child) {
+                                      return Icon(hidden
+                                          ? Icons.visibility
+                                          : Icons.visibility_off);
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            // hintText: 'Password',
-                            fillColor: Colors.grey[200],
-                            filled: true,
-                            suffix: InkWell(
-                              onTap: _togglePasswordView,
-                              child: Icon(isHidden
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty || value.length < 6) {
-                              return "Enter correct password";
-                            } else {
-                              return null;
-                            }
+                              validator: (value) {
+                                if (value!.isEmpty || value.length < 6) {
+                                  return "Enter correct password";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            );
                           },
                         ),
 
@@ -448,13 +466,25 @@ class LoginDesktop2 extends ConsumerWidget {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                SizedBox(
-                                  height: 24,
-                                  width: 24,
-                                  child: Checkbox(
-                                    value: isChecked,
-                                    onChanged: onChanged,
-                                  ),
+                                Consumer(
+                                  builder: (context, ref, child) {
+                                    final remember =
+                                        ref.watch(rememberProvider)!;
+                                    return SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: Checkbox(
+                                        value: remember,
+                                        onChanged: (_) {
+                                          ref
+                                                  .read(
+                                                      rememberProvider.notifier)
+                                                  .state ==
+                                              _;
+                                        },
+                                      ),
+                                    );
+                                  },
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
@@ -482,21 +512,13 @@ class LoginDesktop2 extends ConsumerWidget {
                         TextButton(
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              // signIn();
-                              // ref
-                              //     .read(authStateProvider.notifier)
-                              //     .loginWithEmailPassword(
-                              //       emailController.text,
-                              //       passwordController.text,
-                              //     )
-                              //     .then((value) => ControllerPage());
-
-                              final result =
-                                  await Authenticator().loginWithEmailPassword(
-                                emailController.text,
-                                passwordController.text,
-                              );
-                              result.log();
+                              await ref
+                                  .read(authStateProvider.notifier)
+                                  .loginWithEmailPassword(
+                                    emailController.text,
+                                    passwordController.text,
+                                  );
+                              // result.log();
                             }
                             return;
                           },

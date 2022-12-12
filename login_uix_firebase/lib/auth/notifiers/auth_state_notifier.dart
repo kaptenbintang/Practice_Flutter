@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:login_uix_firebase/auth/authenticator.dart';
+import 'package:login_uix_firebase/auth/backend/authenticator.dart';
 import 'package:login_uix_firebase/auth/models/auth_result.dart';
 import 'package:login_uix_firebase/auth/models/auth_state.dart';
 import 'package:login_uix_firebase/user_info/backend/user_info_storage.dart';
@@ -42,14 +42,40 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     );
   }
 
-  Future<void> createdWithEmailPassword(String email, String password) async {
+  Future<void> createdWithEmailPassword(
+    String email,
+    String password,
+    String firstName,
+    String lastName,
+    String clientCode,
+    String createdAt,
+    String phoneNumber,
+    String roles,
+    bool markDeleted,
+    String clientType,
+    String dataofbirth,
+  ) async {
     state = state.copiedWithIsLoading(true);
-    final result =
-        await _authenticator.createWithEmailandPassword(email, password);
+    final result = await _authenticator.createWithEmailandPassword(
+      email,
+      password,
+      firstName + lastName,
+    );
     final userId = _authenticator.userId;
     if (result == AuthResult.success && userId != null) {
       await saveUserInfo(
         userId: userId,
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        clientCode: clientCode,
+        createdAt: createdAt,
+        phoneNumber: phoneNumber,
+        roles: roles,
+        markDeleted: markDeleted,
+        clientType: clientType,
+        dataofbirth: dataofbirth,
       );
     }
     state = AuthState(
@@ -61,18 +87,29 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   Future<void> saveUserInfo({
     required UserId userId,
+    String? email,
+    String? password,
+    String? firstName,
+    String? lastName,
+    String? clientCode,
+    String? createdAt,
+    String? phoneNumber,
+    String? roles,
+    bool? markDeleted,
+    String? clientType,
+    String? dataofbirth,
   }) =>
       _userInfoStorage.saveUserInfo(
         userId: userId,
-        firstName: '',
-        lastName: 'lastName',
-        clientcode: 'clientcode',
-        createdAt: 'createdAt',
-        email: _authenticator.email,
-        phoneNumber: 'phoneNumber',
-        roles: 'roles',
-        markDeleted: false,
-        clientType: 'clientType',
-        dateofbirth: 'dateofbirth',
+        firstName: firstName!,
+        lastName: lastName!,
+        clientcode: clientCode!,
+        createdAt: createdAt!,
+        email: email!,
+        phoneNumber: phoneNumber!,
+        roles: roles!,
+        markDeleted: markDeleted!,
+        clientType: clientType!,
+        dateofbirth: dataofbirth!,
       );
 }
