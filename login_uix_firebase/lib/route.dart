@@ -1,3 +1,4 @@
+import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
 
 class RouteName {
@@ -21,4 +22,5 @@ class RouteName {
   static const manageRolesPage = '/manageRolesPage';
   static const manageServicesPage = '/ManageServicesPage';
   static const manageClientsTypePage = '/ManageClientsTypePage';
+  static const MainPagesPage = '/MainPagesPage';
 }

@@ -9,7 +9,7 @@ import 'package:login_uix_firebase/pages/profile_page.dart';
 
 class PageRoutes {
   static const dashboard = DashboardPage.routeName;
-  static const main = MainPage.routeName;
+  // static const main = MainPage.routeName;
 
   static const changePw = changePasswordPage.routeName;
   static const checkEmail = CheckEmailView.routeName;

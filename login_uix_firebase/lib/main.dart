@@ -8,6 +8,7 @@ import 'package:login_uix_firebase/controllers/side_bar_admin_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
+import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
@@ -78,7 +79,7 @@ class MyApp extends ConsumerWidget {
         // },),
         initialRoute: ControllerPage.routeName,
         routes: {
-          MainPage.routeName: (context) => const MainPage(),
+          // MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),
 
           // RegisterPage.routeName: (context) => RegisterPage(),
@@ -111,6 +112,7 @@ class MyApp extends ConsumerWidget {
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
           RouteName.controllerPage: (context) => ControllerPage(),
+          RouteName.MainPagesPage: (context) => MainPagesPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }
