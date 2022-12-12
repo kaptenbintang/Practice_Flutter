@@ -18,7 +18,7 @@ import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
-import 'package:login_uix_firebase/pages/login_page.dart';
+
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
 import '../main.dart';

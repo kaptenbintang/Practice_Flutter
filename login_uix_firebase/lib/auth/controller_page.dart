@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_uix_firebase/pages/login_page.dart';
+import 'package:login_uix_firebase/pages/admin_dashboard_layout.dart';
+
 import 'package:login_uix_firebase/pages/main_page.dart';
 
 import '../pages/dashboard_page.dart';
@@ -36,7 +37,7 @@ class ControllerPage extends StatelessWidget {
 
                       //     context,
                       //     DashboardPage.routeName);
-                      return const DashboardPage();
+                      return AdminDashboardLayout();
                     } else {
                       // Navigator.pushReplacementNamed(
                       //     context, MainPage.routeName);
