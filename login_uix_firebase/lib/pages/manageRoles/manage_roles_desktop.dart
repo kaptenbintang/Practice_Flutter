@@ -9,6 +9,8 @@ import 'package:login_uix_firebase/flutter_flow/flutter_flow_widgets.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
+import '../../helper/database_service.dart';
+import '../../model/roles_data.dart';
 
 class ManageRolesDesktop extends StatefulWidget {
   const ManageRolesDesktop({super.key});
@@ -19,6 +21,55 @@ class ManageRolesDesktop extends StatefulWidget {
 
 class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
   TextEditingController? textController;
+  DataService service = DataService();
+  Future<List<RolesData>>? RolesList;
+  Map<String, dynamic>? currentRolesData;
+  List<RolesData>? retrievedRolesList;
+  GlobalKey<ScaffoldState>? _scaffoldKey;
+  List<Map<String, dynamic>>? listofColumn;
+  RolesData? dataU;
+
+  final _rolesNameController = TextEditingController();
+
+  String? userId;
+  String? _isRoles;
+
+  String? selectedValueRoles;
+  String? selectedValue;
+  int _currentSortColumn = 0;
+  bool _isAscending = true;
+  bool? _isWrite;
+  bool? _isWriteAll;
+  bool? _isRead;
+  bool? _isDelete;
+
+  List<bool>? selected;
+
+  final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scaffoldKey = GlobalKey();
+    _initRetrieval();
+  }
+
+  Future<void> _initRetrieval() async {
+    // listofColumn = (await service.retrieveRoles()).cast<Map<String, dynamic>>();
+    RolesList = service.retrieveRoles();
+    retrievedRolesList = await service.retrieveRoles();
+    selected =
+        List<bool>.generate(retrievedRolesList!.length, (int index) => false);
+  }
+
+  Future<void> _pullRefresh() async {
+    retrievedRolesList = await service.retrieveRoles();
+
+    setState(() {
+      RolesList = service.retrieveRoles();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -46,6 +97,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //Title and Subtitle
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
                       child: Column(
@@ -100,6 +152,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    //Add button, Container title, Search textfield and search icon
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -108,6 +161,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
+                                            //Add Button
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(5, 0, 0, 0),
@@ -126,9 +180,11 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                                 onPressed: () {
                                                   print(
                                                       'IconButton pressed ...');
+                                                  dialogAddNewRoles(context);
                                                 },
                                               ),
                                             ),
+                                            //Container Title
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(16, 0, 0, 0),
@@ -141,6 +197,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                             ),
                                           ],
                                         ),
+                                        //Search textfield and search icon
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -235,6 +292,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                         ),
                                       ],
                                     ),
+                                    //Column Title
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12, 12, 12, 0),
@@ -274,7 +332,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                             Expanded(
                                               flex: 1,
                                               child: Text(
-                                                'Can Write',
+                                                'Can Read',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2,
@@ -299,12 +357,20 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                           ))
                                             Expanded(
                                               child: Text(
-                                                'Can Delete',
+                                                'Can Edit All',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2,
                                               ),
                                             ),
+                                          Expanded(
+                                            child: Text(
+                                              'Can Delete',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
                                           Expanded(
                                             child: Text(
                                               'Action',
@@ -317,1257 +383,58 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                         ],
                                       ),
                                     ),
+                                    //Data Row
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 16, 0, 0),
-                                      child: ListView(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 2),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .lineColor,
-                                                    offset: Offset(0, 1),
-                                                  )
-                                                ],
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 12, 12, 12),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              AutoSizeText(
-                                                                'CLT-C0',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .subtitle1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Poppins',
-                                                                      fontSize:
-                                                                          16,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        5,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Edit',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Delete',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                      child: FutureBuilder(
+                                          future: RolesList,
+                                          builder: (context,
+                                              AsyncSnapshot<List<RolesData>>
+                                                  snapshot) {
+                                            if (snapshot.hasData &&
+                                                snapshot.data!.isNotEmpty) {
+                                              return ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount:
+                                                    retrievedRolesList!.length,
+                                                itemBuilder: (context, indexs) {
+                                                  return _buildTableUser(
+                                                      context,
+                                                      retrievedRolesList![
+                                                          indexs],
+                                                      retrievedRolesList,
+                                                      indexs);
+                                                },
+                                              );
+                                            } else if (snapshot
+                                                        .connectionState ==
+                                                    ConnectionState.done &&
+                                                retrievedRolesList!.isEmpty) {
+                                              return Center(
+                                                child: ListView(
+                                                  physics:
+                                                      const AlwaysScrollableScrollPhysics(),
+                                                  children: const <Widget>[
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional
+                                                              .center,
+                                                      child: Text(
+                                                          'No Data Availble'),
+                                                    )
                                                   ],
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 2),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .lineColor,
-                                                    offset: Offset(0, 1),
-                                                  )
-                                                ],
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 12, 12, 12),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              AutoSizeText(
-                                                                ' Name',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .subtitle1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Poppins',
-                                                                      fontSize:
-                                                                          16,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        5,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Edit',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Delete',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 2),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .lineColor,
-                                                    offset: Offset(0, 1),
-                                                  )
-                                                ],
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 12, 12, 12),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              AutoSizeText(
-                                                                'Name',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .subtitle1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Poppins',
-                                                                      fontSize:
-                                                                          16,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        5,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Edit',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Delete',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 2),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .lineColor,
-                                                    offset: Offset(0, 1),
-                                                  )
-                                                ],
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 12, 12, 12),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              AutoSizeText(
-                                                                'Name',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .subtitle1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Poppins',
-                                                                      fontSize:
-                                                                          16,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        5,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Edit',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Delete',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 2),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .lineColor,
-                                                    offset: Offset(0, 1),
-                                                  )
-                                                ],
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 12, 12, 12),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          AutoSizeText(
-                                                            'Name',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .subtitle1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  fontSize: 16,
-                                                                ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          FlutterFlowIconButton(
-                                                            borderColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                            borderRadius: 30,
-                                                            borderWidth: 1,
-                                                            buttonSize: 40,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 20,
-                                                            ),
-                                                            onPressed: () {
-                                                              print(
-                                                                  'IconButton pressed ...');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        5,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Edit',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                            child:
-                                                                FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
-                                                              },
-                                                              text: 'Delete',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                      width: 80,
-                                                                      height:
-                                                                          35,
-                                                                      color: Color(
-                                                                          0x004B39EF),
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .subtitle2
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        width:
-                                                                            2.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                          8),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                              );
+                                            } else {
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
+                                          }),
                                     ),
                                   ],
                                 ),
@@ -1585,5 +452,600 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
         ),
       ),
     );
+  }
+
+  _buildTableUser(BuildContext context, RolesData snapshot,
+      List<RolesData>? user, int indexs) {
+    // print(_isChecked);
+    // int idx = int.parse(dropDownItemValue2[indexs]);
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).secondaryBackground,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 0,
+              color: FlutterFlowTheme.of(context).lineColor,
+              offset: Offset(0, 1),
+            )
+          ],
+        ),
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //Roles Type Name
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AutoSizeText(
+                          snapshot.rolesName as String,
+                          style:
+                              FlutterFlowTheme.of(context).subtitle1.override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 16,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              //Can Read Checkbox
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Checkbox(
+                      value: snapshot.canRead,
+                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return FlutterFlowTheme.of(context).primaryColor;
+                        }
+                        return FlutterFlowTheme.of(context).primaryColor;
+                      }),
+                      checkColor: Colors.white,
+                      onChanged: (value) {},
+                    )
+                  ],
+                ),
+              ),
+              //Can Edit Checkbox
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Checkbox(
+                      value: snapshot.canWrite,
+                      checkColor: Colors.white,
+                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return FlutterFlowTheme.of(context).primaryColor;
+                        }
+                        return FlutterFlowTheme.of(context).primaryColor;
+                      }),
+                      onChanged: (value) {},
+                    )
+                  ],
+                ),
+              ),
+              //Can Edit All Checkbox
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Checkbox(
+                      value: snapshot.canWriteAll,
+                      checkColor: Colors.white,
+                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return FlutterFlowTheme.of(context).primaryColor;
+                        }
+                        return FlutterFlowTheme.of(context).primaryColor;
+                      }),
+                      onChanged: (value) {},
+                    )
+                  ],
+                ),
+              ),
+              //Can Delete Checkbox
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Checkbox(
+                      value: snapshot.canDelete,
+                      checkColor: Colors.white,
+                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return FlutterFlowTheme.of(context).primaryColor;
+                        }
+                        return FlutterFlowTheme.of(context).primaryColor;
+                      }),
+                      onChanged: (value) {},
+                    )
+                  ],
+                ),
+              ),
+              //Action Button
+              Expanded(
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    //Edit Button
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          print('Button pressed ...');
+                          dialogEditRoles(context);
+                          setState(() {
+                            userId = snapshot.id;
+                            _isRoles = snapshot.rolesName;
+                            _isWrite = snapshot.canWrite;
+                            _isWriteAll = snapshot.canWriteAll;
+                            _isRead = snapshot.canRead;
+                            _isDelete = snapshot.canDelete;
+                          });
+                        },
+                        text: 'Edit',
+                        options: FFButtonOptions(
+                          width: 58,
+                          height: 35,
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .subtitle2
+                              .override(
+                                fontFamily: 'Poppins',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            width: 2.5,
+                          ),
+                          borderRadius: 8,
+                        ),
+                      ),
+                    ),
+                    //Delete Button
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          print('Button pressed ...');
+                          service.deleteRoles(context, snapshot.id.toString());
+                          _pullRefresh();
+                        },
+                        text: 'Delete',
+                        options: FFButtonOptions(
+                          width: 76,
+                          height: 35,
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .subtitle2
+                              .override(
+                                fontFamily: 'Poppins',
+                                color: FlutterFlowTheme.of(context).alternate,
+                              ),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).alternate,
+                            width: 2.5,
+                          ),
+                          borderRadius: 8,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> dialogEditRoles(BuildContext context) {
+    List<bool> listOfValue = [true, false];
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Edit Roles Data"),
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -40.0,
+                  top: -80.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            value: _isWrite,
+                            decoration: InputDecoration(
+                              labelText: "Can Write?",
+                            ),
+                            // hint: Text(
+                            //   'Can Write?',
+                            // ),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.blue,
+                            ),
+                            isExpanded: true,
+                            onChanged: (value) {
+                              setState(() {
+                                _isWrite = value!;
+                              });
+                            },
+                            // onSaved: (value) {},
+                            items: listOfValue.map((bool val) {
+                              return DropdownMenuItem(
+                                value: val,
+                                child: Text(
+                                  val.toString(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            value: _isWriteAll,
+                            decoration: InputDecoration(
+                              labelText: "Can Write All?",
+                            ),
+                            // hint: Text(
+                            //   'Can Write?',
+                            // ),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.blue,
+                            ),
+                            isExpanded: true,
+                            onChanged: (value) {
+                              setState(() {
+                                _isWriteAll = value!;
+                              });
+                            },
+                            // onSaved: (value) {},
+                            items: listOfValue.map((bool val) {
+                              return DropdownMenuItem(
+                                value: val,
+                                child: Text(
+                                  val.toString(),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _isRead,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
+                          ),
+                          icon: Icon(
+                            Icons.manage_search,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isRead = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _isDelete,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
+                          ),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isDelete = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              RolesData rolesData = RolesData(
+                                  id: userId,
+                                  rolesName: _isRoles,
+                                  canWrite: _isWrite,
+                                  canWriteAll: _isWriteAll,
+                                  canRead: _isRead,
+                                  canDelete: _isDelete);
+                              await service.updateRoles(rolesData);
+                              Navigator.pop(context);
+                              _pullRefresh();
+                            }
+
+                            // if (_formKey.currentState!.validate()) {
+                            //   _formKey.currentState!.save();
+                            // }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  Future<dynamic> dialogAddNewRoles(BuildContext context) {
+    bool? _selectedValue;
+    List<bool> listOfValue = [true, false];
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Add new roles"),
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -40.0,
+                  top: -80.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _rolesNameController,
+                          decoration: InputDecoration(
+                            labelText: "Enter roles name",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter correct roles name";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Write?",
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isWrite = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Write All?",
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isWriteAll = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Read?",
+                          ),
+                          icon: Icon(
+                            Icons.manage_search,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isRead = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _selectedValue,
+                          decoration: InputDecoration(
+                            labelText: "Can Delete?",
+                          ),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.blue,
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _isDelete = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: listOfValue.map((bool val) {
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(
+                                val.toString(),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              RolesData rolesData = RolesData(
+                                  id: userId,
+                                  rolesName: _rolesNameController.text,
+                                  canWrite: _isWrite,
+                                  canWriteAll: _isWriteAll,
+                                  canRead: _isRead,
+                                  canDelete: _isDelete);
+                              await service.addRoles(rolesData);
+                              Navigator.pop(context);
+                              _pullRefresh();
+                            }
+
+                            // if (_formKey.currentState!.validate()) {
+                            //   _formKey.currentState!.save();
+                            // }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
