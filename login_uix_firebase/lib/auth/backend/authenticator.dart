@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:login_uix_firebase/auth/models/auth_result.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
+import 'package:login_uix_firebase/pages/landing_layout.dart';
 
 class Authenticator {
   const Authenticator();
@@ -40,12 +42,13 @@ class Authenticator {
   }
 
   Future<AuthResult> createWithEmailandPassword(
-      String email, String password, String firstName) async {
+      String email, String password, String name) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
       return AuthResult.success;
     } on FirebaseAuthException catch (e) {
       final email = e.email;

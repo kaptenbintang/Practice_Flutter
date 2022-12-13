@@ -548,11 +548,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 //   height: 20,
                 // ),
                 ElevatedButton(
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                      Navigator.pushReplacementNamed(
-                          context, ControllerPage.routeName);
-                      // ControllerPage();
+                    onPressed: () async {
+                      // FirebaseAuth.instance.signOut();
+                      // Navigator.pushReplacementNamed(
+                      //     context, ControllerPage.routeName);
+                      // // ControllerPage();
                     },
                     child: const Text('Sign Out'))
               ],

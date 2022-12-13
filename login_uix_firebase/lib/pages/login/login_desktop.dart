@@ -37,28 +37,28 @@ class _LoginDesktopState extends State<LoginDesktop> {
     });
   }
 
-  Future signIn() async {
-//loading circle
-    FirebaseAuth.instance.signOut();
+//   Future signIn() async {
+// //loading circle
+//     FirebaseAuth.instance.signOut();
 
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim())
-          .then((value) => ControllerPage());
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      await showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(e.message.toString()),
-            );
-          });
-    }
-    // Navigator.of(context).pop();
-  }
+//     try {
+//       await FirebaseAuth.instance
+//           .signInWithEmailAndPassword(
+//               email: _emailController.text.trim(),
+//               password: _passwordController.text.trim())
+//           .then((value) => ControllerPage());
+//     } on FirebaseAuthException catch (e) {
+//       print(e);
+//       await showDialog(
+//           context: context,
+//           builder: (context) {
+//             return AlertDialog(
+//               content: Text(e.message.toString()),
+//             );
+//           });
+//     }
+//     // Navigator.of(context).pop();
+//   }
 
   @override
   void dispose() {
@@ -476,11 +476,11 @@ class LoginDesktop2 extends ConsumerWidget {
                                       child: Checkbox(
                                         value: remember,
                                         onChanged: (_) {
-                                          ref
-                                                  .read(
-                                                      rememberProvider.notifier)
-                                                  .state ==
-                                              _;
+                                          // ref
+                                          //         .read(
+                                          //             rememberProvider.notifier)
+                                          //         .state ==
+                                          //     _;
                                         },
                                       ),
                                     );
@@ -510,18 +510,17 @@ class LoginDesktop2 extends ConsumerWidget {
                         const SizedBox(height: 30),
                         //login button
                         TextButton(
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              await ref
-                                  .read(authStateProvider.notifier)
-                                  .loginWithEmailPassword(
-                                    emailController.text,
-                                    passwordController.text,
-                                  );
-                              // result.log();
-                            }
-                            return;
-                          },
+                          onPressed: (() async {
+                            // if (formKey.currentState!.validate()) {
+                            await ref
+                                .read(authStateProvider.notifier)
+                                .loginWithEmailPassword(
+                                  emailController.text,
+                                  passwordController.text,
+                                );
+                            // result.log();
+                            // }
+                          }),
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.green,
                             padding: const EdgeInsets.symmetric(

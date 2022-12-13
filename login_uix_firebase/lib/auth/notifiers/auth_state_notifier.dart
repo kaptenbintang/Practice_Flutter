@@ -30,11 +30,11 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     state = state.copiedWithIsLoading(true);
     final result = await _authenticator.loginWithEmailPassword(email, password);
     final userId = _authenticator.userId;
-    if (result == AuthResult.success && userId != null) {
-      await saveUserInfo(
-        userId: userId,
-      );
-    }
+    // if (result == AuthResult.success && userId != null) {
+    //   await saveUserInfo(
+    //     userId: userId,
+    //   );
+    // }
     state = AuthState(
       result: result,
       isLoading: false,
@@ -59,13 +59,12 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     final result = await _authenticator.createWithEmailandPassword(
       email,
       password,
-      firstName + lastName,
+      firstName,
     );
     final userId = _authenticator.userId;
     if (result == AuthResult.success && userId != null) {
       await saveUserInfo(
         userId: userId,
-        email: email,
         password: password,
         firstName: firstName,
         lastName: lastName,
@@ -87,7 +86,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   Future<void> saveUserInfo({
     required UserId userId,
-    String? email,
+    // String? email,
     String? password,
     String? firstName,
     String? lastName,
@@ -105,7 +104,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
         lastName: lastName!,
         clientcode: clientCode!,
         createdAt: createdAt!,
-        email: email!,
+        email: _authenticator.email,
         phoneNumber: phoneNumber!,
         roles: roles!,
         markDeleted: markDeleted!,

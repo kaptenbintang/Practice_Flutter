@@ -28,9 +28,9 @@ class UserInfoPayload extends MapView<String, dynamic> {
             FirebaseFieldName.email: email ?? '',
             FirebaseFieldName.phoneNumber: phoneNumber ?? '',
             FirebaseFieldName.roles: roles ?? '',
-            FirebaseFieldName.markDeleted: markDeleted,
-            FirebaseFieldName.clientType: clientType ?? false,
-            FirebaseFieldName.dateofbirth: dateofbirth ?? false,
+            FirebaseFieldName.markDeleted: markDeleted ?? false,
+            FirebaseFieldName.clientType: clientType ?? 'user',
+            FirebaseFieldName.dateofbirth: dateofbirth ?? '',
           },
         );
 }

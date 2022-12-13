@@ -1102,17 +1102,18 @@ class RegisterDeskStop2 extends ConsumerWidget {
                         await ref
                             .read(authStateProvider.notifier)
                             .createdWithEmailPassword(
-                                _emailController.text,
-                                _passwordController.text,
-                                _firstNameController.text,
-                                _lastNameController.text,
-                                clientCode,
-                                DateTime.now().toString(),
-                                _phoneNumberController.text,
-                                'user',
-                                false,
-                                'unassigned',
-                                _dateofbirthController.text);
+                              _emailController.text,
+                              _passwordController.text,
+                              _firstNameController.text,
+                              _lastNameController.text,
+                              clientCode,
+                              DateTime.now().toString(),
+                              countryDial + _phoneNumberController.text,
+                              'user',
+                              false,
+                              'unassigned',
+                              _dateofbirthController.text,
+                            );
                       }
                     },
                     style: TextButton.styleFrom(

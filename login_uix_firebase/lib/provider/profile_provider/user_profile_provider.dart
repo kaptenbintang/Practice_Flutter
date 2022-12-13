@@ -17,9 +17,15 @@ class GetDataFromFirestore {
 
   Future<Map<String, dynamic>?> currentUsers(uid) async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await FirebaseFirestore.instance.collection("users").doc(uid).get();
-      return snapshot.data()!;
+      // DocumentSnapshot<Map<String, dynamic>>
+      // QuerySnapshot<Map<String, dynamic>>
+      final snapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .where('uid', isEqualTo: uid.toString())
+          .limit(1)
+          .get();
+      final result = snapshot.docs[0];
+      return result.data();
     } on FirebaseException catch (e) {
       print(e.toString());
       throw Exception(e);
@@ -90,15 +96,16 @@ final userDetailProvider1 = StreamProvider.autoDispose<Map>(
         .collection(
           'users',
         )
-        .doc(userId)
+        .where('uid', isEqualTo: userId)
+        .limit(1)
         .snapshots()
         .listen(
       (snapshots) {
-        final posts = snapshots.data();
+        final data = snapshots.docs;
         // controller.stream.asyncMap(
         //   (event) => event = posts as Iterable<Map>,
         // );
-        controller.sink.add(posts as Map);
+        controller.sink.add(data as Map);
       },
     );
     ref.onDispose(() {

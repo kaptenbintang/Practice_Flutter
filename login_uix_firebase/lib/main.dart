@@ -32,6 +32,7 @@ import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
+import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
 
@@ -98,6 +99,8 @@ class MyApp extends ConsumerWidget {
           ProfilePage.routeName: (context) => const ProfilePage(),
           ProfileRiverpodPage.routeName: (context) =>
               const ProfileRiverpodPage(),
+          ProfileRiverpodPage2.routeName: (context) =>
+              const ProfileRiverpodPage2(),
           UserTablePage.routeName: (context) => const UserTablePage(),
           ManageRoles.routeName: (context) => const ManageRoles(),
           ManageClients.routeName: (context) => const ManageClients(),
@@ -110,7 +113,7 @@ class MyApp extends ConsumerWidget {
               ),
           appointmentPage.routeName: (context) => const appointmentPage(),
           ManagePractioners.routeName: (context) => const ManagePractioners(),
-          ControllerPage.routeName: (context) => ControllerPage(),
+          // ControllerPage.routeName: (context) => ControllerPage(),
           RouteName.changePWPage: (context) => const changePasswordPage(),
           RouteName.checkEmailPage: (context) => const CheckEmailView(),
           RouteName.dashboard: (context) => const DashboardPage(),
@@ -119,7 +122,7 @@ class MyApp extends ConsumerWidget {
           RouteName.landingPage: (context) => const LandingPage(),
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
-          RouteName.controllerPage: (context) => ControllerPage(),
+          // RouteName.controllerPage: (context) => ControllerPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }

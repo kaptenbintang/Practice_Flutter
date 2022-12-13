@@ -3,6 +3,9 @@ import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
+import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
+import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
+import 'package:login_uix_firebase/route.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 
@@ -120,7 +123,8 @@ class _MainPageState extends State<MainPage> {
                                         child: InkWell(
                                           onTap: () {
                                             Navigator.pushNamed(context,
-                                                ProfileRiverpodPage.routeName);
+                                                RouteName.viewProfilePage);
+                                            // ViewProfilePage();
                                           },
                                           child: Text(
                                             'Profile',

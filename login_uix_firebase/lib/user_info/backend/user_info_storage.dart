@@ -29,7 +29,7 @@ class UserInfoStorage {
           )
           .where(
             FirebaseFieldName.userId,
-            isEqualTo: userId,
+            isEqualTo: userId.toString(),
           )
           .limit(1)
           .get();
@@ -68,8 +68,11 @@ class UserInfoStorage {
           .collection(
             FirebaseCollectionName.users,
           )
-          .doc(userId)
-          .set(payload);
+          .add(
+            payload,
+          );
+      // .doc(userId)
+      // .set(payload);
       return true;
     } catch (_) {
       return false;

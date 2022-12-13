@@ -33,34 +33,34 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  Future signIn() async {
-//loading circle
-    FirebaseAuth.instance.signOut();
+//   Future signIn() async {
+// //loading circle
+//     FirebaseAuth.instance.signOut();
 
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Center(child: CircularProgressIndicator());
-        });
+//     showDialog(
+//         context: context,
+//         builder: (context) {
+//           return Center(child: CircularProgressIndicator());
+//         });
 
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim())
-          .then((value) => ControllerPage());
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      await showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(e.message.toString()),
-            );
-          });
-    }
-    Navigator.of(context).pop();
-  }
+//     try {
+//       await FirebaseAuth.instance
+//           .signInWithEmailAndPassword(
+//               email: _emailController.text.trim(),
+//               password: _passwordController.text.trim())
+//           .then((value) => ControllerPage());
+//     } on FirebaseAuthException catch (e) {
+//       print(e);
+//       await showDialog(
+//           context: context,
+//           builder: (context) {
+//             return AlertDialog(
+//               content: Text(e.message.toString()),
+//             );
+//           });
+//     }
+//     Navigator.of(context).pop();
+//   }
 
   //create validation login
 
@@ -238,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: GestureDetector(
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                          signIn();
+                          // signIn();
                           return;
                         }
                       },
