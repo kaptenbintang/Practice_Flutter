@@ -1,6 +1,9 @@
+import 'package:booking_calendar/booking_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -12,6 +15,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../helper/database_service.dart';
 import '../route.dart';
 import 'main_page.dart';
+import 'package:intl/intl.dart';
 
 class appointmentPage extends StatefulWidget {
   static const routeName = '/appointmentPage';
@@ -22,6 +26,7 @@ class appointmentPage extends StatefulWidget {
 }
 
 class _appointmentPageState extends State<appointmentPage> {
+  String? _selectedDate;
   String? userId;
   String? dropDownServices;
   String? dropDownLocation;
@@ -32,6 +37,8 @@ class _appointmentPageState extends State<appointmentPage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _myBox = Hive.box('myBox');
+  final now = DateTime.now();
+  late BookingService mockBookingService;
 
   @override
   void initState() {
@@ -42,6 +49,58 @@ class _appointmentPageState extends State<appointmentPage> {
       userId = _myBox.get('id');
     });
     dateandtimeController = TextEditingController();
+    mockBookingService = BookingService(
+        serviceName: 'Mock Service',
+        serviceDuration: 30,
+        bookingEnd: DateTime(now.year, now.month, now.day, 18, 0),
+        bookingStart: DateTime(now.year, now.month, now.day, 9, 0));
+  }
+
+  Stream<dynamic>? getBookingStreamMock(
+      {required DateTime end, required DateTime start}) {
+    return Stream.value([]);
+  }
+
+  Future<dynamic> uploadBookingMock(
+      {required BookingService newBooking}) async {
+    await Future.delayed(const Duration(seconds: 1));
+    converted.add(DateTimeRange(
+        start: newBooking.bookingStart, end: newBooking.bookingEnd));
+    setState(() {
+      dateandtimeController?.text = DateFormat('yyyy-MM-dd – kk:mm:a')
+          .format(newBooking.bookingStart)
+          .toString();
+    });
+    print('${newBooking.toJson()} has been uploaded');
+  }
+
+  List<DateTimeRange> converted = [];
+
+  List<DateTimeRange> convertStreamResultMock({required dynamic streamResult}) {
+    ///here you can parse the streamresult and convert to [List<DateTimeRange>]
+    ///take care this is only mock, so if you add today as disabledDays it will still be visible on the first load
+    ///disabledDays will properly work with real data
+    DateTime first = now;
+    DateTime second = now.add(const Duration(minutes: 55));
+    DateTime third = now.subtract(const Duration(minutes: 240));
+    DateTime fourth = now.subtract(const Duration(minutes: 500));
+    converted.add(
+        DateTimeRange(start: first, end: now.add(const Duration(minutes: 30))));
+    converted.add(DateTimeRange(
+        start: second, end: second.add(const Duration(minutes: 23))));
+    converted.add(DateTimeRange(
+        start: third, end: third.add(const Duration(minutes: 15))));
+    converted.add(DateTimeRange(
+        start: fourth, end: fourth.add(const Duration(minutes: 50))));
+    return converted;
+  }
+
+  List<DateTimeRange> generatePauseSlots() {
+    return [
+      DateTimeRange(
+          start: DateTime(now.year, now.month, now.day, 12, 0),
+          end: DateTime(now.year, now.month, now.day, 13, 0))
+    ];
   }
 
   @override
@@ -111,8 +170,8 @@ class _appointmentPageState extends State<appointmentPage> {
                                                   20, 20, 20, 20),
                                           child: InkWell(
                                             onTap: () {
-                                              Navigator.pushNamed(
-                                                  context, MainPage.routeName);
+                                              Navigator.pushNamed(context,
+                                                  RouteName.MainPagesPage);
                                             },
                                             child: Text(
                                               'Home',
@@ -885,7 +944,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                         MainAxisSize.max,
                                                     children: [
                                                       Text(
-                                                        'Date/Time: ',
+                                                        'Date: ',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -896,7 +955,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      95,
+                                                                      165,
                                                                       20,
                                                                       20,
                                                                       20),
@@ -906,65 +965,145 @@ class _appointmentPageState extends State<appointmentPage> {
                                                             autofocus: true,
                                                             obscureText: false,
                                                             readOnly: true,
-                                                            onTap: () async {
-                                                              DateTime?
-                                                                  pickedDate =
-                                                                  await showDatePicker(
-                                                                      context:
-                                                                          context,
-                                                                      initialDate:
-                                                                          DateTime
-                                                                              .now(),
-                                                                      firstDate:
-                                                                          DateTime(
-                                                                              2022), //DateTime.now() - not to allow to choose before today.
-                                                                      lastDate:
-                                                                          DateTime(
-                                                                              2023));
-
-                                                              var time = await showTimePicker(
+                                                            onTap: () {
+                                                              showDialog(
                                                                   context:
                                                                       context,
-                                                                  initialTime:
-                                                                      TimeOfDay
-                                                                          .now());
+                                                                  builder:
+                                                                      (context) {
+                                                                    return AlertDialog(
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      // actions: <
+                                                                      //     Widget>[
+                                                                      //   Container(
+                                                                      //     height:
+                                                                      //         30,
+                                                                      //     child:
+                                                                      //         MaterialButton(
+                                                                      //       color:
+                                                                      //           Colors.green,
+                                                                      //       child:
+                                                                      //           Text(
+                                                                      //         'Set',
+                                                                      //         style: TextStyle(color: Colors.white),
+                                                                      //       ),
+                                                                      //       onPressed:
+                                                                      //           () {
+                                                                      //         setState(() {
+                                                                      //           // date_of_birth = date_controller.text;
+                                                                      //         });
 
-                                                              if (pickedDate !=
-                                                                      null &&
-                                                                  time !=
-                                                                      null) {
-                                                                print(
-                                                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                                                String
-                                                                    formattedDate =
-                                                                    DateFormat(
-                                                                            'yyyy-MM-dd')
-                                                                        .format(
-                                                                            pickedDate);
-                                                                print(
-                                                                    formattedDate); //formatted date output using intl package =>  2021-03-16
-                                                                //you can implement different kind of Date Format here according to your requirement
+                                                                      //         Navigator.of(context).pop();
+                                                                      //       },
+                                                                      //     ),
+                                                                      //   ),
+                                                                      //   TextButton(
+                                                                      //     child:
+                                                                      //         Text('Cancel'),
+                                                                      //     onPressed:
+                                                                      //         () {
+                                                                      //       setState(() {
+                                                                      //         // date_controller.text = date_of_birth;
+                                                                      //       });
 
-                                                                setState(() {
-                                                                  dateandtimeController
-                                                                          ?.text =
-                                                                      formattedDate +
-                                                                          " " +
-                                                                          "${time.hour}:${time.minute}";
-
-                                                                  //set output date to TextField value.
-                                                                });
-                                                                // setState(() {
-                                                                //   dateandtimeController
-                                                                //           ?.text =
-                                                                //       "${time.hour}:${time.minute}";
-
-                                                                //   //set output date to TextField value.
-                                                                // });
-                                                              } else {
-                                                                print(
-                                                                    "Date is not selected");
-                                                              }
+                                                                      //       Navigator.of(context).pop();
+                                                                      //     },
+                                                                      //   ),
+                                                                      // ],
+                                                                      content:
+                                                                          Container(
+                                                                        height:
+                                                                            600,
+                                                                        width:
+                                                                            600,
+                                                                        child:
+                                                                            BookingCalendar(
+                                                                          bookingService:
+                                                                              mockBookingService,
+                                                                          convertStreamResultToDateTimeRanges:
+                                                                              convertStreamResultMock,
+                                                                          getBookingStream:
+                                                                              getBookingStreamMock,
+                                                                          uploadBooking:
+                                                                              uploadBookingMock,
+                                                                          pauseSlots:
+                                                                              generatePauseSlots(),
+                                                                          pauseSlotText:
+                                                                              'LUNCH',
+                                                                          hideBreakTime:
+                                                                              false,
+                                                                          loadingWidget: Align(
+                                                                              alignment: Alignment.center,
+                                                                              child: const Text('Fetching data...')),
+                                                                          uploadingWidget: Align(
+                                                                              alignment: Alignment.center,
+                                                                              child: const Text('Submitting data...')),
+                                                                          locale:
+                                                                              'en_EN',
+                                                                          startingDayOfWeek:
+                                                                              StartingDayOfWeek.monday,
+                                                                          disabledDays: const [
+                                                                            6,
+                                                                            7
+                                                                          ],
+                                                                        ),
+                                                                        //     SfDateRangePicker(
+                                                                        //   initialSelectedDate:
+                                                                        //       DateTime.now(),
+                                                                        //   onSelectionChanged:
+                                                                        //       _onSelectionChanged,
+                                                                        //   selectionMode:
+                                                                        //       DateRangePickerSelectionMode.single,
+                                                                        //   view:
+                                                                        //       DateRangePickerView.month,
+                                                                        //   monthViewSettings:
+                                                                        //       DateRangePickerMonthViewSettings(blackoutDates: [
+                                                                        //     DateTime(
+                                                                        //         2022,
+                                                                        //         12,
+                                                                        //         14)
+                                                                        //   ], weekendDays: [
+                                                                        //     7,
+                                                                        //     6
+                                                                        //   ], specialDates: [
+                                                                        //     DateTime(
+                                                                        //         2022,
+                                                                        //         12,
+                                                                        //         26),
+                                                                        //     DateTime(
+                                                                        //         2022,
+                                                                        //         12,
+                                                                        //         27),
+                                                                        //     DateTime(
+                                                                        //         2022,
+                                                                        //         12,
+                                                                        //         28)
+                                                                        //   ], showTrailingAndLeadingDates: true),
+                                                                        //   monthCellStyle:
+                                                                        //       DateRangePickerMonthCellStyle(
+                                                                        //     blackoutDatesDecoration: BoxDecoration(
+                                                                        //         color: Colors.red,
+                                                                        //         border: Border.all(color: const Color(0xFFF44436), width: 1),
+                                                                        //         shape: BoxShape.circle),
+                                                                        //     weekendDatesDecoration: BoxDecoration(
+                                                                        //         color: const Color(0xFFDFDFDF),
+                                                                        //         border: Border.all(color: const Color(0xFFB6B6B6), width: 1),
+                                                                        //         shape: BoxShape.circle),
+                                                                        //     specialDatesDecoration: BoxDecoration(
+                                                                        //         color: Colors.green,
+                                                                        //         border: Border.all(color: const Color(0xFF2B732F), width: 1),
+                                                                        //         shape: BoxShape.circle),
+                                                                        //     blackoutDateTextStyle:
+                                                                        //         TextStyle(color: Colors.white, decoration: TextDecoration.lineThrough),
+                                                                        //     specialDatesTextStyle:
+                                                                        //         const TextStyle(color: Colors.white),
+                                                                        //   ),
+                                                                        // ),
+                                                                      ),
+                                                                    );
+                                                                  });
                                                             },
                                                             decoration:
                                                                 InputDecoration(
@@ -1241,4 +1380,40 @@ class _appointmentPageState extends State<appointmentPage> {
       ),
     );
   }
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    /// The argument value will return the changed date as [DateTime] when the
+    /// widget [SfDateRangeSelectionMode] set as single.
+    ///
+    /// The argument value will return the changed dates as [List<DateTime>]
+    /// when the widget [SfDateRangeSelectionMode] set as multiple.
+    ///
+    /// The argument value will return the changed range as [PickerDateRange]
+    /// when the widget [SfDateRangeSelectionMode] set as range.
+    ///
+    /// The argument value will return the changed ranges as
+    /// [List<PickerDateRange] when the widget [SfDateRangeSelectionMode] set as
+    /// multi range.
+    setState(() {
+      if (args.value is PickerDateRange) {
+      } else if (args.value is DateTime) {
+        dateandtimeController?.text =
+            DateFormat('dd/MM/yyyy').format(args.value).toString();
+        ;
+      } else if (args.value is List<DateTime>) {
+      } else {}
+    });
+  }
+
+// https://www.syncfusion.com/kb/11467/how-to-add-a-date-range-picker-sfdaterangepicker-in-the-flutter-dialog-window
+  // Widget getDateRangePicker() {
+  //   return Container(
+  //       height: 250,
+  //       child: Card(
+  //           child: SfDateRangePicker(
+  //         view: DateRangePickerView.month,
+  //         selectionMode: DateRangePickerSelectionMode.single,
+  //         onSelectionChanged: selectionChanged,
+  //       )));
+  // }
 }

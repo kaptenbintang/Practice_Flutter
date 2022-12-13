@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:login_uix_firebase/controllers/side_bar_admin_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:login_uix_firebase/auth/provider/is_logged_in_provider.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
+import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
@@ -22,6 +24,7 @@ import 'package:login_uix_firebase/pages/login/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
+import 'package:login_uix_firebase/pages/login/login_page.dart';
 import 'package:login_uix_firebase/pages/main_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_client_type_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
@@ -35,17 +38,19 @@ import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
-
+import 'package:login_uix_firebase/routes/page_route.dart';
+import 'package:login_uix_firebase/widgets/side_bar_admin.dart';
 import 'controllers/menu_controller.dart';
 import 'controllers/navigation_controller.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/date_symbol_data_local.dart';
 import 'pages/LandingPage/landing_page.dart';
 
 void main() async {
   Get.put(MenuController());
   Get.put(NavigationController());
+  Get.put(SideBarAdminController());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -53,8 +58,7 @@ void main() async {
   await Hive.initFlutter();
 
   var box = await Hive.openBox('myBox');
-
-  runApp(ProviderScope(child: MyApp()));
+  initializeDateFormatting().then((_) => runApp(ProviderScope(child: MyApp())));
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -81,14 +85,14 @@ class MyApp extends ConsumerWidget {
           builder: (context, ref, child) {
             final isLoggedin = ref.watch(isLoggedInProvider);
             if (isLoggedin) {
-              return const MainPage();
+              return const MainPagesPage();
             } else {
               return LandingLayout();
             }
           },
         ),
         routes: {
-          MainPage.routeName: (context) => const MainPage(),
+          // MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),
           // LoginPage.routeName: (context) => LoginPage(),
           // RegisterPage.routeName: (context) => RegisterPage(),
@@ -123,6 +127,7 @@ class MyApp extends ConsumerWidget {
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
           // RouteName.controllerPage: (context) => ControllerPage(),
+          RouteName.MainPagesPage: (context) => MainPagesPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }

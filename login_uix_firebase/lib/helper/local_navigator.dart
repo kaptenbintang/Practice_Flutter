@@ -8,3 +8,9 @@ Navigator localNavigator() => Navigator(
       initialRoute: LandingRoute,
       onGenerateRoute: generateRoute,
     );
+
+Navigator adminDashboardNavigator() => Navigator(
+      key: navigationController.navigationKey,
+      initialRoute: ManageStaffRoute,
+      onGenerateRoute: generateRouteAdmin,
+    );

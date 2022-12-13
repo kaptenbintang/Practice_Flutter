@@ -13,6 +13,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/routing/logOutRoute.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../helper/database_service.dart';
@@ -542,7 +543,7 @@ class _ProfilePageDesktopWidgetState extends State<ProfilePageDesktopWidget> {
                             FFButtonWidget(
                               onPressed: () async {
                                 FirebaseAuth.instance.signOut();
-                                Navigator.popAndPushNamed(
+                                Navigator.pushReplacementNamed(
                                     context, RouteName.controllerPage);
                                 navigatorKey.currentState!
                                     .popUntil((route) => route.isFirst);
