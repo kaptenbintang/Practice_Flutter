@@ -1,3 +1,4 @@
+import 'package:booking_calendar/booking_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hive/hive.dart';
@@ -36,6 +37,8 @@ class _appointmentPageState extends State<appointmentPage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _myBox = Hive.box('myBox');
+  final now = DateTime.now();
+  late BookingService mockBookingService;
 
   @override
   void initState() {
@@ -46,6 +49,58 @@ class _appointmentPageState extends State<appointmentPage> {
       userId = _myBox.get('id');
     });
     dateandtimeController = TextEditingController();
+    mockBookingService = BookingService(
+        serviceName: 'Mock Service',
+        serviceDuration: 30,
+        bookingEnd: DateTime(now.year, now.month, now.day, 18, 0),
+        bookingStart: DateTime(now.year, now.month, now.day, 9, 0));
+  }
+
+  Stream<dynamic>? getBookingStreamMock(
+      {required DateTime end, required DateTime start}) {
+    return Stream.value([]);
+  }
+
+  Future<dynamic> uploadBookingMock(
+      {required BookingService newBooking}) async {
+    await Future.delayed(const Duration(seconds: 1));
+    converted.add(DateTimeRange(
+        start: newBooking.bookingStart, end: newBooking.bookingEnd));
+    setState(() {
+      dateandtimeController?.text = DateFormat('yyyy-MM-dd – kk:mm:a')
+          .format(newBooking.bookingStart)
+          .toString();
+    });
+    print('${newBooking.toJson()} has been uploaded');
+  }
+
+  List<DateTimeRange> converted = [];
+
+  List<DateTimeRange> convertStreamResultMock({required dynamic streamResult}) {
+    ///here you can parse the streamresult and convert to [List<DateTimeRange>]
+    ///take care this is only mock, so if you add today as disabledDays it will still be visible on the first load
+    ///disabledDays will properly work with real data
+    DateTime first = now;
+    DateTime second = now.add(const Duration(minutes: 55));
+    DateTime third = now.subtract(const Duration(minutes: 240));
+    DateTime fourth = now.subtract(const Duration(minutes: 500));
+    converted.add(
+        DateTimeRange(start: first, end: now.add(const Duration(minutes: 30))));
+    converted.add(DateTimeRange(
+        start: second, end: second.add(const Duration(minutes: 23))));
+    converted.add(DateTimeRange(
+        start: third, end: third.add(const Duration(minutes: 15))));
+    converted.add(DateTimeRange(
+        start: fourth, end: fourth.add(const Duration(minutes: 50))));
+    return converted;
+  }
+
+  List<DateTimeRange> generatePauseSlots() {
+    return [
+      DateTimeRange(
+          start: DateTime(now.year, now.month, now.day, 12, 0),
+          end: DateTime(now.year, now.month, now.day, 13, 0))
+    ];
   }
 
   @override
@@ -640,11 +695,11 @@ class _appointmentPageState extends State<appointmentPage> {
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              1,
+                                              0.8,
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              1,
+                                              0.8,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .lineColor,
@@ -920,102 +975,132 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       backgroundColor:
                                                                           Colors
                                                                               .white,
-                                                                      actions: <
-                                                                          Widget>[
-                                                                        Container(
-                                                                          height:
-                                                                              30,
-                                                                          child:
-                                                                              MaterialButton(
-                                                                            color:
-                                                                                Colors.green,
-                                                                            child:
-                                                                                Text(
-                                                                              'Set',
-                                                                              style: TextStyle(color: Colors.white),
-                                                                            ),
-                                                                            onPressed:
-                                                                                () {
-                                                                              setState(() {
-                                                                                // date_of_birth = date_controller.text;
-                                                                              });
+                                                                      // actions: <
+                                                                      //     Widget>[
+                                                                      //   Container(
+                                                                      //     height:
+                                                                      //         30,
+                                                                      //     child:
+                                                                      //         MaterialButton(
+                                                                      //       color:
+                                                                      //           Colors.green,
+                                                                      //       child:
+                                                                      //           Text(
+                                                                      //         'Set',
+                                                                      //         style: TextStyle(color: Colors.white),
+                                                                      //       ),
+                                                                      //       onPressed:
+                                                                      //           () {
+                                                                      //         setState(() {
+                                                                      //           // date_of_birth = date_controller.text;
+                                                                      //         });
 
-                                                                              Navigator.of(context).pop();
-                                                                            },
-                                                                          ),
-                                                                        ),
-                                                                        TextButton(
-                                                                          child:
-                                                                              Text('Cancel'),
-                                                                          onPressed:
-                                                                              () {
-                                                                            setState(() {
-                                                                              // date_controller.text = date_of_birth;
-                                                                            });
+                                                                      //         Navigator.of(context).pop();
+                                                                      //       },
+                                                                      //     ),
+                                                                      //   ),
+                                                                      //   TextButton(
+                                                                      //     child:
+                                                                      //         Text('Cancel'),
+                                                                      //     onPressed:
+                                                                      //         () {
+                                                                      //       setState(() {
+                                                                      //         // date_controller.text = date_of_birth;
+                                                                      //       });
 
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                        ),
-                                                                      ],
+                                                                      //       Navigator.of(context).pop();
+                                                                      //     },
+                                                                      //   ),
+                                                                      // ],
                                                                       content:
                                                                           Container(
                                                                         height:
-                                                                            300,
+                                                                            600,
                                                                         width:
-                                                                            300,
+                                                                            600,
                                                                         child:
-                                                                            SfDateRangePicker(
-                                                                          initialSelectedDate:
-                                                                              DateTime.now(),
-                                                                          onSelectionChanged:
-                                                                              _onSelectionChanged,
-                                                                          selectionMode:
-                                                                              DateRangePickerSelectionMode.single,
-                                                                          view:
-                                                                              DateRangePickerView.month,
-                                                                          monthViewSettings:
-                                                                              DateRangePickerMonthViewSettings(blackoutDates: [
-                                                                            DateTime(
-                                                                                2022,
-                                                                                12,
-                                                                                14)
-                                                                          ], weekendDays: [
-                                                                            7,
-                                                                            6
-                                                                          ], specialDates: [
-                                                                            DateTime(
-                                                                                2022,
-                                                                                12,
-                                                                                26),
-                                                                            DateTime(
-                                                                                2022,
-                                                                                12,
-                                                                                27),
-                                                                            DateTime(
-                                                                                2022,
-                                                                                12,
-                                                                                28)
-                                                                          ], showTrailingAndLeadingDates: true),
-                                                                          monthCellStyle:
-                                                                              DateRangePickerMonthCellStyle(
-                                                                            blackoutDatesDecoration: BoxDecoration(
-                                                                                color: Colors.red,
-                                                                                border: Border.all(color: const Color(0xFFF44436), width: 1),
-                                                                                shape: BoxShape.circle),
-                                                                            weekendDatesDecoration: BoxDecoration(
-                                                                                color: const Color(0xFFDFDFDF),
-                                                                                border: Border.all(color: const Color(0xFFB6B6B6), width: 1),
-                                                                                shape: BoxShape.circle),
-                                                                            specialDatesDecoration: BoxDecoration(
-                                                                                color: Colors.green,
-                                                                                border: Border.all(color: const Color(0xFF2B732F), width: 1),
-                                                                                shape: BoxShape.circle),
-                                                                            blackoutDateTextStyle:
-                                                                                TextStyle(color: Colors.white, decoration: TextDecoration.lineThrough),
-                                                                            specialDatesTextStyle:
-                                                                                const TextStyle(color: Colors.white),
-                                                                          ),
+                                                                            BookingCalendar(
+                                                                          bookingService:
+                                                                              mockBookingService,
+                                                                          convertStreamResultToDateTimeRanges:
+                                                                              convertStreamResultMock,
+                                                                          getBookingStream:
+                                                                              getBookingStreamMock,
+                                                                          uploadBooking:
+                                                                              uploadBookingMock,
+                                                                          pauseSlots:
+                                                                              generatePauseSlots(),
+                                                                          pauseSlotText:
+                                                                              'LUNCH',
+                                                                          hideBreakTime:
+                                                                              false,
+                                                                          loadingWidget: Align(
+                                                                              alignment: Alignment.center,
+                                                                              child: const Text('Fetching data...')),
+                                                                          uploadingWidget: Align(
+                                                                              alignment: Alignment.center,
+                                                                              child: const Text('Submitting data...')),
+                                                                          locale:
+                                                                              'en_EN',
+                                                                          startingDayOfWeek:
+                                                                              StartingDayOfWeek.monday,
+                                                                          disabledDays: const [
+                                                                            6,
+                                                                            7
+                                                                          ],
                                                                         ),
+                                                                        //     SfDateRangePicker(
+                                                                        //   initialSelectedDate:
+                                                                        //       DateTime.now(),
+                                                                        //   onSelectionChanged:
+                                                                        //       _onSelectionChanged,
+                                                                        //   selectionMode:
+                                                                        //       DateRangePickerSelectionMode.single,
+                                                                        //   view:
+                                                                        //       DateRangePickerView.month,
+                                                                        //   monthViewSettings:
+                                                                        //       DateRangePickerMonthViewSettings(blackoutDates: [
+                                                                        //     DateTime(
+                                                                        //         2022,
+                                                                        //         12,
+                                                                        //         14)
+                                                                        //   ], weekendDays: [
+                                                                        //     7,
+                                                                        //     6
+                                                                        //   ], specialDates: [
+                                                                        //     DateTime(
+                                                                        //         2022,
+                                                                        //         12,
+                                                                        //         26),
+                                                                        //     DateTime(
+                                                                        //         2022,
+                                                                        //         12,
+                                                                        //         27),
+                                                                        //     DateTime(
+                                                                        //         2022,
+                                                                        //         12,
+                                                                        //         28)
+                                                                        //   ], showTrailingAndLeadingDates: true),
+                                                                        //   monthCellStyle:
+                                                                        //       DateRangePickerMonthCellStyle(
+                                                                        //     blackoutDatesDecoration: BoxDecoration(
+                                                                        //         color: Colors.red,
+                                                                        //         border: Border.all(color: const Color(0xFFF44436), width: 1),
+                                                                        //         shape: BoxShape.circle),
+                                                                        //     weekendDatesDecoration: BoxDecoration(
+                                                                        //         color: const Color(0xFFDFDFDF),
+                                                                        //         border: Border.all(color: const Color(0xFFB6B6B6), width: 1),
+                                                                        //         shape: BoxShape.circle),
+                                                                        //     specialDatesDecoration: BoxDecoration(
+                                                                        //         color: Colors.green,
+                                                                        //         border: Border.all(color: const Color(0xFF2B732F), width: 1),
+                                                                        //         shape: BoxShape.circle),
+                                                                        //     blackoutDateTextStyle:
+                                                                        //         TextStyle(color: Colors.white, decoration: TextDecoration.lineThrough),
+                                                                        //     specialDatesTextStyle:
+                                                                        //         const TextStyle(color: Colors.white),
+                                                                        //   ),
+                                                                        // ),
                                                                       ),
                                                                     );
                                                                   });
@@ -1096,176 +1181,6 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                 TextInputType
                                                                     .datetime,
                                                           ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(20, 20, 20, 20),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Time: ',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .title1,
-                                                      ),
-                                                      SingleChildScrollView(
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          162,
-                                                                          20,
-                                                                          20,
-                                                                          20),
-                                                              child: Container(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.4,
-                                                                height: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .height *
-                                                                    0.25,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .lineColor,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  border: Border
-                                                                      .all(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                  ),
-                                                                ),
-                                                                child: GridView(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  gridDelegate:
-                                                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                                                    crossAxisCount:
-                                                                        6,
-                                                                    crossAxisSpacing:
-                                                                        10,
-                                                                    mainAxisSpacing:
-                                                                        10,
-                                                                    childAspectRatio:
-                                                                        1,
-                                                                  ),
-                                                                  scrollDirection:
-                                                                      Axis.vertical,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              20,
-                                                                              20,
-                                                                              20,
-                                                                              20),
-                                                                      child:
-                                                                          Container(
-                                                                        width: MediaQuery.of(context).size.width *
-                                                                            0.2,
-                                                                        height: MediaQuery.of(context).size.height *
-                                                                            0.2,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          boxShadow: [
-                                                                            BoxShadow(
-                                                                              blurRadius: 12,
-                                                                              color: Color(0x33000000),
-                                                                              offset: Offset(0, 2),
-                                                                            )
-                                                                          ],
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(8),
-                                                                        ),
-                                                                        child:
-                                                                            Column(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceAround,
-                                                                          children: [
-                                                                            Text(
-                                                                              '09:00',
-                                                                              textAlign: TextAlign.center,
-                                                                              style: FlutterFlowTheme.of(context).bodyText1,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              20,
-                                                                              20,
-                                                                              20,
-                                                                              20),
-                                                                      child:
-                                                                          Container(
-                                                                        width: MediaQuery.of(context).size.width *
-                                                                            0.2,
-                                                                        height: MediaQuery.of(context).size.height *
-                                                                            0.2,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          boxShadow: [
-                                                                            BoxShadow(
-                                                                              blurRadius: 12,
-                                                                              color: Color(0x33000000),
-                                                                              offset: Offset(0, 2),
-                                                                            )
-                                                                          ],
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(8),
-                                                                        ),
-                                                                        child:
-                                                                            Column(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceAround,
-                                                                          children: [
-                                                                            Text(
-                                                                              '09.30',
-                                                                              textAlign: TextAlign.center,
-                                                                              style: FlutterFlowTheme.of(context).bodyText1,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
                                                         ),
                                                       ),
                                                     ],

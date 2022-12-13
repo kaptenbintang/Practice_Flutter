@@ -40,7 +40,7 @@ import 'controllers/menu_controller.dart';
 import 'controllers/navigation_controller.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/date_symbol_data_local.dart';
 import 'pages/LandingPage/landing_page.dart';
 
 void main() async {
@@ -54,8 +54,7 @@ void main() async {
   await Hive.initFlutter();
 
   var box = await Hive.openBox('myBox');
-
-  runApp(ProviderScope(child: MyApp()));
+  initializeDateFormatting().then((_) => runApp(ProviderScope(child: MyApp())));
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
