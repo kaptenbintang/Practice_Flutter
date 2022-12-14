@@ -10,6 +10,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:login_uix_firebase/auth/provider/is_logged_in_provider.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
+import 'package:login_uix_firebase/pages/admin_dashboard_layout.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
@@ -37,8 +38,11 @@ import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
+import 'package:login_uix_firebase/provider/loading_provider/is_loading_provider.dart';
+import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 import 'package:login_uix_firebase/route.dart';
 import 'package:login_uix_firebase/routes/page_route.dart';
+import 'package:login_uix_firebase/widgets/loading/loading_screen.dart';
 import 'package:login_uix_firebase/widgets/side_bar_admin.dart';
 import 'controllers/menu_controller.dart';
 import 'controllers/navigation_controller.dart';
@@ -83,12 +87,53 @@ class MyApp extends ConsumerWidget {
         // initialRoute: ControllerPage.routeName,
         home: Consumer(
           builder: (context, ref, child) {
+            ref.listen<bool>(
+              isLoadingProvider,
+              (_, isLoading) {
+                if (isLoading) {
+                  LoadingScreen.instance().show(
+                    context: context,
+                  );
+                } else {
+                  LoadingScreen.instance().hide();
+                }
+              },
+            );
+
             final isLoggedin = ref.watch(isLoggedInProvider);
+            // final userData = ref.watch(
+            //   userDetailProvider,
+            // );
+            // final userDataResult = userData.value;
+            // final userRoles = userDataResult?['roles'];
+
+            // if (isLoggedin) {
+            //   return userData.when(
+            //     data: (data) {
+            //       if (data?['roles'] != 'user') {
+            //         return AdminDashboardLayout();
+            //       } else {
+            //         return MainPagesPage();
+            //       }
+            //     },
+            //     error: (err, stack) => Text('Error: $err'),
+            //     loading: () => const CircularProgressIndicator(),
+            //   );
+            // } else {
+            //   return LandingLayout();
+            // }
+
             if (isLoggedin) {
-              return const MainPagesPage();
+              // if (userRoles != 'user') {
+              //   return AdminDashboardLayout();
+              // } else {
+              return MainPagesPage();
+              // }
             } else {
               return LandingLayout();
             }
+
+            // print(userData.);
           },
         ),
         routes: {

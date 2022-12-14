@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/constant/strings.dart';
 import 'package:login_uix_firebase/widgets/loading/loading_screen_controller.dart';
 
 class LoadingScreen {
@@ -12,7 +13,7 @@ class LoadingScreen {
 
   void show({
     required BuildContext context,
-    String text = 'loading . . .',
+    String text = Strings.loading,
   }) {
     if (controller?.update(text) ?? false) {
       return;
@@ -33,13 +34,14 @@ class LoadingScreen {
     required BuildContext context,
     required String text,
   }) {
-    final textController = StreamController<String>();
-    textController.add(text);
-
     final state = Overlay.of(context);
     if (state == null) {
       return null;
     }
+
+    final textController = StreamController<String>();
+    textController.add(text);
+
     final renderBox = context.findRenderObject() as RenderBox;
     final size = renderBox.size;
 

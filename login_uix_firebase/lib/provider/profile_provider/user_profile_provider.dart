@@ -39,7 +39,7 @@ final apiProvider =
 const unknownWeatherEmoji = '??';
 
 final userDetailProvider = FutureProvider.autoDispose<Map?>(
-  (ref) async {
+  (ref) {
     // final userProvider = ref.watch(currentCityProvider);
 
     // final auth = FirebaseAuth.instance;

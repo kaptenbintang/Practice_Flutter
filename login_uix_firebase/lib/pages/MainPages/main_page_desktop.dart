@@ -123,7 +123,7 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
                                         child: InkWell(
                                           onTap: () {
                                             Navigator.pushNamed(context,
-                                                ProfileRiverpodPage.routeName);
+                                                RouteName.viewProfilePage);
                                           },
                                           child: Text(
                                             'Profile',
