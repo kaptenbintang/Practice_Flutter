@@ -1448,7 +1448,9 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                     .toString(),
                                                             clientComment:
                                                                 commentController
-                                                                    ?.text);
+                                                                    ?.text,
+                                                            statusAppointment:
+                                                                "ongoing");
                                                         await service
                                                             .addAppointment(
                                                                 appointmentData);
