@@ -1,5 +1,6 @@
 import 'package:booking_calendar/booking_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
@@ -30,25 +31,50 @@ class _appointmentPageState extends State<appointmentPage> {
   String? userId;
   String? dropDownServices;
   String? dropDownLocation;
+  String? dropDownNameorCode;
   TextEditingController? pnameController;
   TextEditingController? dateandtimeController;
   TextEditingController? searchController;
+  TextEditingController? emailController;
+  TextEditingController? phNumbController;
+  TextEditingController? commentController;
   DataService service = DataService();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _myBox = Hive.box('myBox');
   final now = DateTime.now();
   late BookingService mockBookingService;
+  final user = FirebaseAuth.instance.currentUser!;
+  final auth = FirebaseAuth.instance;
+  Future<Map<String, dynamic>>? currentUserData;
+  Map<String, dynamic>? retrievedUserData;
+
+  var uid;
+  var fName, lName, uEmail, phNumb, clientCode;
+
+  Future<void> _initRetrieval() async {
+    currentUserData = service.currentUsers(user.uid);
+    retrievedUserData = await service.currentUsers(user.uid);
+    // print(retrievedUserData!['id']);
+    fName = retrievedUserData!["firstName"];
+    lName = retrievedUserData!["lastName"];
+    phNumb = retrievedUserData!["phoneNumber"];
+    clientCode = retrievedUserData!["clientcode"];
+    uEmail = retrievedUserData!["email"];
+  }
 
   @override
   void initState() {
     super.initState();
-    searchController = TextEditingController();
+    _initRetrieval();
     setState(() {
       pnameController?.text = _myBox.get('name');
       userId = _myBox.get('id');
     });
+    searchController = TextEditingController();
     dateandtimeController = TextEditingController();
+    emailController = TextEditingController();
+    commentController = TextEditingController();
     mockBookingService = BookingService(
         serviceName: 'Mock Service',
         serviceDuration: 30,
@@ -312,382 +338,6 @@ class _appointmentPageState extends State<appointmentPage> {
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.2,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.1,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Appointment Instructions',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .title1,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20, 60, 20, 20),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.2,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.14,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .lineColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
-                                                        child: Text(
-                                                          'Step 1',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    22, 20, 20),
-                                                        child: Text(
-                                                          'Services',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title2,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                20, 0, 20, 0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          '\"Lorem ipsum dolor sit amet\n',
-                                                          textAlign:
-                                                              TextAlign.justify,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20, 60, 20, 20),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.2,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.14,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .lineColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
-                                                        child: Text(
-                                                          'Step 2',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    22, 20, 20),
-                                                        child: Text(
-                                                          'date/time',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title2,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                20, 0, 0, 0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          '\"Lorem ipsum dolor sit amet\n',
-                                                          textAlign:
-                                                              TextAlign.justify,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20, 60, 20, 20),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.2,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.14,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .lineColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
-                                                        child: Text(
-                                                          'Step 3',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    22, 20, 20),
-                                                        child: Text(
-                                                          'Period',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title2,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                20, 0, 0, 0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          '\"Lorem ipsum dolor sit amet\n',
-                                                          textAlign:
-                                                              TextAlign.justify,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20, 60, 20, 20),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.2,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.14,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .lineColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(20,
-                                                                    20, 20, 20),
-                                                        child: Text(
-                                                          'Step 4',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title1,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10,
-                                                                    22, 20, 20),
-                                                        child: Text(
-                                                          'Location',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title2,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                20, 0, 0, 0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          '\"Lorem ipsum dolor sit amet\n',
-                                                          textAlign:
-                                                              TextAlign.justify,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             20, 60, 20, 20),
@@ -699,7 +349,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              0.8,
+                                              1.5,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .lineColor,
@@ -1118,7 +768,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                               hintStyle:
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText2,
+                                                                      .title1,
                                                               enabledBorder:
                                                                   OutlineInputBorder(
                                                                 borderSide:
@@ -1205,7 +855,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      123,
+                                                                      115,
                                                                       20,
                                                                       20,
                                                                       20),
@@ -1294,6 +944,477 @@ class _appointmentPageState extends State<appointmentPage> {
                                                   alignment:
                                                       AlignmentDirectional(
                                                           0, 0),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                20, 20, 20, 20),
+                                                    child: Text(
+                                                      'Your Details',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .title1,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(20, 20, 20, 20),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Text(
+                                                        'Code/Name: ',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .title1,
+                                                      ),
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      70,
+                                                                      20,
+                                                                      20,
+                                                                      20),
+                                                          child: FutureBuilder(
+                                                              future:
+                                                                  currentUserData,
+                                                              builder: (context,
+                                                                  AsyncSnapshot<
+                                                                          Map<String,
+                                                                              dynamic>>
+                                                                      snapshot) {
+                                                                // if (snapshot
+                                                                //         .connectionState ==
+                                                                //     ConnectionState
+                                                                //         .waiting) {
+                                                                //   return Text(
+                                                                //       'Loading');
+                                                                // }
+                                                                if (snapshot
+                                                                        .hasData &&
+                                                                    snapshot
+                                                                        .data!
+                                                                        .isNotEmpty) {
+                                                                  return FlutterFlowDropDown(
+                                                                    options: [
+                                                                      fName.toString() +
+                                                                          " " +
+                                                                          lName
+                                                                              .toString(),
+                                                                      clientCode
+                                                                          .toString()
+                                                                    ],
+                                                                    onChanged: (val) =>
+                                                                        setState(() =>
+                                                                            dropDownNameorCode =
+                                                                                val),
+                                                                    initialOption:
+                                                                        dropDownNameorCode,
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.2,
+                                                                    height: MediaQuery.of(context)
+                                                                            .size
+                                                                            .height *
+                                                                        0.06,
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .subtitle1,
+                                                                    hintText:
+                                                                        'Please select..',
+                                                                    fillColor: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .lineColor,
+                                                                    elevation:
+                                                                        0,
+                                                                    borderColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                    borderWidth:
+                                                                        1,
+                                                                    borderRadius:
+                                                                        8,
+                                                                    margin: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12,
+                                                                            4,
+                                                                            12,
+                                                                            4),
+                                                                    hidesUnderline:
+                                                                        true,
+                                                                  );
+                                                                } else {
+                                                                  return const Center(
+                                                                    child:
+                                                                        CircularProgressIndicator(),
+                                                                  );
+                                                                }
+                                                              }),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(20, 20, 20, 20),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Text(
+                                                        'Email: ',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .title1,
+                                                      ),
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      150,
+                                                                      20,
+                                                                      20,
+                                                                      20),
+                                                          child: FutureBuilder(
+                                                              future:
+                                                                  currentUserData,
+                                                              builder: (context,
+                                                                  AsyncSnapshot<
+                                                                          Map<String,
+                                                                              dynamic>>
+                                                                      snapshot) {
+                                                                if (snapshot
+                                                                        .hasData &&
+                                                                    snapshot
+                                                                        .data!
+                                                                        .isNotEmpty) {
+                                                                  return TextFormField(
+                                                                    controller:
+                                                                        emailController,
+                                                                    autofocus:
+                                                                        true,
+                                                                    obscureText:
+                                                                        false,
+                                                                    readOnly:
+                                                                        true,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      hintText:
+                                                                          uEmail
+                                                                              .toString(),
+                                                                      // enabled: false,
+                                                                      hintStyle:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .subtitle2,
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      ),
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      ),
+                                                                      errorBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              Color(0x00000000),
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      ),
+                                                                      focusedErrorBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              Color(0x00000000),
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      ),
+                                                                    ),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .subtitle1,
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .emailAddress,
+                                                                  );
+                                                                } else {
+                                                                  return const Center(
+                                                                    child:
+                                                                        CircularProgressIndicator(),
+                                                                  );
+                                                                }
+                                                              }),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(20, 20, 20, 20),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Text(
+                                                        'Phone Number: ',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .title1,
+                                                      ),
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      40,
+                                                                      20,
+                                                                      20,
+                                                                      20),
+                                                          child: FutureBuilder(
+                                                              future:
+                                                                  currentUserData,
+                                                              builder: (context,
+                                                                  AsyncSnapshot<
+                                                                          Map<String,
+                                                                              dynamic>>
+                                                                      snapshot) {
+                                                                if (snapshot
+                                                                        .hasData &&
+                                                                    snapshot
+                                                                        .data!
+                                                                        .isNotEmpty) {
+                                                                  return TextFormField(
+                                                                    controller:
+                                                                        phNumbController,
+                                                                    autofocus:
+                                                                        true,
+                                                                    obscureText:
+                                                                        false,
+                                                                    readOnly:
+                                                                        true,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      hintText:
+                                                                          phNumb
+                                                                              .toString(),
+                                                                      // enabled: false,
+                                                                      hintStyle:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .subtitle2,
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      ),
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      ),
+                                                                      errorBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              Color(0x00000000),
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      ),
+                                                                      focusedErrorBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              Color(0x00000000),
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      ),
+                                                                    ),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .subtitle1,
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .phone,
+                                                                  );
+                                                                } else {
+                                                                  return const Center(
+                                                                    child:
+                                                                        CircularProgressIndicator(),
+                                                                  );
+                                                                }
+                                                              }),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(20, 20, 20, 20),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Text(
+                                                        'Comment: ',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .title1,
+                                                      ),
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      100,
+                                                                      20,
+                                                                      20,
+                                                                      20),
+                                                          child: TextFormField(
+                                                            controller:
+                                                                commentController,
+                                                            autofocus: true,
+                                                            obscureText: false,
+                                                            // readOnly: true,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  "What would you like to gain from this session?",
+                                                              // enabled: false,
+                                                              hintStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .subtitle2,
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .subtitle1,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .multiline,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
                                                       if (formKey.currentState!
@@ -1306,22 +1427,28 @@ class _appointmentPageState extends State<appointmentPage> {
                                                         //   userId =
                                                         //       _myBox.get('id');
                                                         // });
-                                                        AppointmentData
-                                                            appointmentData =
-                                                            AppointmentData(
-                                                                id:
-                                                                    _myBox.get(
-                                                                        'id'),
-                                                                practionerName:
-                                                                    _myBox.get(
-                                                                        'name'),
-                                                                services:
-                                                                    dropDownServices,
-                                                                dateandtime:
-                                                                    dateandtimeController
-                                                                        ?.text,
-                                                                location:
-                                                                    dropDownLocation);
+                                                        AppointmentData appointmentData = AppointmentData(
+                                                            id: _myBox
+                                                                .get('id'),
+                                                            practionerName: _myBox
+                                                                .get('name'),
+                                                            services:
+                                                                dropDownServices,
+                                                            dateandtime:
+                                                                dateandtimeController
+                                                                    ?.text,
+                                                            location:
+                                                                dropDownLocation,
+                                                            clientNameorCode:
+                                                                dropDownNameorCode,
+                                                            clientEmail: uEmail
+                                                                .toString(),
+                                                            clientphNumber:
+                                                                phNumb
+                                                                    .toString(),
+                                                            clientComment:
+                                                                commentController
+                                                                    ?.text);
                                                         await service
                                                             .addAppointment(
                                                                 appointmentData);
