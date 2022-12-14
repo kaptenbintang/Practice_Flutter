@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
@@ -54,6 +56,10 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
 
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> _streamOngoing = FirebaseFirestore.instance
+        .collection('appointment')
+        // .where('statusAppointment', isEqualTo: 'ongoing')
+        .snapshots(includeMetadataChanges: true);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -491,65 +497,201 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
                     ),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-0.95, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                          child: Text(
-                            'On going appointment',
-                            style: FlutterFlowTheme.of(context).title1,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 30, 20, 0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.asset(
-                                    'lib/images/noappointment.png',
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.3,
-                                    fit: BoxFit.scaleDown,
+                StreamBuilder<QuerySnapshot>(
+                  stream: _streamOngoing,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    // bool isCorrectSnapshot = true;
+                    // snapshot.data!.docs.map((DocumentSnapshot document) {
+                    //   Map<String, dynamic> data =
+                    //       document.data()! as Map<String, dynamic>;
+                    //   return data["statusAppointment"] = "ongoing";
+                    // });
+
+                    if (snapshot.hasData) {
+                      print("ada appointment");
+                      return Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          26, 20, 20, 20),
+                                      child: Text(
+                                        'On going appointment',
+                                        style:
+                                            FlutterFlowTheme.of(context).title1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: GridView(
+                                    padding: EdgeInsets.zero,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 4,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio: 1,
+                                    ),
+                                    scrollDirection: Axis.vertical,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            20, 20, 20, 20),
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.2,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .lineColor,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Text(
+                                                'Dr. Bintang',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .title1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: 16,
+                                                        ),
+                                              ),
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.network(
+                                                  'https://picsum.photos/seed/357/600',
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.2,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              Text(
+                                                '12/12/2020 - 09.00 A.M',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                              Padding(
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      print("gaada appointment");
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-0.95, 0),
+                              child: Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                                 child: Text(
-                                  'No Appointment',
+                                  'On going appointment',
                                   style: FlutterFlowTheme.of(context).title1,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 30, 20, 0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                          'lib/images/noappointment.png',
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.3,
+                                          fit: BoxFit.scaleDown,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 0),
+                                      child: Text(
+                                        'No Appointment',
+                                        style:
+                                            FlutterFlowTheme.of(context).title1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
+                      );
+                    }
+                  },
                 ),
                 Stack(
                   children: [
