@@ -1,14 +1,16 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:login_uix_firebase/controllers/side_bar_admin_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:login_uix_firebase/auth/provider/is_logged_in_provider.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
+import 'package:login_uix_firebase/pages/admin_dashboard_layout.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
@@ -18,6 +20,8 @@ import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_page.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
+import 'package:login_uix_firebase/pages/landing_layout.dart';
+import 'package:login_uix_firebase/pages/login/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
@@ -32,9 +36,13 @@ import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
+import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
+import 'package:login_uix_firebase/provider/loading_provider/is_loading_provider.dart';
+import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 import 'package:login_uix_firebase/route.dart';
 import 'package:login_uix_firebase/routes/page_route.dart';
+import 'package:login_uix_firebase/widgets/loading/loading_screen.dart';
 import 'package:login_uix_firebase/widgets/side_bar_admin.dart';
 import 'controllers/menu_controller.dart';
 import 'controllers/navigation_controller.dart';
@@ -76,11 +84,62 @@ class MyApp extends ConsumerWidget {
         // home: Consumer(builder: (context, ref, child) {
 
         // },),
-        initialRoute: ControllerPage.routeName,
+        // initialRoute: ControllerPage.routeName,
+        home: Consumer(
+          builder: (context, ref, child) {
+            ref.listen<bool>(
+              isLoadingProvider,
+              (_, isLoading) {
+                if (isLoading) {
+                  LoadingScreen.instance().show(
+                    context: context,
+                  );
+                } else {
+                  LoadingScreen.instance().hide();
+                }
+              },
+            );
+
+            final isLoggedin = ref.watch(isLoggedInProvider);
+            // final userData = ref.watch(
+            //   userDetailProvider,
+            // );
+            // final userDataResult = userData.value;
+            // final userRoles = userDataResult?['roles'];
+
+            // if (isLoggedin) {
+            //   return userData.when(
+            //     data: (data) {
+            //       if (data?['roles'] != 'user') {
+            //         return AdminDashboardLayout();
+            //       } else {
+            //         return MainPagesPage();
+            //       }
+            //     },
+            //     error: (err, stack) => Text('Error: $err'),
+            //     loading: () => const CircularProgressIndicator(),
+            //   );
+            // } else {
+            //   return LandingLayout();
+            // }
+
+            if (isLoggedin) {
+              // if (userRoles != 'user') {
+              //   return AdminDashboardLayout();
+              // } else {
+              return MainPagesPage();
+              // }
+            } else {
+              return LandingLayout();
+            }
+
+            // print(userData.);
+          },
+        ),
         routes: {
           // MainPage.routeName: (context) => const MainPage(),
           DashboardPage.routeName: (context) => const DashboardPage(),
-
+          // LoginPage.routeName: (context) => LoginPage(),
           // RegisterPage.routeName: (context) => RegisterPage(),
           DeleteAccount.routeName: (context) => const DeleteAccount(),
           CheckEmailView.routeName: (context) => const CheckEmailView(),
@@ -89,6 +148,8 @@ class MyApp extends ConsumerWidget {
           ProfilePage.routeName: (context) => const ProfilePage(),
           ProfileRiverpodPage.routeName: (context) =>
               const ProfileRiverpodPage(),
+          ProfileRiverpodPage2.routeName: (context) =>
+              const ProfileRiverpodPage2(),
           UserTablePage.routeName: (context) => const UserTablePage(),
           ManageRoles.routeName: (context) => const ManageRoles(),
           ManageClients.routeName: (context) => const ManageClients(),
@@ -101,7 +162,7 @@ class MyApp extends ConsumerWidget {
               ),
           appointmentPage.routeName: (context) => const appointmentPage(),
           ManagePractioners.routeName: (context) => const ManagePractioners(),
-          ControllerPage.routeName: (context) => ControllerPage(),
+          // ControllerPage.routeName: (context) => ControllerPage(),
           RouteName.changePWPage: (context) => const changePasswordPage(),
           RouteName.checkEmailPage: (context) => const CheckEmailView(),
           RouteName.dashboard: (context) => const DashboardPage(),
@@ -110,7 +171,7 @@ class MyApp extends ConsumerWidget {
           RouteName.landingPage: (context) => const LandingPage(),
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
-          RouteName.controllerPage: (context) => ControllerPage(),
+          // RouteName.controllerPage: (context) => ControllerPage(),
           RouteName.MainPagesPage: (context) => MainPagesPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });

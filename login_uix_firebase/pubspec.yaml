@@ -94,6 +94,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^20.3.60
   syncfusion_flutter_calendar: ^20.3.60
   flutter_riverpod: ^2.1.1
+  hooks_riverpod: ^2.1.1
   booking_calendar: ^1.1.7
 
   
