@@ -1,3 +1,6 @@
+import 'dart:js';
+
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/auth/backend/authenticator.dart';
 import 'package:login_uix_firebase/auth/models/auth_result.dart';
@@ -26,9 +29,11 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     state = const AuthState.unknown();
   }
 
-  Future<void> loginWithEmailPassword(String email, String password) async {
+  Future<void> loginWithEmailPassword(
+      String email, String password, BuildContext context) async {
     state = state.copiedWithIsLoading(true);
-    final result = await _authenticator.loginWithEmailPassword(email, password);
+    final result =
+        await _authenticator.loginWithEmailPassword(email, password, context);
     final userId = _authenticator.userId;
     // if (result == AuthResult.success && userId != null) {
     //   await saveUserInfo(

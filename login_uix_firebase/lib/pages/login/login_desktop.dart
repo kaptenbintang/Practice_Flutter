@@ -514,10 +514,8 @@ class LoginDesktop2 extends ConsumerWidget {
                             // if (formKey.currentState!.validate()) {
                             await ref
                                 .read(authStateProvider.notifier)
-                                .loginWithEmailPassword(
-                                  emailController.text,
-                                  passwordController.text,
-                                );
+                                .loginWithEmailPassword(emailController.text,
+                                    passwordController.text, context);
                             // result.log();
                             // }
                           }),
