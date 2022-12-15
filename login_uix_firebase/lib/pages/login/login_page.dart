@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
             if (ResponsiveWidget.isSmallScreen(context)) {
               return LoginMobile();
             } else {
-              return LoginDesktop();
+              return LoginDesktop2();
             }
           },
         ),

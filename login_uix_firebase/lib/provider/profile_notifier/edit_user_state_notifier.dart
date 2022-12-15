@@ -1,32 +1,69 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:login_uix_firebase/helper/database_service.dart';
+import 'package:login_uix_firebase/auth/backend/authenticator.dart';
+import 'package:login_uix_firebase/auth/models/auth_result.dart';
+import 'package:login_uix_firebase/auth/models/auth_state.dart';
+import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
+import 'package:login_uix_firebase/constant/firebase_field_name.dart';
+import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
+
 import 'package:login_uix_firebase/model/user_data.dart';
 
-class EditUserNotifier extends StateNotifier<bool> {
+class EditUserNotifier extends StateNotifier<IsLoading> {
   EditUserNotifier() : super(false);
 
-  set mapData(bool value) => state = value;
+  set isLoading(bool value) => state = value;
+  // final _authenticator = const Authenticator();
+
+  // EditUserNotifier() : super(const AuthState.unknown()) {
+  //   if (_authenticator.isAlreadyLoggedIn) {
+  //     state = AuthState(
+  //       result: AuthResult.success,
+  //       isLoading: false,
+  //       userId: _authenticator.userId,
+  //     );
+  //   }
+  // }
+
+  // set mapData(bool value) => state = value;
 
   Future<bool> editUser({
     required UserData userData,
   }) async {
     try {
+      isLoading = true;
       // final userId = FirebaseAuth.instance.currentUser!.uid;
-      mapData = true;
+      // mapData = true;
 
       // DataService.updateUserI(userData);
       // print(userId);
-
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userData.id)
-          .update(userData.toMap());
+      final userInfo = await FirebaseFirestore.instance
+          .collection(
+            FirebaseCollectionName.users,
+          )
+          .where(
+            FirebaseFieldName.userId,
+            isEqualTo: userData.id.toString(),
+          )
+          .limit(1)
+          .get();
+      if (userInfo.docs.isNotEmpty) {
+        await userInfo.docs.first.reference.update(
+          {
+            FirebaseFieldName.firstName: userData.firstName,
+            FirebaseFieldName.lastName: userData.lastName,
+            FirebaseFieldName.phoneNumber: userData.phoneNumber ?? '',
+            FirebaseFieldName.dateofbirth: userData.doBirth ?? '',
+          },
+        );
+      }
 
       return true;
     } catch (e) {
       return false;
+    } finally {
+      isLoading = false;
     }
   }
 }

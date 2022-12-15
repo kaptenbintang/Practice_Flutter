@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
         body: LayoutBuilder(
           builder: (context, constraints) {
             if (constraints.maxWidth > 600) {
-              return RegisterDesktop();
+              return RegisterDeskStop2();
             } else {
               return RegisterMobile();
             }
