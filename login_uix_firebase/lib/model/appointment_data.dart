@@ -29,6 +29,7 @@ class AppointmentData {
 
   Map<String, dynamic> toMap() {
     return {
+      "clientId": id,
       "practionerName": practionerName,
       "services": services,
       "dateandtime": dateandtime,
