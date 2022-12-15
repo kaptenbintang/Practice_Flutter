@@ -128,11 +128,11 @@ class MyApp extends ConsumerWidget {
               final userRoles = ref.watch(
                 userDetailProvider,
               );
-              final String ee = userRoles.value!['roles'];
+              final ee = userRoles.value!['roles'];
               // if (userRoles != 'user') {
               //   return AdminDashboardLayout();
               // } else {
-              if ('user' != ee) {
+              if (ee != 'user') {
                 return AdminDashboardLayout();
               } else {
                 return MainPagesPage();
