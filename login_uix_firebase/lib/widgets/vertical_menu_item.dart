@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../constant/controllers.dart';
 import '../constant/style.dart';
@@ -33,8 +34,8 @@ class VerticalMenuItem extends StatelessWidget {
                   maintainState: true,
                   maintainAnimation: true,
                   child: Container(
-                    width: 3,
-                    height: 72,
+                    width: Dimensions.height30 / 10,
+                    height: Dimensions.height60 + Dimensions.height10,
                     color: dark,
                   ),
                 ),
@@ -53,12 +54,13 @@ class VerticalMenuItem extends StatelessWidget {
                               color: menuController.isHovering(itemName!)
                                   ? dark
                                   : lightGrey,
+                              size: Dimensions.font18,
                             ))
                           : Flexible(
                               child: CustomText(
                                 text: itemName!,
                                 color: dark,
-                                size: 18,
+                                size: Dimensions.font18,
                                 weight: FontWeight.bold,
                               ),
                             )

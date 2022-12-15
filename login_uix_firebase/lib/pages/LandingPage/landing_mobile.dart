@@ -6,6 +6,7 @@ import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_widgets.dart';
 
 import 'package:flip_card/flip_card.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 import 'package:login_uix_firebase/route.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
@@ -22,6 +23,7 @@ class LandingPageMobileWidget extends StatefulWidget {
 
 class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
   PageController? pageViewController;
+
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -33,13 +35,15 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                //Page View
                 Container(
                   width: double.infinity,
-                  height: 500,
+                  height: Dimensions.height500,
                   child: Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0, 0, 0, Dimensions.height10 * 5),
                         child: PageView(
                           controller: pageViewController ??=
                               PageController(initialPage: 0),
@@ -63,7 +67,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                       Text(
                                         'Business',
                                         style: TextStyle(
-                                          fontSize: 50,
+                                          fontSize: Dimensions.font50,
                                           foreground: Paint()
                                             ..style = PaintingStyle.stroke
                                             ..strokeWidth = 3
@@ -74,7 +78,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                       Text(
                                         'Business',
                                         style: TextStyle(
-                                          fontSize: 50,
+                                          fontSize: Dimensions.font50,
                                           color: Color(0xFF68EBDC),
                                         ),
                                       ),
@@ -88,7 +92,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                       //       .override(
                                       //         fontFamily: 'Poppins',
                                       //         color: Color(0xFF68EBDC),
-                                      //         fontSize: 50,
+                                      //         fontSize: Dimensions.font50,
                                       //       ),
                                       // )
                                       ),
@@ -96,7 +100,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(0, 1),
                                   child: Container(
-                                    height: 150,
+                                    height: Dimensions.height100 +
+                                        Dimensions.height10 * 5,
                                     child: Stack(
                                       children: [
                                         Column(
@@ -108,8 +113,9 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               },
                                               text: 'EAP Programs',
                                               options: FFButtonOptions(
-                                                width: 280,
-                                                height: 40,
+                                                width: Dimensions.width100 * 2 +
+                                                    Dimensions.width40 * 2,
+                                                height: Dimensions.height20 * 2,
                                                 color: Color(0xFFD9DD12),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
@@ -126,8 +132,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               ),
                                             ),
                                             Container(
-                                              width: 100,
-                                              height: 10,
+                                              width: Dimensions.width100,
+                                              height: Dimensions.height10,
                                               decoration: BoxDecoration(
                                                 color: Color(0x00FFFFFF),
                                               ),
@@ -138,8 +144,9 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               },
                                               text: 'Coching Services',
                                               options: FFButtonOptions(
-                                                width: 280,
-                                                height: 40,
+                                                width: Dimensions.width100 * 2 +
+                                                    Dimensions.width40 * 2,
+                                                height: Dimensions.height20 * 2,
                                                 color: Color(0xFFD9DD12),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
@@ -156,8 +163,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               ),
                                             ),
                                             Container(
-                                              width: 100,
-                                              height: 10,
+                                              width: Dimensions.width100,
+                                              height: Dimensions.height10,
                                               decoration: BoxDecoration(
                                                 color: Color(0x00FFFFFF),
                                               ),
@@ -168,8 +175,9 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               },
                                               text: 'Training  Programs',
                                               options: FFButtonOptions(
-                                                width: 280,
-                                                height: 40,
+                                                width: Dimensions.width100 * 2 +
+                                                    Dimensions.width40 * 2,
+                                                height: Dimensions.height20 * 2,
                                                 color: Color(0xFFD9DD12),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
@@ -186,8 +194,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               ),
                                             ),
                                             Container(
-                                              width: 100,
-                                              height: 10,
+                                              width: Dimensions.width100,
+                                              height: Dimensions.height10,
                                               decoration: BoxDecoration(
                                                 color: Color(0x00FFFFFF),
                                               ),
@@ -218,7 +226,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                       Text(
                                         'Personal',
                                         style: TextStyle(
-                                          fontSize: 50,
+                                          fontSize: Dimensions.font50,
                                           foreground: Paint()
                                             ..style = PaintingStyle.stroke
                                             ..strokeWidth = 3
@@ -229,7 +237,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                       Text(
                                         'Personal',
                                         style: TextStyle(
-                                          fontSize: 50,
+                                          fontSize: Dimensions.font50,
                                           color: Color(0xFF68EBDC),
                                         ),
                                       ),
@@ -243,7 +251,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                       //       .override(
                                       //         fontFamily: 'Poppins',
                                       //         color: Color(0xFF68EBDC),
-                                      //         fontSize: 50,
+                                      //         fontSize: Dimensions.font50,
                                       //       ),
                                       // )
                                       ),
@@ -251,7 +259,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(0, 1),
                                   child: Container(
-                                    height: 150,
+                                    height: Dimensions.height100 +
+                                        Dimensions.height10 * 5,
                                     child: Stack(
                                       children: [
                                         Column(
@@ -264,8 +273,9 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               text:
                                                   'Psychotherapy & Counseling',
                                               options: FFButtonOptions(
-                                                width: 280,
-                                                height: 40,
+                                                width: Dimensions.width100 * 2 +
+                                                    Dimensions.width40 * 2,
+                                                height: Dimensions.height20 * 2,
                                                 color: Color(0xFFD9DD12),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
@@ -282,8 +292,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               ),
                                             ),
                                             Container(
-                                              width: 100,
-                                              height: 10,
+                                              width: Dimensions.width100,
+                                              height: Dimensions.height10,
                                               decoration: BoxDecoration(
                                                 color: Color(0x00FFFFFF),
                                               ),
@@ -294,8 +304,9 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               },
                                               text: 'Assessment Services',
                                               options: FFButtonOptions(
-                                                width: 280,
-                                                height: 40,
+                                                width: Dimensions.width100 * 2 +
+                                                    Dimensions.width40 * 2,
+                                                height: Dimensions.height20 * 2,
                                                 color: Color(0xFFD9DD12),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
@@ -312,8 +323,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               ),
                                             ),
                                             Container(
-                                              width: 100,
-                                              height: 10,
+                                              width: Dimensions.width100,
+                                              height: Dimensions.height10,
                                               decoration: BoxDecoration(
                                                 color: Color(0x00FFFFFF),
                                               ),
@@ -324,8 +335,9 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               },
                                               text: 'Education & Development',
                                               options: FFButtonOptions(
-                                                width: 280,
-                                                height: 40,
+                                                width: Dimensions.width100 * 2 +
+                                                    Dimensions.width40 * 2,
+                                                height: Dimensions.height20 * 2,
                                                 color: Color(0xFFD9DD12),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
@@ -342,8 +354,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                               ),
                                             ),
                                             Container(
-                                              width: 100,
-                                              height: 10,
+                                              width: Dimensions.width100,
+                                              height: Dimensions.height10,
                                               decoration: BoxDecoration(
                                                 color: Color(0x00FFFFFF),
                                               ),
@@ -392,16 +404,19 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                     ],
                   ),
                 ),
+                //4 Listview
                 ListView(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Container(
-                      height: 80,
+                      height: Dimensions.height20 * 4,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius20),
                       ),
                       child: Align(
                         alignment: AlignmentDirectional(-0.05, 0),
@@ -410,8 +425,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width: 10,
-                              height: 80,
+                              width: Dimensions.width10,
+                              height: Dimensions.height20 * 4,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -422,8 +437,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                               size: 24,
                             ),
                             Container(
-                              width: 15,
-                              height: 80,
+                              width: Dimensions.width15,
+                              height: Dimensions.height20 * 4,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -438,7 +453,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                       fontFamily: 'Poppins',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryBtnText,
-                                      fontSize: 18,
+                                      fontSize: Dimensions.font18,
                                     ),
                               )),
                             ),
@@ -447,26 +462,27 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                       ),
                     ),
                     Container(
-                      width: 100,
-                      height: 10,
+                      width: Dimensions.width100,
+                      height: Dimensions.height10,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                     ),
                     Container(
-                      width: 100,
-                      height: 80,
+                      width: Dimensions.width100,
+                      height: Dimensions.height20 * 4,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius20),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: 10,
-                            height: 80,
+                            width: Dimensions.width10,
+                            height: Dimensions.height20 * 4,
                             decoration: BoxDecoration(
                               color: Color(0x00FFFFFF),
                             ),
@@ -477,8 +493,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                             size: 24,
                           ),
                           Container(
-                            width: 15,
-                            height: 80,
+                            width: Dimensions.width15,
+                            height: Dimensions.height20 * 4,
                             decoration: BoxDecoration(
                               color: Color(0x00FFFFFF),
                             ),
@@ -493,7 +509,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     fontFamily: 'Poppins',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBtnText,
-                                    fontSize: 18,
+                                    fontSize: Dimensions.font18,
                                   ),
                             )),
                           ),
@@ -501,26 +517,27 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                       ),
                     ),
                     Container(
-                      width: 100,
-                      height: 10,
+                      width: Dimensions.width100,
+                      height: Dimensions.height10,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                     ),
                     Container(
                       width: double.infinity,
-                      height: 80,
+                      height: Dimensions.height20 * 4,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius20),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: 10,
-                            height: 80,
+                            width: Dimensions.width10,
+                            height: Dimensions.height20 * 4,
                             decoration: BoxDecoration(
                               color: Color(0x00FFFFFF),
                             ),
@@ -531,8 +548,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                             size: 24,
                           ),
                           Container(
-                            width: 15,
-                            height: 80,
+                            width: Dimensions.width15,
+                            height: Dimensions.height20 * 4,
                             decoration: BoxDecoration(
                               color: Color(0x00FFFFFF),
                             ),
@@ -547,7 +564,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     fontFamily: 'Poppins',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBtnText,
-                                    fontSize: 18,
+                                    fontSize: Dimensions.font18,
                                   ),
                             )),
                           ),
@@ -555,26 +572,27 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                       ),
                     ),
                     Container(
-                      width: 100,
-                      height: 10,
+                      width: Dimensions.width100,
+                      height: Dimensions.height10,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                     ),
                     Container(
                       width: 200,
-                      height: 80,
+                      height: Dimensions.height20 * 4,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius20),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: 10,
-                            height: 80,
+                            width: Dimensions.width10,
+                            height: Dimensions.height20 * 4,
                             decoration: BoxDecoration(
                               color: Color(0x00FFFFFF),
                             ),
@@ -585,8 +603,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                             size: 24,
                           ),
                           Container(
-                            width: 15,
-                            height: 80,
+                            width: Dimensions.width15,
+                            height: Dimensions.height20 * 4,
                             decoration: BoxDecoration(
                               color: Color(0x00FFFFFF),
                             ),
@@ -601,7 +619,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     fontFamily: 'Poppins',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBtnText,
-                                    fontSize: 18,
+                                    fontSize: Dimensions.font18,
                                   ),
                             )),
                           ),
@@ -612,27 +630,28 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                 ),
                 Container(
                   width: double.infinity,
-                  height: 50,
+                  height: Dimensions.height10 * 5,
                   decoration: BoxDecoration(
                     color: Color(0x00FFFFFF),
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(Dimensions.radius10),
+                      bottomRight: Radius.circular(Dimensions.radius10),
                       topLeft: Radius.circular(0),
                       topRight: Radius.circular(0),
                     ),
                   ),
                 ),
+                //Flip1
                 FlipCard(
                   fill: Fill.fillBack,
                   direction: FlipDirection.HORIZONTAL,
                   speed: 400,
                   front: Container(
-                    width: 300,
-                    height: 300,
+                    width: Dimensions.width100 * 3,
+                    height: Dimensions.height100 * 3,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(Dimensions.radius15),
                     ),
                     child: Stack(
                       children: [
@@ -640,21 +659,23 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
                             ),
                             Image.asset(
                               'assets/images/Low.png',
-                              width: 150,
-                              height: 150,
+                              width:
+                                  Dimensions.width100 + Dimensions.width10 * 5,
+                              height: Dimensions.height100 +
+                                  Dimensions.height10 * 5,
                               fit: BoxFit.cover,
                             ),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -666,12 +687,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 15,
+                                        fontSize: Dimensions.font15,
                                       ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -684,12 +705,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 11,
+                                    fontSize: Dimensions.font11,
                                   ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -713,11 +734,11 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                     ),
                   ),
                   back: Container(
-                    width: 300,
-                    height: 300,
+                    width: Dimensions.width100 * 3,
+                    height: Dimensions.height100 * 3,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(Dimensions.radius15),
                     ),
                     child: Stack(
                       children: [
@@ -725,21 +746,23 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
                             ),
                             Image.asset(
                               'assets/images/addiction.png',
-                              width: 150,
-                              height: 150,
+                              width:
+                                  Dimensions.width100 + Dimensions.width10 * 5,
+                              height: Dimensions.height100 +
+                                  Dimensions.height10 * 5,
                               fit: BoxFit.cover,
                             ),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -751,12 +774,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 13,
+                                        fontSize: Dimensions.font13,
                                       ),
                             )),
                             Container(
-                              width: 100,
-                              height: 8,
+                              width: Dimensions.width100,
+                              height: Dimensions.height08,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -769,12 +792,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 10,
+                                    fontSize: Dimensions.font09,
                                   ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -799,22 +822,23 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                   ),
                 ),
                 Container(
-                  width: 100,
-                  height: 30,
+                  width: Dimensions.width100,
+                  height: Dimensions.height30,
                   decoration: BoxDecoration(
                     color: Color(0x00FFFFFF),
                   ),
                 ),
+                //Flip2
                 FlipCard(
                   fill: Fill.fillBack,
                   direction: FlipDirection.HORIZONTAL,
                   speed: 400,
                   front: Container(
-                    width: 300,
-                    height: 300,
+                    width: Dimensions.width100 * 3,
+                    height: Dimensions.height100 * 3,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(Dimensions.radius15),
                     ),
                     child: Stack(
                       children: [
@@ -822,21 +846,23 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
                             ),
                             Image.asset(
                               'assets/images/Home.png',
-                              width: 150,
-                              height: 150,
+                              width:
+                                  Dimensions.width100 + Dimensions.width10 * 5,
+                              height: Dimensions.height100 +
+                                  Dimensions.height10 * 5,
                               fit: BoxFit.cover,
                             ),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -848,12 +874,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 15,
+                                        fontSize: Dimensions.font15,
                                       ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -866,12 +892,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 12,
+                                    fontSize: Dimensions.font12,
                                   ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -895,11 +921,11 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                     ),
                   ),
                   back: Container(
-                    width: 300,
-                    height: 300,
+                    width: Dimensions.width100 * 3,
+                    height: Dimensions.height100 * 3,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(Dimensions.radius15),
                     ),
                     child: Stack(
                       children: [
@@ -907,21 +933,23 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
                             ),
                             Image.asset(
                               'assets/images/Reports.png',
-                              width: 150,
-                              height: 150,
+                              width:
+                                  Dimensions.width100 + Dimensions.width10 * 5,
+                              height: Dimensions.height100 +
+                                  Dimensions.height10 * 5,
                               fit: BoxFit.cover,
                             ),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -933,12 +961,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 15,
+                                        fontSize: Dimensions.font15,
                                       ),
                             )),
                             Container(
-                              width: 100,
-                              height: 8,
+                              width: Dimensions.width100,
+                              height: Dimensions.height08,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -951,12 +979,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 12,
+                                    fontSize: Dimensions.font12,
                                   ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -981,22 +1009,23 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                   ),
                 ),
                 Container(
-                  width: 100,
-                  height: 30,
+                  width: Dimensions.width100,
+                  height: Dimensions.height30,
                   decoration: BoxDecoration(
                     color: Color(0x00FFFFFF),
                   ),
                 ),
+                //Flip3
                 FlipCard(
                   fill: Fill.fillBack,
                   direction: FlipDirection.HORIZONTAL,
                   speed: 400,
                   front: Container(
-                    width: 300,
-                    height: 300,
+                    width: Dimensions.width100 * 3,
+                    height: Dimensions.height100 * 3,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(Dimensions.radius15),
                     ),
                     child: Stack(
                       children: [
@@ -1004,21 +1033,23 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
                             ),
                             Image.asset(
                               'assets/images/autism.png',
-                              width: 150,
-                              height: 150,
+                              width:
+                                  Dimensions.width100 + Dimensions.width10 * 5,
+                              height: Dimensions.height100 +
+                                  Dimensions.height10 * 5,
                               fit: BoxFit.cover,
                             ),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1030,12 +1061,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 15,
+                                        fontSize: Dimensions.font15,
                                       ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1048,12 +1079,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 11,
+                                    fontSize: Dimensions.font10,
                                   ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1077,11 +1108,11 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                     ),
                   ),
                   back: Container(
-                    width: 300,
-                    height: 300,
+                    width: Dimensions.width100 * 3,
+                    height: Dimensions.height100 * 3,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(Dimensions.radius15),
                     ),
                     child: Stack(
                       children: [
@@ -1089,21 +1120,23 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
                             ),
                             Image.asset(
                               'assets/images/Health.png',
-                              width: 150,
-                              height: 150,
+                              width:
+                                  Dimensions.width100 + Dimensions.width10 * 5,
+                              height: Dimensions.height100 +
+                                  Dimensions.height10 * 5,
                               fit: BoxFit.cover,
                             ),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1115,12 +1148,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 15,
+                                        fontSize: Dimensions.font15,
                                       ),
                             )),
                             Container(
-                              width: 100,
-                              height: 8,
+                              width: Dimensions.width100,
+                              height: Dimensions.height08,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1133,12 +1166,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 12,
+                                    fontSize: Dimensions.font12,
                                   ),
                             )),
                             Container(
-                              width: 100,
-                              height: 10,
+                              width: Dimensions.width100,
+                              height: Dimensions.height10,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1163,38 +1196,39 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                   ),
                 ),
                 Container(
-                  width: 100,
-                  height: 30,
+                  width: Dimensions.width100,
+                  height: Dimensions.height30,
                   decoration: BoxDecoration(
                     color: Color(0x00FFFFFF),
                   ),
                 ),
+                //Content4
                 Container(
-                  width: 300,
-                  height: 300,
+                  width: Dimensions.width100 * 3,
+                  height: Dimensions.height100 * 3,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).tertiaryColor,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(Dimensions.radius15),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
-                        width: 100,
-                        height: 10,
+                        width: Dimensions.width100,
+                        height: Dimensions.height10,
                         decoration: BoxDecoration(
                           color: Color(0x00FFFFFF),
                         ),
                       ),
                       Image.asset(
                         'assets/images/EAP.png',
-                        width: 150,
-                        height: 150,
+                        width: Dimensions.width100 + Dimensions.width10 * 5,
+                        height: Dimensions.height100 + Dimensions.height10 * 5,
                         fit: BoxFit.cover,
                       ),
                       Container(
-                        width: 100,
-                        height: 10,
+                        width: Dimensions.width100,
+                        height: Dimensions.height10,
                         decoration: BoxDecoration(
                           color: Color(0x00FFFFFF),
                         ),
@@ -1205,12 +1239,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).title3.override(
                               fontFamily: 'Poppins',
-                              fontSize: 15,
+                              fontSize: Dimensions.font15,
                             ),
                       )),
                       Container(
-                        width: 100,
-                        height: 10,
+                        width: Dimensions.width100,
+                        height: Dimensions.height10,
                         decoration: BoxDecoration(
                           color: Color(0x00FFFFFF),
                         ),
@@ -1221,12 +1255,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              fontSize: 11,
+                              fontSize: Dimensions.font11,
                             ),
                       )),
                       Container(
-                        width: 100,
-                        height: 10,
+                        width: Dimensions.width100,
+                        height: Dimensions.height10,
                         decoration: BoxDecoration(
                           color: Color(0x00FFFFFF),
                         ),
@@ -1235,12 +1269,13 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                   ),
                 ),
                 Container(
-                  width: 100,
-                  height: 30,
+                  width: Dimensions.width100,
+                  height: Dimensions.height30,
                   decoration: BoxDecoration(
                     color: Color(0x00FFFFFF),
                   ),
                 ),
+                //Getting Started is Easy
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -1252,8 +1287,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           ),
                     )),
                     Container(
-                      width: 100,
-                      height: 10,
+                      width: Dimensions.width100,
+                      height: Dimensions.height10,
                       decoration: BoxDecoration(
                         color: Color(0x00FFFFFF),
                       ),
@@ -1263,8 +1298,9 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          width: 120,
-                          height: 260,
+                          width: Dimensions.width100 + Dimensions.width20,
+                          height: Dimensions.height100 * 2 +
+                              Dimensions.height30 * 2,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -1274,7 +1310,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Container(
-                                width: 100,
+                                width: Dimensions.width100,
                                 height: 5,
                                 decoration: BoxDecoration(
                                   color: Color(0x02FFFFFF),
@@ -1287,8 +1323,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                 size: 25,
                               ),
                               Container(
-                                width: 100,
-                                height: 8,
+                                width: Dimensions.width100,
+                                height: Dimensions.height08,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -1302,12 +1338,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Roboto Mono',
-                                      fontSize: 12,
+                                      fontSize: Dimensions.font12,
                                       fontWeight: FontWeight.w600,
                                     ),
                               )),
                               Container(
-                                width: 100,
+                                width: Dimensions.width100,
                                 height: 5,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
@@ -1322,15 +1358,16 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 10,
+                                      fontSize: Dimensions.font10,
                                     ),
                               )),
                             ],
                           ),
                         ),
                         Container(
-                          width: 120,
-                          height: 260,
+                          width: Dimensions.width100 + Dimensions.width20,
+                          height: Dimensions.height100 * 2 +
+                              Dimensions.height30 * 2,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -1340,7 +1377,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Container(
-                                width: 100,
+                                width: Dimensions.width100,
                                 height: 5,
                                 decoration: BoxDecoration(
                                   color: Color(0x02FFFFFF),
@@ -1353,8 +1390,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                 size: 25,
                               ),
                               Container(
-                                width: 100,
-                                height: 8,
+                                width: Dimensions.width100,
+                                height: Dimensions.height08,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -1368,12 +1405,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Roboto Mono',
-                                      fontSize: 12,
+                                      fontSize: Dimensions.font12,
                                       fontWeight: FontWeight.w600,
                                     ),
                               )),
                               Container(
-                                width: 100,
+                                width: Dimensions.width100,
                                 height: 5,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
@@ -1388,15 +1425,16 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 10,
+                                      fontSize: Dimensions.font10,
                                     ),
                               )),
                             ],
                           ),
                         ),
                         Container(
-                          width: 120,
-                          height: 260,
+                          width: Dimensions.width100 + Dimensions.width20,
+                          height: Dimensions.height100 * 2 +
+                              Dimensions.height30 * 2,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -1406,7 +1444,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Container(
-                                width: 100,
+                                width: Dimensions.width100,
                                 height: 5,
                                 decoration: BoxDecoration(
                                   color: Color(0x02FFFFFF),
@@ -1419,8 +1457,8 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                 size: 25,
                               ),
                               Container(
-                                width: 100,
-                                height: 8,
+                                width: Dimensions.width100,
+                                height: Dimensions.height08,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -1434,12 +1472,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Roboto Mono',
-                                      fontSize: 12,
+                                      fontSize: Dimensions.font12,
                                       fontWeight: FontWeight.w600,
                                     ),
                               )),
                               Container(
-                                width: 100,
+                                width: Dimensions.width100,
                                 height: 5,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
@@ -1454,7 +1492,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 10,
+                                      fontSize: Dimensions.font09,
                                     ),
                               )),
                             ],
@@ -1463,14 +1501,15 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                       ],
                     ),
                     Container(
-                      width: 100,
-                      height: 10,
+                      width: Dimensions.width100,
+                      height: Dimensions.height10,
                       decoration: BoxDecoration(
                         color: Color(0x00FFFFFF),
                       ),
                     ),
+                    //Call button
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: EdgeInsets.only(bottom: Dimensions.height10),
                       child: FFButtonWidget(
                         onPressed: () {
                           print('Button pressed ...');
@@ -1478,11 +1517,12 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                         text: 'Book a free phone consultation',
                         icon: Icon(
                           Icons.phone,
-                          size: 18,
+                          size: Dimensions.iconSize18,
                         ),
                         options: FFButtonOptions(
-                          width: 250,
-                          height: 50,
+                          width:
+                              Dimensions.width100 * 2 + Dimensions.width10 * 5,
+                          height: Dimensions.height10 * 5,
                           color: FlutterFlowTheme.of(context).primaryBtnText,
                           textStyle: FlutterFlowTheme.of(context)
                               .subtitle2

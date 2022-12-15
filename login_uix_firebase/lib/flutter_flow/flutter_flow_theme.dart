@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,43 +46,43 @@ abstract class FlutterFlowTheme {
         'Poppins',
         color: primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 24,
+        fontSize: Dimensions.iconSize24,
       );
   TextStyle get title2 => GoogleFonts.getFont(
         'Poppins',
         color: secondaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 22,
+        fontSize: Dimensions.font22,
       );
   TextStyle get title3 => GoogleFonts.getFont(
         'Poppins',
         color: primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 20,
+        fontSize: Dimensions.font20,
       );
   TextStyle get subtitle1 => GoogleFonts.getFont(
         'Poppins',
         color: primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 18,
+        fontSize: Dimensions.font18,
       );
   TextStyle get subtitle2 => GoogleFonts.getFont(
         'Poppins',
         color: secondaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 16,
+        fontSize: Dimensions.font16,
       );
   TextStyle get bodyText1 => GoogleFonts.getFont(
         'Poppins',
         color: primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 14,
+        fontSize: Dimensions.font14,
       );
   TextStyle get bodyText2 => GoogleFonts.getFont(
         'Poppins',
         color: secondaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 14,
+        fontSize: Dimensions.font14,
       );
 }
 
