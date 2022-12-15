@@ -1,8 +1,10 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
+import 'package:login_uix_firebase/helper/responsive.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,43 +48,57 @@ abstract class FlutterFlowTheme {
         'Poppins',
         color: primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: Dimensions.iconSize24,
+        fontSize: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 24
+            : Dimensions.iconSize24,
       );
   TextStyle get title2 => GoogleFonts.getFont(
         'Poppins',
         color: secondaryText,
         fontWeight: FontWeight.w600,
-        fontSize: Dimensions.font22,
+        fontSize: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 22
+            : Dimensions.font22,
       );
   TextStyle get title3 => GoogleFonts.getFont(
         'Poppins',
         color: primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: Dimensions.font20,
+        fontSize: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 20
+            : Dimensions.font20,
       );
   TextStyle get subtitle1 => GoogleFonts.getFont(
         'Poppins',
         color: primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: Dimensions.font18,
+        fontSize: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 18
+            : Dimensions.font18,
       );
   TextStyle get subtitle2 => GoogleFonts.getFont(
         'Poppins',
         color: secondaryText,
         fontWeight: FontWeight.w600,
-        fontSize: Dimensions.font16,
+        fontSize: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 16
+            : Dimensions.font16,
       );
   TextStyle get bodyText1 => GoogleFonts.getFont(
         'Poppins',
         color: primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: Dimensions.font14,
+        fontSize: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 14
+            : Dimensions.font14,
       );
   TextStyle get bodyText2 => GoogleFonts.getFont(
         'Poppins',
         color: secondaryText,
         fontWeight: FontWeight.w600,
-        fontSize: Dimensions.font14,
+        fontSize: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 14
+            : Dimensions.font14,
       );
 }
 

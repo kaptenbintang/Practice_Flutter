@@ -17,6 +17,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+    double maxWidth = 1920;
     return Align(
       alignment: AlignmentDirectional(0.5, 0),
       child: SingleChildScrollView(
@@ -75,7 +77,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           },
                                           text: 'EAP Programs',
                                           options: FFButtonOptions(
-                                            width: 280,
+                                            width: _width / (maxWidth / 280),
                                             height: 40,
                                             color: Color(0xFFD9DD12),
                                             textStyle:
@@ -84,6 +86,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                                     .override(
                                                       fontFamily: 'Poppins',
                                                       color: Color(0xFF469C92),
+                                                      fontSize: _width /
+                                                          (maxWidth / 18),
                                                     ),
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
@@ -105,7 +109,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           },
                                           text: 'Coching Services',
                                           options: FFButtonOptions(
-                                            width: 280,
+                                            width: _width / (maxWidth / 280),
                                             height: 40,
                                             color: Color(0xFFD9DD12),
                                             textStyle:
@@ -114,6 +118,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                                     .override(
                                                       fontFamily: 'Poppins',
                                                       color: Color(0xFF469C92),
+                                                      fontSize: _width /
+                                                          (maxWidth / 18),
                                                     ),
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
@@ -135,7 +141,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           },
                                           text: 'Training  Programs',
                                           options: FFButtonOptions(
-                                            width: 280,
+                                            width: _width / (maxWidth / 280),
                                             height: 40,
                                             color: Color(0xFFD9DD12),
                                             textStyle:
@@ -144,6 +150,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                                     .override(
                                                       fontFamily: 'Poppins',
                                                       color: Color(0xFF469C92),
+                                                      fontSize: _width /
+                                                          (maxWidth / 18),
                                                     ),
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
@@ -205,7 +213,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           },
                                           text: 'Psychotherapy & Counseling',
                                           options: FFButtonOptions(
-                                            width: 280,
+                                            width: _width / (maxWidth / 280),
                                             height: 40,
                                             color: Color(0xFFD9DD12),
                                             textStyle:
@@ -214,6 +222,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                                     .override(
                                                       fontFamily: 'Poppins',
                                                       color: Color(0xFF469C92),
+                                                      fontSize: _width /
+                                                          (maxWidth / 18),
                                                     ),
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
@@ -235,7 +245,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           },
                                           text: 'Assessment Services',
                                           options: FFButtonOptions(
-                                            width: 280,
+                                            width: _width / (maxWidth / 280),
                                             height: 40,
                                             color: Color(0xFFD9DD12),
                                             textStyle:
@@ -244,6 +254,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                                     .override(
                                                       fontFamily: 'Poppins',
                                                       color: Color(0xFF469C92),
+                                                      fontSize: _width /
+                                                          (maxWidth / 18),
                                                     ),
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
@@ -265,7 +277,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           },
                                           text: 'Education & Development',
                                           options: FFButtonOptions(
-                                            width: 280,
+                                            width: _width / (maxWidth / 280),
                                             height: 40,
                                             color: Color(0xFFD9DD12),
                                             textStyle:
@@ -274,6 +286,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                                     .override(
                                                       fontFamily: 'Poppins',
                                                       color: Color(0xFF469C92),
+                                                      fontSize: _width /
+                                                          (maxWidth / 18),
                                                     ),
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
@@ -336,7 +350,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
               child: Container(
-                height: 330,
+                height: _width / (maxWidth / 330),
                 decoration: BoxDecoration(
                   color: Color(0x00FFFFFF),
                 ),
@@ -349,7 +363,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                           child: Container(
-                            width: 250,
+                            width: _width / (maxWidth / 350),
                             decoration: BoxDecoration(
                               color:
                                   FlutterFlowTheme.of(context).secondaryColor,
@@ -372,7 +386,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   Icon(
                                     Icons.settings_outlined,
                                     color: Color(0xFFD9DD12),
-                                    size: 80,
+                                    size: _width / (maxWidth / 80),
                                   ),
                                   Container(
                                     width: 100,
@@ -394,7 +408,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                             fontFamily: 'Poppins',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBtnText,
-                                            fontSize: 28,
+                                            fontSize: _width / (maxWidth / 28),
                                           ),
                                     )),
                                   ),
@@ -406,7 +420,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                           child: Container(
-                            width: 250,
+                            width: _width / (maxWidth / 350),
                             decoration: BoxDecoration(
                               color: Color(0xFF26AECA),
                               borderRadius: BorderRadius.circular(20),
@@ -428,7 +442,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   Icon(
                                     Icons.image_search,
                                     color: Color(0xFFD9DD12),
-                                    size: 80,
+                                    size: _width / (maxWidth / 80),
                                   ),
                                   Container(
                                     width: 100,
@@ -450,7 +464,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                             fontFamily: 'Poppins',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBtnText,
-                                            fontSize: 28,
+                                            fontSize: _width / (maxWidth / 28),
                                           ),
                                     )),
                                   ),
@@ -462,7 +476,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                           child: Container(
-                            width: 250,
+                            width: _width / (maxWidth / 350),
                             decoration: BoxDecoration(
                               color:
                                   FlutterFlowTheme.of(context).secondaryColor,
@@ -485,7 +499,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   Icon(
                                     Icons.favorite_rounded,
                                     color: Color(0xFFD9DD12),
-                                    size: 80,
+                                    size: _width / (maxWidth / 80),
                                   ),
                                   Container(
                                     width: 100,
@@ -507,7 +521,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                             fontFamily: 'Poppins',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBtnText,
-                                            fontSize: 28,
+                                            fontSize: _width / (maxWidth / 28),
                                           ),
                                     )),
                                   ),
@@ -519,7 +533,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                           child: Container(
-                            width: 250,
+                            width: _width / (maxWidth / 350),
                             decoration: BoxDecoration(
                               color: Color(0xFF26AECA),
                               borderRadius: BorderRadius.circular(20),
@@ -541,7 +555,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   Icon(
                                     Icons.stairs_outlined,
                                     color: Color(0xFFD9DD12),
-                                    size: 80,
+                                    size: _width / (maxWidth / 80),
                                   ),
                                   Container(
                                     width: 100,
@@ -563,7 +577,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                             fontFamily: 'Poppins',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBtnText,
-                                            fontSize: 28,
+                                            fontSize: _width / (maxWidth / 28),
                                           ),
                                     )),
                                   ),
@@ -582,14 +596,15 @@ class LandingPageDesktopWidget extends StatelessWidget {
                         },
                         text: 'See Upcoming Events',
                         options: FFButtonOptions(
-                          width: 230,
-                          height: 35,
+                          width: _width / (maxWidth / 350),
+                          height: _width / (maxWidth / 45),
                           color: Color(0xFFD9DD12),
-                          textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF225E6A),
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .subtitle2
+                              .override(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFF225E6A),
+                                  fontSize: _width / (maxWidth / 20)),
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1,
@@ -613,8 +628,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                   front: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                     child: Container(
-                      width: 250,
-                      height: 250,
+                      width: _width / (maxWidth / 350),
+                      height: _width / (maxWidth / 350),
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
                         borderRadius: BorderRadius.circular(12),
@@ -652,7 +667,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                     .title3
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 13,
+                                      fontSize: _width / (maxWidth / 15),
                                     ),
                               )),
                               Container(
@@ -673,7 +688,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 9,
+                                        fontSize: _width / (maxWidth / 12),
                                       ),
                                 )),
                               ),
@@ -706,8 +721,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                     ),
                   ),
                   back: Container(
-                    width: 250,
-                    height: 250,
+                    width: _width / (maxWidth / 350),
+                    height: _width / (maxWidth / 350),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
                       borderRadius: BorderRadius.circular(12),
@@ -726,8 +741,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             ),
                             Image.asset(
                               'assets/images/Health.png',
-                              width: 120,
-                              height: 120,
+                              width: _width / (maxWidth / 130),
+                              height: _width / (maxWidth / 130),
                               fit: BoxFit.cover,
                             ),
                             Container(
@@ -744,7 +759,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 13,
+                                        fontSize: _width / (maxWidth / 15),
                                       ),
                             )),
                             Container(
@@ -762,7 +777,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 10,
+                                    fontSize: _width / (maxWidth / 10),
                                   ),
                             )),
                             Container(
@@ -799,8 +814,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                   front: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                     child: Container(
-                      width: 250,
-                      height: 250,
+                      width: _width / (maxWidth / 350),
+                      height: _width / (maxWidth / 350),
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
                         borderRadius: BorderRadius.circular(12),
@@ -838,7 +853,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                     .title3
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 13,
+                                      fontSize: _width / (maxWidth / 15),
                                     ),
                               )),
                               Container(
@@ -856,7 +871,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 9,
+                                      fontSize: _width / (maxWidth / 12),
                                     ),
                               )),
                               Container(
@@ -888,8 +903,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                     ),
                   ),
                   back: Container(
-                    width: 250,
-                    height: 250,
+                    width: _width / (maxWidth / 350),
+                    height: _width / (maxWidth / 350),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
                       borderRadius: BorderRadius.circular(12),
@@ -908,8 +923,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             ),
                             Image.asset(
                               'assets/images/Reports.png',
-                              width: 120,
-                              height: 120,
+                              width: _width / (maxWidth / 130),
+                              height: _width / (maxWidth / 130),
                               fit: BoxFit.cover,
                             ),
                             Container(
@@ -926,7 +941,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 13,
+                                        fontSize: _width / (maxWidth / 15),
                                       ),
                             )),
                             Container(
@@ -944,7 +959,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 10,
+                                    fontSize: _width / (maxWidth / 10),
                                   ),
                             )),
                             Container(
@@ -981,8 +996,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                   front: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                     child: Container(
-                      width: 250,
-                      height: 250,
+                      width: _width / (maxWidth / 350),
+                      height: _width / (maxWidth / 350),
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
                         borderRadius: BorderRadius.circular(12),
@@ -1020,7 +1035,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                     .title3
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 13,
+                                      fontSize: _width / (maxWidth / 15),
                                     ),
                               )),
                               Container(
@@ -1038,7 +1053,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 9,
+                                      fontSize: _width / (maxWidth / 12),
                                     ),
                               )),
                               Container(
@@ -1070,8 +1085,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                     ),
                   ),
                   back: Container(
-                    width: 250,
-                    height: 250,
+                    width: _width / (maxWidth / 350),
+                    height: _width / (maxWidth / 350),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
                       borderRadius: BorderRadius.circular(12),
@@ -1090,8 +1105,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             ),
                             Image.asset(
                               'assets/images/addiction.png',
-                              width: 120,
-                              height: 120,
+                              width: _width / (maxWidth / 130),
+                              height: _width / (maxWidth / 130),
                               fit: BoxFit.cover,
                             ),
                             Container(
@@ -1108,7 +1123,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 13,
+                                        fontSize: _width / (maxWidth / 15),
                                       ),
                             )),
                             Container(
@@ -1126,7 +1141,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 7,
+                                    fontSize: _width / (maxWidth / 10),
                                   ),
                             )),
                             Container(
@@ -1157,8 +1172,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: 250,
-                  height: 250,
+                  width: _width / (maxWidth / 350),
+                  height: _width / (maxWidth / 350),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).tertiaryColor,
                     borderRadius: BorderRadius.circular(12),
@@ -1192,7 +1207,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).title3.override(
                               fontFamily: 'Poppins',
-                              fontSize: 13,
+                              fontSize: _width / (maxWidth / 15),
                             ),
                       )),
                       Container(
@@ -1208,7 +1223,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              fontSize: 9,
+                              fontSize: _width / (maxWidth / 12),
                             ),
                       )),
                       Container(
@@ -1449,7 +1464,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                       size: 18,
                     ),
                     options: FFButtonOptions(
-                      width: 250,
+                      width: _width / (maxWidth / 350),
                       height: 50,
                       color: FlutterFlowTheme.of(context).primaryBtnText,
                       textStyle: FlutterFlowTheme.of(context)
