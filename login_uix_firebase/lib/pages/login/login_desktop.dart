@@ -298,7 +298,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
 }
 
 class HiddenPass extends StateNotifier<bool?> {
-  HiddenPass() : super(false);
+  HiddenPass() : super(true);
   void change() => state = state == false ? true : false;
 }
 
@@ -440,8 +440,8 @@ class LoginDesktop2 extends ConsumerWidget {
                                   child: Consumer(
                                     builder: (context, ref, child) {
                                       return Icon(hidden
-                                          ? Icons.visibility
-                                          : Icons.visibility_off);
+                                          ? Icons.visibility_off
+                                          : Icons.visibility);
                                     },
                                   ),
                                 ),
