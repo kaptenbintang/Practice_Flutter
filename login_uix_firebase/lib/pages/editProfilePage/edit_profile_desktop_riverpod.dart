@@ -305,7 +305,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                             LengthLimitingTextInputFormatter(11)
                           ],
                           controller: phonenumberController,
-                          showCountryFlag: true,
+                          showCountryFlag: false,
                           showDropdownIcon: true,
                           initialCountryCode: 'MY',
                           disableLengthCheck: true,
@@ -512,7 +512,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
               error: (error, stackTrace) => Text('Error ??' '$error'),
               loading: () => const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
+                child: Center(child: CircularProgressIndicator()),
               ),
             );
           },

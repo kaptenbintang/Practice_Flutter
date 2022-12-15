@@ -89,7 +89,7 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                           child: InkWell(
                                             onTap: () {
                                               Navigator.pushNamed(context,
-                                                  RouteName.editProfilePage);
+                                                  RouteName.MainPagesPage);
                                             },
                                             child: Text(
                                               'Home',
