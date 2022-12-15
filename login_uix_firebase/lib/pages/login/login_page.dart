@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/pages/login/login_desktop.dart';
 import 'package:login_uix_firebase/pages/login/login_mobile.dart';
 
@@ -21,10 +22,10 @@ class _LoginPageState extends State<LoginPage> {
         resizeToAvoidBottomInset: false,
         body: LayoutBuilder(
           builder: (context, constraints) {
-            if (constraints.maxWidth > 600) {
-              return LoginDesktop2();
-            } else {
+            if (ResponsiveWidget.isSmallScreen(context)) {
               return LoginMobile();
+            } else {
+              return LoginDesktop2();
             }
           },
         ),

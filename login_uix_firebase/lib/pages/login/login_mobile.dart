@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/route.dart';
 
@@ -76,7 +77,7 @@ class _LoginMobileState extends State<LoginMobile> {
       child: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(30),
+            padding: EdgeInsets.all(Dimensions.height30),
             child: Center(
               child: Form(
                   key: _formKey,
@@ -87,38 +88,45 @@ class _LoginMobileState extends State<LoginMobile> {
                       Text(
                         'Welcome back',
                         style: GoogleFonts.inter(
-                          fontSize: 17,
+                          fontSize: Dimensions.font17,
                           color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: Dimensions.height08),
                       Text(
                         'Login to your account',
                         style: GoogleFonts.inter(
-                          fontSize: 23,
+                          fontSize: Dimensions.font23,
                           color: Colors.black,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(height: 35),
+                      SizedBox(
+                          height: Dimensions.height30 + Dimensions.height05),
 
                       //email textfield
                       TextFormField(
                         controller: _emailController,
                         // onChanged: (text) => setState(() => _text),
                         decoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(
+                                top: Dimensions.height10,
+                                bottom: Dimensions.height10),
                             labelText: "Email address",
                             prefixIcon: Icon(
                               Icons.mail,
                               color: Colors.blue,
+                              size: Dimensions.iconSize24,
                             ),
                             // errorText: _errorEmailText,
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.circular(12)),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius12)),
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.blue),
-                                borderRadius: BorderRadius.circular(12)),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius12)),
                             // hintText: 'Email',
                             fillColor: Colors.grey[200],
                             filled: true),
@@ -130,7 +138,7 @@ class _LoginMobileState extends State<LoginMobile> {
                           }
                         },
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: Dimensions.height20),
                       //password textfield
                       TextFormField(
                         controller: _passwordController,
@@ -138,25 +146,39 @@ class _LoginMobileState extends State<LoginMobile> {
                         obscureText: _isHidden,
                         decoration: InputDecoration(
                           labelText: "Password",
+                          contentPadding: EdgeInsets.only(
+                              top: Dimensions.height10,
+                              bottom: Dimensions.height10),
                           prefixIcon: Icon(
                             Icons.lock,
                             color: Colors.blue,
+                            size: Dimensions.iconSize24,
                           ),
                           // errorText: _errorPasswordText,
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.circular(12)),
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.radius12)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
-                              borderRadius: BorderRadius.circular(12)),
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.radius12)),
                           // hintText: 'Password',
                           fillColor: Colors.grey[200],
                           filled: true,
                           suffix: InkWell(
                             onTap: _togglePasswordView,
-                            child: Icon(_isHidden
-                                ? Icons.visibility
-                                : Icons.visibility_off),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  right: Dimensions.width08,
+                                  top: Dimensions.height20 / 10),
+                              child: Icon(
+                                _isHidden
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                size: Dimensions.iconSize24,
+                              ),
+                            ),
                           ),
                         ),
                         validator: (value) {
@@ -167,7 +189,8 @@ class _LoginMobileState extends State<LoginMobile> {
                           }
                         },
                       ),
-                      const SizedBox(height: 25),
+                      SizedBox(
+                          height: Dimensions.height20 + Dimensions.height05),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,22 +199,24 @@ class _LoginMobileState extends State<LoginMobile> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               SizedBox(
-                                height: 24,
-                                width: 24,
+                                height: Dimensions.height24,
+                                width: Dimensions.width24,
                                 child: Checkbox(
                                     value: _isChecked, onChanged: onChanged),
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: Dimensions.width08),
                               Text(
                                 'Remember me',
                                 style: GoogleFonts.inter(
-                                  fontSize: 14,
+                                  fontSize: Dimensions.font14,
                                   color: Colors.black,
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(width: 25),
+                          SizedBox(
+                              width:
+                                  Dimensions.width20 + Dimensions.width10 / 2),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -206,14 +231,14 @@ class _LoginMobileState extends State<LoginMobile> {
                             child: Text(
                               'Forgot password?',
                               style: GoogleFonts.inter(
-                                fontSize: 14,
+                                fontSize: Dimensions.font14,
                                 color: const Color.fromARGB(255, 0, 84, 152),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30),
+                      SizedBox(height: Dimensions.height30),
                       TextButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -223,22 +248,23 @@ class _LoginMobileState extends State<LoginMobile> {
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.green,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 20,
-                            horizontal: 10,
+                          padding: EdgeInsets.symmetric(
+                            vertical: Dimensions.height20,
+                            horizontal: Dimensions.width10,
                           ),
                         ),
                         child: Text(
                           'Login now',
                           style: GoogleFonts.inter(
-                            fontSize: 15,
+                            fontSize: Dimensions.font15,
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
 
-                      SizedBox(height: 25),
+                      SizedBox(
+                          height: Dimensions.height20 + Dimensions.height05),
                       //not a member? registernow
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

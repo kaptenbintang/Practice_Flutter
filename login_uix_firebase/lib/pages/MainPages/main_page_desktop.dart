@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
+import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
@@ -33,10 +36,14 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
   List<Map<String, dynamic>>? listofColumn;
   PractionerData? dataU;
 
+  Future<List<AppointmentData>>? AppointmentList;
+  List<AppointmentData>? retrievedAppointmentList;
+
   @override
   void initState() {
     super.initState();
     _initRetrieval();
+    _initRetrieval2();
     textController = TextEditingController();
   }
 
@@ -52,8 +59,17 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
     retrievedPractionerList = await service.retrievePractionerAll();
   }
 
+  Future<void> _initRetrieval2() async {
+    AppointmentList = service.retrieveApppointment();
+    retrievedAppointmentList = await service.retrieveApppointment();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // final Stream<QuerySnapshot> _streamOngoing = FirebaseFirestore.instance
+    //     .collection('appointment')
+    //     // .where('statusAppointment', isEqualTo: 'ongoing')
+    //     .snapshots(includeMetadataChanges: true);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -491,65 +507,179 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
                     ),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-0.95, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                          child: Text(
-                            'On going appointment',
-                            style: FlutterFlowTheme.of(context).title1,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 30, 20, 0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.asset(
-                                    'lib/images/noappointment.png',
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.3,
-                                    fit: BoxFit.scaleDown,
-                                  ),
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('appointment')
+                      .where('clientId',
+                          isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                      .where('statusAppointment', isEqualTo: 'ongoing')
+                      .snapshots(includeMetadataChanges: true),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                      print("ada appointment");
+                      return Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          26, 20, 20, 20),
+                                      child: Text(
+                                        'On going appointment',
+                                        style:
+                                            FlutterFlowTheme.of(context).title1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Padding(
+                                FutureBuilder(
+                                    future: AppointmentList,
+                                    builder: (context,
+                                        AsyncSnapshot<List<AppointmentData>>
+                                            snapshot) {
+                                      if (snapshot.hasData &&
+                                          snapshot.data!.isNotEmpty) {
+                                        return Expanded(
+                                          child: GridView.builder(
+                                            padding: EdgeInsets.zero,
+                                            itemCount: retrievedAppointmentList!
+                                                .length,
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 4,
+                                              crossAxisSpacing: 10,
+                                              mainAxisSpacing: 10,
+                                              childAspectRatio: 1,
+                                            ),
+                                            itemBuilder: (context, index) {
+                                              return tableDepanAppointment(
+                                                  context,
+                                                  retrievedAppointmentList![
+                                                      index],
+                                                  retrievedAppointmentList,
+                                                  index);
+                                            },
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                          ),
+                                        );
+                                      } else if (snapshot.connectionState ==
+                                              ConnectionState.done &&
+                                          retrievedPractionerList!.isEmpty) {
+                                        return Center(
+                                          child: ListView(
+                                            physics:
+                                                const AlwaysScrollableScrollPhysics(),
+                                            children: const <Widget>[
+                                              Align(
+                                                alignment:
+                                                    AlignmentDirectional.center,
+                                                child: Text('No Data Availble'),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      print("gaada appointment");
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-0.95, 0),
+                              child: Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                                 child: Text(
-                                  'No Appointment',
+                                  'On going appointment',
                                   style: FlutterFlowTheme.of(context).title1,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 30, 20, 0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                          'lib/images/noappointment.png',
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.3,
+                                          fit: BoxFit.scaleDown,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 0),
+                                      child: Text(
+                                        'No Appointment',
+                                        style:
+                                            FlutterFlowTheme.of(context).title1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
+                      );
+                    }
+                  },
                 ),
                 Stack(
                   children: [
@@ -604,9 +734,9 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
               snapshot.firstName.toString() +
                   " " +
                   snapshot.lastName.toString());
-          _myBox.put('id', snapshot.id);
+          // _myBox.put('id', snapshot.id);
           print(_myBox.get('name'));
-          print(_myBox.get('id'));
+          // print(_myBox.get('id'));
           Navigator.pushNamed(context, DetailPagePractioner.routeName,
               arguments: snapshot);
         },
@@ -662,6 +792,47 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget tableDepanAppointment(BuildContext context, AppointmentData snapshot,
+      List<AppointmentData>? user, int indexs) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.2,
+        height: MediaQuery.of(context).size.height * 0.2,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).lineColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              snapshot.practionerName.toString(),
+              style: FlutterFlowTheme.of(context).title1.override(
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                  ),
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                'lib/images/doctor.png',
+                width: MediaQuery.of(context).size.width * 0.2,
+                height: MediaQuery.of(context).size.height * 0.2,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+            Text(
+              snapshot.dateandtime.toString(),
+              style: FlutterFlowTheme.of(context).bodyText1,
+            ),
+          ],
         ),
       ),
     );

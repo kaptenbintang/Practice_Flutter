@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
@@ -319,6 +320,16 @@ class DataService {
         .get();
     return snapshot.docs
         .map((docSnapshot) => PractionerData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<AppointmentData>> retrieveApppointment() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("appointment")
+        .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => AppointmentData.fromDocumentSnapshot(docSnapshot))
         .toList();
   }
 

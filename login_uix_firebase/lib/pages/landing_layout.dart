@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../helper/responsive.dart';
 import '../widgets/large_screen.dart';
@@ -21,8 +22,11 @@ class LandingLayout extends StatelessWidget {
       key: _scaffoldKey,
       extendBodyBehindAppBar: true,
       appBar: topNavigationBar(context, _scaffoldKey),
-      drawer: Drawer(
-        child: SideMenu(),
+      drawer: Container(
+        width: Dimensions.width100 * 2,
+        child: Drawer(
+          child: SideMenu(),
+        ),
       ),
       body: ResponsiveWidget(
         largeScreen: LargeScreen(),
