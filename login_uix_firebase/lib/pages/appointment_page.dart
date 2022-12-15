@@ -28,7 +28,7 @@ class appointmentPage extends StatefulWidget {
 
 class _appointmentPageState extends State<appointmentPage> {
   String? _selectedDate;
-  String? userId;
+  // String? userId;
   String? dropDownServices;
   String? dropDownLocation;
   String? dropDownNameorCode;
@@ -69,7 +69,7 @@ class _appointmentPageState extends State<appointmentPage> {
     _initRetrieval();
     setState(() {
       pnameController?.text = _myBox.get('name');
-      userId = _myBox.get('id');
+      // userId = _myBox.get('id');
     });
     searchController = TextEditingController();
     dateandtimeController = TextEditingController();
@@ -1428,8 +1428,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                         //       _myBox.get('id');
                                                         // });
                                                         AppointmentData appointmentData = AppointmentData(
-                                                            id: _myBox
-                                                                .get('id'),
+                                                            id: user.uid,
                                                             practionerName: _myBox
                                                                 .get('name'),
                                                             services:

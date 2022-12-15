@@ -56,10 +56,10 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _streamOngoing = FirebaseFirestore.instance
-        .collection('appointment')
-        // .where('statusAppointment', isEqualTo: 'ongoing')
-        .snapshots(includeMetadataChanges: true);
+    // final Stream<QuerySnapshot> _streamOngoing = FirebaseFirestore.instance
+    //     .collection('appointment')
+    //     // .where('statusAppointment', isEqualTo: 'ongoing')
+    //     .snapshots(includeMetadataChanges: true);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -498,17 +498,15 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
                   ),
                 ),
                 StreamBuilder<QuerySnapshot>(
-                  stream: _streamOngoing,
+                  stream: FirebaseFirestore.instance
+                      .collection('appointment')
+                      .where('clientId',
+                          isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                      .where('statusAppointment', isEqualTo: 'ongoing')
+                      .snapshots(includeMetadataChanges: true),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
-                    // bool isCorrectSnapshot = true;
-                    // snapshot.data!.docs.map((DocumentSnapshot document) {
-                    //   Map<String, dynamic> data =
-                    //       document.data()! as Map<String, dynamic>;
-                    //   return data["statusAppointment"] = "ongoing";
-                    // });
-
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                       print("ada appointment");
                       return Column(
                         mainAxisSize: MainAxisSize.max,
@@ -746,9 +744,9 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
               snapshot.firstName.toString() +
                   " " +
                   snapshot.lastName.toString());
-          _myBox.put('id', snapshot.id);
+          // _myBox.put('id', snapshot.id);
           print(_myBox.get('name'));
-          print(_myBox.get('id'));
+          // print(_myBox.get('id'));
           Navigator.pushNamed(context, DetailPagePractioner.routeName,
               arguments: snapshot);
         },
