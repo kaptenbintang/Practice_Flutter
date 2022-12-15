@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
+import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
@@ -334,10 +336,14 @@ class DataService {
   }
 
   Future<Map<String, dynamic>> currentUsers(uid) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("users").doc(uid).get();
+    final snapshot = await _db
+        .collection("users")
+        .where(FirebaseFieldName.userId, isEqualTo: uid)
+        .limit(1)
+        .get();
+    final cruser = snapshot.docs[0];
     // Map<String, dynamic> data = snapshot.data()!;
-    return snapshot.data()!;
+    return cruser.data();
   }
 
   Future<List<UserData>> searchUser(String name) async {

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/auth/models/auth_result.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
 import 'package:login_uix_firebase/pages/landing_layout.dart';
@@ -22,7 +23,7 @@ class Authenticator {
   }
 
   Future<AuthResult> loginWithEmailPassword(
-      String email, String password) async {
+      String email, String password, BuildContext context) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -31,13 +32,35 @@ class Authenticator {
       return AuthResult.success;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text("No user found for that email."),
+              );
+            });
         print('No user found for that email.');
         return AuthResult.failure;
       } else if (e.code == 'wrong-password') {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text("Wrong password provided for that user."),
+              );
+            });
         print('Wrong password provided for that user.');
         return AuthResult.failure;
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text(e.message.toString()),
+              );
+            });
+        return AuthResult.failure;
       }
-      return AuthResult.failure;
     }
   }
 

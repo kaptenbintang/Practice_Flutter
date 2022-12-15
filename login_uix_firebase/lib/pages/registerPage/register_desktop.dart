@@ -500,8 +500,8 @@ class _RegisterDesktopState extends State<RegisterDesktop> {
                             suffix: InkWell(
                               onTap: _togglePasswordView,
                               child: Icon(_isHidden
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
                             ),
                           ),
                           validator: (value) {
@@ -634,7 +634,7 @@ class _RegisterDesktopState extends State<RegisterDesktop> {
 }
 
 class HiddenPass extends StateNotifier<bool?> {
-  HiddenPass() : super(false);
+  HiddenPass() : super(true);
   void change() => state = state == false ? true : false;
 }
 

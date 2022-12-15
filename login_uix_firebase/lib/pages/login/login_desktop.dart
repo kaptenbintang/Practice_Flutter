@@ -298,7 +298,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
 }
 
 class HiddenPass extends StateNotifier<bool?> {
-  HiddenPass() : super(false);
+  HiddenPass() : super(true);
   void change() => state = state == false ? true : false;
 }
 
@@ -440,8 +440,8 @@ class LoginDesktop2 extends ConsumerWidget {
                                   child: Consumer(
                                     builder: (context, ref, child) {
                                       return Icon(hidden
-                                          ? Icons.visibility
-                                          : Icons.visibility_off);
+                                          ? Icons.visibility_off
+                                          : Icons.visibility);
                                     },
                                   ),
                                 ),
@@ -514,10 +514,8 @@ class LoginDesktop2 extends ConsumerWidget {
                             // if (formKey.currentState!.validate()) {
                             await ref
                                 .read(authStateProvider.notifier)
-                                .loginWithEmailPassword(
-                                  emailController.text,
-                                  passwordController.text,
-                                );
+                                .loginWithEmailPassword(emailController.text,
+                                    passwordController.text, context);
                             // result.log();
                             // }
                           }),
