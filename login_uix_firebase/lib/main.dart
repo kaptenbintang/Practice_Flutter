@@ -101,6 +101,7 @@ class MyApp extends ConsumerWidget {
             );
 
             final isLoggedin = ref.watch(isLoggedInProvider);
+
             // final userData = ref.watch(
             //   userDetailProvider,
             // );
@@ -124,10 +125,18 @@ class MyApp extends ConsumerWidget {
             // }
 
             if (isLoggedin) {
+              final userRoles = ref.watch(
+                userDetailProvider,
+              );
+              final String ee = userRoles.value!['roles'];
               // if (userRoles != 'user') {
               //   return AdminDashboardLayout();
               // } else {
-              return MainPagesPage();
+              if ('user' != ee) {
+                return AdminDashboardLayout();
+              } else {
+                return MainPagesPage();
+              }
               // }
             } else {
               return LandingLayout();

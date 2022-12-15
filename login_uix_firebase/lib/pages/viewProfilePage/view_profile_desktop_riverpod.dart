@@ -10,6 +10,7 @@ import 'package:login_uix_firebase/main.dart';
 import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 import 'package:login_uix_firebase/route.dart';
+import 'package:recase/recase.dart';
 
 class ProfileRiverpodPage2 extends ConsumerWidget {
   static const routeName = '/profileViewPageRiverpod';
@@ -160,9 +161,9 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          data?['firstName'] +
+                                          '${data?['firstName'].toString().sentenceCase}' +
                                               ' ' +
-                                              data?['lastName'],
+                                              '${data?['lastName'].toString().sentenceCase}',
                                           style: FlutterFlowTheme.of(context)
                                               .title3
                                               .override(
@@ -207,7 +208,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(24, 12, 0, 12),
+                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
                               child: Text(
                                 'Account Settings',
                                 style: FlutterFlowTheme.of(context)
@@ -226,6 +227,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
                           mainAxisSize: MainAxisSize.max,
@@ -325,7 +327,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(
-                                                  fontFamily: 'Urbanist',
+                                                  fontFamily: 'Outfit',
                                                   color: Color(0xFF57636C),
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.normal,

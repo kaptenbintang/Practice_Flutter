@@ -4,13 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
+import 'package:login_uix_firebase/model/auth/user_id.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
-
-final currentCityProvider = StateProvider<UserData?>(
-  (ref) {
-    return null;
-  },
-);
 
 class GetDataFromFirestore {
   const GetDataFromFirestore();
@@ -44,7 +40,9 @@ final userDetailProvider = FutureProvider.autoDispose<Map?>(
 
     // final auth = FirebaseAuth.instance;
 
-    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final userId = ref.watch(userIdProvider);
+
+    // final userId = FirebaseAuth.instance.currentUser!.uid;
     return ref.watch(apiProvider).currentUsers(userId);
 
     // final controller = StreamController<Map>();
