@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
+import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/route.dart';
@@ -35,10 +36,14 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
   List<Map<String, dynamic>>? listofColumn;
   PractionerData? dataU;
 
+  Future<List<AppointmentData>>? AppointmentList;
+  List<AppointmentData>? retrievedAppointmentList;
+
   @override
   void initState() {
     super.initState();
     _initRetrieval();
+    _initRetrieval2();
     textController = TextEditingController();
   }
 
@@ -52,6 +57,11 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
     // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
     PractionerList = service.retrievePractionerAll();
     retrievedPractionerList = await service.retrievePractionerAll();
+  }
+
+  Future<void> _initRetrieval2() async {
+    AppointmentList = service.retrieveApppointment();
+    retrievedAppointmentList = await service.retrieveApppointment();
   }
 
   @override
@@ -538,80 +548,60 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
                                     ),
                                   ],
                                 ),
-                                Expanded(
-                                  child: GridView(
-                                    padding: EdgeInsets.zero,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 4,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: 1,
-                                    ),
-                                    scrollDirection: Axis.vertical,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            20, 20, 20, 20),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.2,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .lineColor,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                                FutureBuilder(
+                                    future: AppointmentList,
+                                    builder: (context,
+                                        AsyncSnapshot<List<AppointmentData>>
+                                            snapshot) {
+                                      if (snapshot.hasData &&
+                                          snapshot.data!.isNotEmpty) {
+                                        return Expanded(
+                                          child: GridView.builder(
+                                            padding: EdgeInsets.zero,
+                                            itemCount: retrievedAppointmentList!
+                                                .length,
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 4,
+                                              crossAxisSpacing: 10,
+                                              mainAxisSpacing: 10,
+                                              childAspectRatio: 1,
+                                            ),
+                                            itemBuilder: (context, index) {
+                                              return tableDepanAppointment(
+                                                  context,
+                                                  retrievedAppointmentList![
+                                                      index],
+                                                  retrievedAppointmentList,
+                                                  index);
+                                            },
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
                                           ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                'Dr. Bintang',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title1
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 16,
-                                                        ),
-                                              ),
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Image.network(
-                                                  'https://picsum.photos/seed/357/600',
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.2,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.2,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Text(
-                                                '12/12/2020 - 09.00 A.M',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1,
-                                              ),
+                                        );
+                                      } else if (snapshot.connectionState ==
+                                              ConnectionState.done &&
+                                          retrievedPractionerList!.isEmpty) {
+                                        return Center(
+                                          child: ListView(
+                                            physics:
+                                                const AlwaysScrollableScrollPhysics(),
+                                            children: const <Widget>[
+                                              Align(
+                                                alignment:
+                                                    AlignmentDirectional.center,
+                                                child: Text('No Data Availble'),
+                                              )
                                             ],
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                        );
+                                      } else {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                    }),
                               ],
                             ),
                           ),
@@ -802,6 +792,47 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget tableDepanAppointment(BuildContext context, AppointmentData snapshot,
+      List<AppointmentData>? user, int indexs) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.2,
+        height: MediaQuery.of(context).size.height * 0.2,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).lineColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              snapshot.practionerName.toString(),
+              style: FlutterFlowTheme.of(context).title1.override(
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                  ),
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                'lib/images/doctor.png',
+                width: MediaQuery.of(context).size.width * 0.2,
+                height: MediaQuery.of(context).size.height * 0.2,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+            Text(
+              snapshot.dateandtime.toString(),
+              style: FlutterFlowTheme.of(context).bodyText1,
+            ),
+          ],
         ),
       ),
     );
