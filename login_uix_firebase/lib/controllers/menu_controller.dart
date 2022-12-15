@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_uix_firebase/constant/style.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
+import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/routing/routes.dart';
 
 class MenuController extends GetxController {
@@ -42,14 +43,17 @@ class MenuController extends GetxController {
     if (isActive(itemName)) {
       return Icon(
         icon,
-        size: Dimensions.font22,
+        size: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 22
+            : Dimensions.font22,
         color: dark,
       );
     }
     return Icon(
       icon,
       color: isHovering(itemName) ? dark : lightGrey,
-      size: Dimensions.font22,
+      size:
+          ResponsiveWidget.isLargeScreen(Get.context!) ? 22 : Dimensions.font22,
     );
   }
 }

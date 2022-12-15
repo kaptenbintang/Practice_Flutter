@@ -96,8 +96,11 @@ class SideMenu extends StatelessWidget {
                                         .facebook_box, //use the respective social logo
                                     iconColor:
                                         Color.fromARGB(255, 26, 119, 196),
-                                    iconSize: Dimensions
-                                        .iconSize28, //(optional, default - grey)
+                                    iconSize: ResponsiveWidget.isLargeScreen(
+                                            context)
+                                        ? _width / (1920 / 28)
+                                        : Dimensions
+                                            .iconSize28, //(optional, default - grey)
                                     link:
                                         'https://www.facebook.com/pg/TheRelationary/', //provide the link
                                     placeholderStyle: TextStyle(
@@ -116,8 +119,11 @@ class SideMenu extends StatelessWidget {
                                   iconData: SocialIconsFlutter
                                       .instagram, //use the respective social logo
                                   iconColor: Colors.pink,
-                                  iconSize: Dimensions
-                                      .iconSize28, //(optional, default - grey)
+                                  iconSize: ResponsiveWidget.isLargeScreen(
+                                          context)
+                                      ? _width / (1920 / 28)
+                                      : Dimensions
+                                          .iconSize28, //(optional, default - grey)
                                   link:
                                       'https://twitter.com/TheRelationary', //provide the link
                                   placeholderStyle: TextStyle(
@@ -135,8 +141,11 @@ class SideMenu extends StatelessWidget {
                                   iconData: SocialIconsFlutter
                                       .twitter, //use the respective social logo
                                   iconColor: Colors.blueAccent,
-                                  iconSize: Dimensions
-                                      .iconSize28, //(optional, default - grey)
+                                  iconSize: ResponsiveWidget.isLargeScreen(
+                                          context)
+                                      ? _width / (1920 / 28)
+                                      : Dimensions
+                                          .iconSize28, //(optional, default - grey)
                                   link:
                                       'https://www.instagram.com/therelationary/', //provide the link
                                   placeholderStyle: TextStyle(
@@ -154,8 +163,11 @@ class SideMenu extends StatelessWidget {
                                   iconData: SocialIconsFlutter
                                       .youtube, //use the respective social logo
                                   iconColor: Color.fromARGB(255, 235, 25, 25),
-                                  iconSize: Dimensions
-                                      .iconSize28, //(optional, default - grey)
+                                  iconSize: ResponsiveWidget.isLargeScreen(
+                                          context)
+                                      ? _width / (1920 / 28)
+                                      : Dimensions
+                                          .iconSize28, //(optional, default - grey)
                                   link:
                                       'https://www.youtube.com/channel/UCJDgsezvoL79bTAycsJtTog', //provide the link
                                   placeholderStyle: TextStyle(
@@ -191,8 +203,9 @@ class SideMenu extends StatelessWidget {
                               'https://www.facebook.com/pg/TheRelationary/', //provide the link
                           placeholderStyle: TextStyle(
                               color: Colors.black, fontSize: Dimensions.font20),
-                          iconSize:
-                              Dimensions.iconSize28, //placeholder text style
+                          iconSize: ResponsiveWidget.isLargeScreen(context)
+                              ? _width / (1920 / 35)
+                              : Dimensions.iconSize28, //placeholder text style
                         ),
                       ),
                     ),
@@ -208,8 +221,9 @@ class SideMenu extends StatelessWidget {
                             'https://twitter.com/TheRelationary', //provide the link
                         placeholderStyle: TextStyle(
                             color: Colors.black, fontSize: Dimensions.font20),
-                        iconSize:
-                            Dimensions.iconSize28, //placeholder text style
+                        iconSize: ResponsiveWidget.isLargeScreen(context)
+                            ? _width / (1920 / 35)
+                            : Dimensions.iconSize28, //placeholder text style
                       ),
                     ),
                     Padding(
@@ -225,8 +239,9 @@ class SideMenu extends StatelessWidget {
                             'https://www.instagram.com/therelationary/', //provide the link
                         placeholderStyle: TextStyle(
                             color: Colors.black, fontSize: Dimensions.font20),
-                        iconSize:
-                            Dimensions.iconSize28, //placeholder text style
+                        iconSize: ResponsiveWidget.isLargeScreen(context)
+                            ? _width / (1920 / 35)
+                            : Dimensions.iconSize28, //placeholder text style
                       ),
                     ),
                     Padding(
@@ -242,8 +257,9 @@ class SideMenu extends StatelessWidget {
                             'https://www.youtube.com/channel/UCJDgsezvoL79bTAycsJtTog', //provide the link
                         placeholderStyle: TextStyle(
                             color: Colors.black, fontSize: Dimensions.font20),
-                        iconSize:
-                            Dimensions.iconSize28, //placeholder text style
+                        iconSize: ResponsiveWidget.isLargeScreen(context)
+                            ? _width / (1920 / 35)
+                            : Dimensions.iconSize28, //placeholder text style
                       ),
                     ),
                   ],

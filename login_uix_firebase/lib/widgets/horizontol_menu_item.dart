@@ -5,6 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:login_uix_firebase/constant/controllers.dart';
 import 'package:login_uix_firebase/constant/style.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
+import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/widgets/custom_text.dart';
 
 // ignore: must_be_immutable
@@ -60,7 +62,9 @@ class HorizontolMenuItem extends StatelessWidget {
                         child: CustomText(
                           text: itemName!,
                           color: dark,
-                          size: 18,
+                          size: ResponsiveWidget.isLargeScreen(context)
+                              ? _width / (1920 / 18)
+                              : Dimensions.font18,
                           weight: FontWeight.bold,
                         ),
                       )
