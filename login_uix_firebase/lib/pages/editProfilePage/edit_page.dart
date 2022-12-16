@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_profile_desktop.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_profile_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_profile_mobile.dart';
+import 'package:login_uix_firebase/pages/editProfilePage/edit_profile_mobile_riverpod.dart';
 
 import '../../helper/responsive.dart';
 
@@ -17,7 +18,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     if (ResponsiveWidget.isSmallScreen(context)) {
-      return EditProfileMobileWidget();
+      return EditProfileMobileWidgetRiverpod();
     } else {
       return EditProfileDesktopWidget2();
     }

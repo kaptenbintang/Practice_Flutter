@@ -397,7 +397,29 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                 ));
           },
           error: (Object error, StackTrace stackTrace) {},
-          loading: () {},
+          loading: () {
+            return ColoredBox(
+              color: Colors.white.withAlpha(128),
+              child: Center(
+                child: Container(
+                  color: Colors.blue,
+                  padding: const EdgeInsets.all(8),
+                  width: 150,
+                  height: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                      Text('Loading'),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ));
       }),
     );

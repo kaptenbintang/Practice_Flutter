@@ -1085,14 +1085,6 @@ class RegisterDeskStop2 extends ConsumerWidget {
                   TextButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        // signUp();
-                        // final result =
-                        //     await Authenticator().createWithEmailandPassword(
-                        //   _emailController.text,
-                        //   _passwordController.text,
-                        // );
-                        // print(result);
-                        // return;
                         String clientCode = getLastInitials(
                                 _lastNameController.text.toString()) +
                             getInitials(_firstNameController.text.toString()) +
