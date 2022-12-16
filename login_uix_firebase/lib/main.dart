@@ -128,16 +128,20 @@ class MyApp extends ConsumerWidget {
               final userRoles = ref.watch(
                 userDetailProvider,
               );
-              final ee = userRoles.value!['roles'];
-              // if (userRoles != 'user') {
-              //   return AdminDashboardLayout();
-              // } else {
-              if (ee != 'user') {
-                return AdminDashboardLayout();
-              } else {
-                return MainPagesPage();
-              }
-              // }
+              return userRoles.when(
+                  data: (data) {
+                    if (data?['roles'] != 'user') {
+                      return AdminDashboardLayout();
+                    } else {
+                      return MainPagesPage();
+                    }
+                  },
+                  error: (error, stackTrace) {
+                    return Text('$error');
+                  },
+                  loading: () => Center(
+                        child: CircularProgressIndicator(),
+                      ));
             } else {
               return LandingLayout();
             }
