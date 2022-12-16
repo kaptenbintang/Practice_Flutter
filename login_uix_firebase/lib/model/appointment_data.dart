@@ -13,19 +13,20 @@ class AppointmentData {
   final String? clientphNumber;
   final String? clientComment;
   final String? statusAppointment;
+  final String? createdAt;
 
-  AppointmentData({
-    this.id,
-    this.practionerName,
-    this.services,
-    this.dateandtime,
-    this.location,
-    this.clientNameorCode,
-    this.clientEmail,
-    this.clientphNumber,
-    this.clientComment,
-    this.statusAppointment,
-  });
+  AppointmentData(
+      {this.id,
+      this.practionerName,
+      this.services,
+      this.dateandtime,
+      this.location,
+      this.clientNameorCode,
+      this.clientEmail,
+      this.clientphNumber,
+      this.clientComment,
+      this.statusAppointment,
+      this.createdAt});
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,6 +40,7 @@ class AppointmentData {
       "clientphNumber": clientphNumber,
       "clientComment": clientComment,
       "statusAppointment": statusAppointment,
+      "createdAt": createdAt,
     };
   }
 
@@ -53,5 +55,7 @@ class AppointmentData {
         clientEmail = doc.data()!["clientEmail"],
         clientphNumber = doc.data()!["clientphNumber"],
         clientComment = doc.data()!["clientComment"],
-        statusAppointment = doc.data()!["statusAppointment"];
+        statusAppointment = doc.data()!["statusAppointment"],
+        createdAt = doc.data()!["createdAt"];
 }
+///test
