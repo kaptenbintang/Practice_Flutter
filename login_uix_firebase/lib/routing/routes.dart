@@ -12,6 +12,7 @@ const ManageClientTypeRoute = "Manage Client Type";
 const ManageServicesRoute = "Manage Services";
 const ManageServicesCategoryRoute = "Services Category";
 const ManagePractionersRoute = "Manage Practioners";
+const AppointmentRoute = "Manage Appointment";
 const LogOutRoute = "Log Out";
 
 List sideBarAdminItems = [
@@ -22,6 +23,7 @@ List sideBarAdminItems = [
   ManageServicesRoute,
   ManageServicesCategoryRoute,
   ManagePractionersRoute,
+  AppointmentRoute,
   LogOutRoute
 ];
 
