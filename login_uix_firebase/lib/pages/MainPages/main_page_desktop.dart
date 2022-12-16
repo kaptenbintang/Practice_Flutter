@@ -781,7 +781,7 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                   child: Text(
-                    snapshot.myBackground as String,
+                    "Speciality: " + snapshot.mySpecialty.toString(),
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Poppins',
@@ -833,7 +833,7 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
               style: FlutterFlowTheme.of(context).bodyText1,
             ),
             Text(
-              "Booking Date:" + " " + snapshot.dateandtime.toString(),
+              "Booking Date: " + snapshot.dateandtime.toString(),
               style: FlutterFlowTheme.of(context).bodyText1,
             ),
           ],
