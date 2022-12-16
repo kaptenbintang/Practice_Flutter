@@ -39,7 +39,7 @@ class HorizontolMenuItem extends StatelessWidget {
                   maintainAnimation: true,
                   child: Container(
                     width: 6,
-                    height: 40,
+                    height: _width / (1920 / 40),
                     color: dark,
                   ),
                 ),

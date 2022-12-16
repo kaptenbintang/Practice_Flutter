@@ -59,7 +59,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                     .override(
                                       fontFamily: 'Poppins',
                                       color: Color(0xFF68EBDC),
-                                      fontSize: 50,
+                                      fontSize: _width / (maxWidth / 50),
                                     ),
                               )),
                             ),
@@ -196,7 +196,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                     .override(
                                       fontFamily: 'Poppins',
                                       color: Color(0xFF68EBDC),
-                                      fontSize: 50,
+                                      fontSize: _width / (maxWidth / 50),
                                     ),
                               )),
                             ),
@@ -336,8 +336,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                           expansionFactor: 2,
                           spacing: 8,
                           radius: 16,
-                          dotWidth: 30,
-                          dotHeight: 30,
+                          dotWidth: _width / (maxWidth / 30),
+                          dotHeight: _width / (maxWidth / 30),
                           dotColor: Color(0xFF292121),
                           activeDotColor:
                               FlutterFlowTheme.of(context).primaryColor,
@@ -607,6 +607,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   fontFamily: 'Poppins',
                                   color: Color(0xFF225E6A),
                                   fontSize: _width / (maxWidth / 20)),
+                          elevation: 10,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1,
@@ -650,7 +651,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               ),
                               Image.asset(
                                 'assets/images/autism.png',
-                                width: 120,
+                                width: _width / (maxWidth / 120),
                                 height: 120,
                                 fit: BoxFit.cover,
                               ),
@@ -836,7 +837,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               ),
                               Image.asset(
                                 'assets/images/Home.png',
-                                width: 120,
+                                width: _width / (maxWidth / 120),
                                 height: 120,
                                 fit: BoxFit.cover,
                               ),
@@ -1018,7 +1019,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               ),
                               Image.asset(
                                 'assets/images/Low.png',
-                                width: 120,
+                                width: _width / (maxWidth / 120),
                                 height: 120,
                                 fit: BoxFit.cover,
                               ),
@@ -1192,7 +1193,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                       ),
                       Image.asset(
                         'assets/images/EAP.png',
-                        width: 120,
+                        width: _width / (maxWidth / 120),
                         height: 120,
                         fit: BoxFit.cover,
                       ),
@@ -1242,14 +1243,14 @@ class LandingPageDesktopWidget extends StatelessWidget {
             ),
             Container(
               width: 100,
-              height: 30,
+              height: _width / (maxWidth / 30),
               decoration: BoxDecoration(
                 color: Color(0x00FFFFFF),
               ),
             ),
             Container(
               width: 100,
-              height: 30,
+              height: _width / (maxWidth / 30),
               decoration: BoxDecoration(
                 color: Color(0x00FFFFFF),
               ),
@@ -1261,8 +1262,8 @@ class LandingPageDesktopWidget extends StatelessWidget {
                     child: Text(
                   'Getting Started is Easy',
                   style: FlutterFlowTheme.of(context).title1.override(
-                        fontFamily: 'Roboto Mono',
-                      ),
+                      fontFamily: 'Roboto Mono',
+                      fontSize: _width / (maxWidth / 30)),
                 )),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(50, 20, 50, 20),
@@ -1271,34 +1272,43 @@ class LandingPageDesktopWidget extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     children: [
+                      //list1
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(100, 10, 100, 10),
                         child: Container(
-                          width: 120,
-                          height: 100,
+                          width: _width / (maxWidth / 120),
+                          height: _width / (maxWidth / 100),
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            shape: BoxShape.rectangle,
-                          ),
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              shape: BoxShape.rectangle,
+                              boxShadow: [
+                                BoxShadow(blurRadius: 10, color: Colors.grey)
+                              ]),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: Icon(
                                   Icons.mark_chat_read,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryColor,
-                                  size: 50,
+                                  size: _width / (maxWidth / 50),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: SelectionArea(
                                     child: Text(
                                   'Book a Free Consultation',
@@ -1307,14 +1317,17 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Roboto Mono',
-                                        fontSize: 20,
+                                        fontSize: _width / (maxWidth / 25),
                                         fontWeight: FontWeight.w600,
                                       ),
                                 )),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: SelectionArea(
                                     child: Text(
                                   'Our free consultations are very popular,\nplease check back daily for new slots.',
@@ -1323,7 +1336,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 15,
+                                        fontSize: _width / (maxWidth / 15),
                                       ),
                                 )),
                               ),
@@ -1331,34 +1344,43 @@ class LandingPageDesktopWidget extends StatelessWidget {
                           ),
                         ),
                       ),
+                      //list2
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(100, 10, 100, 10),
                         child: Container(
-                          width: 120,
-                          height: 100,
+                          width: _width / (maxWidth / 120),
+                          height: _width / (maxWidth / 100),
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            shape: BoxShape.rectangle,
-                          ),
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              shape: BoxShape.rectangle,
+                              boxShadow: [
+                                BoxShadow(blurRadius: 10, color: Colors.grey)
+                              ]),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: Icon(
                                   Icons.calendar_today,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryColor,
-                                  size: 50,
+                                  size: _width / (maxWidth / 50),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: SelectionArea(
                                     child: Text(
                                   'Make an Appointment',
@@ -1367,14 +1389,17 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Roboto Mono',
-                                        fontSize: 20,
+                                        fontSize: _width / (maxWidth / 25),
                                         fontWeight: FontWeight.w600,
                                       ),
                                 )),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: SelectionArea(
                                     child: Text(
                                   'Set an official date and time at which to\nmeet one of our practitioners. ',
@@ -1383,7 +1408,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 15,
+                                        fontSize: _width / (maxWidth / 15),
                                       ),
                                 )),
                               ),
@@ -1391,34 +1416,43 @@ class LandingPageDesktopWidget extends StatelessWidget {
                           ),
                         ),
                       ),
+                      //list3
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(100, 10, 100, 10),
                         child: Container(
-                          width: 120,
+                          width: _width / (maxWidth / 120),
                           height: _width / (maxWidth / 150),
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            shape: BoxShape.rectangle,
-                          ),
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              shape: BoxShape.rectangle,
+                              boxShadow: [
+                                BoxShadow(blurRadius: 10, color: Colors.grey)
+                              ]),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: Icon(
                                   Icons.favorite_border,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryColor,
-                                  size: 50,
+                                  size: _width / (maxWidth / 50),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: SelectionArea(
                                     child: Text(
                                   'Begin your 1st Session!',
@@ -1427,14 +1461,17 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Roboto Mono',
-                                        fontSize: 20,
+                                        fontSize: _width / (maxWidth / 25),
                                         fontWeight: FontWeight.w600,
                                       ),
                                 )),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    _width / (maxWidth / 10),
+                                    0,
+                                    _width / (maxWidth / 10),
+                                    0),
                                 child: SelectionArea(
                                     child: Text(
                                   'Your therapist will need to know why \nyou’re seeking therapy. They may ask what\n kinds of needs or issues you’d like to address in \nyour treatment together as well as what you’ve\n done to manage your mental health in the \npast.',
@@ -1443,7 +1480,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 15,
+                                        fontSize: _width / (maxWidth / 15),
                                       ),
                                 )),
                               ),
@@ -1454,6 +1491,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                     ],
                   ),
                 ),
+                //Call button
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                   child: FFButtonWidget(
@@ -1461,19 +1499,24 @@ class LandingPageDesktopWidget extends StatelessWidget {
                       print('Button pressed ...');
                     },
                     text: 'Book a free phone consultation',
-                    icon: Icon(
-                      Icons.phone,
-                      size: 18,
+                    icon: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: _width / (maxWidth / 8.0)),
+                      child: Icon(
+                        Icons.phone,
+                        size: _width / (maxWidth / 20),
+                      ),
                     ),
                     options: FFButtonOptions(
                       width: _width / (maxWidth / 350),
-                      height: 50,
+                      height: _width / (maxWidth / 50),
                       color: FlutterFlowTheme.of(context).primaryBtnText,
                       textStyle: FlutterFlowTheme.of(context)
                           .subtitle2
                           .override(
                             fontFamily: 'Oswald',
                             color: FlutterFlowTheme.of(context).secondaryColor,
+                            fontSize: _width / (maxWidth / 20),
                           ),
                       borderSide: BorderSide(
                         color: FlutterFlowTheme.of(context).secondaryColor,
