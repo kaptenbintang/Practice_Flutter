@@ -71,10 +71,12 @@ class _LoginDesktopState extends State<LoginDesktop> {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+    double maxWidth = 1920;
     return SafeArea(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: EdgeInsets.all(_width / (maxWidth / 30)),
           child: Row(
             children: [
               Expanded(
@@ -88,8 +90,10 @@ class _LoginDesktopState extends State<LoginDesktop> {
               Expanded(
                 //<-- Expanded widget
                 child: Container(
-                  constraints: const BoxConstraints(maxWidth: 21),
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  constraints:
+                      BoxConstraints(maxWidth: _width / (maxWidth / 21)),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: _width / (maxWidth / 50)),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -99,20 +103,20 @@ class _LoginDesktopState extends State<LoginDesktop> {
                         Text(
                           'Welcome back',
                           style: GoogleFonts.inter(
-                            fontSize: 17,
+                            fontSize: _width / (maxWidth / 17),
                             color: Colors.black,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: _width / (maxWidth / 8)),
                         Text(
                           'Login to your account',
                           style: GoogleFonts.inter(
-                            fontSize: 23,
+                            fontSize: _width / (maxWidth / 23),
                             color: Colors.black,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(height: 35),
+                        SizedBox(height: _width / (maxWidth / 35)),
                         //email textfield
                         TextFormField(
                           controller: _emailController,
@@ -121,7 +125,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                               labelText: 'Email',
                               hintText: 'abc@example.com',
                               labelStyle: GoogleFonts.inter(
-                                fontSize: 14,
+                                fontSize: _width / (maxWidth / 14),
                                 color: Colors.black,
                               ),
                               enabledBorder: const OutlineInputBorder(
@@ -148,7 +152,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                           },
                         ),
 
-                        const SizedBox(height: 20),
+                        SizedBox(height: _width / (maxWidth / 20)),
                         //password textfield
 
                         TextFormField(
@@ -158,7 +162,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                             labelText: 'Password',
                             hintText: '********',
                             labelStyle: GoogleFonts.inter(
-                              fontSize: 14,
+                              fontSize: _width / (maxWidth / 14),
                               color: Colors.black,
                             ),
                             enabledBorder: const OutlineInputBorder(
@@ -192,7 +196,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                           },
                         ),
 
-                        const SizedBox(height: 25),
+                        SizedBox(height: _width / (maxWidth / 25)),
                         //remember me & forgot password
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -202,35 +206,35 @@ class _LoginDesktopState extends State<LoginDesktop> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SizedBox(
-                                  height: 24,
-                                  width: 24,
+                                  height: _width / (maxWidth / 24),
+                                  width: _width / (maxWidth / 24),
                                   child: Checkbox(
                                     value: _isChecked,
                                     onChanged: onChanged,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
+                                SizedBox(width: _width / (maxWidth / 8)),
                                 Text(
                                   'Remember me',
                                   style: GoogleFonts.inter(
-                                    fontSize: 14,
+                                    fontSize: _width / (maxWidth / 14),
                                     color: Colors.black,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(width: 25),
+                            SizedBox(width: _width / (maxWidth / 25)),
                             Text(
                               'Forgot password?',
                               style: GoogleFonts.inter(
-                                fontSize: 14,
+                                fontSize: _width / (maxWidth / 14),
                                 color: const Color.fromARGB(255, 0, 84, 152),
                               ),
                             ),
                           ],
                         ),
 
-                        const SizedBox(height: 30),
+                        SizedBox(height: _width / (maxWidth / 30)),
                         //login button
                         TextButton(
                           onPressed: () async {
@@ -242,21 +246,21 @@ class _LoginDesktopState extends State<LoginDesktop> {
                           },
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.green,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 20,
-                              horizontal: 10,
+                            padding: EdgeInsets.symmetric(
+                              vertical: _width / (maxWidth / 20),
+                              horizontal: _width / (maxWidth / 10),
                             ),
                           ),
                           child: Text(
                             'Login now',
                             style: GoogleFonts.inter(
-                              fontSize: 15,
+                              fontSize: _width / (maxWidth / 15),
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 15),
+                        SizedBox(height: _width / (maxWidth / 15)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -324,11 +328,13 @@ class LoginDesktop2 extends ConsumerWidget {
     final passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
     bool isEmail(String input) => EmailValidator.validate(input);
+    double _width = MediaQuery.of(context).size.width;
+    double maxWidth = 1920;
 
     return SafeArea(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: EdgeInsets.all(_width / (maxWidth / 30)),
           child: Row(
             children: [
               Expanded(
@@ -342,8 +348,10 @@ class LoginDesktop2 extends ConsumerWidget {
               Expanded(
                 //<-- Expanded widget
                 child: Container(
-                  constraints: const BoxConstraints(maxWidth: 21),
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  constraints:
+                      BoxConstraints(maxWidth: _width / (maxWidth / 21)),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: _width / (maxWidth / 50)),
                   child: Form(
                     key: formKey,
                     child: Column(
@@ -353,20 +361,20 @@ class LoginDesktop2 extends ConsumerWidget {
                         Text(
                           'Welcome back',
                           style: GoogleFonts.inter(
-                            fontSize: 17,
+                            fontSize: _width / (maxWidth / 17),
                             color: Colors.black,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: _width / (maxWidth / 8)),
                         Text(
                           'Login to your account',
                           style: GoogleFonts.inter(
-                            fontSize: 23,
+                            fontSize: _width / (maxWidth / 23),
                             color: Colors.black,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(height: 35),
+                        SizedBox(height: _width / (maxWidth / 35)),
                         //email textfield
                         TextFormField(
                           controller: emailController,
@@ -375,7 +383,7 @@ class LoginDesktop2 extends ConsumerWidget {
                               labelText: 'Email',
                               hintText: 'abc@example.com',
                               labelStyle: GoogleFonts.inter(
-                                fontSize: 14,
+                                fontSize: _width / (maxWidth / 14),
                                 color: Colors.black,
                               ),
                               enabledBorder: const OutlineInputBorder(
@@ -402,7 +410,7 @@ class LoginDesktop2 extends ConsumerWidget {
                           },
                         ),
 
-                        const SizedBox(height: 20),
+                        SizedBox(height: _width / (maxWidth / 20)),
                         //password textfield
 
                         Consumer(
@@ -415,7 +423,7 @@ class LoginDesktop2 extends ConsumerWidget {
                                 labelText: 'Password',
                                 hintText: '********',
                                 labelStyle: GoogleFonts.inter(
-                                  fontSize: 14,
+                                  fontSize: _width / (maxWidth / 14),
                                   color: Colors.black,
                                 ),
                                 enabledBorder: const OutlineInputBorder(
@@ -457,7 +465,7 @@ class LoginDesktop2 extends ConsumerWidget {
                           },
                         ),
 
-                        const SizedBox(height: 25),
+                        SizedBox(height: _width / (maxWidth / 25)),
                         //remember me & forgot password
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -471,8 +479,8 @@ class LoginDesktop2 extends ConsumerWidget {
                                     final remember =
                                         ref.watch(rememberProvider)!;
                                     return SizedBox(
-                                      height: 24,
-                                      width: 24,
+                                      height: _width / (maxWidth / 24),
+                                      width: _width / (maxWidth / 24),
                                       child: Checkbox(
                                         value: remember,
                                         onChanged: (_) {
@@ -482,32 +490,34 @@ class LoginDesktop2 extends ConsumerWidget {
                                           //         .state ==
                                           //     _;
                                         },
+                                        side: BorderSide(
+                                            color: Colors.grey, width: 1.5),
                                       ),
                                     );
                                   },
                                 ),
-                                const SizedBox(width: 8),
+                                SizedBox(width: _width / (maxWidth / 8)),
                                 Text(
                                   'Remember me',
                                   style: GoogleFonts.inter(
-                                    fontSize: 14,
+                                    fontSize: _width / (maxWidth / 14),
                                     color: Colors.black,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(width: 25),
+                            SizedBox(width: _width / (maxWidth / 25)),
                             Text(
                               'Forgot password?',
                               style: GoogleFonts.inter(
-                                fontSize: 14,
+                                fontSize: _width / (maxWidth / 14),
                                 color: const Color.fromARGB(255, 0, 84, 152),
                               ),
                             ),
                           ],
                         ),
 
-                        const SizedBox(height: 30),
+                        SizedBox(height: _width / (maxWidth / 30)),
                         //login button
                         TextButton(
                           onPressed: (() async {
@@ -521,27 +531,30 @@ class LoginDesktop2 extends ConsumerWidget {
                           }),
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.green,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 20,
-                              horizontal: 10,
+                            padding: EdgeInsets.symmetric(
+                              vertical: _width / (maxWidth / 20),
+                              horizontal: _width / (maxWidth / 10),
                             ),
                           ),
                           child: Text(
                             'Login now',
                             style: GoogleFonts.inter(
-                              fontSize: 15,
+                              fontSize: _width / (maxWidth / 15),
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 15),
+                        SizedBox(height: _width / (maxWidth / 15)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
+                            Text(
                               "Not a member?",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: _width / (maxWidth / 15),
+                              ),
                             ),
                             GestureDetector(
                               onTap: () {
@@ -551,8 +564,10 @@ class LoginDesktop2 extends ConsumerWidget {
                               child: Text(
                                 " Register now!",
                                 style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: _width / (maxWidth / 15),
+                                ),
                               ),
                             )
                           ],
