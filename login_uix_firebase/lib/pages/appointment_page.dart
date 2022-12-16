@@ -93,7 +93,7 @@ class _appointmentPageState extends State<appointmentPage> {
     converted.add(DateTimeRange(
         start: newBooking.bookingStart, end: newBooking.bookingEnd));
     setState(() {
-      dateandtimeController?.text = DateFormat('yyyy-MM-dd – kk:mm:a')
+      dateandtimeController?.text = DateFormat('EEE, yyyy-MM-dd, kk:mm:a')
           .format(newBooking.bookingStart)
           .toString();
     });
@@ -140,7 +140,7 @@ class _appointmentPageState extends State<appointmentPage> {
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
-        .collection('servicesCategory')
+        .collection('services')
         .snapshots(includeMetadataChanges: true);
     final Stream<QuerySnapshot> _locationStream = FirebaseFirestore.instance
         .collection('location')
@@ -541,7 +541,7 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                             document.data()!
                                                                                 as Map<String, dynamic>;
                                                                         return data[
-                                                                            "categoryName"];
+                                                                            "servicesName"];
                                                                       })
                                                                       .toList()
                                                                       .cast<
@@ -1470,7 +1470,10 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                 commentController
                                                                     ?.text,
                                                             statusAppointment:
-                                                                "ongoing");
+                                                                "ongoing",
+                                                            createdAt: DateTime
+                                                                    .now()
+                                                                .toString());
                                                         await service
                                                             .addAppointment(
                                                                 appointmentData);
@@ -1530,29 +1533,29 @@ class _appointmentPageState extends State<appointmentPage> {
     );
   }
 
-  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    /// The argument value will return the changed date as [DateTime] when the
-    /// widget [SfDateRangeSelectionMode] set as single.
-    ///
-    /// The argument value will return the changed dates as [List<DateTime>]
-    /// when the widget [SfDateRangeSelectionMode] set as multiple.
-    ///
-    /// The argument value will return the changed range as [PickerDateRange]
-    /// when the widget [SfDateRangeSelectionMode] set as range.
-    ///
-    /// The argument value will return the changed ranges as
-    /// [List<PickerDateRange] when the widget [SfDateRangeSelectionMode] set as
-    /// multi range.
-    setState(() {
-      if (args.value is PickerDateRange) {
-      } else if (args.value is DateTime) {
-        dateandtimeController?.text =
-            DateFormat('dd/MM/yyyy').format(args.value).toString();
-        ;
-      } else if (args.value is List<DateTime>) {
-      } else {}
-    });
-  }
+  // void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+  //   /// The argument value will return the changed date as [DateTime] when the
+  //   /// widget [SfDateRangeSelectionMode] set as single.
+  //   ///
+  //   /// The argument value will return the changed dates as [List<DateTime>]
+  //   /// when the widget [SfDateRangeSelectionMode] set as multiple.
+  //   ///
+  //   /// The argument value will return the changed range as [PickerDateRange]
+  //   /// when the widget [SfDateRangeSelectionMode] set as range.
+  //   ///
+  //   /// The argument value will return the changed ranges as
+  //   /// [List<PickerDateRange] when the widget [SfDateRangeSelectionMode] set as
+  //   /// multi range.
+  //   setState(() {
+  //     if (args.value is PickerDateRange) {
+  //     } else if (args.value is DateTime) {
+  //       dateandtimeController?.text =
+  //           DateFormat('dd/MM/yyyy').format(args.value).toString();
+  //       ;
+  //     } else if (args.value is List<DateTime>) {
+  //     } else {}
+  //   });
+  // }
 
 // https://www.syncfusion.com/kb/11467/how-to-add-a-date-range-picker-sfdaterangepicker-in-the-flutter-dialog-window
   // Widget getDateRangePicker() {
@@ -1565,4 +1568,5 @@ class _appointmentPageState extends State<appointmentPage> {
   //         onSelectionChanged: selectionChanged,
   //       )));
   // }
+  ///test
 }

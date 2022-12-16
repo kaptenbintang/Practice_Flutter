@@ -28,7 +28,7 @@ class CustomText extends StatelessWidget {
       text!,
       style: TextStyle(
         fontSize: ResponsiveWidget.isLargeScreen(context)
-            ? _width / (1920 / size!)
+            ? _width / (1920 / 16)
             : Dimensions.font16,
         color: color,
         fontWeight: weight,
