@@ -97,19 +97,20 @@ class MyApp extends ConsumerWidget {
                 userDetailProvider,
               );
               return userRoles.when(
-                  data: (data) {
-                    if (data?['roles'] != 'user') {
-                      return AdminDashboardLayout();
-                    } else {
-                      return MainPagesPage();
-                    }
-                  },
-                  error: (error, stackTrace) {
-                    return Text('$error');
-                  },
-                  loading: () => Center(
-                        child: CircularProgressIndicator(),
-                      ));
+                data: (data) {
+                  if (data?['roles'] != 'user') {
+                    return AdminDashboardLayout();
+                  } else {
+                    return MainPagesPage();
+                  }
+                },
+                error: (error, stackTrace) {
+                  return Text('$error');
+                },
+                loading: () {
+                  return Container();
+                },
+              );
             } else {
               return LandingLayout();
             }

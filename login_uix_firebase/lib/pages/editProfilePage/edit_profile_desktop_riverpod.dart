@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
@@ -172,7 +173,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                             labelText: 'First Name',
                             labelStyle:
                                 FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Lexend Deca',
+                                      fontFamily: 'Poppins',
                                       color: Color(0xFF95A1AC),
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal,
@@ -299,6 +300,9 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                       child: Container(
                         width: 500,
                         child: IntlPhoneField(
+                          pickerDialogStyle: PickerDialogStyle(
+                            width: 400,
+                          ),
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly,
@@ -510,9 +514,26 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                 );
               },
               error: (error, stackTrace) => Text('Error ??' '$error'),
-              loading: () => const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(child: CircularProgressIndicator()),
+              loading: () => ColoredBox(
+                color: Colors.white.withAlpha(128),
+                child: Center(
+                  child: Container(
+                    color: Colors.blue,
+                    padding: const EdgeInsets.all(8),
+                    width: 150,
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: const [
+                        CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                        Text('Loading'),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             );
           },
