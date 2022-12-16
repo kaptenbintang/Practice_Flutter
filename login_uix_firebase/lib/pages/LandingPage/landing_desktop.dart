@@ -28,7 +28,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              height: 500,
+              height: _width / (maxWidth / 500),
               child: Stack(
                 children: [
                   Padding(
@@ -39,6 +39,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                           PageController(initialPage: 0),
                       scrollDirection: Axis.horizontal,
                       children: [
+                        //Pageview0
                         Stack(
                           children: [
                             Image.asset(
@@ -65,7 +66,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             Align(
                               alignment: AlignmentDirectional(0, 1),
                               child: Container(
-                                height: 150,
+                                height: _width / (maxWidth / 150),
                                 child: Stack(
                                   children: [
                                     Column(
@@ -78,7 +79,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           text: 'EAP Programs',
                                           options: FFButtonOptions(
                                             width: _width / (maxWidth / 280),
-                                            height: 40,
+                                            height: _width / (maxWidth / 40),
                                             color: Color(0xFFD9DD12),
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
@@ -98,7 +99,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                         ),
                                         Container(
                                           width: 100,
-                                          height: 10,
+                                          height: _width / (maxWidth / 10),
                                           decoration: BoxDecoration(
                                             color: Color(0x00FFFFFF),
                                           ),
@@ -110,7 +111,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           text: 'Coching Services',
                                           options: FFButtonOptions(
                                             width: _width / (maxWidth / 280),
-                                            height: 40,
+                                            height: _width / (maxWidth / 40),
                                             color: Color(0xFFD9DD12),
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
@@ -130,7 +131,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                         ),
                                         Container(
                                           width: 100,
-                                          height: 10,
+                                          height: _width / (maxWidth / 10),
                                           decoration: BoxDecoration(
                                             color: Color(0x00FFFFFF),
                                           ),
@@ -142,7 +143,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           text: 'Training  Programs',
                                           options: FFButtonOptions(
                                             width: _width / (maxWidth / 280),
-                                            height: 40,
+                                            height: _width / (maxWidth / 40),
                                             color: Color(0xFFD9DD12),
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
@@ -162,7 +163,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                         ),
                                         Container(
                                           width: 100,
-                                          height: 10,
+                                          height: _width / (maxWidth / 10),
                                           decoration: BoxDecoration(
                                             color: Color(0x00FFFFFF),
                                           ),
@@ -175,6 +176,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             ),
                           ],
                         ),
+                        //Pageview1
                         Stack(
                           children: [
                             Image.asset(
@@ -201,7 +203,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             Align(
                               alignment: AlignmentDirectional(0, 1),
                               child: Container(
-                                height: 150,
+                                height: _width / (maxWidth / 150),
                                 child: Stack(
                                   children: [
                                     Column(
@@ -214,7 +216,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           text: 'Psychotherapy & Counseling',
                                           options: FFButtonOptions(
                                             width: _width / (maxWidth / 280),
-                                            height: 40,
+                                            height: _width / (maxWidth / 40),
                                             color: Color(0xFFD9DD12),
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
@@ -234,7 +236,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                         ),
                                         Container(
                                           width: 100,
-                                          height: 10,
+                                          height: _width / (maxWidth / 10),
                                           decoration: BoxDecoration(
                                             color: Color(0x00FFFFFF),
                                           ),
@@ -246,7 +248,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           text: 'Assessment Services',
                                           options: FFButtonOptions(
                                             width: _width / (maxWidth / 280),
-                                            height: 40,
+                                            height: _width / (maxWidth / 40),
                                             color: Color(0xFFD9DD12),
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
@@ -266,7 +268,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                         ),
                                         Container(
                                           width: 100,
-                                          height: 10,
+                                          height: _width / (maxWidth / 10),
                                           decoration: BoxDecoration(
                                             color: Color(0x00FFFFFF),
                                           ),
@@ -278,7 +280,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                           text: 'Education & Development',
                                           options: FFButtonOptions(
                                             width: _width / (maxWidth / 280),
-                                            height: 40,
+                                            height: _width / (maxWidth / 40),
                                             color: Color(0xFFD9DD12),
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
@@ -298,7 +300,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                         ),
                                         Container(
                                           width: 100,
-                                          height: 10,
+                                          height: _width / (maxWidth / 10),
                                           decoration: BoxDecoration(
                                             color: Color(0x00FFFFFF),
                                           ),
@@ -378,7 +380,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: 100,
-                                    height: 10,
+                                    height: _width / (maxWidth / 10),
                                     decoration: BoxDecoration(
                                       color: Color(0x00FFFFFF),
                                     ),
@@ -390,7 +392,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   ),
                                   Container(
                                     width: 100,
-                                    height: 10,
+                                    height: _width / (maxWidth / 10),
                                     decoration: BoxDecoration(
                                       color: Color(0x00FFFFFF),
                                     ),
@@ -434,7 +436,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: 100,
-                                    height: 10,
+                                    height: _width / (maxWidth / 10),
                                     decoration: BoxDecoration(
                                       color: Color(0x00FFFFFF),
                                     ),
@@ -446,7 +448,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   ),
                                   Container(
                                     width: 100,
-                                    height: 10,
+                                    height: _width / (maxWidth / 10),
                                     decoration: BoxDecoration(
                                       color: Color(0x00FFFFFF),
                                     ),
@@ -491,7 +493,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: 100,
-                                    height: 10,
+                                    height: _width / (maxWidth / 10),
                                     decoration: BoxDecoration(
                                       color: Color(0x00FFFFFF),
                                     ),
@@ -503,7 +505,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   ),
                                   Container(
                                     width: 100,
-                                    height: 10,
+                                    height: _width / (maxWidth / 10),
                                     decoration: BoxDecoration(
                                       color: Color(0x00FFFFFF),
                                     ),
@@ -547,7 +549,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: 100,
-                                    height: 10,
+                                    height: _width / (maxWidth / 10),
                                     decoration: BoxDecoration(
                                       color: Color(0x00FFFFFF),
                                     ),
@@ -559,7 +561,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                                   ),
                                   Container(
                                     width: 100,
-                                    height: 10,
+                                    height: _width / (maxWidth / 10),
                                     decoration: BoxDecoration(
                                       color: Color(0x00FFFFFF),
                                     ),
@@ -641,7 +643,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             children: [
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -654,7 +656,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               ),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -672,7 +674,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               )),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -694,7 +696,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               ),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -734,7 +736,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                           children: [
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -747,7 +749,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             ),
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -782,7 +784,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             )),
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -827,7 +829,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             children: [
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -840,7 +842,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               ),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -858,7 +860,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               )),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -876,7 +878,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               )),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -916,7 +918,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                           children: [
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -929,7 +931,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             ),
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -964,7 +966,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             )),
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1009,7 +1011,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             children: [
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -1022,7 +1024,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               ),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -1040,7 +1042,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               )),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -1058,7 +1060,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                               )),
                               Container(
                                 width: 100,
-                                height: 10,
+                                height: _width / (maxWidth / 10),
                                 decoration: BoxDecoration(
                                   color: Color(0x00FFFFFF),
                                 ),
@@ -1098,7 +1100,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                           children: [
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1111,7 +1113,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             ),
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1146,7 +1148,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             )),
                             Container(
                               width: 100,
-                              height: 10,
+                              height: _width / (maxWidth / 10),
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),
                               ),
@@ -1183,7 +1185,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                     children: [
                       Container(
                         width: 100,
-                        height: 10,
+                        height: _width / (maxWidth / 10),
                         decoration: BoxDecoration(
                           color: Color(0x00FFFFFF),
                         ),
@@ -1196,7 +1198,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                       ),
                       Container(
                         width: 100,
-                        height: 10,
+                        height: _width / (maxWidth / 10),
                         decoration: BoxDecoration(
                           color: Color(0x00FFFFFF),
                         ),
@@ -1212,7 +1214,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                       )),
                       Container(
                         width: 100,
-                        height: 10,
+                        height: _width / (maxWidth / 10),
                         decoration: BoxDecoration(
                           color: Color(0x00FFFFFF),
                         ),
@@ -1228,7 +1230,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                       )),
                       Container(
                         width: 100,
-                        height: 10,
+                        height: _width / (maxWidth / 10),
                         decoration: BoxDecoration(
                           color: Color(0x00FFFFFF),
                         ),
@@ -1394,7 +1396,7 @@ class LandingPageDesktopWidget extends StatelessWidget {
                             EdgeInsetsDirectional.fromSTEB(100, 10, 100, 10),
                         child: Container(
                           width: 120,
-                          height: 150,
+                          height: _width / (maxWidth / 150),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
