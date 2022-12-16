@@ -58,3 +58,4 @@ class AppointmentData {
         statusAppointment = doc.data()!["statusAppointment"],
         createdAt = doc.data()!["createdAt"];
 }
+///test
