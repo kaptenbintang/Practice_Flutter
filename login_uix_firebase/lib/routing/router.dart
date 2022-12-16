@@ -22,6 +22,7 @@ import 'package:login_uix_firebase/routing/logOutRoute.dart';
 import 'package:login_uix_firebase/routing/routes.dart';
 
 import '../main.dart';
+import '../pages/manageAppointment/manage_appointment_page.dart';
 import '../route.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -57,6 +58,8 @@ Route<dynamic> generateRouteAdmin(RouteSettings settings) {
       return _getPageRoute(ManageServiceCategoryPage());
     case ManagePractionersRoute:
       return _getPageRoute(ManagePractionerPage());
+    case AppointmentRoute:
+      return _getPageRoute(ManageAppointmentPage());
     default:
       return _getPageRoute(ManageStaffPage());
   }
