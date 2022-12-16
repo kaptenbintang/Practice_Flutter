@@ -24,9 +24,6 @@ import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/pages/login/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:login_uix_firebase/auth/controller_page.dart';
-import 'package:login_uix_firebase/pages/login/login_page.dart';
-import 'package:login_uix_firebase/pages/main_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_client_type_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
@@ -41,13 +38,10 @@ import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart'
 import 'package:login_uix_firebase/provider/loading_provider/is_loading_provider.dart';
 import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 import 'package:login_uix_firebase/route.dart';
-import 'package:login_uix_firebase/routes/page_route.dart';
 import 'package:login_uix_firebase/widgets/loading/loading_screen.dart';
-import 'package:login_uix_firebase/widgets/side_bar_admin.dart';
 import 'controllers/menu_controller.dart';
 import 'controllers/navigation_controller.dart';
 import 'firebase_options.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'pages/LandingPage/landing_page.dart';
 
@@ -81,10 +75,6 @@ class MyApp extends ConsumerWidget {
     return GetMaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        // home: Consumer(builder: (context, ref, child) {
-
-        // },),
-        // initialRoute: ControllerPage.routeName,
         home: Consumer(
           builder: (context, ref, child) {
             ref.listen<bool>(
@@ -102,47 +92,27 @@ class MyApp extends ConsumerWidget {
 
             final isLoggedin = ref.watch(isLoggedInProvider);
 
-            // final userData = ref.watch(
-            //   userDetailProvider,
-            // );
-            // final userDataResult = userData.value;
-            // final userRoles = userDataResult?['roles'];
-
-            // if (isLoggedin) {
-            //   return userData.when(
-            //     data: (data) {
-            //       if (data?['roles'] != 'user') {
-            //         return AdminDashboardLayout();
-            //       } else {
-            //         return MainPagesPage();
-            //       }
-            //     },
-            //     error: (err, stack) => Text('Error: $err'),
-            //     loading: () => const CircularProgressIndicator(),
-            //   );
-            // } else {
-            //   return LandingLayout();
-            // }
-
             if (isLoggedin) {
               final userRoles = ref.watch(
                 userDetailProvider,
               );
-              final ee = userRoles.value!['roles'];
-              // if (userRoles != 'user') {
-              //   return AdminDashboardLayout();
-              // } else {
-              if (ee != 'user') {
-                return AdminDashboardLayout();
-              } else {
-                return MainPagesPage();
-              }
-              // }
+              return userRoles.when(
+                  data: (data) {
+                    if (data?['roles'] != 'user') {
+                      return AdminDashboardLayout();
+                    } else {
+                      return MainPagesPage();
+                    }
+                  },
+                  error: (error, stackTrace) {
+                    return Text('$error');
+                  },
+                  loading: () => Center(
+                        child: CircularProgressIndicator(),
+                      ));
             } else {
               return LandingLayout();
             }
-
-            // print(userData.);
           },
         ),
         routes: {
