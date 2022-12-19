@@ -31,17 +31,28 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   AppointmentData? dataU;
-
+  final _practionername = TextEditingController();
+  final _location = TextEditingController();
+  final _services = TextEditingController();
+  final _dateandtime = TextEditingController();
   final _clientcodeorname = TextEditingController();
   final _clientphnumber = TextEditingController();
   final _clientemail = TextEditingController();
+  final _clientcomment = TextEditingController();
   final _statusAppointment = TextEditingController();
+  final _createdAt = TextEditingController();
 
   String? userId;
+  String? PractionerNameID;
+  String? locationID;
+  String? servicesID;
+  String? dateandtimeID;
   String? clientCodeorNameID;
   String? clientphNumberID;
   String? clientEmail;
+  String? clientcommentID;
   String? statusAppointmentID;
+  String? createdAtID;
   String? selectedValueClient;
   String? selectedValue;
   int _currentSortColumn = 0;
@@ -531,16 +542,21 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                           dialogEditAppointment(context);
                           setState(() {
                             userId = snapshot.id;
-                            // firstNameID = snapshot.firstName;
-                            // lastNameID = snapshot.lastName;
-                            // myApproachID = snapshot.myApproach;
-                            // myBackgroundID = snapshot.myBackground;
-                            // myQualificationsID = snapshot.myQualifications;
-                            // mySpecialtyID = snapshot.mySpecialty;
-                            // myRolesID = snapshot.myRoles;
-                            // languagesID = snapshot.languages;
-                            // titleMainID = snapshot.titleMain;
-                            // schedulePractionerID = snapshot.practionerSchedule;
+                            _practionername.text =
+                                snapshot.practionerName.toString();
+                            _services.text = snapshot.services.toString();
+                            _location.text = snapshot.location.toString();
+                            _dateandtime.text = snapshot.dateandtime.toString();
+                            _clientcodeorname.text =
+                                snapshot.clientNameorCode.toString();
+                            _clientphnumber.text =
+                                snapshot.clientphNumber.toString();
+                            _clientemail.text = snapshot.clientEmail.toString();
+                            _clientcomment.text =
+                                snapshot.clientComment.toString();
+                            _statusAppointment.text =
+                                snapshot.statusAppointment.toString();
+                            _createdAt.text = snapshot.createdAt.toString();
                           });
                         },
                         text: 'Edit',
@@ -570,7 +586,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                       child: FFButtonWidget(
                         onPressed: () async {
                           print('Button pressed ...');
-                          await service.deletePractioners(
+                          await service.deleteAppointment(
                               context, snapshot.id.toString());
                           _pullRefresh();
                         },
@@ -638,6 +654,42 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
+                          controller: _practionername,
+                          decoration: InputDecoration(
+                            labelText: "Practioner Name",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _services,
+                          decoration: InputDecoration(
+                            labelText: "Services",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _location,
+                          decoration: InputDecoration(
+                            labelText: "Location",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _dateandtime,
+                          decoration: InputDecoration(
+                            labelText: "Date/Time",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
                           controller: _clientcodeorname,
                           decoration: InputDecoration(
                             labelText: "Code or Name",
@@ -665,9 +717,45 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
-                          controller: _statusAppointment,
+                          controller: _clientcomment,
                           decoration: InputDecoration(
-                            labelText: "Status Appointment",
+                            labelText: "Comment",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField(
+                          value: _statusAppointment.text,
+                          decoration: InputDecoration(
+                            labelText: "Status",
+                          ),
+                          // icon: Icon(
+                          //   Icons.edit,
+                          //   color: Colors.blue,
+                          // ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _statusAppointment.text = value!;
+                            });
+                          },
+                          onSaved: (value) {},
+                          items: <String>['ongoing', 'complete']
+                              .map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _createdAt,
+                          decoration: InputDecoration(
+                            labelText: "CreatedAt",
                           ),
                         ),
                       ),
@@ -682,10 +770,16 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                             if (_formKey.currentState!.validate()) {
                               AppointmentData appointmentData = AppointmentData(
                                   id: userId,
+                                  practionerName: _practionername.text,
+                                  services: _services.text,
+                                  location: _location.text,
+                                  dateandtime: _dateandtime.text,
                                   clientNameorCode: _clientcodeorname.text,
                                   clientphNumber: _clientphnumber.text,
                                   clientEmail: _clientemail.text,
-                                  statusAppointment: _statusAppointment.text);
+                                  clientComment: _clientcomment.text,
+                                  statusAppointment: _statusAppointment.text,
+                                  createdAt: _createdAt.text);
                               await service.updateAppointment(appointmentData);
                               Navigator.pop(context);
                               _pullRefresh();
