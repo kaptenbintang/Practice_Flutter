@@ -364,6 +364,18 @@ class DataService {
     QuerySnapshot<Map<String, dynamic>> snapshot = await _db
         .collection("appointment")
         .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .where('statusAppointment', isEqualTo: 'ongoing')
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => AppointmentData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<AppointmentData>> retrieveApppointment2() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("appointment")
+        .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .where('statusAppointment', isNotEqualTo: 'ongoing')
         .get();
     return snapshot.docs
         .map((docSnapshot) => AppointmentData.fromDocumentSnapshot(docSnapshot))
