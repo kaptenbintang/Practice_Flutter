@@ -351,54 +351,53 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                     final appointments = ref.watch(userAppointmentProvider);
                     return appointments.when(
                       data: (data) {
-                        if (data.isEmpty) {
-                          return const EmptyContentsWithTextAnimationView(
-                            text: 'You have no appointment',
-                          );
-                        } else {
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.7,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  26, 20, 20, 20),
-                                          child: Text(
-                                            'On going appointment',
-                                            style: FlutterFlowTheme.of(context)
-                                                .title1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Expanded(
-                                      child: AppointmentsGridView(
-                                          appointments: data),
-                                    ),
-                                  ],
-                                ),
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
                               ),
-                            ],
-                          );
-                        }
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            26, 20, 20, 20),
+                                        child: Text(
+                                          'On going appointment',
+                                          style: FlutterFlowTheme.of(context)
+                                              .title1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Expanded(
+                                      child: data.isNotEmpty
+                                          ? AppointmentsGridView(
+                                              appointments: data)
+                                          : SingleChildScrollView(
+                                              child:
+                                                  const EmptyContentsWithTextAnimationView(
+                                                text:
+                                                    'You have no appointments',
+                                              ),
+                                            )),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
                       },
                       error: (error, stackTrace) {
                         return const ErrorAnimationView();
