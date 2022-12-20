@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -11,30 +13,31 @@ import '../model/practioner_data.dart';
 import '../route.dart';
 import 'main_page.dart';
 
-class DetailPagePractioner extends StatefulWidget {
+class DetailPagePractioner extends ConsumerStatefulWidget {
   static const routeName = '/detailPage';
-  final PractionerData? dataU;
-  const DetailPagePractioner({super.key, required this.dataU});
+  final Practioner practioner;
+  const DetailPagePractioner({super.key, required this.practioner});
 
   @override
-  _DetailPagePractionerState createState() => _DetailPagePractionerState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DetailPagePractionerState();
 }
 
-class _DetailPagePractionerState extends State<DetailPagePractioner> {
-  TextEditingController? textController;
+class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
+  final textController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  @override
-  void initState() {
-    super.initState();
-    textController = TextEditingController();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   textController = TextEditingController();
+  // }
 
-  @override
-  void dispose() {
-    textController?.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   textController?.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -310,11 +313,13 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                       10),
                                                           child: Text(
                                                             'Name: ' +
-                                                                widget.dataU!
+                                                                widget
+                                                                    .practioner
                                                                     .firstName
                                                                     .toString() +
                                                                 ' ' +
-                                                                widget.dataU!
+                                                                widget
+                                                                    .practioner
                                                                     .lastName
                                                                     .toString(),
                                                             style: FlutterFlowTheme
@@ -332,7 +337,8 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                       10),
                                                           child: Text(
                                                             'My Approach: ' +
-                                                                widget.dataU!
+                                                                widget
+                                                                    .practioner
                                                                     .myApproach
                                                                     .toString(),
                                                             style: FlutterFlowTheme
@@ -350,7 +356,8 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                       10),
                                                           child: Text(
                                                             'My Backgrounds: ' +
-                                                                widget.dataU!
+                                                                widget
+                                                                    .practioner
                                                                     .myBackground
                                                                     .toString(),
                                                             style: FlutterFlowTheme
@@ -368,7 +375,8 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                       10),
                                                           child: Text(
                                                             'My Qualifications: ' +
-                                                                widget.dataU!
+                                                                widget
+                                                                    .practioner
                                                                     .myQualifications
                                                                     .toString(),
                                                             style: FlutterFlowTheme
@@ -386,7 +394,8 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                       10),
                                                           child: Text(
                                                             'My Specialty: ' +
-                                                                widget.dataU!
+                                                                widget
+                                                                    .practioner
                                                                     .mySpecialty
                                                                     .toString(),
                                                             style: FlutterFlowTheme
@@ -404,7 +413,8 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                                                       10),
                                                           child: Text(
                                                             'My Roles: ' +
-                                                                widget.dataU!
+                                                                widget
+                                                                    .practioner
                                                                     .myRoles
                                                                     .toString(),
                                                             style: FlutterFlowTheme
@@ -505,14 +515,15 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Text(
-                                          widget.dataU!.firstName.toString(),
+                                          widget.practioner.firstName
+                                              .toString(),
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .title1,
                                         ),
                                         Text(
                                           '(Speaks ' +
-                                              widget.dataU!.languages
+                                              widget.practioner.languages
                                                   .toString() +
                                               ')',
                                           textAlign: TextAlign.center,
@@ -520,7 +531,8 @@ class _DetailPagePractionerState extends State<DetailPagePractioner> {
                                               .subtitle1,
                                         ),
                                         Text(
-                                          widget.dataU!.titleMain.toString(),
+                                          widget.practioner.titleMain
+                                              .toString(),
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,

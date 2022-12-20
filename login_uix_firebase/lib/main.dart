@@ -9,6 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:login_uix_firebase/auth/provider/is_logged_in_provider.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
+import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
 import 'package:login_uix_firebase/pages/admin_dashboard_layout.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
@@ -137,8 +138,8 @@ class MyApp extends ConsumerWidget {
           ManageServiceCategory.routeName: (context) =>
               const ManageServiceCategory(),
           DetailPagePractioner.routeName: (context) => DetailPagePractioner(
-                dataU: ModalRoute.of(context)?.settings.arguments
-                    as PractionerData,
+                practioner:
+                    ModalRoute.of(context)?.settings.arguments as Practioner,
               ),
           appointmentPage.routeName: (context) => const appointmentPage(),
           ManagePractioners.routeName: (context) => const ManagePractioners(),
