@@ -38,6 +38,8 @@ class SideBarAdminController extends GetxController {
         return _customIcon(Icons.home_repair_service, itemName);
       case ManageServicesCategoryRoute:
         return _customIcon(Icons.content_paste, itemName);
+      case AppointmentRoute:
+        return _customIcon(Icons.calendar_month, itemName);
       case LogOutRoute:
         return _customIcon(Icons.logout, itemName);
       default:

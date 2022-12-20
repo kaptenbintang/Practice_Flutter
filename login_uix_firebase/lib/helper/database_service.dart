@@ -85,6 +85,13 @@ class DataService {
         .update(practionerData.toMap());
   }
 
+  Future<void> updateAppointment(AppointmentData appointmentData) async {
+    await _db
+        .collection("appointment")
+        .doc(appointmentData.id)
+        .update(appointmentData.toMap());
+  }
+
   Future<void> updateServicesCategory(
       serviceCategoryClass servicesDataCategory) async {
     await _db
@@ -172,6 +179,24 @@ class DataService {
           builder: (context) {
             return AlertDialog(
               content: Text("Deleted Practioner"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> deleteAppointment(
+      BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("appointment").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Appointment"),
             );
           },
         );
@@ -322,6 +347,16 @@ class DataService {
         .get();
     return snapshot.docs
         .map((docSnapshot) => PractionerData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<AppointmentData>> retrieveApppointmentAll() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("appointment")
+        // .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => AppointmentData.fromDocumentSnapshot(docSnapshot))
         .toList();
   }
 

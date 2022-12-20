@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_desktop.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_mobile.dart';
+import 'package:login_uix_firebase/pages/registerPage/register_mobile_riverpod.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -22,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
             if (constraints.maxWidth > 600) {
               return RegisterDeskStop2();
             } else {
-              return RegisterMobile();
+              return RegisterMobileRiverpod();
             }
           },
         ),

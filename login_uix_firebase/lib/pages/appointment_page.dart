@@ -93,7 +93,7 @@ class _appointmentPageState extends State<appointmentPage> {
     converted.add(DateTimeRange(
         start: newBooking.bookingStart, end: newBooking.bookingEnd));
     setState(() {
-      dateandtimeController?.text = DateFormat('EEE, yyyy-MM-dd – kk:mm:a')
+      dateandtimeController?.text = DateFormat('EEE, yyyy-MM-dd, kk:mm:a')
           .format(newBooking.bookingStart)
           .toString();
     });
@@ -227,10 +227,16 @@ class _appointmentPageState extends State<appointmentPage> {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             20, 20, 20, 20),
-                                        child: Text(
-                                          'Contact us',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                RouteName.HistoryBooking);
+                                          },
+                                          child: Text(
+                                            'Booking History',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
                                         ),
                                       ),
                                       Expanded(

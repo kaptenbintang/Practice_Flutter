@@ -1,212 +1,91 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
-
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pw_validator/Resource/Strings.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-import 'package:get/get.dart';
-import 'package:intl/src/intl/date_format.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:login_uix_firebase/auth/provider/auth_state_provider.dart';
+import 'package:login_uix_firebase/constant/controllers.dart';
+import 'package:login_uix_firebase/flutter_flow/flutter_flow.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
+import 'package:login_uix_firebase/routing/routes.dart';
 
-import 'package:login_uix_firebase/route.dart';
-
-import '../../constant/controllers.dart';
-import '../../routing/routes.dart';
-import '../forgot_pw_page.dart';
-
-class RegisterMobile extends StatefulWidget {
-  const RegisterMobile({super.key});
-
-  @override
-  State<RegisterMobile> createState() => _RegisterMobileState();
+class HiddenPass extends StateNotifier<bool?> {
+  HiddenPass() : super(true);
+  void change() => state = state == false ? true : false;
 }
 
-class _RegisterMobileState extends State<RegisterMobile> {
-  bool _isChecked = false;
-  //text controllers
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmpasswordController = TextEditingController();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _phoneNumberController = TextEditingController();
-  final _dateofbirthController = TextEditingController();
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final FirebaseFirestore db = FirebaseFirestore.instance;
-  final countryDial = "0";
+final hiddenPassProvider = StateNotifierProvider<HiddenPass, bool?>((ref) {
+  return HiddenPass();
+});
 
-  bool passwordConfirmed() {
-    if (_passwordController.text.trim() ==
-        _confirmpasswordController.text.trim()) {
-      return true;
-    } else {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text("Your Password is not same, Please try again!"),
-            );
-          });
-      return false;
-    }
-  }
+class RegisterMobileRiverpod extends ConsumerWidget {
+  const RegisterMobileRiverpod({super.key});
 
-  String getLastInitials(String _lastNameController) {
-    return _lastNameController.isNotEmpty
-        ? _lastNameController
-            .trim()
-            .split(RegExp(' +'))
-            .map((s) => s[0])
-            .take(1)
-            .join()
-            .toUpperCase()
-        : '';
-  }
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
+    final _confirmpasswordController = TextEditingController();
+    final _firstNameController = TextEditingController();
+    final _lastNameController = TextEditingController();
+    final _phoneNumberController = TextEditingController();
+    final _dateofbirthController = TextEditingController();
+    final countryDial = "0";
 
-  String getInitials(String _firstNameController) {
-    return _firstNameController.contains(' ')
-        ? _firstNameController
-            .trim()
-            .split(RegExp(' +'))
-            .reversed
-            .map((s) => s[0])
-            .take(2)
-            .join()
-            .toUpperCase()
-        : _firstNameController
+    final _formKey = GlobalKey<FormState>();
+    bool isEmail(String input) => EmailValidator.validate(input);
+
+    String getLastInitials(String _lastNameController) =>
+        _lastNameController.isNotEmpty
+            ? _lastNameController
                 .trim()
                 .split(RegExp(' +'))
                 .map((s) => s[0])
                 .take(1)
                 .join()
-                .toUpperCase() +
-            _firstNameController
+                .toUpperCase()
+            : '';
+
+    String getInitials(String _firstNameController) =>
+        _firstNameController.contains(' ')
+            ? _firstNameController
                 .trim()
                 .split(RegExp(' +'))
-                .map((s) => s[1])
-                .take(1)
+                .reversed
+                .map((s) => s[0])
+                .take(2)
                 .join()
-                .toUpperCase();
-  }
+                .toUpperCase()
+            : _firstNameController
+                    .trim()
+                    .split(RegExp(' +'))
+                    .map((s) => s[0])
+                    .take(1)
+                    .join()
+                    .toUpperCase() +
+                _firstNameController
+                    .trim()
+                    .split(RegExp(' +'))
+                    .map((s) => s[1])
+                    .take(1)
+                    .join()
+                    .toUpperCase();
 
-  String generateRandomString(int length) {
-    final random = Random();
-    const availableChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    final randomString = List.generate(length,
-            (index) => availableChars[random.nextInt(availableChars.length)])
-        .join();
+    String generateRandomString(int length) {
+      final random = Random();
+      const availableChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+      final randomString = List.generate(length,
+              (index) => availableChars[random.nextInt(availableChars.length)])
+          .join();
 
-    return randomString;
-  }
-
-  Future addUserDetails(String uid, String firstName, String lastName,
-      String email, String phoneNumber, String dateofbirth) async {
-    await db.collection('users').doc(uid).set({
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      // 'age': age,
-      'phoneNumber': countryDial + phoneNumber,
-      'dateofbirth': dateofbirth,
-      'roles': 'user',
-      'clientType': 'unassigned',
-      'clientcode': getLastInitials(_lastNameController.text.toString()) +
-          getInitials(_firstNameController.text.toString()) +
-          '-' +
-          generateRandomString(2),
-      'imageUrl': '',
-      'createdAt': DateTime.now().toString(),
-      'markDeleted': false,
-    });
-  }
-
-  Future signUp() async {
-    String userUid;
-
-    //authenticate user
-    if (passwordConfirmed()) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Center(child: CircularProgressIndicator());
-          });
-
-      try {
-        //create user
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim());
-
-        //add user details
-        auth.authStateChanges().listen((User? user) {
-          if (user == null) {
-            SnackBar(
-              content: const Text('There is no User Login'),
-            );
-          } else {
-            userUid = user.uid;
-            addUserDetails(
-                userUid,
-                _firstNameController.text.trim(),
-                _lastNameController.text.trim(),
-                _emailController.text.trim(),
-                // int.parse(_ageController.text.trim()),
-                _phoneNumberController.text.trim(),
-                _dateofbirthController.text.trim());
-          }
-        });
-      } on FirebaseAuthException catch (e) {
-        print(e);
-        await showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Text(e.message.toString()),
-              );
-            });
-      }
-      Navigator.of(context).pop();
+      return randomString;
     }
-  }
 
-  final _formKey = GlobalKey<FormState>();
-  bool isEmail(String input) => EmailValidator.validate(input);
-  bool _isHidden = true;
-  void _togglePasswordView() {
-    setState(() {
-      _isHidden = !_isHidden;
-    });
-  }
-
-  @override
-  void initState() {
-    _dateofbirthController.text = ""; //set the initial value of text field
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmpasswordController.dispose();
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    // _ageController.dispose();
-    _phoneNumberController.dispose();
-    _dateofbirthController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return SafeArea(
       child: Center(
           child: SingleChildScrollView(
@@ -383,10 +262,9 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                 formattedDate); //formatted date output using intl package =>  2021-03-16
                             //you can implement different kind of Date Format here according to your requirement
 
-                            setState(() {
-                              _dateofbirthController.text =
-                                  formattedDate; //set output date to TextField value.
-                            });
+                            _dateofbirthController.text =
+                                formattedDate; //set output date to TextField value.
+
                           } else {
                             print("Date is not selected");
                           }
@@ -484,52 +362,61 @@ class _RegisterMobileState extends State<RegisterMobile> {
                           EdgeInsets.symmetric(horizontal: Dimensions.width16),
                       child: Column(
                         children: [
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText: _isHidden,
-                            decoration: InputDecoration(
-                              labelStyle:
-                                  TextStyle(fontSize: Dimensions.font15),
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: Dimensions.height10),
-                              labelText: "Password",
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: Colors.blue,
-                                size: Dimensions.iconSize24,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radius12)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radius12)),
-                              // hintText: 'Password',
-                              fillColor: Colors.grey[200],
-                              filled: true,
-                              suffix: InkWell(
-                                onTap: _togglePasswordView,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      right: Dimensions.width08,
-                                      top: Dimensions.height20 / 10),
-                                  child: Icon(
-                                    _isHidden
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                          Consumer(
+                            builder: (context, ref, child) {
+                              final hidden = ref.watch(hiddenPassProvider)!;
+                              return TextFormField(
+                                controller: _passwordController,
+                                obscureText: hidden,
+                                decoration: InputDecoration(
+                                  labelStyle:
+                                      TextStyle(fontSize: Dimensions.font15),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: Dimensions.height10),
+                                  labelText: "Password",
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Colors.blue,
                                     size: Dimensions.iconSize24,
                                   ),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.radius12)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.radius12)),
+                                  // hintText: 'Password',
+                                  fillColor: Colors.grey[200],
+                                  filled: true,
+                                  suffix: InkWell(
+                                    onTap: ref
+                                        .read(hiddenPassProvider.notifier)
+                                        .change,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          right: Dimensions.width08,
+                                          top: Dimensions.height20 / 10),
+                                      child: Icon(
+                                        hidden
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        size: Dimensions.iconSize24,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter correct password";
-                              } else {
-                                return null;
-                              }
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Enter correct password";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              );
                             },
                           ),
                           FlutterPwValidator(
@@ -552,53 +439,82 @@ class _RegisterMobileState extends State<RegisterMobile> {
                     Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: Dimensions.width16),
-                      child: TextFormField(
-                        controller: _confirmpasswordController,
-                        obscureText: _isHidden,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(fontSize: Dimensions.font15),
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: Dimensions.height10),
-                          labelText: "Confirm Password",
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: Colors.blue,
-                            size: Dimensions.iconSize24,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius12)),
-                          // hintText: 'Confirm Password',
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                          suffix: InkWell(
-                            onTap: _togglePasswordView,
-                            child: Icon(_isHidden
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Enter correct password";
-                          } else {
-                            return null;
-                          }
+                      child: Consumer(
+                        builder: (context, ref, child) {
+                          final hidden = ref.watch(hiddenPassProvider)!;
+
+                          return TextFormField(
+                            controller: _confirmpasswordController,
+                            obscureText: hidden,
+                            decoration: InputDecoration(
+                              labelStyle:
+                                  TextStyle(fontSize: Dimensions.font15),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: Dimensions.height10),
+                              labelText: "Confirm Password",
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: Colors.blue,
+                                size: Dimensions.iconSize24,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius12)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius12)),
+                              // hintText: 'Confirm Password',
+                              fillColor: Colors.grey[200],
+                              filled: true,
+                              suffix: InkWell(
+                                onTap: ref
+                                    .read(hiddenPassProvider.notifier)
+                                    .change,
+                                child: Icon(hidden
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter correct password";
+                              } else {
+                                return null;
+                              }
+                            },
+                          );
                         },
                       ),
                     ),
                     const SizedBox(height: 30),
                     //Register Button
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          signUp();
-                          return;
+                          String clientCode = getLastInitials(
+                                  _lastNameController.text.toString()) +
+                              getInitials(
+                                  _firstNameController.text.toString()) +
+                              '-' +
+                              generateRandomString(2);
+
+                          await ref
+                              .read(authStateProvider.notifier)
+                              .createdWithEmailPassword(
+                                _emailController.text,
+                                _passwordController.text,
+                                _firstNameController.text,
+                                _lastNameController.text,
+                                clientCode,
+                                DateTime.now().toString(),
+                                countryDial + _phoneNumberController.text,
+                                'user',
+                                false,
+                                'unassigned',
+                                _dateofbirthController.text,
+                              );
                         }
                       },
                       style: TextButton.styleFrom(
@@ -651,11 +567,5 @@ class _RegisterMobileState extends State<RegisterMobile> {
         ),
       )),
     );
-  }
-
-  void onChanged(bool? value) {
-    setState(() {
-      _isChecked = value!;
-    });
   }
 }
