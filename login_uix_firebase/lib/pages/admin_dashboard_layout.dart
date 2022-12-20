@@ -17,6 +17,14 @@ class AdminDashboardLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+    double maxWidth = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return Scaffold(
       key: _scaffoldKey,
       extendBodyBehindAppBar: true,
@@ -27,7 +35,7 @@ class AdminDashboardLayout extends StatelessWidget {
           ? topNavigationBar(context, _scaffoldKey)
           : null,
       drawer: Container(
-        width: 200,
+        width: _width / (maxWidth / 200),
         child: Drawer(
           elevation: 16,
           child: SideBarAdmin(),

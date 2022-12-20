@@ -521,6 +521,7 @@ class LoginDesktop2 extends ConsumerWidget {
                         //login button
                         TextButton(
                           onPressed: (() async {
+                            navigationController.navigateTo(sideMenuItems[0]);
                             // if (formKey.currentState!.validate()) {
                             await ref
                                 .read(authStateProvider.notifier)

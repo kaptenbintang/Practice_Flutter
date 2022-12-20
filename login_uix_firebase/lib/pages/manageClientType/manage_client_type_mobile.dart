@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print, sized_box_for_whitespace, sort_child_properties_last
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -83,7 +84,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                 alignment: AlignmentDirectional(0, 0),
                 child: Container(
                   width: double.infinity,
-                  height: 44,
+                  height: Dimensions.height20 + Dimensions.height24,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                     borderRadius: BorderRadius.circular(0),
@@ -92,7 +93,11 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                 ),
               ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  Dimensions.width16,
+                  Dimensions.height08 * 2,
+                  Dimensions.width16,
+                  Dimensions.height08 * 2),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -104,7 +109,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                       offset: Offset(0, 2),
                     )
                   ],
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(Dimensions.font16),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -113,7 +118,11 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                   children: [
                     //Title and subtitle
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          Dimensions.width16,
+                          Dimensions.width16,
+                          0,
+                          Dimensions.height08 * 2),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +135,8 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                           ),
                           //Subtitle
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, Dimensions.height08 / 2, 0, 0),
                             child: Text(
                               'Your project status is appearing here.',
                               style: FlutterFlowTheme.of(context).bodyText2,
@@ -136,7 +146,8 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          Dimensions.width24 / 2, 0, Dimensions.width24 / 2, 0),
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -148,14 +159,18 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                Dimensions.width08 / 2,
+                                0,
+                                Dimensions.width08 / 2,
+                                Dimensions.height24),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.font16),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).lineColor,
                                   width: 1,
@@ -163,7 +178,10 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 12),
+                                    0,
+                                    Dimensions.height08 * 2,
+                                    0,
+                                    Dimensions.height24 / 2),
                                 child: SingleChildScrollView(
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -173,7 +191,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                       //COntainer Title
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            16, 0, 0, 0),
+                                            Dimensions.width16, 0, 0, 0),
                                         child: Text(
                                           'Client Type',
                                           style: FlutterFlowTheme.of(context)
@@ -193,9 +211,14 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                                 //textfield search
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 5, 0, 5),
+                                                      .fromSTEB(
+                                                          Dimensions.width10,
+                                                          Dimensions.height05,
+                                                          0,
+                                                          Dimensions.height05),
                                                   child: Container(
-                                                    width: 150,
+                                                    width: Dimensions.width100 +
+                                                        Dimensions.width10 * 5,
                                                     child: TextFormField(
                                                       controller:
                                                           textController,
@@ -217,9 +240,10 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                                                 .primaryText,
                                                             width: 1.5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                      .radius15 /
+                                                                  3),
                                                         ),
                                                         focusedBorder:
                                                             OutlineInputBorder(
@@ -230,9 +254,10 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                                                 .primaryText,
                                                             width: 1.5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                      .radius15 /
+                                                                  3),
                                                         ),
                                                         errorBorder:
                                                             OutlineInputBorder(
@@ -242,9 +267,10 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                                                 0x00000000),
                                                             width: 1.5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                      .radius15 /
+                                                                  3),
                                                         ),
                                                         focusedErrorBorder:
                                                             OutlineInputBorder(
@@ -254,9 +280,10 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                                                 0x00000000),
                                                             width: 1.5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                      .radius15 /
+                                                                  3),
                                                         ),
                                                       ),
                                                       style: FlutterFlowTheme
@@ -273,20 +300,27 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                                 //search icon
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(5, 0, 0, 0),
+                                                      .fromSTEB(
+                                                          Dimensions.width10 /
+                                                              2,
+                                                          0,
+                                                          0,
+                                                          0),
                                                   child: FlutterFlowIconButton(
                                                     borderColor:
                                                         Colors.transparent,
-                                                    borderRadius: 30,
+                                                    borderRadius:
+                                                        Dimensions.radius30,
                                                     borderWidth: 1,
-                                                    buttonSize: 40,
+                                                    buttonSize:
+                                                        Dimensions.font20 * 2,
                                                     icon: Icon(
                                                       Icons.search,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primaryText,
-                                                      size: 20,
+                                                      size: Dimensions.font20,
                                                     ),
                                                     onPressed: () {
                                                       print(
@@ -300,15 +334,15 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                           //add button
                                           FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
-                                            borderRadius: 30,
+                                            borderRadius: Dimensions.radius30,
                                             borderWidth: 1,
-                                            buttonSize: 40,
+                                            buttonSize: Dimensions.font20 * 2,
                                             icon: Icon(
                                               Icons.playlist_add,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryColor,
-                                              size: 20,
+                                              size: Dimensions.font20,
                                             ),
                                             onPressed: () {
                                               print('IconButton pressed ...');
@@ -320,7 +354,10 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                       //Column Title
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            12, 12, 12, 0),
+                                            Dimensions.width24 / 2,
+                                            Dimensions.height24 / 2,
+                                            Dimensions.width24 / 2,
+                                            0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -329,7 +366,12 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 0, 0, 0),
+                                                      .fromSTEB(
+                                                          Dimensions.width30 /
+                                                              10,
+                                                          0,
+                                                          0,
+                                                          0),
                                                   child: Text(
                                                     'Client Type',
                                                     style: FlutterFlowTheme.of(
@@ -354,7 +396,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                       //Data Row
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 16, 0, 0),
+                                            0, Dimensions.height08 * 2, 0, 0),
                                         child: ListView(
                                           padding: EdgeInsets.zero,
                                           shrinkWrap: true,
@@ -443,7 +485,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height10 / 5),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -457,72 +499,82 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
           ],
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              Dimensions.width24 / 2,
+              Dimensions.height24 / 2,
+              Dimensions.width24 / 2,
+              Dimensions.height24 / 2),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              AutoSizeText(
-                snapshot.ctName!,
-                style: FlutterFlowTheme.of(context).subtitle1,
+              Expanded(
+                flex: 3,
+                child: AutoSizeText(
+                  snapshot.ctName!,
+                  style: FlutterFlowTheme.of(context).subtitle1,
+                ),
               ),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    DropdownButton<String>(
-                      focusNode: dropDownFocus,
-                      isExpanded: true,
-                      borderRadius: BorderRadius.circular(30),
-                      iconSize: 40,
-                      icon: Icon(
-                        Icons.arrow_drop_down,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 20,
-                      ),
-                      onChanged: (value) {
-                        print(value);
-                        // if value doesnt contain just close the dropDown
-                        if (value == null) {
-                          dropDownFocus.unfocus();
-                        } else {
-                          switch (value) {
-                            case "Remove":
-                              service.deleteClientType(
-                                  context, snapshot.id.toString());
-                              _pullRefresh();
-                              break;
-                            case "Edit":
-                              dialogEditClientType(context);
-                              setState(() {
-                                userId = snapshot.id;
-                                clientTypeName = snapshot.ctName;
-                              });
-                              break;
-                            default:
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        focusNode: dropDownFocus,
+                        isExpanded: true,
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        iconSize: Dimensions.font20 * 2,
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: Dimensions.font20,
+                        ),
+                        onChanged: (value) {
+                          print(value);
+                          // if value doesnt contain just close the dropDown
+                          if (value == null) {
+                            dropDownFocus.unfocus();
+                          } else {
+                            switch (value) {
+                              case "Remove":
+                                service.deleteClientType(
+                                    context, snapshot.id.toString());
+                                _pullRefresh();
+                                break;
+                              case "Edit":
+                                dialogEditClientType(context);
+                                setState(() {
+                                  userId = snapshot.id;
+                                  clientTypeName = snapshot.ctName;
+                                });
+                                break;
+                              default:
+                            }
                           }
-                        }
-                      },
-                      // items: List.generate(
-                      //     dropDownItemValue2.length,
-                      //     (index) => DropdownMenuItem(
-                      //           value: dropDownItemValue2[index],
-                      //           child: Text(dropDownItemValue2[index]),
-                      //         )),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text('Action'),
-                          value: "Action",
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Edit'),
-                          value: "Edit",
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Remove'),
-                          value: "Remove",
-                        ),
-                      ],
+                        },
+                        // items: List.generate(
+                        //     dropDownItemValue2.length,
+                        //     (index) => DropdownMenuItem(
+                        //           value: dropDownItemValue2[index],
+                        //           child: Text(dropDownItemValue2[index]),
+                        //         )),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Action'),
+                            value: "Action",
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Edit'),
+                            value: "Edit",
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Remove'),
+                            value: "Remove",
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -545,8 +597,8 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(Dimensions.width20 * 2),
+                  top: -(Dimensions.height20 * 4),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -563,7 +615,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.font16 / 2),
                         child: TextFormField(
                           controller: _clientTypeController,
                           decoration: InputDecoration(
@@ -572,10 +624,10 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: Dimensions.height20 * 2,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.font16 / 2),
                         child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () async {
@@ -614,8 +666,8 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(Dimensions.width20 * 2),
+                  top: -(Dimensions.height20 * 4),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -632,7 +684,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.font16 / 2),
                         child: TextFormField(
                           controller: _clientTypeController,
                           decoration: InputDecoration(
@@ -648,10 +700,10 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: Dimensions.height20 * 2,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.font16 / 2),
                         child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () async {

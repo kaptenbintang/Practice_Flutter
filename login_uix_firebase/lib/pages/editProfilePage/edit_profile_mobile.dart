@@ -319,7 +319,6 @@ class _EditProfileMobileWidgetState extends State<EditProfileMobileWidget> {
                                   .override(
                                     fontFamily: 'Lexend Deca',
                                     color: Color(0xFF4B39EF),
-                                    fontSize: 14,
                                     fontWeight: FontWeight.normal,
                                   ),
                               elevation: 1,
@@ -344,14 +343,12 @@ class _EditProfileMobileWidgetState extends State<EditProfileMobileWidget> {
                               FlutterFlowTheme.of(context).bodyText2.override(
                                     fontFamily: 'Lexend Deca',
                                     color: Color(0xFF95A1AC),
-                                    fontSize: 14,
                                     fontWeight: FontWeight.normal,
                                   ),
                           hintStyle:
                               FlutterFlowTheme.of(context).bodyText2.override(
                                     fontFamily: 'Lexend Deca',
                                     color: Color(0xFF95A1AC),
-                                    fontSize: 14,
                                     fontWeight: FontWeight.normal,
                                   ),
                           enabledBorder: OutlineInputBorder(
@@ -390,7 +387,6 @@ class _EditProfileMobileWidgetState extends State<EditProfileMobileWidget> {
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Lexend Deca',
                               color: Color(0xFF090F13),
-                              fontSize: 14,
                               fontWeight: FontWeight.normal,
                             ),
                         maxLines: null,

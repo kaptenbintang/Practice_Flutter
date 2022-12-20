@@ -162,7 +162,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                     Navigator.pop(context);
                   },
                   child: Container(
-                    height: 50,
+                    height: Dimensions.height10 * 5,
                     color: Colors.orange,
                     child: Center(
                       child: Column(
@@ -189,7 +189,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                   alignment: AlignmentDirectional(0, 0),
                   child: Container(
                     width: double.infinity,
-                    height: 44,
+                    height: Dimensions.height24 + Dimensions.height20,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       borderRadius: BorderRadius.circular(0),
@@ -199,7 +199,11 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                 ),
               //Dashboard container
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                padding: EdgeInsetsDirectional.fromSTEB(
+                    Dimensions.width16,
+                    Dimensions.height15 + Dimensions.height10 / 10,
+                    Dimensions.width16,
+                    Dimensions.height15 + Dimensions.height10 / 10),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -211,7 +215,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                         offset: Offset(0, 2),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.radius15 + Dimensions.radius10 / 10),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -220,7 +225,11 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                     children: [
                       //Title
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            Dimensions.width16,
+                            Dimensions.height15 + Dimensions.height10 / 10,
+                            0,
+                            Dimensions.height15 + Dimensions.height10 / 10),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -231,8 +240,12 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               style: FlutterFlowTheme.of(context).title3,
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0,
+                                  Dimensions.height05 -
+                                      Dimensions.height10 / 10,
+                                  0,
+                                  0),
                               child: Text(
                                 'Your project status is appearing here.',
                                 style: FlutterFlowTheme.of(context).bodyText2,
@@ -243,7 +256,11 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                       ),
                       //COntent wrap
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            Dimensions.width24 / 12,
+                            0,
+                            Dimensions.width24 / 2,
+                            0),
                         child: Wrap(
                           spacing: 8,
                           runSpacing: 8,
@@ -255,15 +272,20 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                           clipBehavior: Clip.none,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  Dimensions.width08 / 2,
+                                  0,
+                                  Dimensions.width08 / 2,
+                                  Dimensions.height24),
                               //Staff COntainer
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(16),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius15 +
+                                          Dimensions.radius10 / 10),
                                   border: Border.all(
                                     color:
                                         FlutterFlowTheme.of(context).lineColor,
@@ -272,7 +294,11 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 16, 0, 12),
+                                      0,
+                                      Dimensions.height15 +
+                                          Dimensions.height10 / 10,
+                                      0,
+                                      Dimensions.height24 / 2),
                                   child: SingleChildScrollView(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
@@ -283,7 +309,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
+                                                  Dimensions.width16, 0, 0, 0),
                                           child: Text(
                                             'My Staff',
                                             style: FlutterFlowTheme.of(context)
@@ -307,9 +333,18 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 5, 0, 5),
+                                                                Dimensions
+                                                                    .width10,
+                                                                Dimensions
+                                                                    .height05,
+                                                                0,
+                                                                Dimensions
+                                                                    .height05),
                                                     child: Container(
-                                                      width: 150,
+                                                      width: Dimensions
+                                                              .width100 +
+                                                          Dimensions.width10 *
+                                                              5,
                                                       child: TextFormField(
                                                         controller:
                                                             controllerSearch,
@@ -332,9 +367,10 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                               width: 1.5,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                            .radius15 /
+                                                                        3),
                                                           ),
                                                           focusedBorder:
                                                               OutlineInputBorder(
@@ -346,9 +382,10 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                               width: 1.5,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                            .radius15 /
+                                                                        3),
                                                           ),
                                                           errorBorder:
                                                               OutlineInputBorder(
@@ -359,9 +396,10 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                               width: 1.5,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                            .radius15 /
+                                                                        3),
                                                           ),
                                                           focusedErrorBorder:
                                                               OutlineInputBorder(
@@ -372,9 +410,10 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                               width: 1.5,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                            .radius15 /
+                                                                        3),
                                                           ),
                                                         ),
                                                         style: FlutterFlowTheme
@@ -390,24 +429,29 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                   ),
                                                   //searchicon
                                                   Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                5, 0, 0, 0),
+                                                    padding: EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            Dimensions.width30 /
+                                                                10,
+                                                            0,
+                                                            0,
+                                                            0),
                                                     child:
                                                         FlutterFlowIconButton(
                                                       borderColor:
                                                           Colors.transparent,
-                                                      borderRadius: 30,
+                                                      borderRadius:
+                                                          Dimensions.radius30,
                                                       borderWidth: 1,
-                                                      buttonSize: 40,
+                                                      buttonSize:
+                                                          Dimensions.font10 * 3,
                                                       icon: Icon(
                                                         Icons.search,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
-                                                        size: 20,
+                                                        size: Dimensions.font18,
                                                       ),
                                                       onPressed: () {
                                                         controllerSearch
@@ -421,7 +465,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsets.only(top: 6),
+                                              padding: EdgeInsets.only(
+                                                  top: Dimensions.height10),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -434,39 +479,51 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                               .isNotEmpty
                                                           ? true
                                                           : false,
-                                                      child: Text(
-                                                        'Selected ${selectedUser.length} Users out of ${retrievedUserList?.length}',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  fontSize: 12,
-                                                                ),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 5.0),
+                                                        child: Text(
+                                                          'Selected ${selectedUser.length} Users out of ${retrievedUserList?.length}',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontSize: Dimensions
+                                                                        .font15 /
+                                                                    2,
+                                                              ),
+                                                        ),
                                                       )),
                                                   SizedBox(
-                                                    width: 5.0,
+                                                    width:
+                                                        Dimensions.width10 / 2,
                                                   ),
                                                   //Deleteiconbutton
                                                   Padding(
                                                     padding: EdgeInsets.only(
-                                                        right: 5),
+                                                      right:
+                                                          Dimensions.width10 /
+                                                              2,
+                                                    ),
                                                     child:
                                                         FlutterFlowIconButton(
                                                       borderColor:
                                                           Colors.transparent,
-                                                      borderRadius: 30,
+                                                      borderRadius:
+                                                          Dimensions.radius30,
                                                       borderWidth: 1,
-                                                      buttonSize: 30,
+                                                      buttonSize:
+                                                          Dimensions.font10 * 3,
                                                       icon: Icon(
                                                         Icons.delete_sweep,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .alternate,
-                                                        size: 20,
+                                                        size: Dimensions.font18,
                                                       ),
                                                       onPressed: () {
                                                         showDialog(
@@ -512,7 +569,10 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  12, 12, 12, 0),
+                                                  Dimensions.width24 / 2,
+                                                  Dimensions.height24 / 2,
+                                                  Dimensions.width24 / 2,
+                                                  0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -521,7 +581,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                 children: [
                                                   //select all button
                                                   Checkbox(
-                                                    splashRadius: 30,
+                                                    splashRadius:
+                                                        Dimensions.radius30,
                                                     value:
                                                         selectedUser.isNotEmpty
                                                             ? true
@@ -540,11 +601,14 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                               const Duration(
                                                                   milliseconds:
                                                                       1500),
-                                                          width: 300.0,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                            horizontal: 8.0,
+                                                          width: Dimensions
+                                                                  .width100 *
+                                                              3,
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                            horizontal:
+                                                                Dimensions
+                                                                    .width08,
                                                           ),
                                                           behavior:
                                                               SnackBarBehavior
@@ -552,9 +616,9 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                           shape:
                                                               RoundedRectangleBorder(
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                        .radius10),
                                                           ),
                                                           content: Text(
                                                             'All user selected: $value',
@@ -567,7 +631,11 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 0, 0, 0),
+                                                                Dimensions
+                                                                    .width10,
+                                                                0,
+                                                                0,
+                                                                0),
                                                     child: Text(
                                                       'CT Code',
                                                       style:
@@ -594,7 +662,10 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 16, 0, 0),
+                                                  0,
+                                                  Dimensions.height08 * 2,
+                                                  0,
+                                                  0),
                                           child: //staff data row
                                               FutureBuilder(
                                                   future: userList,
@@ -672,7 +743,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
           }
         },
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+          padding:
+              EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height10 / 5),
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -686,7 +758,11 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
               ],
             ),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  Dimensions.width24 / 2,
+                  Dimensions.height24 / 2,
+                  Dimensions.width24 / 2,
+                  Dimensions.height24 / 2),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -697,7 +773,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, Dimensions.width24 / 2, 0),
                           child: Checkbox(
                             value: selectedUser.contains(snapshot),
                             onChanged: (isSelected) {
@@ -726,8 +803,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               desktop: false,
                             ))
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0, Dimensions.height10 / 5, 0, 0),
                                 child: Text(
                                   snapshot.emailUser!,
                                   style: FlutterFlowTheme.of(context).bodyText2,
@@ -744,84 +821,89 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        DropdownButton<String>(
-                          focusNode: dropDownFocus,
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(30),
-                          iconSize: 40,
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 20,
-                          ),
-                          onChanged: (value) {
-                            print(value);
-                            if (value == null) {
-                              dropDownFocus.unfocus();
-                            } else {
-                              switch (value) {
-                                case "Edit":
-                                  dialogEdit(context);
-                                  setState(() {
-                                    _emailController.text = snapshot.emailUser!;
-                                    _clientTypeController.text =
-                                        snapshot.clientType as String;
-                                    _rolesController.text =
-                                        snapshot.roles as String;
-                                    _firstNameController.text =
-                                        snapshot.firstName;
-                                    _lastNameController.text =
-                                        snapshot.lastName;
-                                    _ageController.text = snapshot.doBirth;
-                                    _clientCodeController.text =
-                                        snapshot.clientCode as String;
-                                    _phoneController.text =
-                                        snapshot.phoneNumber;
-                                    userId = snapshot.id;
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            focusNode: dropDownFocus,
+                            isExpanded: true,
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.radius30),
+                            iconSize: Dimensions.font20 * 2,
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: Dimensions.font20,
+                            ),
+                            onChanged: (value) {
+                              print(value);
+                              if (value == null) {
+                                dropDownFocus.unfocus();
+                              } else {
+                                switch (value) {
+                                  case "Edit":
+                                    dialogEdit(context);
+                                    setState(() {
+                                      _emailController.text =
+                                          snapshot.emailUser!;
+                                      _clientTypeController.text =
+                                          snapshot.clientType as String;
+                                      _rolesController.text =
+                                          snapshot.roles as String;
+                                      _firstNameController.text =
+                                          snapshot.firstName;
+                                      _lastNameController.text =
+                                          snapshot.lastName;
+                                      _ageController.text = snapshot.doBirth;
+                                      _clientCodeController.text =
+                                          snapshot.clientCode as String;
+                                      _phoneController.text =
+                                          snapshot.phoneNumber;
+                                      userId = snapshot.id;
 
-                                    selectedValue = snapshot.clientType;
-                                    selectedValueRoles = snapshot.roles;
-                                    createAt = snapshot.createdAt;
-                                    marDeleted = snapshot.markDeleted;
-                                  });
-                                  break;
-                                case "ResetPassword":
-                                  dialogResetPassword(context);
-                                  setState(() {
-                                    _emailController.text = snapshot.emailUser!;
-                                  });
-                                  break;
-                                default:
+                                      selectedValue = snapshot.clientType;
+                                      selectedValueRoles = snapshot.roles;
+                                      createAt = snapshot.createdAt;
+                                      marDeleted = snapshot.markDeleted;
+                                    });
+                                    break;
+                                  case "ResetPassword":
+                                    dialogResetPassword(context);
+                                    setState(() {
+                                      _emailController.text =
+                                          snapshot.emailUser!;
+                                    });
+                                    break;
+                                  default:
+                                }
                               }
-                            }
-                          },
-                          // items: List.generate(
-                          //     dropDownItemValue2.length,
-                          //     (index) => DropdownMenuItem(
-                          //           value: dropDownItemValue2[index],
-                          //           child: Text(dropDownItemValue2[index]),
-                          //         )),
-                          items: [
-                            DropdownMenuItem(
-                              child: Text('Action'),
-                              value: "Action",
-                            ),
-                            if (authoRoles['canWrite'] != false)
+                            },
+                            // items: List.generate(
+                            //     dropDownItemValue2.length,
+                            //     (index) => DropdownMenuItem(
+                            //           value: dropDownItemValue2[index],
+                            //           child: Text(dropDownItemValue2[index]),
+                            //         )),
+                            items: [
                               DropdownMenuItem(
-                                child: Text('Edit'),
-                                value: "Edit",
+                                child: Text('Action'),
+                                value: "Action",
                               ),
-                            // if (currentUser.uid.toString != snapshot.id.toString &&
-                            //     authoRoles!['canDelete'] != false)
-                            //   DropdownMenuItem(
-                            //     child: Text('Remove'),
-                            //     value: "Remove",
-                            //   ),
-                            DropdownMenuItem(
-                              child: Text('Change Password'),
-                              value: "ResetPassword",
-                            ),
-                          ],
+                              if (authoRoles['canWrite'] != false)
+                                DropdownMenuItem(
+                                  child: Text('Edit'),
+                                  value: "Edit",
+                                ),
+                              // if (currentUser.uid.toString != snapshot.id.toString &&
+                              //     authoRoles!['canDelete'] != false)
+                              //   DropdownMenuItem(
+                              //     child: Text('Remove'),
+                              //     value: "Remove",
+                              //   ),
+                              DropdownMenuItem(
+                                child: Text('Change Password'),
+                                value: "ResetPassword",
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -846,7 +928,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
           }
         },
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+          padding:
+              EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height10 / 5),
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -860,7 +943,11 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
               ],
             ),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  Dimensions.width24 / 2,
+                  Dimensions.height24 / 2,
+                  Dimensions.width24 / 2,
+                  Dimensions.height24 / 2),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -871,7 +958,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, Dimensions.width24 / 2, 0),
                           child: Checkbox(
                             value: selectedUser.contains(snapshot),
                             onChanged: (isSelected) {
@@ -900,8 +988,8 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               desktop: false,
                             ))
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0, Dimensions.height10 / 5, 0, 0),
                                 child: Text(
                                   snapshot.emailUser!,
                                   style: FlutterFlowTheme.of(context).bodyText2,
@@ -922,12 +1010,13 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                           focusNode: dropDownFocus,
                           isExpanded: true,
                           elevation: 8,
-                          borderRadius: BorderRadius.circular(30),
-                          iconSize: 40,
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius30),
+                          iconSize: Dimensions.font20 * 2,
                           icon: Icon(
                             Icons.arrow_drop_down,
                             color: FlutterFlowTheme.of(context).primaryText,
-                            size: 20,
+                            size: Dimensions.font20,
                           ),
                           onChanged: (value) {
                             print(value);
@@ -1059,14 +1148,14 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
         builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
+                borderRadius: BorderRadius.circular(Dimensions.radius20)),
             title: const Text("Edit User Data"),
             content: SingleChildScrollView(
                 child: ListBody(
               children: [
                 SizedBox(
                   // height: 500,
-                  width: 400,
+                  width: Dimensions.width100 * 4,
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -1074,8 +1163,10 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                       children: [
                         //client code
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 8, bottom: 8),
+                          padding: EdgeInsets.only(
+                              left: Dimensions.width08,
+                              right: Dimensions.width08,
+                              bottom: Dimensions.height08),
                           child: TextFormField(
                             enabled: authoRoles['canWriteAll'] != false
                                 ? true
@@ -1084,15 +1175,18 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 labelText: "Client Code",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.orange),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 fillColor: authoRoles['canWriteAll'] != false
                                     ? Colors.grey[200]
                                     : Colors.grey[400],
@@ -1106,7 +1200,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             //firstname
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(Dimensions.font16 / 2),
                                 child: TextFormField(
                                   controller: _firstNameController,
                                   decoration: InputDecoration(
@@ -1114,13 +1208,13 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                       enabledBorder: OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius12)),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.blue),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius12)),
                                       fillColor: Colors.grey[200],
                                       filled: true),
                                 ),
@@ -1129,7 +1223,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             //lastname
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(Dimensions.font16 / 2),
                                 child: TextFormField(
                                   controller: _lastNameController,
                                   decoration: InputDecoration(
@@ -1137,13 +1231,13 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                       enabledBorder: OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius12)),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.blue),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius12)),
                                       fillColor: Colors.grey[200],
                                       filled: true),
                                 ),
@@ -1153,63 +1247,69 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                         ),
                         //email
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(Dimensions.font16 / 2),
                           child: TextFormField(
                             controller: _emailController,
                             decoration: InputDecoration(
                                 labelText: "Email",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 fillColor: Colors.grey[200],
                                 filled: true),
                           ),
                         ),
                         //dateofbirth
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(Dimensions.font16 / 2),
                           child: TextFormField(
                             controller: _ageController,
                             decoration: InputDecoration(
                                 labelText: "Date of Birth",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 fillColor: Colors.grey[200],
                                 filled: true),
                           ),
                         ),
                         //phonenumber
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(Dimensions.font16 / 2),
                           child: TextFormField(
                             controller: _phoneController,
                             decoration: InputDecoration(
                                 labelText: "Phone Number",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius12)),
                                 fillColor: Colors.grey[200],
                                 filled: true),
                           ),
                         ),
                         //clienttype
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(Dimensions.font16 / 2),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField2(
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
-                              dropdownMaxHeight: 250,
+                              dropdownMaxHeight: Dimensions.height500 / 2,
                               value: selectedValue!.isNotEmpty
                                   ? selectedValue
                                   : selectedValue = "",
@@ -1217,7 +1317,9 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 color: authoRoles['canWriteAll'] != false
                                     ? Colors.grey[200]
                                     : Colors.grey[400],
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radius15 -
+                                        Dimensions.radius10 / 10),
                               ),
                               decoration: InputDecoration(
                                 //Add isDense true and zero Padding.
@@ -1228,34 +1330,37 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
 
                                 contentPadding: EdgeInsets.zero,
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius15),
                                 ),
                                 //Add more decoration as you want here
                                 //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
                               ),
                               isExpanded: true,
-                              hint: const Text(
+                              hint: Text(
                                 'Select Client Type',
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(fontSize: Dimensions.font14),
                               ),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.arrow_drop_down,
                                 color: Colors.black45,
                               ),
-                              iconSize: 30,
-                              buttonHeight: 50,
-                              buttonPadding:
-                                  const EdgeInsets.only(left: 20, right: 10),
+                              iconSize: Dimensions.font10 * 3,
+                              buttonHeight: Dimensions.height10 * 5,
+                              buttonPadding: EdgeInsets.only(
+                                  left: Dimensions.width10,
+                                  right: Dimensions.width10),
                               dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius15),
                               ),
                               items: listOfValue
                                   .map((item) => DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
                                           item,
-                                          style: const TextStyle(
-                                            fontSize: 14,
+                                          style: TextStyle(
+                                            fontSize: Dimensions.font14,
                                           ),
                                         ),
                                       ))
@@ -1278,24 +1383,26 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               },
                               searchController: searchDropClientType,
                               searchInnerWidget: Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 8,
-                                  bottom: 4,
-                                  right: 8,
-                                  left: 8,
+                                padding: EdgeInsets.only(
+                                  top: Dimensions.height08,
+                                  bottom: Dimensions.height08 / 2,
+                                  right: Dimensions.width08,
+                                  left: Dimensions.width08,
                                 ),
                                 child: TextFormField(
                                   controller: searchDropClientType,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 8,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: Dimensions.width10,
+                                      vertical: Dimensions.height08,
                                     ),
                                     hintText: 'Search for an item...',
-                                    hintStyle: const TextStyle(fontSize: 12),
+                                    hintStyle:
+                                        TextStyle(fontSize: Dimensions.font12),
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.font16 / 2),
                                     ),
                                   ),
                                 ),
@@ -1316,12 +1423,12 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                         ),
                         //roles type
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(Dimensions.font16 / 2),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField2(
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
-                              dropdownMaxHeight: 250,
+                              dropdownMaxHeight: Dimensions.height500 / 2,
                               value:
                                   // rolesType == "Developer"
                                   selectedValueRoles!.isNotEmpty
@@ -1332,7 +1439,9 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 color: rolesType == "superadmin"
                                     ? Colors.grey[200]
                                     : Colors.grey[400],
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radius15 -
+                                        Dimensions.radius10 / 10),
                               ),
                               decoration: InputDecoration(
                                 //Add isDense true and zero Padding.
@@ -1343,34 +1452,37 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
 
                                 contentPadding: EdgeInsets.zero,
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius15),
                                 ),
                                 //Add more decoration as you want here
                                 //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
                               ),
                               isExpanded: true,
-                              hint: const Text(
+                              hint: Text(
                                 'Select Roles Type',
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(fontSize: Dimensions.font14),
                               ),
                               icon: const Icon(
                                 Icons.arrow_drop_down,
                                 color: Colors.black45,
                               ),
-                              iconSize: 30,
-                              buttonHeight: 50,
-                              buttonPadding:
-                                  const EdgeInsets.only(left: 20, right: 10),
+                              iconSize: Dimensions.font10 * 3,
+                              buttonHeight: Dimensions.height10 * 5,
+                              buttonPadding: EdgeInsets.only(
+                                  left: Dimensions.width10,
+                                  right: Dimensions.width10),
                               dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius15),
                               ),
                               items: listOfValueRoles
                                   .map((item) => DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
                                           item,
-                                          style: const TextStyle(
-                                            fontSize: 14,
+                                          style: TextStyle(
+                                            fontSize: Dimensions.font14,
                                           ),
                                         ),
                                       ))
@@ -1393,24 +1505,26 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               },
                               searchController: searchDropRoles,
                               searchInnerWidget: Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 8,
-                                  bottom: 4,
-                                  right: 8,
-                                  left: 8,
+                                padding: EdgeInsets.only(
+                                  top: Dimensions.height08,
+                                  bottom: Dimensions.height08 / 2,
+                                  right: Dimensions.width08,
+                                  left: Dimensions.width08,
                                 ),
                                 child: TextFormField(
                                   controller: searchDropRoles,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 8,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: Dimensions.width10,
+                                      vertical: Dimensions.height08,
                                     ),
                                     hintText: 'Search for an item...',
-                                    hintStyle: const TextStyle(fontSize: 12),
+                                    hintStyle:
+                                        TextStyle(fontSize: Dimensions.font12),
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.font16 / 2),
                                     ),
                                   ),
                                 ),
@@ -1436,7 +1550,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             //cancel button
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(Dimensions.font16 / 2),
                                 child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
@@ -1452,7 +1566,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             //comfirm button
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(Dimensions.font16 / 2),
                                 child: ElevatedButton(
                                   onPressed: (() async {
                                     if (_formKey.currentState!.validate()) {
@@ -1498,21 +1612,21 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
         builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
+                borderRadius: BorderRadius.circular(Dimensions.radius20)),
             title: const Text("Send a link reset password"),
             content: SingleChildScrollView(
                 child: ListBody(
               children: [
                 SizedBox(
                   // height: 500,
-                  width: 400,
+                  width: Dimensions.width100 * 4,
                   child: Form(
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(Dimensions.font16 / 2),
                           child: TextFormField(
                             controller: _emailController,
                             // maxLines: 1,
@@ -1522,11 +1636,13 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               hintStyle: TextStyle(color: Color(0xFF6f6f6f)),
                               counterText: '',
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius15),
                                 borderSide: BorderSide(color: Colors.grey),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius15),
                                 borderSide: BorderSide(
                                   color: Color(0xFFf3f5f6),
                                   width: 2.0,
@@ -1544,7 +1660,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(Dimensions.font16 / 2),
                                 child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
@@ -1555,7 +1671,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(Dimensions.font16 / 2),
                                 child: ElevatedButton(
                                   onPressed: () {
                                     passwordReset(context);

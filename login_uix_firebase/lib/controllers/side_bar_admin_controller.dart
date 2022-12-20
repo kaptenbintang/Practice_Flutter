@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/routing/routes.dart';
 
@@ -50,7 +51,9 @@ class SideBarAdminController extends GetxController {
     if (isActive(itemName)) {
       return Icon(
         icon,
-        size: 24,
+        size: ResponsiveWidget.isSmallScreen(Get.context!)
+            ? Dimensions.font12 * 2
+            : 24,
         color: FlutterFlowTheme.of(Get.context!).primaryColor,
       );
     }

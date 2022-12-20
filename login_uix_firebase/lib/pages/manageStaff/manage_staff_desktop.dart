@@ -13,6 +13,7 @@ import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
+import '../../helper/responsive.dart';
 import '../../helper/user_privilege.dart';
 import '../../model/roles_data.dart';
 import '../../model/user_data.dart';
@@ -145,13 +146,25 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16)),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -163,7 +176,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                       offset: Offset(0, 2),
                     )
                   ],
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius:
+                      BorderRadius.circular(screenWidth / (width / 16)),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -171,7 +185,11 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 16),
+                          screenWidth / (width / 16),
+                          0,
+                          screenWidth / (width / 16)),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -179,20 +197,33 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                         children: [
                           Text(
                             'Dashboard',
-                            style: FlutterFlowTheme.of(context).title3,
+                            style: FlutterFlowTheme.of(context).title3.override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: screenWidth / (width / 20),
+                                ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, screenWidth / (width / 4), 0, 0),
                             child: Text(
                               'Your project status is appearing here.',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: screenWidth / (width / 14),
+                                  ),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 12),
+                          0,
+                          screenWidth / (width / 12),
+                          0),
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -204,14 +235,18 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 4),
+                                0,
+                                screenWidth / (width / 4),
+                                screenWidth / (width / 24)),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 16)),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).lineColor,
                                   width: 1,
@@ -219,7 +254,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 12),
+                                    0,
+                                    screenWidth / (width / 16),
+                                    0,
+                                    screenWidth / (width / 12)),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,23 +270,39 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
+                                                  screenWidth / (width / 16),
+                                                  0,
+                                                  0,
+                                                  0),
                                           child: Text(
                                             'My Staff',
                                             style: FlutterFlowTheme.of(context)
-                                                .title3,
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: screenWidth /
+                                                      (width / 20),
+                                                ),
                                           ),
                                         ),
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Container(
-                                              width: 200,
+                                              width:
+                                                  screenWidth / (width / 200),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 5),
+                                                    .fromSTEB(
+                                                        0,
+                                                        screenWidth /
+                                                            (width / 5),
+                                                        0,
+                                                        screenWidth /
+                                                            (width / 5)),
                                                 child: Container(
-                                                  width: 200,
+                                                  width: screenWidth /
+                                                      (width / 200),
                                                   child: TextFormField(
                                                     controller:
                                                         controllerSearch,
@@ -259,7 +313,15 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText2,
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontSize:
+                                                                    screenWidth /
+                                                                        (width /
+                                                                            14),
+                                                              ),
                                                       enabledBorder:
                                                           OutlineInputBorder(
                                                         borderSide: BorderSide(
@@ -269,8 +331,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
@@ -281,8 +345,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       errorBorder:
                                                           OutlineInputBorder(
@@ -292,8 +358,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       focusedErrorBorder:
                                                           OutlineInputBorder(
@@ -303,28 +371,39 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1,
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 14),
+                                                        ),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                             FlutterFlowIconButton(
                                               borderColor: Colors.transparent,
-                                              borderRadius: 30,
+                                              borderRadius:
+                                                  screenWidth / (width / 30),
                                               borderWidth: 1,
-                                              buttonSize: 50,
+                                              buttonSize:
+                                                  screenWidth / (width / 50),
                                               icon: Icon(
                                                 Icons.search,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                size: 25,
+                                                size:
+                                                    screenWidth / (width / 25),
                                               ),
                                               onPressed: () {
                                                 print('IconButton pressed ...');
@@ -354,24 +433,30 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                         .bodyText2
                                                         .override(
                                                           fontFamily: 'Poppins',
-                                                          fontSize: 12,
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 12),
                                                         ),
                                                   )),
                                               SizedBox(
-                                                width: 5.0,
+                                                width:
+                                                    screenWidth / (width / 5),
                                               ),
                                               //Deleteiconbutton
                                               FlutterFlowIconButton(
                                                 borderColor: Colors.transparent,
-                                                borderRadius: 30,
+                                                borderRadius:
+                                                    screenWidth / (width / 30),
                                                 borderWidth: 1,
-                                                buttonSize: 50,
+                                                buttonSize:
+                                                    screenWidth / (width / 50),
                                                 icon: Icon(
                                                   Icons.delete_sweep,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .alternate,
-                                                  size: 25,
+                                                  size: screenWidth /
+                                                      (width / 25),
                                                 ),
                                                 onPressed: () {
                                                   print(
@@ -409,7 +494,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 12, 12, 0),
+                                          screenWidth / (width / 12),
+                                          screenWidth / (width / 12),
+                                          screenWidth / (width / 12),
+                                          0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -421,7 +509,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                               children: [
                                                 //select all button
                                                 Checkbox(
-                                                  splashRadius: 30,
+                                                  splashRadius: screenWidth /
+                                                      (width / 30),
                                                   value: selectedUser.isNotEmpty
                                                       ? true
                                                       : false,
@@ -451,8 +540,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                         shape:
                                                             RoundedRectangleBorder(
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
+                                                              BorderRadius.circular(
+                                                                  screenWidth /
+                                                                      (width /
+                                                                          10)),
                                                         ),
                                                         content: Text(
                                                           'All user selected: $value',
@@ -467,13 +558,25 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                8, 0, 0, 0),
+                                                                screenWidth /
+                                                                    (width / 8),
+                                                                0,
+                                                                0,
+                                                                0),
                                                     child: Text(
                                                       'CT Code',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText2,
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontSize:
+                                                                    screenWidth /
+                                                                        (width /
+                                                                            14),
+                                                              ),
                                                     ),
                                                   ),
                                                 ),
@@ -491,7 +594,13 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                 'Email',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 14),
+                                                        ),
                                               ),
                                             ),
                                           if (responsiveVisibility(
@@ -503,7 +612,13 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                 'Phone Number',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 14),
+                                                        ),
                                               ),
                                             ),
                                           if (responsiveVisibility(
@@ -516,7 +631,13 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                                 'Roles',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 14),
+                                                        ),
                                               ),
                                             ),
                                           Expanded(
@@ -525,7 +646,12 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                               textAlign: TextAlign.end,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                                      .bodyText2
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 14),
+                                                      ),
                                             ),
                                           ),
                                         ],
@@ -533,7 +659,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 16, 0, 0),
+                                          0, screenWidth / (width / 16), 0, 0),
                                       child: //staff data row
                                           FutureBuilder(
                                               future: userList,
@@ -590,6 +716,14 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
   }
 
   _buildTableUser(BuildContext context, UserData snapshot, int indexs) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     // int idx = int.parse(dropDownItemValue2[indexs]);
     if (rolesType! != "superadmin") {
       return InkWell(
@@ -605,7 +739,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
           }
         },
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              0, 0, 0, screenWidth / (width / 2)),
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -619,7 +754,11 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
               ],
             ),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  screenWidth / (width / 12),
+                  screenWidth / (width / 12),
+                  screenWidth / (width / 12),
+                  screenWidth / (width / 12)),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -629,7 +768,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, screenWidth / (width / 12), 0),
                           child: Checkbox(
                             value: selectedUser.contains(snapshot),
                             onChanged: (isSelected) {
@@ -654,7 +794,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                   .subtitle1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 16,
+                                    fontSize: screenWidth / (width / 12),
                                   ),
                             ),
                           ],
@@ -671,7 +811,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                       flex: 2,
                       child: Text(
                         snapshot.emailUser!,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: screenWidth / (width / 14),
+                            ),
                       ),
                     ),
                   if (responsiveVisibility(
@@ -681,7 +824,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                     Expanded(
                       child: Text(
                         snapshot.phoneNumber,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: screenWidth / (width / 14),
+                            ),
                       ),
                     ),
                   if (responsiveVisibility(
@@ -692,7 +838,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                     Expanded(
                       child: Text(
                         snapshot.roles!,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: screenWidth / (width / 14),
+                            ),
                       ),
                     ),
                   Expanded(
@@ -701,7 +850,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, screenWidth / (width / 5), 0),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
@@ -728,8 +878,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                             },
                             text: 'Edit',
                             options: FFButtonOptions(
-                                width: 75,
-                                height: 35,
+                                width: screenWidth / (width / 75),
+                                height: screenWidth / (width / 35),
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -738,18 +888,19 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                       fontFamily: 'Poppins',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryColor,
-                                      fontSize: 15,
+                                      fontSize: screenWidth / (width / 15),
                                     ),
                                 borderSide: BorderSide(
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                   width: 2.5,
                                 ),
-                                borderRadius: 8),
+                                borderRadius: screenWidth / (width / 8)),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 5), 0, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
@@ -760,8 +911,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                             },
                             text: 'ResetPassword',
                             options: FFButtonOptions(
-                                width: 75,
-                                height: 35,
+                                width: screenWidth / (width / 75),
+                                height: screenWidth / (width / 35),
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -770,13 +921,13 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                       fontFamily: 'Poppins',
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
-                                      fontSize: 15,
+                                      fontSize: screenWidth / (width / 15),
                                     ),
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).alternate,
                                   width: 2.5,
                                 ),
-                                borderRadius: 8),
+                                borderRadius: screenWidth / (width / 8)),
                           ),
                         ),
                       ],
@@ -802,7 +953,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
           }
         },
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              0, 0, 0, screenWidth / (width / 2)),
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -816,7 +968,11 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
               ],
             ),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  screenWidth / (width / 12),
+                  screenWidth / (width / 12),
+                  screenWidth / (width / 12),
+                  screenWidth / (width / 12)),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -826,7 +982,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, screenWidth / (width / 16), 0),
                           child: Checkbox(
                             value: selectedUser.contains(snapshot),
                             onChanged: (isSelected) {
@@ -851,7 +1008,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                   .subtitle1
                                   .override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 16,
+                                    fontSize: screenWidth / (width / 12),
                                   ),
                             ),
                           ],
@@ -868,7 +1025,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                       flex: 2,
                       child: Text(
                         snapshot.emailUser!,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: screenWidth / (width / 14),
+                            ),
                       ),
                     ),
                   if (responsiveVisibility(
@@ -878,7 +1038,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                     Expanded(
                       child: Text(
                         snapshot.phoneNumber,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: screenWidth / (width / 14),
+                            ),
                       ),
                     ),
                   if (responsiveVisibility(
@@ -889,7 +1052,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                     Expanded(
                       child: Text(
                         snapshot.roles!,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: screenWidth / (width / 14),
+                            ),
                       ),
                     ),
                   Expanded(
@@ -898,7 +1064,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, screenWidth / (width / 5), 0),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
@@ -925,8 +1092,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                             },
                             text: 'Edit',
                             options: FFButtonOptions(
-                                width: 75,
-                                height: 35,
+                                width: screenWidth / (width / 75),
+                                height: screenWidth / (width / 35),
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -935,18 +1102,19 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                       fontFamily: 'Poppins',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryColor,
-                                      fontSize: 15,
+                                      fontSize: screenWidth / (width / 15),
                                     ),
                                 borderSide: BorderSide(
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                   width: 2.5,
                                 ),
-                                borderRadius: 8),
+                                borderRadius: screenWidth / (width / 8)),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 5), 0, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
@@ -972,8 +1140,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                             },
                             text: 'Delete',
                             options: FFButtonOptions(
-                                width: 75,
-                                height: 35,
+                                width: screenWidth / (width / 75),
+                                height: screenWidth / (width / 35),
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -982,17 +1150,18 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                       fontFamily: 'Poppins',
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
-                                      fontSize: 15,
+                                      fontSize: screenWidth / (width / 15),
                                     ),
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).alternate,
                                   width: 2.5,
                                 ),
-                                borderRadius: 8),
+                                borderRadius: screenWidth / (width / 8)),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 5), 0, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
@@ -1003,8 +1172,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                             },
                             text: 'Reset Password',
                             options: FFButtonOptions(
-                                width: 75,
-                                height: 35,
+                                width: screenWidth / (width / 75),
+                                height: screenWidth / (width / 35),
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -1013,17 +1182,18 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                       fontFamily: 'Poppins',
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
-                                      fontSize: 15,
+                                      fontSize: screenWidth / (width / 15),
                                     ),
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).alternate,
                                   width: 2.5,
                                 ),
-                                borderRadius: 8),
+                                borderRadius: screenWidth / (width / 8)),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 5), 0, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
@@ -1043,8 +1213,8 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                             },
                             text: 'Restore',
                             options: FFButtonOptions(
-                                width: 75,
-                                height: 35,
+                                width: screenWidth / (width / 75),
+                                height: screenWidth / (width / 35),
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -1053,13 +1223,13 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                       fontFamily: 'Poppins',
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
-                                      fontSize: 15,
+                                      fontSize: screenWidth / (width / 15),
                                     ),
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).alternate,
                                   width: 2.5,
                                 ),
-                                borderRadius: 8),
+                                borderRadius: screenWidth / (width / 8)),
                           ),
                         ),
                       ],
@@ -1076,6 +1246,14 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
 
 //pop up edit dialog
   Future<dynamic> dialogEdit(BuildContext context) async {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return await showDialog(
         barrierDismissible: false,
         context: context,
@@ -1516,6 +1694,14 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
 
 //pop up reset password
   Future<dynamic> dialogResetPassword(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return showDialog(
         context: context,
         builder: (context) {
@@ -1600,6 +1786,14 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
   }
 
   Future passwordReset(context) async {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
