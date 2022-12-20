@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/auth_state_provider.dart';
+import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
@@ -11,6 +12,9 @@ import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 
 import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
+import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
+import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
 
 class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
   static const routeName = '/profileViewPageRiverpod';
@@ -20,29 +24,19 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
-    final nameController = TextEditingController();
-    final lastsNameController = TextEditingController();
-    final dateofbirthController = TextEditingController();
-    final phonenumberController = TextEditingController();
 
     return Scaffold(
       body: Consumer(builder: (context, ref, child) {
         final userData = ref.watch(
           userDetailProvider,
         );
+        final userUid = ref.watch(userIdProvider)!;
+        final userInfoModel = ref.watch(
+          userInfoModelProvider(userUid),
+        );
         return Center(
-            child: userData.when(
+            child: userInfoModel.when(
           data: (data) {
-            String? namef = data?['firstName'];
-            String? namel = data?['lastName'];
-            String? phone = data?['phoneNumber'];
-            String? dob = data?['dateofbirth'];
-
-            nameController.text = namef ?? '';
-            lastsNameController.text = namel ?? '';
-            phonenumberController.text = phone.toString();
-            dateofbirthController.text = dob ?? '';
-
             return Scaffold(
               key: scaffoldKey,
               backgroundColor: Color(0xFFF1F4F8),
@@ -137,7 +131,9 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '$namef' + ' ' + '$namel',
+                                        '${data.firstName}' +
+                                            ' ' +
+                                            '${data.lastName}',
                                         style: FlutterFlowTheme.of(context)
                                             .title3
                                             .override(
@@ -151,7 +147,7 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 4, 0, 0),
                                         child: Text(
-                                          data?['email'],
+                                          data.email.toString(),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
@@ -172,7 +168,7 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 4, 0, 0),
                                             child: Text(
-                                              data?['roles'],
+                                              data.roles.toString(),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText2
@@ -190,7 +186,7 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 4, 0, 0),
                                             child: Text(
-                                              data?['clientType'],
+                                              data.clientType.toString(),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText2
@@ -416,8 +412,12 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
               ),
             );
           },
-          error: (Object error, StackTrace stackTrace) {},
-          loading: () {},
+          error: (Object error, StackTrace stackTrace) {
+            return const ErrorAnimationView();
+          },
+          loading: () {
+            return const LoadingAnimationView();
+          },
         ));
       }),
     );

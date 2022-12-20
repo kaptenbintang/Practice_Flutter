@@ -2,38 +2,32 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:login_uix_firebase/model/practioner_data.dart';
+import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
+import 'package:login_uix_firebase/constant/firebase_field_name.dart';
+import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 
-final allPostsProvider = StreamProvider.autoDispose<Iterable<PractionerData>>(
+final allPractionersProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
   (ref) {
-    final controller = StreamController<Iterable<PractionerData>>();
+    final controller = StreamController<Iterable<Practioner>>();
 
     final sub = FirebaseFirestore.instance
         .collection(
-          'practioners',
+          FirebaseCollectionName.practioners,
         )
         .orderBy(
-          'firstName',
+          FirebaseFieldName.firstName,
           descending: true,
         )
         .snapshots()
         .listen(
       (snapshots) {
-        final posts = snapshots.docs.map(
-          (doc) => PractionerData(
-            firstName: doc['firstName'],
-            lastName: doc['lastName'],
-            languages: doc['languages'],
-            myApproach: doc['myApproach'],
-            myBackground: doc['myBackground'],
-            myQualifications: doc['myQualifications'],
-            myRoles: doc['myRoles'],
-            mySpecialty: doc['mySpecialty'],
-            titleMain: doc['titleMain'],
-            id: doc['id'],
+        final practioner = snapshots.docs.map(
+          (doc) => Practioner(
+            practionerId: doc.id,
+            json: doc.data(),
           ),
         );
-        controller.sink.add(posts);
+        controller.sink.add(practioner);
       },
     );
 

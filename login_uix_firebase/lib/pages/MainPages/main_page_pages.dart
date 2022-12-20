@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/pages/MainPages/main_page_desktop.dart';
+import 'package:login_uix_firebase/pages/MainPages/main_page_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/MainPages/main_page_mobile.dart';
 
 import '../../constant/controllers.dart';
@@ -17,6 +18,6 @@ class MainPagesPage extends StatelessWidget {
     return ResponsiveWidget.isSmallScreen(context) ||
             ResponsiveWidget.isMediumScreen(context)
         ? mainPageMobile()
-        : mainPageDesktop();
+        : MainPageDesktopRiverpod();
   }
 }
