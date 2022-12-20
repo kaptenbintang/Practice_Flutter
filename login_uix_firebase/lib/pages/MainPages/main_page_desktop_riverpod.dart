@@ -102,10 +102,16 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             20, 20, 20, 20),
-                                        child: Text(
-                                          'Contact us',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                RouteName.HistoryBooking);
+                                          },
+                                          child: Text(
+                                            'Booking History',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
                                         ),
                                       ),
                                       Expanded(
