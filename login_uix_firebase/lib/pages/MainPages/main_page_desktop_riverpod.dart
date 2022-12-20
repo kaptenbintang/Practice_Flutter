@@ -386,9 +386,9 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                       child: data.isNotEmpty
                                           ? AppointmentsGridView(
                                               appointments: data)
-                                          : SingleChildScrollView(
+                                          : const SingleChildScrollView(
                                               child:
-                                                  const EmptyContentsWithTextAnimationView(
+                                                  EmptyContentsWithTextAnimationView(
                                                 text:
                                                     'You have no appointments',
                                               ),
