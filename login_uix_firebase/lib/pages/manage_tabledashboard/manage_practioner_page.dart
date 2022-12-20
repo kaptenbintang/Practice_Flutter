@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
-import 'package:login_uix_firebase/pages/schedule_calendar_page.dart';
 import '../../flutter_flow/flutter_flow.dart';
 import '../../helper/database_service.dart';
 import '../../main.dart';
