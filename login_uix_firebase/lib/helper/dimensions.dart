@@ -8,7 +8,9 @@ class Dimensions {
       ? 414
       : ResponsiveWidget.isSmallScreen(Get.context!)
           ? 912
-          : 1280;
+          : ResponsiveWidget.isLargeScreen(Get.context!)
+              ? 1920
+              : 1280;
   static double height = ResponsiveWidget.isphoneScreen(Get.context!)
       ? 896
       : ResponsiveWidget.isSmallScreen(Get.context!)

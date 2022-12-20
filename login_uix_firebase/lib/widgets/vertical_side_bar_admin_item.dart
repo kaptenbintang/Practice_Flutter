@@ -14,52 +14,59 @@ class VerticalSideAdminItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return // Generated code for this Container Widget...
-        InkWell(
-            onTap: onTap,
-            onHover: (value) {
-              value
-                  ? sideAdminController.onHover(itemName!)
-                  : sideAdminController.onHover("not hovering");
-            },
-            child: Obx(
-              () => Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                child: Container(
-                  width: double.infinity,
-                  height: ResponsiveWidget.isMediumScreen(context) ? null : 55,
-                  decoration: BoxDecoration(
-                    color: sideAdminController.isActive(itemName!)
-                        ? FlutterFlowTheme.of(context).secondaryBackground
-                        : sideAdminController.isHovering(itemName!)
-                            ? lightGrey.withOpacity(.1)
-                            : FlutterFlowTheme.of(context).primaryBackground,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      sideAdminController.returnIconFor(itemName!),
-                      (!sideAdminController.isActive(itemName!))
-                          ? CustomText(
-                              text: itemName!,
-                              size: 14,
-                              weight: sideAdminController.isHovering(itemName!)
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                              align: TextAlign.center,
-                            )
-                          : CustomText(
-                              text: itemName!,
-                              size: 14,
-                              weight: FontWeight.bold,
-                              align: TextAlign.center,
-                            )
-                    ],
-                  ),
-                ),
+    double _width = MediaQuery.of(context).size.width;
+    double maxWidth = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
+    return InkWell(
+        onTap: onTap,
+        onHover: (value) {
+          value
+              ? sideAdminController.onHover(itemName!)
+              : sideAdminController.onHover("not hovering");
+        },
+        child: Obx(
+          () => Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+            child: Container(
+              width: double.infinity,
+              height: ResponsiveWidget.isMediumScreen(context) ? null : 55,
+              decoration: BoxDecoration(
+                color: sideAdminController.isActive(itemName!)
+                    ? FlutterFlowTheme.of(context).secondaryBackground
+                    : sideAdminController.isHovering(itemName!)
+                        ? lightGrey.withOpacity(.1)
+                        : FlutterFlowTheme.of(context).primaryBackground,
+                borderRadius: BorderRadius.circular(12),
               ),
-            ));
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  sideAdminController.returnIconFor(itemName!),
+                  (!sideAdminController.isActive(itemName!))
+                      ? CustomText(
+                          text: itemName!,
+                          size: _width / (maxWidth / 14),
+                          weight: sideAdminController.isHovering(itemName!)
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                          align: TextAlign.center,
+                        )
+                      : CustomText(
+                          text: itemName!,
+                          size: _width / (maxWidth / 16),
+                          weight: FontWeight.bold,
+                          align: TextAlign.center,
+                        )
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }

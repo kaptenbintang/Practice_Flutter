@@ -9,6 +9,7 @@ import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
+import '../../helper/responsive.dart';
 import '../../model/clientType_data.dart';
 
 class ManageClientTypeDesktop extends StatefulWidget {
@@ -69,14 +70,25 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    return // Generated code for this Column Widget...
-        Expanded(
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
+    return Expanded(
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16)),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -88,7 +100,8 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                       offset: Offset(0, 2),
                     )
                   ],
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius:
+                      BorderRadius.circular(screenWidth / (width / 16)),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -96,7 +109,11 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 16),
+                          screenWidth / (width / 16),
+                          0,
+                          screenWidth / (width / 16)),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -104,20 +121,32 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                         children: [
                           Text(
                             'Dashboard',
-                            style: FlutterFlowTheme.of(context).title3,
+                            style: FlutterFlowTheme.of(context).title3.override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: screenWidth / (width / 20),
+                                ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, screenWidth / (width / 4), 0, 0),
                             child: Text(
                               'Your project status is appearing here.',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                      fontSize: screenWidth / (width / 14),
+                                      fontFamily: 'Poppins'),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 12),
+                          0,
+                          screenWidth / (width / 12),
+                          0),
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -129,14 +158,18 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 4),
+                                0,
+                                screenWidth / (width / 4),
+                                screenWidth / (width / 24)),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.4,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 16)),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).lineColor,
                                   width: 1,
@@ -144,7 +177,10 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 12),
+                                    0,
+                                    screenWidth / (width / 16),
+                                    0,
+                                    screenWidth / (width / 12)),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,18 +196,25 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                           children: [
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5, 0, 0, 0),
+                                                  .fromSTEB(
+                                                      screenWidth / (width / 5),
+                                                      0,
+                                                      0,
+                                                      0),
                                               child: FlutterFlowIconButton(
                                                 borderColor: Colors.transparent,
-                                                borderRadius: 30,
+                                                borderRadius:
+                                                    screenWidth / (width / 30),
                                                 borderWidth: 1,
-                                                buttonSize: 50,
+                                                buttonSize:
+                                                    screenWidth / (width / 50),
                                                 icon: Icon(
                                                   Icons.playlist_add_rounded,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
-                                                  size: 25,
+                                                  size: screenWidth /
+                                                      (width / 25),
                                                 ),
                                                 onPressed: () {
                                                   print(
@@ -181,12 +224,23 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 0, 0),
+                                                  .fromSTEB(
+                                                      screenWidth /
+                                                          (width / 16),
+                                                      0,
+                                                      0,
+                                                      0),
                                               child: Text(
                                                 'Client Type',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .title3,
+                                                        .title3
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 20),
+                                                        ),
                                               ),
                                             ),
                                           ],
@@ -196,22 +250,36 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Container(
-                                              width: 200,
+                                              width:
+                                                  screenWidth / (width / 200),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 5),
+                                                    .fromSTEB(
+                                                        0,
+                                                        screenWidth /
+                                                            (width / 5),
+                                                        0,
+                                                        screenWidth /
+                                                            (width / 5)),
                                                 child: Container(
-                                                  width: 200,
+                                                  width: screenWidth /
+                                                      (width / 200),
                                                   child: TextFormField(
                                                     controller: textController,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       hintText: 'Search...',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
+                                                      hintStyle: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyText2
+                                                          .override(
+                                                              fontSize:
+                                                                  screenWidth /
+                                                                      (width /
+                                                                          14),
+                                                              fontFamily:
+                                                                  'Poppins'),
                                                       enabledBorder:
                                                           OutlineInputBorder(
                                                         borderSide: BorderSide(
@@ -221,8 +289,10 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
@@ -233,8 +303,10 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       errorBorder:
                                                           OutlineInputBorder(
@@ -244,8 +316,10 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       focusedErrorBorder:
                                                           OutlineInputBorder(
@@ -255,8 +329,10 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                     ),
                                                     style: FlutterFlowTheme.of(
@@ -268,15 +344,18 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                             ),
                                             FlutterFlowIconButton(
                                               borderColor: Colors.transparent,
-                                              borderRadius: 30,
+                                              borderRadius:
+                                                  screenWidth / (width / 30),
                                               borderWidth: 1,
-                                              buttonSize: 50,
+                                              buttonSize:
+                                                  screenWidth / (width / 50),
                                               icon: Icon(
                                                 Icons.search,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                size: 25,
+                                                size:
+                                                    screenWidth / (width / 25),
                                               ),
                                               onPressed: () {
                                                 print('IconButton pressed ...');
@@ -289,7 +368,10 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                     //Column Title
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 12, 12, 0),
+                                          screenWidth / (width / 12),
+                                          screenWidth / (width / 12),
+                                          screenWidth / (width / 12),
+                                          0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -305,13 +387,23 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                8, 0, 0, 0),
+                                                                screenWidth /
+                                                                    (width / 8),
+                                                                0,
+                                                                0,
+                                                                0),
                                                     child: Text(
                                                       'Client Type',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyText2
+                                                          .override(
+                                                              fontSize:
+                                                                  screenWidth /
+                                                                      (width /
+                                                                          14),
+                                                              fontFamily:
+                                                                  'Poppins'),
                                                     ),
                                                   ),
                                                 ),
@@ -322,9 +414,13 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                             child: Text(
                                               'Action',
                                               textAlign: TextAlign.end,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                      fontSize: screenWidth /
+                                                          (width / 14),
+                                                      fontFamily: 'Poppins'),
                                             ),
                                           ),
                                         ],
@@ -333,7 +429,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                     //Data Row
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 16, 0, 0),
+                                          0, screenWidth / (width / 16), 0, 0),
                                       child: ListView(
                                         padding: EdgeInsets.zero,
                                         shrinkWrap: true,
@@ -415,10 +511,19 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
 
   _buildTableUser(BuildContext context, ClientData snapshot,
       List<ClientData>? user, int indexs) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+      padding:
+          EdgeInsetsDirectional.fromSTEB(0, 0, 0, screenWidth / (width / 2)),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -432,7 +537,8 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
           ],
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          padding: EdgeInsetsDirectional.fromSTEB(screenWidth / (width / 12),
+              screenWidth / (width / 12), screenWidth / (width / 12), 12),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -451,7 +557,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                           style:
                               FlutterFlowTheme.of(context).subtitle1.override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 16,
+                                    fontSize: screenWidth / (width / 16),
                                   ),
                         ),
                       ],
@@ -466,7 +572,8 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                   children: [
                     //Edit Button
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          0, 0, screenWidth / (width / 5), 0),
                       child: FFButtonWidget(
                         onPressed: () {
                           print('Button pressed ...');
@@ -478,27 +585,28 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                         },
                         text: 'Edit',
                         options: FFButtonOptions(
-                            width: 80,
-                            height: 35,
+                            width: screenWidth / (width / 80),
+                            height: screenWidth / (width / 35),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             textStyle: FlutterFlowTheme.of(context)
                                 .subtitle2
                                 .override(
-                                  fontFamily: 'Poppins',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                ),
+                                    fontFamily: 'Poppins',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontSize: screenWidth / (width / 16)),
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.of(context).primaryColor,
                               width: 2.5,
                             ),
-                            borderRadius: 8),
+                            borderRadius: screenWidth / (width / 8)),
                       ),
                     ),
                     //Delete Button
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 5), 0, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () {
                           print('Button pressed ...');
@@ -508,8 +616,8 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                         },
                         text: 'Delete',
                         options: FFButtonOptions(
-                            width: 80,
-                            height: 35,
+                            width: screenWidth / (width / 80),
+                            height: screenWidth / (width / 35),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             textStyle: FlutterFlowTheme.of(context)
@@ -517,12 +625,13 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                 .override(
                                   fontFamily: 'Poppins',
                                   color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: screenWidth / (width / 16),
                                 ),
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.of(context).alternate,
                               width: 2.5,
                             ),
-                            borderRadius: 8),
+                            borderRadius: screenWidth / (width / 8)),
                       ),
                     ),
                   ],
@@ -536,6 +645,14 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
   }
 
   Future<dynamic> dialogEditClientType(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     List<bool> listOfValue = [true, false];
     return showDialog(
         context: context,
@@ -546,8 +663,8 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -screenWidth / (width / 40),
+                  top: -screenWidth / (width / 80),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -564,7 +681,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(screenWidth / (width / 8)),
                         child: TextFormField(
                           controller: _clientTypeController,
                           decoration: InputDecoration(
@@ -573,10 +690,10 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: screenWidth / (width / 40),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(screenWidth / (width / 8)),
                         child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () async {
@@ -606,6 +723,14 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
   }
 
   Future<dynamic> dialogAddNewClientType(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -615,8 +740,8 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(screenWidth / (width / 40)),
+                  top: -(screenWidth / (width / 80)),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -633,7 +758,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(screenWidth / (width / 8)),
                         child: TextFormField(
                           controller: _clientTypeController,
                           decoration: InputDecoration(
@@ -649,10 +774,10 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: screenWidth / (width / 40),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(screenWidth / (width / 8)),
                         child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () async {

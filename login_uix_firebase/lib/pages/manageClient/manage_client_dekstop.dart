@@ -15,6 +15,7 @@ import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
+import '../../helper/responsive.dart';
 import '../../model/user_data.dart';
 
 class ManageClientDesktop extends StatefulWidget {
@@ -119,14 +120,25 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    return // Generated code for this Column Widget...
-        Expanded(
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
+    return Expanded(
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16)),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -138,7 +150,8 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                       offset: Offset(0, 2),
                     )
                   ],
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius:
+                      BorderRadius.circular(screenWidth / (width / 16)),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -146,7 +159,11 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 16),
+                          screenWidth / (width / 16),
+                          0,
+                          screenWidth / (width / 16)),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -154,20 +171,31 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                         children: [
                           Text(
                             'Dashboard',
-                            style: FlutterFlowTheme.of(context).title3,
+                            style: FlutterFlowTheme.of(context).title3.override(
+                                fontFamily: 'Poppins',
+                                fontSize: screenWidth / (width / 20)),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, screenWidth / (width / 4), 0, 0),
                             child: Text(
                               'Your project status is appearing here.',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 12)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 12),
+                          0,
+                          screenWidth / (width / 12),
+                          0),
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -179,14 +207,18 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 4),
+                                0,
+                                screenWidth / (width / 4),
+                                screenWidth / (width / 24)),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 16)),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).lineColor,
                                   width: 1,
@@ -194,7 +226,10 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 12),
+                                    0,
+                                    screenWidth / (width / 16),
+                                    0,
+                                    screenWidth / (width / 12)),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,33 +242,54 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
+                                                  screenWidth / (width / 16),
+                                                  0,
+                                                  0,
+                                                  0),
                                           child: Text(
                                             'Client',
                                             style: FlutterFlowTheme.of(context)
-                                                .title3,
+                                                .title3
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: screenWidth /
+                                                        (width / 20)),
                                           ),
                                         ),
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Container(
-                                              width: 200,
+                                              width:
+                                                  screenWidth / (width / 200),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 5),
+                                                    .fromSTEB(
+                                                        0,
+                                                        screenWidth /
+                                                            (width / 5),
+                                                        0,
+                                                        screenWidth /
+                                                            (width / 5)),
                                                 child: Container(
-                                                  width: 200,
+                                                  width: screenWidth /
+                                                      (width / 200),
                                                   child: TextFormField(
                                                     controller: textController,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       hintText: 'Search...',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
+                                                      hintStyle: FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText2
+                                                          .override(
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontSize:
+                                                                  screenWidth /
+                                                                      (width /
+                                                                          12)),
                                                       enabledBorder:
                                                           OutlineInputBorder(
                                                         borderSide: BorderSide(
@@ -243,8 +299,10 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
@@ -255,8 +313,10 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       errorBorder:
                                                           OutlineInputBorder(
@@ -266,8 +326,10 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       focusedErrorBorder:
                                                           OutlineInputBorder(
@@ -277,28 +339,40 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1,
+                                                        .bodyText1
+                                                        .override(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize:
+                                                                screenWidth /
+                                                                    (width /
+                                                                        14)),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                             FlutterFlowIconButton(
                                               borderColor: Colors.transparent,
-                                              borderRadius: 30,
+                                              borderRadius:
+                                                  screenWidth / (width / 30),
                                               borderWidth: 1,
-                                              buttonSize: 50,
+                                              buttonSize:
+                                                  screenWidth / (width / 50),
                                               icon: Icon(
                                                 Icons.search,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                size: 25,
+                                                size:
+                                                    screenWidth / (width / 25),
                                               ),
                                               onPressed: () {
                                                 print('IconButton pressed ...');
@@ -311,7 +385,10 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                     //Column Title
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 12, 12, 0),
+                                          screenWidth / (width / 12),
+                                          screenWidth / (width / 12),
+                                          screenWidth / (width / 12),
+                                          0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -327,13 +404,23 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                8, 0, 0, 0),
+                                                                screenWidth /
+                                                                    (width / 8),
+                                                                0,
+                                                                0,
+                                                                0),
                                                     child: Text(
                                                       'CT Code',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyText2
+                                                          .override(
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontSize:
+                                                                  screenWidth /
+                                                                      (width /
+                                                                          12)),
                                                     ),
                                                   ),
                                                 ),
@@ -349,9 +436,13 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                               flex: 2,
                                               child: Text(
                                                 'Email',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 12)),
                                               ),
                                             ),
                                           if (responsiveVisibility(
@@ -361,9 +452,13 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                             Expanded(
                                               child: Text(
                                                 'Phone Number',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 12)),
                                               ),
                                             ),
                                           if (responsiveVisibility(
@@ -374,9 +469,13 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                             Expanded(
                                               child: Text(
                                                 'Client Type',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 12)),
                                               ),
                                             ),
                                           Expanded(
@@ -386,7 +485,12 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                               textAlign: TextAlign.end,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                                      .bodyText2
+                                                      .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 12)),
                                             ),
                                           ),
                                         ],
@@ -395,7 +499,7 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                     //Data Row
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 16, 0, 0),
+                                          0, screenWidth / (width / 16), 0, 0),
                                       child: FutureBuilder(
                                           future: userList,
                                           builder: (context,
@@ -464,8 +568,17 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
 
   _buildTableUser(BuildContext context, UserData snapshot, int indexs) {
     // int idx = int.parse(dropDownItemValue2[indexs]);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+      padding:
+          EdgeInsetsDirectional.fromSTEB(0, 0, 0, screenWidth / (width / 2)),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -479,7 +592,11 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
           ],
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              screenWidth / (width / 12),
+              screenWidth / (width / 12),
+              screenWidth / (width / 12),
+              screenWidth / (width / 12)),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -497,7 +614,7 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                           style:
                               FlutterFlowTheme.of(context).subtitle1.override(
                                     fontFamily: 'Poppins',
-                                    fontSize: 16,
+                                    fontSize: screenWidth / (width / 16),
                                   ),
                         ),
                       ],
@@ -514,7 +631,9 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                   flex: 2,
                   child: Text(
                     snapshot.emailUser as String,
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 14)),
                   ),
                 ),
               if (responsiveVisibility(
@@ -524,7 +643,9 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                 Expanded(
                   child: Text(
                     snapshot.phoneNumber,
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 14)),
                   ),
                 ),
               if (responsiveVisibility(
@@ -535,7 +656,9 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                 Expanded(
                   child: Text(
                     snapshot.clientType!,
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 14)),
                   ),
                 ),
               // ButtonRow
@@ -548,7 +671,8 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                     //Edit Button
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0, 0, screenWidth / (width / 5), 0),
                         child: FFButtonWidget(
                           onPressed: () {
                             print('Button pressed ...');
@@ -573,21 +697,21 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                           },
                           text: 'Edit',
                           options: FFButtonOptions(
-                            width: 60,
-                            height: 30,
+                            width: screenWidth / (width / 60),
+                            height: screenWidth / (width / 30),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             textStyle: GoogleFonts.getFont(
                               'Roboto',
                               color: FlutterFlowTheme.of(context).primaryColor,
                               fontWeight: FontWeight.w600,
-                              fontSize: 12,
+                              fontSize: screenWidth / (width / 12),
                             ),
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.of(context).primaryColor,
                               width: 2.5,
                             ),
-                            borderRadius: 8,
+                            borderRadius: screenWidth / (width / 8),
                           ),
                         ),
                       ),
@@ -595,28 +719,29 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                     //Delete Button
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            screenWidth / (width / 5), 0, 0, 0),
                         child: FFButtonWidget(
                           onPressed: () {
                             print('Button pressed ...');
                           },
                           text: 'Delete',
                           options: FFButtonOptions(
-                            width: 63,
-                            height: 30,
+                            width: screenWidth / (width / 63),
+                            height: screenWidth / (width / 30),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             textStyle: GoogleFonts.getFont(
                               'Roboto',
                               color: FlutterFlowTheme.of(context).alternate,
                               fontWeight: FontWeight.w600,
-                              fontSize: 12,
+                              fontSize: screenWidth / (width / 12),
                             ),
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.of(context).alternate,
                               width: 2.5,
                             ),
-                            borderRadius: 8,
+                            borderRadius: screenWidth / (width / 8),
                           ),
                         ),
                       ),
@@ -625,7 +750,8 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                     Expanded(
                       flex: 2,
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            screenWidth / (width / 5), 0, 0, 0),
                         child: FFButtonWidget(
                           onPressed: () {
                             print('Button pressed ...');
@@ -633,8 +759,8 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                           },
                           text: 'Change Password',
                           options: FFButtonOptions(
-                            width: 63,
-                            height: 30,
+                            width: screenWidth / (width / 63),
+                            height: screenWidth / (width / 30),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             textStyle: GoogleFonts.getFont(
@@ -642,14 +768,14 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                               color:
                                   FlutterFlowTheme.of(context).secondaryColor,
                               fontWeight: FontWeight.w600,
-                              fontSize: 12,
+                              fontSize: screenWidth / (width / 12),
                             ),
                             borderSide: BorderSide(
                               color:
                                   FlutterFlowTheme.of(context).secondaryColor,
                               width: 2.5,
                             ),
-                            borderRadius: 8,
+                            borderRadius: screenWidth / (width / 8),
                           ),
                         ),
                       ),
@@ -665,28 +791,39 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
   }
 
   Future<dynamic> dialogEdit(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: const Text("Edit User Data"),
+                borderRadius:
+                    BorderRadius.circular(screenWidth / (width / 20))),
+            title: Text("Edit User Data"),
             content: SingleChildScrollView(
                 child: ListBody(
               children: [
                 SizedBox(
                   // height: 500,
-                  width: 400,
+                  width: screenWidth / (width / 400),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 8, bottom: 8),
+                          padding: EdgeInsets.only(
+                              left: screenWidth / (width / 8),
+                              right: screenWidth / (width / 8),
+                              bottom: screenWidth / (width / 8)),
                           child: TextFormField(
                             enabled: currentUserData?["roles"] == 'Developer'
                                 ? true
@@ -696,10 +833,12 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                 labelText: "Client Code",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12))),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12))),
                                 fillColor: Colors.grey[200],
                                 filled: true),
                           ),
@@ -710,7 +849,8 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 8)),
                                 child: TextFormField(
                                   controller: _firstNameController,
                                   decoration: InputDecoration(
@@ -718,13 +858,13 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                       enabledBorder: OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 12))),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.blue),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 12))),
                                       fillColor: Colors.grey[200],
                                       filled: true),
                                 ),
@@ -732,7 +872,8 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 8)),
                                 child: TextFormField(
                                   controller: _lastNameController,
                                   decoration: InputDecoration(
@@ -740,13 +881,13 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                       enabledBorder: OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 12))),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.blue),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 12))),
                                       fillColor: Colors.grey[200],
                                       filled: true),
                                 ),
@@ -755,92 +896,98 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
                           child: TextFormField(
                             controller: _emailController,
                             decoration: InputDecoration(
                                 labelText: "Email",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12))),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12))),
                                 fillColor: Colors.grey[200],
                                 filled: true),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
                           child: TextFormField(
                             controller: _ageController,
                             decoration: InputDecoration(
                                 labelText: "Age",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12))),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12))),
                                 fillColor: Colors.grey[200],
                                 filled: true),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
                           child: TextFormField(
                             controller: _phoneController,
                             decoration: InputDecoration(
                                 labelText: "Phone Number",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12))),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12))),
                                 fillColor: Colors.grey[200],
                                 filled: true),
                           ),
                         ),
                         // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
+                        //   padding: EdgeInsets.all(screenWidth / (width / 8)),
                         //   child: TextFormField(
                         //     controller: _rolesController,
                         //     decoration: InputDecoration(
                         //         labelText: "Roles",
                         //         enabledBorder: OutlineInputBorder(
                         //             borderSide: BorderSide(color: Colors.white),
-                        //             borderRadius: BorderRadius.circular(12)),
+                        //             borderRadius: BorderRadius.circular(screenWidth / (width / 12))),
                         //         focusedBorder: OutlineInputBorder(
                         //             borderSide: BorderSide(color: Colors.blue),
-                        //             borderRadius: BorderRadius.circular(12)),
+                        //             borderRadius: BorderRadius.circular(screenWidth / (width / 12))),
                         //         fillColor: Colors.grey[200],
                         //         filled: true),
                         //   ),
                         // ),
                         // Padding(
-                        //   padding: const EdgeInsets.all(8),
+                        //   padding: EdgeInsets.all(8),
                         //   child: TextFormField(
                         //     controller: _clientTypeController,
                         //     decoration: InputDecoration(
                         //         labelText: "Client Type",
                         //         enabledBorder: OutlineInputBorder(
                         //             borderSide: BorderSide(color: Colors.white),
-                        //             borderRadius: BorderRadius.circular(12)),
+                        //             borderRadius: BorderRadius.circular(screenWidth / (width / 12))),
                         //         focusedBorder: OutlineInputBorder(
                         //             borderSide: BorderSide(color: Colors.blue),
-                        //             borderRadius: BorderRadius.circular(12)),
+                        //             borderRadius: BorderRadius.circular(screenWidth / (width / 12))),
                         //         fillColor: Colors.grey[200],
                         //         filled: true),
                         //   ),
                         // ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField2(
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
-                              dropdownMaxHeight: 250,
+                              dropdownMaxHeight: screenWidth / (width / 250),
                               value: currentUserData?['roles'] == "Developer"
                                   ? selectedValue!.isNotEmpty
                                       ? selectedValue
@@ -850,45 +997,51 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                 color: currentUserData?['roles'] == "Developer"
                                     ? Colors.grey[200]
                                     : Colors.grey[400],
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 14)),
                               ),
                               decoration: InputDecoration(
                                 //Add isDense true and zero Padding.
                                 //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
                                 isDense: true,
                                 // labelText: 'Client Type',
-                                label: const Text("Client Type"),
+                                label: Text("Client Type"),
 
                                 contentPadding: EdgeInsets.zero,
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 15)),
                                 ),
                                 //Add more decoration as you want here
                                 //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
                               ),
                               isExpanded: true,
-                              hint: const Text(
+                              hint: Text(
                                 'Select Client Type',
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(
+                                    fontSize: screenWidth / (width / 14)),
                               ),
                               icon: const Icon(
                                 Icons.arrow_drop_down,
                                 color: Colors.black45,
                               ),
-                              iconSize: 30,
-                              buttonHeight: 50,
-                              buttonPadding:
-                                  const EdgeInsets.only(left: 20, right: 10),
+                              iconSize: screenWidth / (width / 30),
+                              buttonHeight: screenWidth / (width / 50),
+                              buttonPadding: EdgeInsets.only(
+                                  left: screenWidth / (width / 20),
+                                  right: screenWidth / (width / 10)),
                               dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 15)),
                               ),
                               items: listOfValue
                                   .map((item) => DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
                                           item,
-                                          style: const TextStyle(
-                                            fontSize: 14,
+                                          style: TextStyle(
+                                            fontSize:
+                                                screenWidth / (width / 14),
                                           ),
                                         ),
                                       ))
@@ -911,24 +1064,25 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                               },
                               searchController: searchDropClientType,
                               searchInnerWidget: Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 8,
-                                  bottom: 4,
-                                  right: 8,
-                                  left: 8,
+                                padding: EdgeInsets.only(
+                                  top: screenWidth / (width / 8),
+                                  bottom: screenWidth / (width / 4),
+                                  right: screenWidth / (width / 8),
+                                  left: screenWidth / (width / 8),
                                 ),
                                 child: TextFormField(
                                   controller: searchDropClientType,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 8,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth / (width / 10),
+                                      vertical: screenWidth / (width / 8),
                                     ),
                                     hintText: 'Search for an item...',
-                                    hintStyle: const TextStyle(fontSize: 12),
+                                    hintStyle: TextStyle(fontSize: 12),
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth / (width / 8)),
                                     ),
                                   ),
                                 ),
@@ -948,12 +1102,12 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField2(
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
-                              dropdownMaxHeight: 250,
+                              dropdownMaxHeight: screenWidth / (width / 250),
                               value: currentUserData?['roles'] == "Developer"
                                   ? selectedValueRoles!.isNotEmpty
                                       ? selectedValueRoles
@@ -963,45 +1117,51 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                 color: currentUserData?['roles'] == "Developer"
                                     ? Colors.grey[200]
                                     : Colors.grey[400],
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 14)),
                               ),
                               decoration: InputDecoration(
                                 //Add isDense true and zero Padding.
                                 //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
                                 isDense: true,
                                 // labelText: 'Client Type',
-                                label: const Text("Roles Type"),
+                                label: Text("Roles Type"),
 
                                 contentPadding: EdgeInsets.zero,
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 15)),
                                 ),
                                 //Add more decoration as you want here
                                 //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
                               ),
                               isExpanded: true,
-                              hint: const Text(
+                              hint: Text(
                                 'Select Roles Type',
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(
+                                    fontSize: screenWidth / (width / 14)),
                               ),
                               icon: const Icon(
                                 Icons.arrow_drop_down,
                                 color: Colors.black45,
                               ),
-                              iconSize: 30,
-                              buttonHeight: 50,
-                              buttonPadding:
-                                  const EdgeInsets.only(left: 20, right: 10),
+                              iconSize: screenWidth / (width / 30),
+                              buttonHeight: screenWidth / (width / 50),
+                              buttonPadding: EdgeInsets.only(
+                                  left: screenWidth / (width / 20),
+                                  right: screenWidth / (width / 10)),
                               dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 15)),
                               ),
                               items: listOfValueRoles
                                   .map((item) => DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
                                           item,
-                                          style: const TextStyle(
-                                            fontSize: 14,
+                                          style: TextStyle(
+                                            fontSize:
+                                                screenWidth / (width / 14),
                                           ),
                                         ),
                                       ))
@@ -1024,24 +1184,25 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                               },
                               searchController: searchDropRoles,
                               searchInnerWidget: Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 8,
-                                  bottom: 4,
-                                  right: 8,
-                                  left: 8,
+                                padding: EdgeInsets.only(
+                                  top: screenWidth / (width / 8),
+                                  bottom: screenWidth / (width / 4),
+                                  right: screenWidth / (width / 8),
+                                  left: screenWidth / (width / 8),
                                 ),
                                 child: TextFormField(
                                   controller: searchDropRoles,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 8,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth / (width / 10),
+                                      vertical: screenWidth / (width / 8),
                                     ),
                                     hintText: 'Search for an item...',
-                                    hintStyle: const TextStyle(fontSize: 12),
+                                    hintStyle: TextStyle(fontSize: 12),
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth / (width / 8)),
                                     ),
                                   ),
                                 ),
@@ -1066,7 +1227,8 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 8)),
                                 child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
@@ -1075,13 +1237,14 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                       selectedValue == "";
                                     });
                                   },
-                                  child: const Text('Cancel'),
+                                  child: Text('Cancel'),
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 8)),
                                 child: ElevatedButton(
                                   onPressed: (() async {
                                     if (_formKey.currentState!.validate()) {
@@ -1102,7 +1265,7 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                       await service.updateUser(userData);
                                     }
                                   }),
-                                  child: const Text('Confirm'),
+                                  child: Text('Confirm'),
                                 ),
                               ),
                             ),
@@ -1119,26 +1282,35 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
   }
 
   Future<dynamic> dialogChangePassword(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: const Text("Create new pasword for this user"),
+                borderRadius:
+                    BorderRadius.circular(screenWidth / (width / 20))),
+            title: Text("Create new pasword for this user"),
             content: SingleChildScrollView(
                 child: ListBody(
               children: [
                 SizedBox(
                   // height: 500,
-                  width: 400,
+                  width: screenWidth / (width / 400),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
                           child: TextFormField(
                             controller: newPasswordController,
                             obscureText: true,
@@ -1146,10 +1318,12 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                               labelText: "New Password",
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 12))),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(12)),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 12))),
                               fillColor: Colors.grey[200],
                               filled: true,
                             ),
@@ -1173,7 +1347,7 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                             },
                             controller: newPasswordController),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
                           child: TextFormField(
                             controller: newConfirmPasswordController,
                             obscureText: true,
@@ -1181,10 +1355,12 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                               labelText: "Confirm Password",
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 12))),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(12)),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 12))),
                               fillColor: Colors.grey[200],
                               filled: true,
                             ),
@@ -1202,18 +1378,20 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 8)),
                                 child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Cancel'),
+                                  child: Text('Cancel'),
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 8)),
                                 child: ElevatedButton(
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
@@ -1224,7 +1402,7 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                       changePassword();
                                     }
                                   },
-                                  child: const Text('Confirm'),
+                                  child: Text('Confirm'),
                                 ),
                               ),
                             ),
