@@ -22,6 +22,7 @@ import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_page.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
 import 'package:login_uix_firebase/pages/historybookingpage/historybooking.dart';
+import 'package:login_uix_firebase/pages/historybookingpage/historybooking_riverpod.dart';
 import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/pages/login/login_page.dart';
 
@@ -153,7 +154,8 @@ class MyApp extends ConsumerWidget {
           RouteName.landingPage: (context) => const LandingPage(),
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
-          RouteName.historyBookingRiverpod: (context) => const HistoryBooking(),
+          RouteName.historyBookingRiverpod: (context) =>
+              const historyBookingRiverpod(),
           // RouteName.controllerPage: (context) => ControllerPage(),
           RouteName.MainPagesPage: (context) => MainPagesPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
