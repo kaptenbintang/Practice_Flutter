@@ -1,6 +1,6 @@
 // import 'dart:io' show file;
 // import 'dart:io';
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_typing_uninitialized_variables
 
 import 'dart:html' as html;
 import 'dart:io' as ios;

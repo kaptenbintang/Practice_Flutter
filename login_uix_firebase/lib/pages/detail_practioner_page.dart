@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 

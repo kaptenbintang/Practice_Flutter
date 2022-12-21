@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_initializing_formals, library_private_types_in_public_api
+
 import '../../assets_audio_player.dart';
 import 'package:flutter/widgets.dart';
 
