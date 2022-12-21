@@ -2,6 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
+import 'package:login_uix_firebase/pages/appointment_page_riverpod.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -26,18 +27,6 @@ class DetailPagePractioner extends ConsumerStatefulWidget {
 class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
   final textController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   textController = TextEditingController();
-  // }
-
-  // @override
-  // void dispose() {
-  //   textController?.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -437,15 +426,10 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                                             onPressed: () {
                                                               Navigator.pushNamed(
                                                                   context,
-                                                                  appointmentPage
-                                                                      .routeName);
-                                                              // print(
-                                                              //     'Button pressed ...');
-                                                              // final _myBox =
-                                                              //     Hive.box(
-                                                              //         'myBox');
-                                                              // print(_myBox
-                                                              //     .get('name'));
+                                                                  AppointmentPageRiverpod
+                                                                      .routeName,
+                                                                  arguments: widget
+                                                                      .practioner);
                                                             },
                                                             text:
                                                                 'Make an appointment!',
