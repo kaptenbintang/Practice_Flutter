@@ -1,51 +1,20 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/provider/main_page/appointment2_provider.dart';
 
-import '../helper/database_service.dart';
-import '../model/appointment_data.dart';
-import '../route.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../route.dart';
+import '../../widgets/animations/error_animation_view.dart';
+import '../../widgets/animations/loading_animation_view.dart';
 
-class HistoryBooking extends StatefulWidget {
-  const HistoryBooking({Key? key}) : super(key: key);
-
-  @override
-  _HistoryBookingState createState() => _HistoryBookingState();
-}
-
-class _HistoryBookingState extends State<HistoryBooking> {
-  TextEditingController? searchController;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  DataService service = DataService();
-  Future<List<AppointmentData>>? AppointmentList;
-  List<AppointmentData>? retrievedAppointmentList;
+class historyBookingRiverpod extends ConsumerWidget {
+  const historyBookingRiverpod({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    _initRetrieval();
-    searchController = TextEditingController();
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    TextEditingController? searchController;
+    final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Future<void> _initRetrieval() async {
-    AppointmentList = service.retrieveApppointment2();
-    retrievedAppointmentList = await service.retrieveApppointment2();
-  }
-
-  @override
-  void dispose() {
-    searchController?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -240,21 +209,12 @@ class _HistoryBookingState extends State<HistoryBooking> {
                                   ),
                                   shape: BoxShape.rectangle,
                                 ),
-                                child: StreamBuilder<QuerySnapshot>(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('appointment')
-                                        .where('clientId',
-                                            isEqualTo: FirebaseAuth
-                                                .instance.currentUser?.uid)
-                                        .where('statusAppointment',
-                                            isNotEqualTo: 'ongoing')
-                                        .snapshots(
-                                            includeMetadataChanges: true),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                                      if (snapshot.hasData &&
-                                          snapshot.data!.docs.isNotEmpty) {
-// Generated code for this Column Widget...
+                                child: Consumer(
+                                  builder: (context, ref, child) {
+                                    final appointments =
+                                        ref.watch(userAppointmentProvider2);
+                                    return appointments.when(data: (data) {
+                                      if (data.isNotEmpty) {
                                         return Column(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -270,69 +230,14 @@ class _HistoryBookingState extends State<HistoryBooking> {
                                                         .title1,
                                               ),
                                             ),
-                                            FutureBuilder(
-                                                future: AppointmentList,
-                                                builder: (context,
-                                                    AsyncSnapshot<
-                                                            List<
-                                                                AppointmentData>>
-                                                        snapshot) {
-                                                  if (snapshot.hasData &&
-                                                      snapshot
-                                                          .data!.isNotEmpty) {
-                                                    return ListView.builder(
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                        shrinkWrap: true,
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        itemCount:
-                                                            retrievedAppointmentList!
-                                                                .length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          return tableDepanAppointment(
-                                                              context,
-                                                              retrievedAppointmentList![
-                                                                  index],
-                                                              retrievedAppointmentList,
-                                                              index);
-                                                        });
-
-                                                    // ListView(
-                                                    //   padding: EdgeInsets.zero,
-                                                    //   shrinkWrap: true,
-                                                    //   scrollDirection:
-                                                    //       Axis.vertical,
-                                                    // );
-                                                  } else if (snapshot
-                                                              .connectionState ==
-                                                          ConnectionState
-                                                              .done &&
-                                                      retrievedAppointmentList!
-                                                          .isEmpty) {
-                                                    return Center(
-                                                      child: ListView(
-                                                        physics:
-                                                            const AlwaysScrollableScrollPhysics(),
-                                                        children: const <
-                                                            Widget>[
-                                                          Align(
-                                                            alignment:
-                                                                AlignmentDirectional
-                                                                    .center,
-                                                            child: Text(
-                                                                'No Data Availble'),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    return const Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    );
-                                                  }
+                                            ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: data.length,
+                                                itemBuilder: (context, index) {
+                                                  return tableDepanAppointment(
+                                                      context, data);
                                                 })
                                           ],
                                         );
@@ -431,7 +336,13 @@ class _HistoryBookingState extends State<HistoryBooking> {
                                           ],
                                         );
                                       }
-                                    }),
+                                    }, error: (error, stackTrace) {
+                                      return const ErrorAnimationView();
+                                    }, loading: () {
+                                      return const LoadingAnimationView();
+                                    });
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -448,8 +359,7 @@ class _HistoryBookingState extends State<HistoryBooking> {
     );
   }
 
-  Widget tableDepanAppointment(BuildContext context, AppointmentData snapshot,
-      List<AppointmentData>? user, int indexs) {
+  Widget tableDepanAppointment(BuildContext context, data) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
       child: Container(
@@ -495,7 +405,7 @@ class _HistoryBookingState extends State<HistoryBooking> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                   child: Text(
-                    snapshot.dateandtime.toString(),
+                    data.dateandtime.toString(),
                     style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                 ),
@@ -514,7 +424,7 @@ class _HistoryBookingState extends State<HistoryBooking> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                   child: Text(
-                    snapshot.services.toString(),
+                    data.services.toString(),
                     style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                 ),
@@ -533,7 +443,7 @@ class _HistoryBookingState extends State<HistoryBooking> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                   child: Text(
-                    snapshot.practionerName.toString(),
+                    data.practionerName.toString(),
                     style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                 ),
@@ -552,7 +462,7 @@ class _HistoryBookingState extends State<HistoryBooking> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                   child: Text(
-                    snapshot.location.toString(),
+                    data.location.toString(),
                     style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                 ),
@@ -571,7 +481,7 @@ class _HistoryBookingState extends State<HistoryBooking> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                   child: Text(
-                    snapshot.statusAppointment.toString(),
+                    data.statusAppointment.toString(),
                     style: FlutterFlowTheme.of(context).subtitle1.override(
                           fontFamily: 'Poppins',
                           color: FlutterFlowTheme.of(context).secondaryColor,

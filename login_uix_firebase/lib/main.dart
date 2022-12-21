@@ -21,7 +21,7 @@ import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_page.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
-import 'package:login_uix_firebase/pages/historybooking.dart';
+import 'package:login_uix_firebase/pages/historybookingpage/historybooking.dart';
 import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/pages/login/login_page.dart';
 
