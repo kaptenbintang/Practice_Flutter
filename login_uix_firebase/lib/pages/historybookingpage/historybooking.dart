@@ -3,14 +3,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../helper/database_service.dart';
-import '../model/appointment_data.dart';
-import '../route.dart';
+import '../../helper/database_service.dart';
+import '../../model/appointment_data.dart';
+import '../../route.dart';
 
 class HistoryBooking extends StatefulWidget {
   const HistoryBooking({Key? key}) : super(key: key);
@@ -130,8 +130,10 @@ class _HistoryBookingState extends State<HistoryBooking> {
                                             20, 20, 20, 20),
                                         child: InkWell(
                                           onTap: () {
-                                            Navigator.pushNamed(context,
-                                                RouteName.HistoryBooking);
+                                            Navigator.pushNamed(
+                                                context,
+                                                RouteName
+                                                    .historyBookingRiverpod);
                                           },
                                           child: Text(
                                             'Booking History',
