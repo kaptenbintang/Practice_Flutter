@@ -13,7 +13,7 @@ class PractionersThumbnailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTapped,
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
