@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/provider/main_page/appointment2_provider.dart';
 
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -238,8 +239,10 @@ class historyBookingRiverpod extends ConsumerWidget {
                                                 scrollDirection: Axis.vertical,
                                                 itemCount: data.length,
                                                 itemBuilder: (context, index) {
+                                                  final appointmentData =
+                                                      data.elementAt(index);
                                                   return tableDepanAppointment(
-                                                      context, data);
+                                                      context, appointmentData);
                                                 })
                                           ],
                                         );
@@ -339,6 +342,7 @@ class historyBookingRiverpod extends ConsumerWidget {
                                         );
                                       }
                                     }, error: (error, stackTrace) {
+                                      print(error);
                                       return const ErrorAnimationView();
                                     }, loading: () {
                                       return const LoadingAnimationView();
@@ -361,7 +365,7 @@ class historyBookingRiverpod extends ConsumerWidget {
     );
   }
 
-  Widget tableDepanAppointment(BuildContext context, data) {
+  Widget tableDepanAppointment(BuildContext context, Appointment data) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
       child: Container(
@@ -381,14 +385,14 @@ class historyBookingRiverpod extends ConsumerWidget {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 10),
                   child: Text(
-                    'Booking ID',
+                    'Created At',
                     style: FlutterFlowTheme.of(context).title3,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                   child: Text(
-                    'FEFEG#RX',
+                    data.createdAt.toString(),
                     style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                 ),
@@ -400,7 +404,7 @@ class historyBookingRiverpod extends ConsumerWidget {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 10),
                   child: Text(
-                    'Date/Time',
+                    'Date/Time Booking',
                     style: FlutterFlowTheme.of(context).title3,
                   ),
                 ),

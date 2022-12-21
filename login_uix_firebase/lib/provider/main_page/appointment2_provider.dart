@@ -23,10 +23,10 @@ final userAppointmentProvider2 =
         .collection(
           FirebaseCollectionName.appointment,
         )
-        .orderBy(
-          FirebaseFieldName.createdAt,
-          descending: false,
-        )
+        // .orderBy(
+        //   FirebaseFieldName.createdAt,
+        //   descending: false,
+        // )
         .where(
           AppointmentKey.clientId,
           isEqualTo: userId,
