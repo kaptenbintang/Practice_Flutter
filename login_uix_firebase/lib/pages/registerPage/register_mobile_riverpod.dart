@@ -550,6 +550,7 @@ class RegisterMobileRiverpod extends ConsumerWidget {
                         GestureDetector(
                           onTap: () {
                             navigationController.navigateTo(sideMenuItems[3]);
+                            menuController.changeActiveitemTo(sideMenuItems[3]);
                           },
                           child: Text(
                             " Login now!",

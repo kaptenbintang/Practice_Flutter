@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, unused_field, sized_box_for_whitespace, avoid_print, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, sort_child_properties_last, prefer_final_fields
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -85,7 +86,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                 alignment: AlignmentDirectional(0, 0),
                 child: Container(
                   width: double.infinity,
-                  height: 44,
+                  height: Dimensions.height20 + Dimensions.height24,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                     borderRadius: BorderRadius.circular(0),
@@ -94,7 +95,11 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                 ),
               ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  Dimensions.width16,
+                  Dimensions.height08 * 2,
+                  Dimensions.width16,
+                  Dimensions.height08 * 2),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -106,7 +111,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                       offset: Offset(0, 2),
                     )
                   ],
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(Dimensions.font16),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -115,7 +120,11 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                   children: [
                     //Title and Subtitle
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          Dimensions.width16,
+                          Dimensions.height08 * 2,
+                          0,
+                          Dimensions.height08 * 2),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +135,8 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                             style: FlutterFlowTheme.of(context).title3,
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, Dimensions.height08 / 2, 0, 0),
                             child: Text(
                               'Your project status is appearing here.',
                               style: FlutterFlowTheme.of(context).bodyText2,
@@ -136,7 +146,8 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          Dimensions.width24 / 2, 0, Dimensions.width24 / 2, 0),
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -148,14 +159,18 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                Dimensions.width08 / 2,
+                                0,
+                                Dimensions.width08 / 2,
+                                Dimensions.height24),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.font16),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).lineColor,
                                   width: 1,
@@ -163,7 +178,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 12),
+                                    0,
+                                    Dimensions.height08 * 2,
+                                    0,
+                                    Dimensions.height24 / 2),
                                 child: SingleChildScrollView(
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -173,7 +191,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                       //Container title
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            16, 0, 0, 5),
+                                            Dimensions.width16,
+                                            0,
+                                            0,
+                                            Dimensions.height05),
                                         child: Text(
                                           'Roles Accessibilty',
                                           style: FlutterFlowTheme.of(context)
@@ -183,7 +204,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                       //Search textfield,search icon and add Button
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 5, 0, 0),
+                                            0, Dimensions.height05, 0, 0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -198,9 +219,18 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 5, 0, 5),
+                                                                Dimensions
+                                                                    .width10,
+                                                                Dimensions
+                                                                    .height05,
+                                                                0,
+                                                                Dimensions
+                                                                    .height05),
                                                     child: Container(
-                                                      width: 150,
+                                                      width: Dimensions
+                                                              .width100 +
+                                                          Dimensions.width10 *
+                                                              5,
                                                       child: TextFormField(
                                                         controller:
                                                             textController,
@@ -223,9 +253,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                                               width: 1.5,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                            .radius15 /
+                                                                        3),
                                                           ),
                                                           focusedBorder:
                                                               OutlineInputBorder(
@@ -237,9 +268,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                                               width: 1.5,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                            .radius15 /
+                                                                        3),
                                                           ),
                                                           errorBorder:
                                                               OutlineInputBorder(
@@ -250,9 +282,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                                               width: 1.5,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                            .radius15 /
+                                                                        3),
                                                           ),
                                                           focusedErrorBorder:
                                                               OutlineInputBorder(
@@ -263,9 +296,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                                               width: 1.5,
                                                             ),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                            .radius15 /
+                                                                        3),
                                                           ),
                                                         ),
                                                         style: FlutterFlowTheme
@@ -280,24 +314,29 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                                     ),
                                                   ),
                                                   Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                5, 0, 0, 0),
+                                                    padding: EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            Dimensions.width10 /
+                                                                2,
+                                                            0,
+                                                            0,
+                                                            0),
                                                     child:
                                                         FlutterFlowIconButton(
                                                       borderColor:
                                                           Colors.transparent,
-                                                      borderRadius: 30,
+                                                      borderRadius:
+                                                          Dimensions.radius30,
                                                       borderWidth: 1,
-                                                      buttonSize: 40,
+                                                      buttonSize:
+                                                          Dimensions.font20 * 2,
                                                       icon: Icon(
                                                         Icons.search,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
-                                                        size: 20,
+                                                        size: Dimensions.font20,
                                                       ),
                                                       onPressed: () {
                                                         print(
@@ -311,15 +350,15 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                             //Add Button
                                             FlutterFlowIconButton(
                                               borderColor: Colors.transparent,
-                                              borderRadius: 30,
+                                              borderRadius: Dimensions.radius30,
                                               borderWidth: 1,
-                                              buttonSize: 40,
+                                              buttonSize: Dimensions.font20 * 2,
                                               icon: Icon(
                                                 Icons.playlist_add,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryColor,
-                                                size: 20,
+                                                size: Dimensions.font20,
                                               ),
                                               onPressed: () {
                                                 print('IconButton pressed ...');
@@ -332,7 +371,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                       //Column Title
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            12, 12, 12, 0),
+                                            Dimensions.width24 / 2,
+                                            Dimensions.height24 / 2,
+                                            Dimensions.width24 / 2,
+                                            0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -341,7 +383,11 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 0, 0, 0),
+                                                      .fromSTEB(
+                                                          Dimensions.width10,
+                                                          0,
+                                                          0,
+                                                          0),
                                                   child: Text(
                                                     'Roles',
                                                     style: FlutterFlowTheme.of(
@@ -366,7 +412,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                       //Data Row
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 16, 0, 0),
+                                            0, Dimensions.height08 * 2, 0, 0),
                                         child: FutureBuilder(
                                             future: RolesList,
                                             builder: (context,
@@ -442,7 +488,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height10 / 5),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -456,14 +502,21 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
           ],
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              Dimensions.width24 / 2,
+              Dimensions.height24 / 2,
+              Dimensions.width24 / 2,
+              Dimensions.height24 / 2),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
               //Roles Type Name
-              AutoSizeText(
-                snapshot.rolesName as String,
-                style: FlutterFlowTheme.of(context).subtitle1,
+              Expanded(
+                flex: 2,
+                child: AutoSizeText(
+                  snapshot.rolesName as String,
+                  style: FlutterFlowTheme.of(context).subtitle1,
+                ),
               ),
               //Dropdown Button
               Expanded(
@@ -471,63 +524,65 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    DropdownButton<String>(
-                      focusNode: dropDownFocus,
-                      isExpanded: true,
-                      borderRadius: BorderRadius.circular(30),
-                      iconSize: 40,
-                      icon: Icon(
-                        Icons.arrow_drop_down,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 20,
-                      ),
-                      onChanged: (value) {
-                        print(value);
-                        // if value doesnt contain just close the dropDown
-                        if (value == null) {
-                          dropDownFocus.unfocus();
-                        } else {
-                          switch (value) {
-                            case "Remove":
-                              service.deleteRoles(
-                                  context, snapshot.id.toString());
-                              _pullRefresh();
-                              break;
-                            case "Edit":
-                              dialogEditRoles(context);
-                              setState(() {
-                                userId = snapshot.id;
-                                _isRoles = snapshot.rolesName;
-                                _isWrite = snapshot.canWrite;
-                                _isWriteAll = snapshot.canWriteAll;
-                                _isRead = snapshot.canRead;
-                                _isDelete = snapshot.canDelete;
-                              });
-                              break;
-                            default:
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        focusNode: dropDownFocus,
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(30),
+                        iconSize: Dimensions.font20 * 2,
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: Dimensions.font20,
+                        ),
+                        onChanged: (value) {
+                          print(value);
+                          // if value doesnt contain just close the dropDown
+                          if (value == null) {
+                            dropDownFocus.unfocus();
+                          } else {
+                            switch (value) {
+                              case "Remove":
+                                service.deleteRoles(
+                                    context, snapshot.id.toString());
+                                _pullRefresh();
+                                break;
+                              case "Edit":
+                                dialogEditRoles(context);
+                                setState(() {
+                                  userId = snapshot.id;
+                                  _isRoles = snapshot.rolesName;
+                                  _isWrite = snapshot.canWrite;
+                                  _isWriteAll = snapshot.canWriteAll;
+                                  _isRead = snapshot.canRead;
+                                  _isDelete = snapshot.canDelete;
+                                });
+                                break;
+                              default:
+                            }
                           }
-                        }
-                      },
-                      // items: List.generate(
-                      //     dropDownItemValue2.length,
-                      //     (index) => DropdownMenuItem(
-                      //           value: dropDownItemValue2[index],
-                      //           child: Text(dropDownItemValue2[index]),
-                      //         )),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text('Action'),
-                          value: "Action",
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Edit'),
-                          value: "Edit",
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Remove'),
-                          value: "Remove",
-                        ),
-                      ],
+                        },
+                        // items: List.generate(
+                        //     dropDownItemValue2.length,
+                        //     (index) => DropdownMenuItem(
+                        //           value: dropDownItemValue2[index],
+                        //           child: Text(dropDownItemValue2[index]),
+                        //         )),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Action'),
+                            value: "Action",
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Edit'),
+                            value: "Edit",
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Remove'),
+                            value: "Remove",
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -550,8 +605,8 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(Dimensions.width20 * 2),
+                  top: -(Dimensions.height20 * 4),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -568,7 +623,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButtonFormField(
                             value: _isWrite,
@@ -601,7 +656,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButtonFormField(
                             value: _isWriteAll,
@@ -634,7 +689,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: DropdownButtonFormField(
                           value: _isRead,
                           decoration: InputDecoration(
@@ -662,7 +717,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: DropdownButtonFormField(
                           value: _isDelete,
                           decoration: InputDecoration(
@@ -690,10 +745,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: Dimensions.height20 * 2,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () async {
@@ -737,8 +792,8 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(Dimensions.width20 * 2),
+                  top: -(Dimensions.height20 * 4),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -755,7 +810,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _rolesNameController,
                           decoration: InputDecoration(
@@ -771,7 +826,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: DropdownButtonFormField(
                           value: _selectedValue,
                           decoration: InputDecoration(
@@ -799,7 +854,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: DropdownButtonFormField(
                           value: _selectedValue,
                           decoration: InputDecoration(
@@ -827,7 +882,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: DropdownButtonFormField(
                           value: _selectedValue,
                           decoration: InputDecoration(
@@ -855,7 +910,7 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: DropdownButtonFormField(
                           value: _selectedValue,
                           decoration: InputDecoration(
@@ -883,10 +938,10 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: Dimensions.height20 * 2,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () async {

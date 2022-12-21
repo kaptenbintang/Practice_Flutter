@@ -18,8 +18,8 @@ const LogOutRoute = "Log Out";
 List sideBarAdminItems = [
   ManageStaffRoute,
   ManageClientRoute,
-  ManageRolesRoute,
   ManageClientTypeRoute,
+  ManageRolesRoute,
   ManageServicesRoute,
   ManageServicesCategoryRoute,
   ManagePractionersRoute,
