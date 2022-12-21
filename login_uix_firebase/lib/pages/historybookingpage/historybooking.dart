@@ -130,8 +130,10 @@ class _HistoryBookingState extends State<HistoryBooking> {
                                             20, 20, 20, 20),
                                         child: InkWell(
                                           onTap: () {
-                                            Navigator.pushNamed(context,
-                                                RouteName.HistoryBooking);
+                                            Navigator.pushNamed(
+                                                context,
+                                                RouteName
+                                                    .historyBookingRiverpod);
                                           },
                                           child: Text(
                                             'Booking History',

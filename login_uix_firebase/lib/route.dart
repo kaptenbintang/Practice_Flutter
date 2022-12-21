@@ -1,5 +1,6 @@
 import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
 import 'package:login_uix_firebase/pages/historybookingpage/historybooking.dart';
+import 'package:login_uix_firebase/pages/historybookingpage/historybooking_riverpod.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
 
 class RouteName {
@@ -24,5 +25,5 @@ class RouteName {
   static const manageServicesPage = '/ManageServicesPage';
   static const manageClientsTypePage = '/ManageClientsTypePage';
   static const MainPagesPage = '/MainPagesPage';
-  static const HistoryBooking = '/HistoryBooking';
+  static const historyBookingRiverpod = '/HistoryBooking';
 }

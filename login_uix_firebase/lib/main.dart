@@ -153,7 +153,7 @@ class MyApp extends ConsumerWidget {
           RouteName.landingPage: (context) => const LandingPage(),
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
-          RouteName.HistoryBooking: (context) => const HistoryBooking(),
+          RouteName.historyBookingRiverpod: (context) => const HistoryBooking(),
           // RouteName.controllerPage: (context) => ControllerPage(),
           RouteName.MainPagesPage: (context) => MainPagesPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
