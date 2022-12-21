@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart' show immutable;
-import 'package:intl_phone_field/phone_number.dart';
 
 @immutable
 class FirebaseFieldName {

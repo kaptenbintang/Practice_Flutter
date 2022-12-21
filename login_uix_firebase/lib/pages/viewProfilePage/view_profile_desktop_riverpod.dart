@@ -5,13 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/auth_state_provider.dart';
+import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_widgets.dart';
 import 'package:login_uix_firebase/main.dart';
+import 'package:login_uix_firebase/model/auth/user_id.dart';
 import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
+import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
+import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
+import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
 import 'package:recase/recase.dart';
 
 class ProfileRiverpodPage2 extends ConsumerWidget {
@@ -22,29 +28,17 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
-    final nameController = TextEditingController();
-    final lastsNameController = TextEditingController();
-    final dateofbirthController = TextEditingController();
-    final phonenumberController = TextEditingController();
 
     return Scaffold(
       body: Consumer(builder: (context, ref, child) {
-        final userData = ref.watch(
-          userDetailProvider,
+        final userUid = ref.watch(userIdProvider)!;
+        final userInfoModel = ref.watch(
+          userInfoModelProvider(userUid),
         );
+
         return Center(
-            child: userData.when(
+            child: userInfoModel.when(
           data: (data) {
-            String? namef = data?['firstName'];
-            String? namel = data?['lastName'];
-            String? phone = data?['phoneNumber'];
-            String? dob = data?['dateofbirth'];
-
-            nameController.text = namef ?? '';
-            lastsNameController.text = namel ?? '';
-            phonenumberController.text = phone.toString();
-            dateofbirthController.text = dob ?? '';
-
             return Scaffold(
                 key: scaffoldKey,
                 backgroundColor: Color(0xFFF1F4F8),
@@ -163,9 +157,9 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '${data?['firstName'].toString().sentenceCase}' +
+                                          '${data.firstName}' +
                                               ' ' +
-                                              '${data?['lastName'].toString().sentenceCase}',
+                                              '${data.lastName}',
                                           style: FlutterFlowTheme.of(context)
                                               .title3
                                               .override(
@@ -180,7 +174,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0, 4, 0, 0),
                                           child: Text(
-                                            data?['email'],
+                                            data.email.toString(),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(
@@ -398,29 +392,11 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                   ],
                 ));
           },
-          error: (Object error, StackTrace stackTrace) {},
+          error: (Object error, StackTrace stackTrace) {
+            return const ErrorAnimationView();
+          },
           loading: () {
-            return ColoredBox(
-              color: Colors.white.withAlpha(128),
-              child: Center(
-                child: Container(
-                  color: Colors.blue,
-                  padding: const EdgeInsets.all(8),
-                  width: 150,
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                      Text('Loading'),
-                    ],
-                  ),
-                ),
-              ),
-            );
+            return const LoadingAnimationView();
           },
         ));
       }),

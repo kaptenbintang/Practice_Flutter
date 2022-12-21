@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
@@ -13,6 +14,9 @@ import 'package:login_uix_firebase/flutter_flow/flutter_flow_widgets.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:login_uix_firebase/provider/profile_provider/edit_user_provider.dart';
 import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
+import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
+import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
+import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
 
 class EditProfileDesktopWidget2 extends ConsumerWidget {
   const EditProfileDesktopWidget2({super.key});
@@ -80,20 +84,16 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
       body: SafeArea(
         child: Consumer(
           builder: (context, ref, child) {
-            final userData = ref.watch(
-              userDetailProvider,
+            final userUid = ref.watch(userIdProvider)!;
+            final userInfoModel = ref.watch(
+              userInfoModelProvider(userUid),
             );
-            return userData.when(
+            return userInfoModel.when(
               data: (data) {
-                String? namef = data?['firstName'];
-                String? namel = data?['lastName'];
-                String? phone = data?['phoneNumber'];
-                String? dob = data?['dateofbirth'];
-
-                nameController.text = namef ?? '';
-                lastsNameController.text = namel ?? '';
-                phonenumberController.text = phone.toString();
-                dateofbirthController.text = dob ?? '';
+                nameController.text = data.firstName;
+                lastsNameController.text = data.lastName;
+                phonenumberController.text = data.phoneNumber ?? '';
+                dateofbirthController.text = data.dateofbirth ?? '';
 
                 return Column(
                   mainAxisSize: MainAxisSize.max,
@@ -515,28 +515,12 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                   ],
                 );
               },
-              error: (error, stackTrace) => Text('Error ??' '$error'),
-              loading: () => ColoredBox(
-                color: Colors.white.withAlpha(128),
-                child: Center(
-                  child: Container(
-                    color: Colors.blue,
-                    padding: const EdgeInsets.all(8),
-                    width: 150,
-                    height: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                        Text('Loading'),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              error: (error, stackTrace) {
+                return const ErrorAnimationView();
+              },
+              loading: () {
+                return const LoadingAnimationView();
+              },
             );
           },
         ),
