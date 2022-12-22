@@ -15,6 +15,7 @@ import 'package:login_uix_firebase/pages/admin_dashboard_layout.dart';
 import 'package:login_uix_firebase/pages/appointment_page.dart';
 import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/appointment_page_riverpod.dart';
+import 'package:login_uix_firebase/pages/appointment_page_riverpod_ver2.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
@@ -149,7 +150,11 @@ class MyApp extends ConsumerWidget {
                 practioner:
                     ModalRoute.of(context)?.settings.arguments as Practioner,
               ),
-
+          AppointmentPageRiverpodVersion2.routeName: (context) =>
+              AppointmentPageRiverpodVersion2(
+                practioner:
+                    ModalRoute.of(context)?.settings.arguments as Practioner,
+              ),
           ManagePractioners.routeName: (context) => const ManagePractioners(),
           // ControllerPage.routeName: (context) => ControllerPage(),
           RouteName.changePWPage: (context) => const changePasswordPage(),
