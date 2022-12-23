@@ -225,62 +225,62 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 500,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    color: Color(0x3416202A),
-                                    offset: Offset(0, 2),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(12),
-                                shape: BoxShape.rectangle,
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
-                                      child: Text(
-                                        'Change Password',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText2
-                                            .override(
-                                              fontFamily: 'Outfit',
-                                              color: Color(0xFF57636C),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Align(
-                                        alignment: AlignmentDirectional(0.9, 0),
-                                        child: Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Color(0xFF57636C),
-                                          size: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisSize: MainAxisSize.max,
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       width: 500,
+                        //       height: 60,
+                        //       decoration: BoxDecoration(
+                        //         color: Colors.white,
+                        //         boxShadow: [
+                        //           BoxShadow(
+                        //             blurRadius: 5,
+                        //             color: Color(0x3416202A),
+                        //             offset: Offset(0, 2),
+                        //           )
+                        //         ],
+                        //         borderRadius: BorderRadius.circular(12),
+                        //         shape: BoxShape.rectangle,
+                        //       ),
+                        //       child: Padding(
+                        //         padding:
+                        //             EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                        //         child: Row(
+                        //           mainAxisSize: MainAxisSize.max,
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsetsDirectional.fromSTEB(
+                        //                   12, 0, 0, 0),
+                        //               child: Text(
+                        //                 'Change Password',
+                        //                 style: FlutterFlowTheme.of(context)
+                        //                     .bodyText2
+                        //                     .override(
+                        //                       fontFamily: 'Outfit',
+                        //                       color: Color(0xFF57636C),
+                        //                       fontSize: 14,
+                        //                       fontWeight: FontWeight.normal,
+                        //                     ),
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Align(
+                        //                 alignment: AlignmentDirectional(0.9, 0),
+                        //                 child: Icon(
+                        //                   Icons.arrow_forward_ios,
+                        //                   color: Color(0xFF57636C),
+                        //                   size: 18,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -288,7 +288,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, RouteName.editProfilePage);
