@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/model/services/services.dart';
+import 'package:login_uix_firebase/provider/appointment_page/service_selected_notifier.dart';
 
 final servicesProvider = StreamProvider.autoDispose<Iterable<Services>>(
   (ref) {
@@ -34,3 +35,7 @@ final servicesProvider = StreamProvider.autoDispose<Iterable<Services>>(
     return controller.stream;
   },
 );
+
+final selectedServiceProvider = ChangeNotifierProvider<ServicesNotifier>((ref) {
+  return ServicesNotifier();
+});
