@@ -13,5 +13,6 @@ class FirebaseFieldName {
   static const phoneNumber = 'phoneNumber';
   static const roles = 'roles';
   static const markDeleted = 'markDeleted';
+  static const statusAppointment = 'statusAppointment';
   const FirebaseFieldName._();
 }
