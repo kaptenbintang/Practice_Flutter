@@ -165,7 +165,7 @@ class AppointmentPageRiverpod extends ConsumerWidget {
                                       child: InkWell(
                                         onTap: () {
                                           Navigator.pushNamed(context,
-                                              RouteName.HistoryBooking);
+                                              RouteName.historyBookingRiverpod);
                                         },
                                         child: Text(
                                           'Booking History',
