@@ -366,6 +366,7 @@ class historyBookingRiverpod extends ConsumerWidget {
   }
 
   Widget tableDepanAppointment(BuildContext context, Appointment data) {
+    String isComplete = data.statusAppointment;
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
       child: Container(
@@ -486,13 +487,34 @@ class historyBookingRiverpod extends ConsumerWidget {
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                  child: Text(
-                    data.statusAppointment.toString(),
-                    style: FlutterFlowTheme.of(context).subtitle1.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.of(context).secondaryColor,
+                  child: isComplete == "Complete"
+                      ? Text(
+                          data.statusAppointment.toString(),
+                          style: FlutterFlowTheme.of(context)
+                              .subtitle1
+                              .override(
+                                fontFamily: 'Poppins',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
+                              ),
+                        )
+                      : Text(
+                          data.statusAppointment.toString(),
+                          style: FlutterFlowTheme.of(context)
+                              .subtitle1
+                              .override(
+                                fontFamily: 'Poppins',
+                                color: FlutterFlowTheme.of(context).alternate,
+                              ),
                         ),
-                  ),
+
+                  // Text(
+                  //   data.statusAppointment.toString(),
+                  //   style: FlutterFlowTheme.of(context).subtitle1.override(
+                  //         fontFamily: 'Poppins',
+                  //         color: FlutterFlowTheme.of(context).secondaryColor,
+                  //       ),
+                  // ),
                 ),
               ],
             ),

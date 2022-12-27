@@ -3,7 +3,8 @@ enum LottieAnimation {
   empty(name: 'empty'),
   loading(name: 'loading'),
   error(name: 'error'),
-  smallError(name: 'small_error');
+  smallError(name: 'small_error'),
+  smallLoading(name: 'small_loading');
 
   final String name;
   const LottieAnimation({

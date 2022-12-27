@@ -1,152 +1,90 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, prefer_const_constructors
-
 import 'package:booking_calendar/booking_calendar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:hive/hive.dart';
-import 'package:login_uix_firebase/model/appointment_data.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
-import '../flutter_flow/flutter_flow_drop_down.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
+import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
+import 'package:login_uix_firebase/provider/appointment_page/location_provider.dart';
+import 'package:login_uix_firebase/provider/appointment_page/services_provider.dart';
+import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
+import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
+import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
+import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
+import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
 
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../helper/database_service.dart';
-import '../route.dart';
-import 'main_page.dart';
-import 'package:intl/intl.dart';
+import '../flutter_flow/flutter_flow.dart';
 
-class appointmentPage extends StatefulWidget {
-  static const routeName = '/appointmentPage';
-  const appointmentPage({Key? key}) : super(key: key);
+class AppointmentPageRiverpod extends ConsumerWidget {
+  static const routeName = '/appointmentPageRiverpod';
+  final Practioner practioner;
 
-  @override
-  _appointmentPageState createState() => _appointmentPageState();
-}
-
-class _appointmentPageState extends State<appointmentPage> {
-  String? _selectedDate;
-  // String? userId;
-  String? dropDownServices;
-  String? dropDownLocation;
-  String? dropDownNameorCode;
-  TextEditingController? pnameController;
-  TextEditingController? dateandtimeController;
-  TextEditingController? searchController;
-  TextEditingController? emailController;
-  TextEditingController? phNumbController;
-  TextEditingController? commentController;
-  DataService service = DataService();
-  final formKey = GlobalKey<FormState>();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _myBox = Hive.box('myBox');
-  final now = DateTime.now();
-  late BookingService mockBookingService;
-  final user = FirebaseAuth.instance.currentUser!;
-  final auth = FirebaseAuth.instance;
-  Future<Map<String, dynamic>>? currentUserData;
-  Map<String, dynamic>? retrievedUserData;
-
-  var uid;
-  var fName, lName, uEmail, phNumb, clientCode;
-
-  Future<void> _initRetrieval() async {
-    currentUserData = service.currentUsers(user.uid);
-    retrievedUserData = await service.currentUsers(user.uid);
-    // print(retrievedUserData!['id']);
-    fName = retrievedUserData!["firstName"];
-    lName = retrievedUserData!["lastName"];
-    phNumb = retrievedUserData!["phoneNumber"];
-    clientCode = retrievedUserData!["clientcode"];
-    uEmail = retrievedUserData!["email"];
-  }
+  const AppointmentPageRiverpod({super.key, required this.practioner});
 
   @override
-  void initState() {
-    super.initState();
-    _initRetrieval();
-    setState(() {
-      pnameController?.text = _myBox.get('name');
-      // userId = _myBox.get('id');
-    });
-    searchController = TextEditingController();
-    dateandtimeController = TextEditingController();
-    emailController = TextEditingController();
-    commentController = TextEditingController();
-    mockBookingService = BookingService(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scaffoldKey = GlobalKey<ScaffoldState>();
+    final formKey = GlobalKey<FormState>();
+
+    final pnameController = TextEditingController();
+    final dateandtimeController = TextEditingController();
+    final searchController = TextEditingController();
+    final emailController = TextEditingController();
+    final phNumbController = TextEditingController();
+    final commentController = TextEditingController();
+    final now = DateTime.now();
+    List<DateTimeRange> converted = [];
+    late BookingService mockBookingService = BookingService(
         serviceName: 'Mock Service',
         serviceDuration: 30,
         bookingEnd: DateTime(now.year, now.month, now.day, 18, 0),
         bookingStart: DateTime(now.year, now.month, now.day, 9, 0));
-  }
 
-  Stream<dynamic>? getBookingStreamMock(
-      {required DateTime end, required DateTime start}) {
-    return Stream.value([]);
-  }
+    Stream<dynamic>? getBookingStreamMock(
+        {required DateTime end, required DateTime start}) {
+      return Stream.value([]);
+    }
 
-  Future<dynamic> uploadBookingMock(
-      {required BookingService newBooking}) async {
-    await Future.delayed(const Duration(seconds: 1));
-    converted.add(DateTimeRange(
-        start: newBooking.bookingStart, end: newBooking.bookingEnd));
-    setState(() {
+    Future<dynamic> uploadBookingMock(
+        {required BookingService newBooking}) async {
+      await Future.delayed(const Duration(seconds: 1));
+      converted.add(DateTimeRange(
+          start: newBooking.bookingStart, end: newBooking.bookingEnd));
+
       dateandtimeController?.text = DateFormat('EEE, yyyy-MM-dd, kk:mm:a')
           .format(newBooking.bookingStart)
           .toString();
-    });
-    print('${newBooking.toJson()} has been uploaded');
-  }
 
-  List<DateTimeRange> converted = [];
+      print('${newBooking.toJson()} has been uploaded');
+    }
 
-  List<DateTimeRange> convertStreamResultMock({required dynamic streamResult}) {
-    ///here you can parse the streamresult and convert to [List<DateTimeRange>]
-    ///take care this is only mock, so if you add today as disabledDays it will still be visible on the first load
-    ///disabledDays will properly work with real data
-    DateTime first = now;
-    DateTime second = now.add(const Duration(minutes: 55));
-    DateTime third = now.subtract(const Duration(minutes: 240));
-    DateTime fourth = now.subtract(const Duration(minutes: 500));
-    converted.add(
-        DateTimeRange(start: first, end: now.add(const Duration(minutes: 30))));
-    converted.add(DateTimeRange(
-        start: second, end: second.add(const Duration(minutes: 23))));
-    converted.add(DateTimeRange(
-        start: third, end: third.add(const Duration(minutes: 15))));
-    converted.add(DateTimeRange(
-        start: fourth, end: fourth.add(const Duration(minutes: 50))));
-    return converted;
-  }
+    List<DateTimeRange> convertStreamResultMock(
+        {required dynamic streamResult}) {
+      ///here you can parse the streamresult and convert to [List<DateTimeRange>]
+      ///take care this is only mock, so if you add today as disabledDays it will still be visible on the first load
+      ///disabledDays will properly work with real data
+      DateTime first = now;
+      DateTime second = now.add(const Duration(minutes: 55));
+      DateTime third = now.subtract(const Duration(minutes: 240));
+      DateTime fourth = now.subtract(const Duration(minutes: 500));
+      converted.add(DateTimeRange(
+          start: first, end: now.add(const Duration(minutes: 30))));
+      converted.add(DateTimeRange(
+          start: second, end: second.add(const Duration(minutes: 23))));
+      converted.add(DateTimeRange(
+          start: third, end: third.add(const Duration(minutes: 15))));
+      converted.add(DateTimeRange(
+          start: fourth, end: fourth.add(const Duration(minutes: 50))));
+      return converted;
+    }
 
-  List<DateTimeRange> generatePauseSlots() {
-    return [
-      DateTimeRange(
-          start: DateTime(now.year, now.month, now.day, 12, 0),
-          end: DateTime(now.year, now.month, now.day, 13, 0))
-    ];
-  }
+    List<DateTimeRange> generatePauseSlots() {
+      return [
+        DateTimeRange(
+            start: DateTime(now.year, now.month, now.day, 12, 0),
+            end: DateTime(now.year, now.month, now.day, 13, 0))
+      ];
+    }
 
-  @override
-  void dispose() {
-    searchController?.dispose();
-    pnameController?.dispose();
-    dateandtimeController?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
-        .collection('services')
-        .snapshots(includeMetadataChanges: true);
-    final Stream<QuerySnapshot> _locationStream = FirebaseFirestore.instance
-        .collection('location')
-        .snapshots(includeMetadataChanges: true);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -406,8 +344,8 @@ class _appointmentPageState extends State<appointmentPage> {
                                                           readOnly: true,
                                                           decoration:
                                                               InputDecoration(
-                                                            hintText: _myBox
-                                                                .get('name'),
+                                                            hintText:
+                                                                '${practioner.firstName} ${practioner.lastName}',
                                                             // enabled: false,
                                                             hintStyle:
                                                                 FlutterFlowTheme.of(
@@ -499,49 +437,34 @@ class _appointmentPageState extends State<appointmentPage> {
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(123, 20,
                                                                   20, 20),
-                                                      child: StreamBuilder<
-                                                              QuerySnapshot>(
-                                                          stream:
-                                                              _categoryStream,
-                                                          builder: (BuildContext
-                                                                  context,
-                                                              AsyncSnapshot<
-                                                                      QuerySnapshot>
-                                                                  snapshot) {
-                                                            // if (snapshot
-                                                            //         .connectionState ==
-                                                            //     ConnectionState
-                                                            //         .waiting) {
-                                                            //   return Text(
-                                                            //       'Loading');
-                                                            // }
-                                                            if (snapshot
-                                                                    .hasData &&
-                                                                snapshot
-                                                                    .data!
-                                                                    .docs
-                                                                    .isNotEmpty) {
+                                                      child: Consumer(
+                                                        builder: (context, ref,
+                                                            child) {
+                                                          final services =
+                                                              ref.watch(
+                                                                  servicesProvider);
+                                                          String?
+                                                              dropDownServices;
+                                                          return services.when(
+                                                            data: (data) {
+                                                              List<String>
+                                                                  pets = [];
+                                                              for (var i = 0;
+                                                                  i ==
+                                                                      data.length;
+                                                                  i++) {
+                                                                pets.add(data
+                                                                    .elementAt(
+                                                                        i)
+                                                                    .servicesName);
+                                                                print(data
+                                                                    .length);
+                                                              }
                                                               return FlutterFlowDropDown(
-                                                                options: snapshot
-                                                                    .data!.docs
-                                                                    .map((DocumentSnapshot
-                                                                        document) {
-                                                                      Map<String,
-                                                                              dynamic>
-                                                                          data =
-                                                                          document.data()! as Map<
-                                                                              String,
-                                                                              dynamic>;
-                                                                      return data[
-                                                                          "servicesName"];
-                                                                    })
-                                                                    .toList()
-                                                                    .cast<
-                                                                        String>(),
+                                                                options: pets,
                                                                 onChanged: (val) =>
-                                                                    setState(() =>
-                                                                        dropDownServices =
-                                                                            val),
+                                                                    dropDownServices =
+                                                                        val,
                                                                 initialOption:
                                                                     dropDownServices,
                                                                 width: MediaQuery.of(
@@ -579,13 +502,17 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                 hidesUnderline:
                                                                     true,
                                                               );
-                                                            } else {
-                                                              return const Center(
-                                                                child:
-                                                                    CircularProgressIndicator(),
-                                                              );
-                                                            }
-                                                          }),
+                                                            },
+                                                            error: (error,
+                                                                stackTrace) {
+                                                              return const SmallErrorAnimationView();
+                                                            },
+                                                            loading: () {
+                                                              return const LoadingAnimationView();
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -859,38 +786,27 @@ class _appointmentPageState extends State<appointmentPage> {
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(115,
                                                                     20, 20, 20),
-                                                        child: StreamBuilder<
-                                                                QuerySnapshot>(
-                                                            stream:
-                                                                _locationStream,
-                                                            builder: (BuildContext
-                                                                    context,
-                                                                AsyncSnapshot<
-                                                                        QuerySnapshot>
-                                                                    snapshot) {
-                                                              // if (snapshot
-                                                              //         .connectionState ==
-                                                              //     ConnectionState
-                                                              //         .waiting) {
-                                                              //   return Text(
-                                                              //       'Loading');
-                                                              // }
-                                                              if (snapshot
-                                                                      .hasData &&
-                                                                  snapshot
-                                                                      .data!
-                                                                      .docs
-                                                                      .isNotEmpty) {
+                                                        child: Consumer(
+                                                          builder: (BuildContext
+                                                                  context,
+                                                              WidgetRef ref,
+                                                              Widget? child) {
+                                                            final location =
+                                                                ref.watch(
+                                                                    locationProvider);
+                                                            return location
+                                                                .when(
+                                                              data: (data) {
+                                                                String?
+                                                                    dropDownLocation;
                                                                 return FlutterFlowDropDown(
-                                                                  options: snapshot
-                                                                      .data!
-                                                                      .docs
-                                                                      .map((DocumentSnapshot
-                                                                          document) {
+                                                                  options: data
+                                                                      .map(
+                                                                          (document) {
                                                                         Map<String,
                                                                                 dynamic>
                                                                             data =
-                                                                            document.data()!
+                                                                            document
                                                                                 as Map<String, dynamic>;
                                                                         return data[
                                                                             "type"];
@@ -899,9 +815,8 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       .cast<
                                                                           String>(),
                                                                   onChanged: (val) =>
-                                                                      setState(() =>
-                                                                          dropDownLocation =
-                                                                              val),
+                                                                      dropDownLocation =
+                                                                          val,
                                                                   initialOption:
                                                                       dropDownLocation,
                                                                   width: MediaQuery.of(
@@ -940,13 +855,17 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                   hidesUnderline:
                                                                       true,
                                                                 );
-                                                              } else {
-                                                                return const Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(),
-                                                                );
-                                                              }
-                                                            }),
+                                                              },
+                                                              error: (error,
+                                                                  stackTrace) {
+                                                                return const ErrorAnimationView();
+                                                              },
+                                                              loading: () {
+                                                                return const LoadingAnimationView();
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -986,40 +905,37 @@ class _appointmentPageState extends State<appointmentPage> {
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(70,
                                                                     20, 20, 20),
-                                                        child: FutureBuilder(
-                                                            future:
-                                                                currentUserData,
-                                                            builder: (context,
-                                                                AsyncSnapshot<
-                                                                        Map<String,
-                                                                            dynamic>>
-                                                                    snapshot) {
-                                                              // if (snapshot
-                                                              //         .connectionState ==
-                                                              //     ConnectionState
-                                                              //         .waiting) {
-                                                              //   return Text(
-                                                              //       'Loading');
-                                                              // }
-                                                              if (snapshot
-                                                                      .hasData &&
-                                                                  snapshot.data!
-                                                                      .isNotEmpty) {
+                                                        child: Consumer(
+                                                          builder: (context,
+                                                              ref, child) {
+                                                            var dropDownNameorCode =
+                                                                TextEditingController();
+                                                            final userUid =
+                                                                ref.watch(
+                                                                    userIdProvider)!;
+                                                            final userInfoModel =
+                                                                ref.watch(
+                                                              userInfoModelProvider(
+                                                                  userUid),
+                                                            );
+
+                                                            return userInfoModel
+                                                                .when(
+                                                              data: (data) {
                                                                 return FlutterFlowDropDown(
                                                                   options: [
-                                                                    fName.toString() +
-                                                                        " " +
-                                                                        lName
-                                                                            .toString(),
-                                                                    clientCode
-                                                                        .toString()
+                                                                    data.firstName +
+                                                                        ' ' +
+                                                                        data.lastName,
+                                                                    data.clientcode
                                                                   ],
                                                                   onChanged: (val) =>
-                                                                      setState(() =>
-                                                                          dropDownNameorCode =
-                                                                              val),
+                                                                      dropDownNameorCode
+                                                                              .text =
+                                                                          val.toString(),
                                                                   initialOption:
-                                                                      dropDownNameorCode,
+                                                                      dropDownNameorCode
+                                                                          .text,
                                                                   width: MediaQuery.of(
                                                                               context)
                                                                           .size
@@ -1056,13 +972,17 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                   hidesUnderline:
                                                                       true,
                                                                 );
-                                                              } else {
-                                                                return const Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(),
-                                                                );
-                                                              }
-                                                            }),
+                                                              },
+                                                              error: (error,
+                                                                  stackTrace) {
+                                                                return const ErrorAnimationView();
+                                                              },
+                                                              loading: () {
+                                                                return const LoadingAnimationView();
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -1088,18 +1008,20 @@ class _appointmentPageState extends State<appointmentPage> {
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(150,
                                                                     20, 20, 20),
-                                                        child: FutureBuilder(
-                                                            future:
-                                                                currentUserData,
-                                                            builder: (context,
-                                                                AsyncSnapshot<
-                                                                        Map<String,
-                                                                            dynamic>>
-                                                                    snapshot) {
-                                                              if (snapshot
-                                                                      .hasData &&
-                                                                  snapshot.data!
-                                                                      .isNotEmpty) {
+                                                        child: Consumer(
+                                                          builder: (context,
+                                                              ref, child) {
+                                                            final userUid =
+                                                                ref.watch(
+                                                                    userIdProvider)!;
+                                                            final userInfoModel =
+                                                                ref.watch(
+                                                              userInfoModelProvider(
+                                                                  userUid),
+                                                            );
+                                                            return userInfoModel
+                                                                .when(
+                                                              data: (data) {
                                                                 return TextFormField(
                                                                   controller:
                                                                       emailController,
@@ -1111,8 +1033,8 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       true,
                                                                   decoration:
                                                                       InputDecoration(
-                                                                    hintText: uEmail
-                                                                        .toString(),
+                                                                    hintText: data
+                                                                        .email,
                                                                     // enabled: false,
                                                                     hintStyle: FlutterFlowTheme.of(
                                                                             context)
@@ -1177,13 +1099,17 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       TextInputType
                                                                           .emailAddress,
                                                                 );
-                                                              } else {
-                                                                return const Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(),
-                                                                );
-                                                              }
-                                                            }),
+                                                              },
+                                                              error: (error,
+                                                                  stackTrace) {
+                                                                return const ErrorAnimationView();
+                                                              },
+                                                              loading: () {
+                                                                return const LoadingAnimationView();
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -1209,18 +1135,20 @@ class _appointmentPageState extends State<appointmentPage> {
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(40,
                                                                     20, 20, 20),
-                                                        child: FutureBuilder(
-                                                            future:
-                                                                currentUserData,
-                                                            builder: (context,
-                                                                AsyncSnapshot<
-                                                                        Map<String,
-                                                                            dynamic>>
-                                                                    snapshot) {
-                                                              if (snapshot
-                                                                      .hasData &&
-                                                                  snapshot.data!
-                                                                      .isNotEmpty) {
+                                                        child: Consumer(
+                                                          builder: (context,
+                                                              ref, child) {
+                                                            final userUid =
+                                                                ref.watch(
+                                                                    userIdProvider)!;
+                                                            final userInfoModel =
+                                                                ref.watch(
+                                                              userInfoModelProvider(
+                                                                  userUid),
+                                                            );
+                                                            return userInfoModel
+                                                                .when(
+                                                              data: (data) {
                                                                 return TextFormField(
                                                                   controller:
                                                                       phNumbController,
@@ -1232,7 +1160,8 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       true,
                                                                   decoration:
                                                                       InputDecoration(
-                                                                    hintText: phNumb
+                                                                    hintText: data
+                                                                        .phoneNumber
                                                                         .toString(),
                                                                     // enabled: false,
                                                                     hintStyle: FlutterFlowTheme.of(
@@ -1298,13 +1227,17 @@ class _appointmentPageState extends State<appointmentPage> {
                                                                       TextInputType
                                                                           .phone,
                                                                 );
-                                                              } else {
-                                                                return const Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(),
-                                                                );
-                                                              }
-                                                            }),
+                                                              },
+                                                              error: (error,
+                                                                  stackTrace) {
+                                                                return const ErrorAnimationView();
+                                                              },
+                                                              loading: () {
+                                                                return const LoadingAnimationView();
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -1427,37 +1360,37 @@ class _appointmentPageState extends State<appointmentPage> {
                                                       //   userId =
                                                       //       _myBox.get('id');
                                                       // });
-                                                      AppointmentData appointmentData = AppointmentData(
-                                                          id: user.uid,
-                                                          practionerName: _myBox
-                                                              .get('name'),
-                                                          services:
-                                                              dropDownServices,
-                                                          dateandtime:
-                                                              dateandtimeController
-                                                                  ?.text,
-                                                          location:
-                                                              dropDownLocation,
-                                                          clientNameorCode:
-                                                              dropDownNameorCode,
-                                                          clientEmail:
-                                                              uEmail.toString(),
-                                                          clientphNumber:
-                                                              phNumb.toString(),
-                                                          clientComment:
-                                                              commentController
-                                                                  ?.text,
-                                                          statusAppointment:
-                                                              "ongoing",
-                                                          createdAt:
-                                                              DateTime.now()
-                                                                  .toString());
-                                                      await service
-                                                          .addAppointment(
-                                                              appointmentData);
+                                                      // AppointmentData appointmentData = AppointmentData(
+                                                      //     id: user.uid,
+                                                      //     practionerName: _myBox
+                                                      //         .get('name'),
+                                                      //     services:
+                                                      //         dropDownServices,
+                                                      //     dateandtime:
+                                                      //         dateandtimeController
+                                                      //             ?.text,
+                                                      //     location:
+                                                      //         dropDownLocation,
+                                                      //     clientNameorCode:
+                                                      //         dropDownNameorCode,
+                                                      //     clientEmail:
+                                                      //         uEmail.toString(),
+                                                      //     clientphNumber:
+                                                      //         phNumb.toString(),
+                                                      //     clientComment:
+                                                      //         commentController
+                                                      //             ?.text,
+                                                      //     statusAppointment:
+                                                      //         "ongoing",
+                                                      //     createdAt:
+                                                      //         DateTime.now()
+                                                      //             .toString());
+                                                      // await service
+                                                      //     .addAppointment(
+                                                      //         appointmentData);
                                                     }
-                                                    print(_myBox.get('name'));
-                                                    print('Button pressed ...');
+                                                    // print(_myBox.get('name'));
+                                                    // print('Button pressed ...');
                                                   },
                                                   text: 'Submit',
                                                   options: FFButtonOptions(
@@ -1503,41 +1436,4 @@ class _appointmentPageState extends State<appointmentPage> {
       ),
     );
   }
-
-  // void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-  //   /// The argument value will return the changed date as [DateTime] when the
-  //   /// widget [SfDateRangeSelectionMode] set as single.
-  //   ///
-  //   /// The argument value will return the changed dates as [List<DateTime>]
-  //   /// when the widget [SfDateRangeSelectionMode] set as multiple.
-  //   ///
-  //   /// The argument value will return the changed range as [PickerDateRange]
-  //   /// when the widget [SfDateRangeSelectionMode] set as range.
-  //   ///
-  //   /// The argument value will return the changed ranges as
-  //   /// [List<PickerDateRange] when the widget [SfDateRangeSelectionMode] set as
-  //   /// multi range.
-  //   setState(() {
-  //     if (args.value is PickerDateRange) {
-  //     } else if (args.value is DateTime) {
-  //       dateandtimeController?.text =
-  //           DateFormat('dd/MM/yyyy').format(args.value).toString();
-  //       ;
-  //     } else if (args.value is List<DateTime>) {
-  //     } else {}
-  //   });
-  // }
-
-// https://www.syncfusion.com/kb/11467/how-to-add-a-date-range-picker-sfdaterangepicker-in-the-flutter-dialog-window
-  // Widget getDateRangePicker() {
-  //   return Container(
-  //       height: 250,
-  //       child: Card(
-  //           child: SfDateRangePicker(
-  //         view: DateRangePickerView.month,
-  //         selectionMode: DateRangePickerSelectionMode.single,
-  //         onSelectionChanged: selectionChanged,
-  //       )));
-  // }
-  ///test
 }

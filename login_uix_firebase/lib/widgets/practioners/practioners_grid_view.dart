@@ -19,7 +19,7 @@ class PractionersGridView extends StatelessWidget {
         crossAxisCount: 3,
         mainAxisSpacing: 8.0,
         crossAxisSpacing: 10.0,
-        childAspectRatio: 1.0,
+        childAspectRatio: 1,
       ),
       itemCount: practioners.length,
       itemBuilder: (context, index) {

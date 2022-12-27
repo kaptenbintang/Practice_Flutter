@@ -81,6 +81,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
     retrievedAppointmentList = await service.retrieveApppointmentAll();
 
     setState(() {
+      // CircularProgressIndicator();
       AppointmentList = service.retrieveApppointmentAll();
     });
   }
@@ -187,16 +188,16 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                                                 borderWidth: 1,
                                                 buttonSize: 50,
                                                 icon: Icon(
-                                                  Icons.playlist_add,
+                                                  Icons.refresh,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
                                                   size: 25,
                                                 ),
                                                 onPressed: () {
-                                                  print(
-                                                      'IconButton pressed ...');
-                                                  dialogaddPractioner(context);
+                                                  // print(
+                                                  //     'IconButton pressed ...');
+                                                  // dialogaddPractioner(context);
                                                   _pullRefresh();
                                                 },
                                               ),
@@ -316,28 +317,21 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Expanded(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Expanded(
-                                                  // flex: 2,
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                8, 0, 0, 0),
-                                                    child: Text(
-                                                      'Client Name/Code',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                            // flex: 2,
+                                            child: Text(
+                                              'Appointment ID',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            // flex: 2,
+                                            child: Text(
+                                              'Client Name/Code',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
                                             ),
                                           ),
                                           if (responsiveVisibility(
@@ -373,12 +367,28 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                                           ))
                                             Expanded(
                                               child: Text(
-                                                'Status',
+                                                'Booking Date',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2,
                                               ),
                                             ),
+                                          Expanded(
+                                            child: Text(
+                                              'Status',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                          // Expanded(
+                                          //   child: Text(
+                                          //     'Created at',
+                                          //     style:
+                                          //         FlutterFlowTheme.of(context)
+                                          //             .bodyText2,
+                                          //   ),
+                                          // ),
                                           Expanded(
                                             child: Text(
                                               'Action',
@@ -488,6 +498,22 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
+              Expanded(
+                // flex: 1,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      snapshot.id!,
+                      style: FlutterFlowTheme.of(context).subtitle1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
               // Name
               Expanded(
                 // flex: 1,
@@ -521,12 +547,25 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                 ),
               ),
               //Speciality
+
+              Expanded(
+                child: Text(
+                  snapshot.dateandtime!,
+                  style: FlutterFlowTheme.of(context).bodyText1,
+                ),
+              ),
               Expanded(
                 child: Text(
                   snapshot.statusAppointment!,
                   style: FlutterFlowTheme.of(context).bodyText1,
                 ),
               ),
+              // Expanded(
+              //   child: Text(
+              //     snapshot.createdAt!,
+              //     style: FlutterFlowTheme.of(context).bodyText1,
+              //   ),
+              // ),
               //Action Button
               Expanded(
                 child: Row(
@@ -741,7 +780,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                             });
                           },
                           onSaved: (value) {},
-                          items: <String>['ongoing', 'complete']
+                          items: <String>['ongoing', 'Complete', 'Cancel']
                               .map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -800,132 +839,132 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
         });
   }
 
-  Future<dynamic> dialogaddPractioner(BuildContext context) {
-    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
-        .collection('servicesCategory')
-        .snapshots(includeMetadataChanges: true);
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Add new services"),
-            content: Stack(
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                Positioned(
-                  right: -40.0,
-                  top: -80.0,
-                  child: InkResponse(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: CircleAvatar(
-                      child: Icon(Icons.close),
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _clientcodeorname,
-                          decoration: InputDecoration(
-                            labelText: "Enter name/code",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter name/code";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _clientphnumber,
-                          decoration: InputDecoration(
-                            labelText: "Enter phone number",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter correct phone number";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _clientemail,
-                          decoration: InputDecoration(
-                            labelText: "Enter client email",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter email";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _statusAppointment,
-                          decoration: InputDecoration(
-                            labelText: "Status Appointment",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Status Appointment";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              AppointmentData appointmentData = AppointmentData(
-                                  id: userId,
-                                  clientNameorCode: _clientcodeorname.text,
-                                  clientphNumber: _clientphnumber.text,
-                                  clientEmail: _clientemail.text,
-                                  statusAppointment: _statusAppointment.text);
-                              await service.addAppointment(appointmentData);
-                              Navigator.pop(context);
-                              _pullRefresh();
-                            }
+  // Future<dynamic> dialogaddPractioner(BuildContext context) {
+  //   final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
+  //       .collection('servicesCategory')
+  //       .snapshots(includeMetadataChanges: true);
+  //   return showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: const Text("Add new services"),
+  //           content: Stack(
+  //             clipBehavior: Clip.none,
+  //             children: <Widget>[
+  //               Positioned(
+  //                 right: -40.0,
+  //                 top: -80.0,
+  //                 child: InkResponse(
+  //                   onTap: () {
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                   child: CircleAvatar(
+  //                     child: Icon(Icons.close),
+  //                     backgroundColor: Colors.red,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Form(
+  //                 key: _formKey,
+  //                 child: Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: <Widget>[
+  //                     Padding(
+  //                       padding: EdgeInsets.all(8.0),
+  //                       child: TextFormField(
+  //                         controller: _clientcodeorname,
+  //                         decoration: InputDecoration(
+  //                           labelText: "Enter name/code",
+  //                         ),
+  //                         validator: (value) {
+  //                           if (value!.isEmpty) {
+  //                             return "Enter name/code";
+  //                           } else {
+  //                             return null;
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: EdgeInsets.all(8.0),
+  //                       child: TextFormField(
+  //                         controller: _clientphnumber,
+  //                         decoration: InputDecoration(
+  //                           labelText: "Enter phone number",
+  //                         ),
+  //                         validator: (value) {
+  //                           if (value!.isEmpty) {
+  //                             return "Enter correct phone number";
+  //                           } else {
+  //                             return null;
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: EdgeInsets.all(8.0),
+  //                       child: TextFormField(
+  //                         controller: _clientemail,
+  //                         decoration: InputDecoration(
+  //                           labelText: "Enter client email",
+  //                         ),
+  //                         validator: (value) {
+  //                           if (value!.isEmpty) {
+  //                             return "Enter email";
+  //                           } else {
+  //                             return null;
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: EdgeInsets.all(8.0),
+  //                       child: TextFormField(
+  //                         controller: _statusAppointment,
+  //                         decoration: InputDecoration(
+  //                           labelText: "Status Appointment",
+  //                         ),
+  //                         validator: (value) {
+  //                           if (value!.isEmpty) {
+  //                             return "Status Appointment";
+  //                           } else {
+  //                             return null;
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 40,
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: ElevatedButton(
+  //                         child: Text("Submit"),
+  //                         onPressed: () async {
+  //                           if (_formKey.currentState!.validate()) {
+  //                             AppointmentData appointmentData = AppointmentData(
+  //                                 id: userId,
+  //                                 clientNameorCode: _clientcodeorname.text,
+  //                                 clientphNumber: _clientphnumber.text,
+  //                                 clientEmail: _clientemail.text,
+  //                                 statusAppointment: _statusAppointment.text);
+  //                             await service.addAppointment(appointmentData);
+  //                             Navigator.pop(context);
+  //                             _pullRefresh();
+  //                           }
 
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
-  }
+  //                           // if (_formKey.currentState!.validate()) {
+  //                           //   _formKey.currentState!.save();
+  //                           // }
+  //                         },
+  //                       ),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         );
+  //       });
+  // }
 }
