@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -262,6 +264,8 @@ class LoginMobileRiverpod extends ConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               navigationController.navigateTo(sideMenuItems[4]);
+                              menuController
+                                  .changeActiveitemTo(sideMenuItems[4]);
                             },
                             child: Text(
                               " Register now!",

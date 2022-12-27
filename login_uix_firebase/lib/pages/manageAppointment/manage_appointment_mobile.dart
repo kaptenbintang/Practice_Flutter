@@ -498,71 +498,74 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    DropdownButton<String>(
-                      focusNode: dropDownFocus,
-                      isExpanded: true,
-                      borderRadius: BorderRadius.circular(30),
-                      iconSize: 40,
-                      icon: Icon(
-                        Icons.arrow_drop_down,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 20,
-                      ),
-                      onChanged: (value) {
-                        print(value);
-                        // if value doesnt contain just close the dropDown
-                        if (value == null) {
-                          dropDownFocus.unfocus();
-                        } else {
-                          switch (value) {
-                            case "Remove":
-                              print('Button pressed ...');
-                              service.deletePractioners(
-                                  context, snapshot.id.toString());
-                              _pullRefresh();
-                              break;
-                            case "Edit":
-                              print('Button pressed ...');
-                              dialogEditPractioner(context);
-                              setState(() {
-                                userId = snapshot.id;
-                                firstNameID = snapshot.firstName;
-                                lastNameID = snapshot.lastName;
-                                myApproachID = snapshot.myApproach;
-                                myBackgroundID = snapshot.myBackground;
-                                myQualificationsID = snapshot.myQualifications;
-                                mySpecialtyID = snapshot.mySpecialty;
-                                myRolesID = snapshot.myRoles;
-                                languagesID = snapshot.languages;
-                                titleMainID = snapshot.titleMain;
-                                schedulePractionerID =
-                                    snapshot.practionerSchedule;
-                              });
-                              break;
-                            default:
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        focusNode: dropDownFocus,
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(30),
+                        iconSize: 40,
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 20,
+                        ),
+                        onChanged: (value) {
+                          print(value);
+                          // if value doesnt contain just close the dropDown
+                          if (value == null) {
+                            dropDownFocus.unfocus();
+                          } else {
+                            switch (value) {
+                              case "Remove":
+                                print('Button pressed ...');
+                                service.deletePractioners(
+                                    context, snapshot.id.toString());
+                                _pullRefresh();
+                                break;
+                              case "Edit":
+                                print('Button pressed ...');
+                                dialogEditPractioner(context);
+                                setState(() {
+                                  userId = snapshot.id;
+                                  firstNameID = snapshot.firstName;
+                                  lastNameID = snapshot.lastName;
+                                  myApproachID = snapshot.myApproach;
+                                  myBackgroundID = snapshot.myBackground;
+                                  myQualificationsID =
+                                      snapshot.myQualifications;
+                                  mySpecialtyID = snapshot.mySpecialty;
+                                  myRolesID = snapshot.myRoles;
+                                  languagesID = snapshot.languages;
+                                  titleMainID = snapshot.titleMain;
+                                  schedulePractionerID =
+                                      snapshot.practionerSchedule;
+                                });
+                                break;
+                              default:
+                            }
                           }
-                        }
-                      },
-                      // items: List.generate(
-                      //     dropDownItemValue2.length,
-                      //     (index) => DropdownMenuItem(
-                      //           value: dropDownItemValue2[index],
-                      //           child: Text(dropDownItemValue2[index]),
-                      //         )),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text('Action'),
-                          value: "Action",
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Edit'),
-                          value: "Edit",
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Remove'),
-                          value: "Remove",
-                        ),
-                      ],
+                        },
+                        // items: List.generate(
+                        //     dropDownItemValue2.length,
+                        //     (index) => DropdownMenuItem(
+                        //           value: dropDownItemValue2[index],
+                        //           child: Text(dropDownItemValue2[index]),
+                        //         )),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Action'),
+                            value: "Action",
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Edit'),
+                            value: "Edit",
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Remove'),
+                            value: "Remove",
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

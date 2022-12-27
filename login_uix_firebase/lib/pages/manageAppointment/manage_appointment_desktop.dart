@@ -316,28 +316,21 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Expanded(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Expanded(
-                                                  // flex: 2,
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                8, 0, 0, 0),
-                                                    child: Text(
-                                                      'Client Name/Code',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                            // flex: 2,
+                                            child: Text(
+                                              'Appointment ID',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            // flex: 2,
+                                            child: Text(
+                                              'Client Name/Code',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
                                             ),
                                           ),
                                           if (responsiveVisibility(
@@ -373,12 +366,28 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                                           ))
                                             Expanded(
                                               child: Text(
-                                                'Status',
+                                                'Booking Date',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2,
                                               ),
                                             ),
+                                          Expanded(
+                                            child: Text(
+                                              'Status',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                          // Expanded(
+                                          //   child: Text(
+                                          //     'Created at',
+                                          //     style:
+                                          //         FlutterFlowTheme.of(context)
+                                          //             .bodyText2,
+                                          //   ),
+                                          // ),
                                           Expanded(
                                             child: Text(
                                               'Action',
@@ -488,6 +497,22 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
+              Expanded(
+                // flex: 1,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      snapshot.id!,
+                      style: FlutterFlowTheme.of(context).subtitle1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
               // Name
               Expanded(
                 // flex: 1,
@@ -521,12 +546,25 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                 ),
               ),
               //Speciality
+
+              Expanded(
+                child: Text(
+                  snapshot.dateandtime!,
+                  style: FlutterFlowTheme.of(context).bodyText1,
+                ),
+              ),
               Expanded(
                 child: Text(
                   snapshot.statusAppointment!,
                   style: FlutterFlowTheme.of(context).bodyText1,
                 ),
               ),
+              // Expanded(
+              //   child: Text(
+              //     snapshot.createdAt!,
+              //     style: FlutterFlowTheme.of(context).bodyText1,
+              //   ),
+              // ),
               //Action Button
               Expanded(
                 child: Row(
@@ -741,7 +779,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                             });
                           },
                           onSaved: (value) {},
-                          items: <String>['ongoing', 'complete']
+                          items: <String>['ongoing', 'Complete', 'Cancel']
                               .map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,

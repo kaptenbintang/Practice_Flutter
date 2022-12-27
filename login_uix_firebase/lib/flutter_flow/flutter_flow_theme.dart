@@ -1,4 +1,4 @@
-// ignore_for_file: overridden_fields, annotate_overrides
+// ignore_for_file: overridden_fields, annotate_overrides, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

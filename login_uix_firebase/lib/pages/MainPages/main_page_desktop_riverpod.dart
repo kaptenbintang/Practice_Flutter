@@ -97,10 +97,16 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           20, 20, 20, 20),
-                                      child: Text(
-                                        'Contact us',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(context,
+                                              RouteName.historyBookingRiverpod);
+                                        },
+                                        child: Text(
+                                          'Booking History',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
+                                        ),
                                       ),
                                     ),
                                     Expanded(
@@ -352,9 +358,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
                             ),
-                            child: ListView(
-                              // mainAxisSize: MainAxisSize.max
-                              shrinkWrap: true,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -373,13 +378,16 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                     ),
                                   ],
                                 ),
-                                data.isNotEmpty
-                                    ? Expanded(
-                                        child: AppointmentsGridView(
-                                            appointments: data))
-                                    : const EmptyContentsWithTextAnimationView(
-                                        text: 'You have no appointments',
-                                      ),
+                                Expanded(
+                                    child: data.isNotEmpty
+                                        ? AppointmentsGridView(
+                                            appointments: data)
+                                        : SingleChildScrollView(
+                                            child:
+                                                const EmptyContentsWithTextAnimationView(
+                                              text: 'You have no appointments',
+                                            ),
+                                          )),
                               ],
                             ),
                           ),
@@ -394,7 +402,308 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                     },
                   );
                 },
-              )
+              ),
+              Stack(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(0),
+                        bottomRight: Radius.circular(0),
+                        topLeft: Radius.circular(60),
+                        topRight: Radius.circular(60),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 20, 30),
+                            child: Text(
+                              'Your Happiness Center',
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 28,
+                                      ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                            child: Text(
+                              '#ReachingOutIsAStrength',
+                              style:
+                                  FlutterFlowTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 22,
+                                      ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Text(
+                            'Get support by email, phone or chat, set up a meeting, or make a reservation for a session to discuss your needs.',
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 20,
+                                    ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 20, 20, 20),
+                                      child: Icon(
+                                        Icons.location_on,
+                                        color: Colors.black,
+                                        size: 60,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Stop By',
+                                      style: FlutterFlowTheme.of(context)
+                                          .title1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 18,
+                                          ),
+                                    ),
+                                    Text(
+                                      'Sunway Geo Avenue\nE-02-02 Jalan Lagoon Selatan',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 20, 20, 20),
+                                      child: Icon(
+                                        Icons.call,
+                                        color: Colors.black,
+                                        size: 60,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Call Us',
+                                      style: FlutterFlowTheme.of(context)
+                                          .title1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 18,
+                                          ),
+                                    ),
+                                    Text(
+                                      '+603.5612.0020\n+6014.718.8213',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 20, 20, 20),
+                                      child: Icon(
+                                        Icons.email_outlined,
+                                        color: Colors.black,
+                                        size: 60,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Email Us',
+                                      style: FlutterFlowTheme.of(context)
+                                          .title1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 18,
+                                          ),
+                                    ),
+                                    Text(
+                                      'hello@relationary.com',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 20, 20, 20),
+                                      child: Icon(
+                                        Icons.access_time,
+                                        color: Colors.black,
+                                        size: 60,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Admin Hours',
+                                      style: FlutterFlowTheme.of(context)
+                                          .title1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 18,
+                                          ),
+                                    ),
+                                    Text(
+                                      'Everyday\n9:00am to 6:00pm',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 20, 20, 20),
+                                      child: Icon(
+                                        Icons.chat_bubble_outline_outlined,
+                                        color: Colors.black,
+                                        size: 60,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Session Hours',
+                                      style: FlutterFlowTheme.of(context)
+                                          .title1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 18,
+                                          ),
+                                    ),
+                                    Text(
+                                      'Everyday\n9:30am to 10:00pm',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Text(
+                            '© 2022-2023 Blue Harmony',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

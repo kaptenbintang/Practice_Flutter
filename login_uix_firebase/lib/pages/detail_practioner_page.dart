@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
@@ -108,7 +110,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                       child: InkWell(
                                         onTap: () {
                                           Navigator.pushNamed(context,
-                                              RouteName.HistoryBooking);
+                                              RouteName.historyBookingRiverpod);
                                         },
                                         child: Text(
                                           'Booking History',

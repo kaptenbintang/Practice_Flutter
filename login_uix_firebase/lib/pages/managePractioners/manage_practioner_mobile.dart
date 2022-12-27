@@ -1,16 +1,15 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_final_fields, avoid_print, prefer_interpolation_to_compose_strings, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, sort_child_properties_last, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, unused_local_variable
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
 import '../../model/practioner_data.dart';
 
@@ -102,7 +101,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                 alignment: AlignmentDirectional(0, 0),
                 child: Container(
                   width: double.infinity,
-                  height: 44,
+                  height: Dimensions.height20 + Dimensions.height24,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                     borderRadius: BorderRadius.circular(0),
@@ -111,7 +110,11 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                 ),
               ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  Dimensions.width16,
+                  Dimensions.height08 * 2,
+                  Dimensions.width16,
+                  Dimensions.height08 * 2),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -120,10 +123,10 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                     BoxShadow(
                       blurRadius: 4,
                       color: Color(0x33000000),
-                      offset: Offset(0, 2),
+                      offset: Offset(0, Dimensions.height08 / 4),
                     )
                   ],
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(Dimensions.font16),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -131,7 +134,11 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          Dimensions.width16,
+                          Dimensions.height08 * 2,
+                          0,
+                          Dimensions.height08 * 2),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -142,7 +149,8 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                             style: FlutterFlowTheme.of(context).title3,
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, Dimensions.height08 / 2, 0, 0),
                             child: Text(
                               'Your project status is appearing here.',
                               style: FlutterFlowTheme.of(context).bodyText2,
@@ -152,7 +160,8 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          Dimensions.width24 / 2, 0, Dimensions.width24 / 2, 0),
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -164,14 +173,18 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                Dimensions.width08 / 2,
+                                0,
+                                Dimensions.width08 / 2,
+                                Dimensions.height24),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.font16),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).lineColor,
                                   width: 1,
@@ -179,7 +192,10 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 12),
+                                    0,
+                                    Dimensions.height08 * 2,
+                                    0,
+                                    Dimensions.height24 / 2),
                                 child: SingleChildScrollView(
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -189,7 +205,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                       //Container title
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            16, 0, 0, 0),
+                                            Dimensions.width08 * 2, 0, 0, 0),
                                         child: Text(
                                           'Practioners',
                                           style: FlutterFlowTheme.of(context)
@@ -208,9 +224,14 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 5, 0, 5),
+                                                      .fromSTEB(
+                                                          Dimensions.width10,
+                                                          Dimensions.height05,
+                                                          0,
+                                                          Dimensions.height05),
                                                   child: Container(
-                                                    width: 150,
+                                                    width: Dimensions.width100 +
+                                                        Dimensions.width10 * 5,
                                                     child: TextFormField(
                                                       controller:
                                                           textController,
@@ -232,9 +253,10 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                                                 .primaryText,
                                                             width: 1.5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                      .radius15 /
+                                                                  3),
                                                         ),
                                                         focusedBorder:
                                                             OutlineInputBorder(
@@ -245,9 +267,10 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                                                 .primaryText,
                                                             width: 1.5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                      .radius15 /
+                                                                  3),
                                                         ),
                                                         errorBorder:
                                                             OutlineInputBorder(
@@ -257,9 +280,10 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                                                 0x00000000),
                                                             width: 1.5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                      .radius15 /
+                                                                  3),
                                                         ),
                                                         focusedErrorBorder:
                                                             OutlineInputBorder(
@@ -269,9 +293,10 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                                                 0x00000000),
                                                             width: 1.5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          borderRadius: BorderRadius
+                                                              .circular(Dimensions
+                                                                      .radius15 /
+                                                                  3),
                                                         ),
                                                       ),
                                                       style: FlutterFlowTheme
@@ -287,20 +312,27 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(5, 0, 0, 0),
+                                                      .fromSTEB(
+                                                          Dimensions.width10 /
+                                                              2,
+                                                          0,
+                                                          0,
+                                                          0),
                                                   child: FlutterFlowIconButton(
                                                     borderColor:
                                                         Colors.transparent,
-                                                    borderRadius: 30,
+                                                    borderRadius:
+                                                        Dimensions.radius30,
                                                     borderWidth: 1,
-                                                    buttonSize: 40,
+                                                    buttonSize:
+                                                        Dimensions.font20 * 2,
                                                     icon: Icon(
                                                       Icons.search,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primaryText,
-                                                      size: 20,
+                                                      size: Dimensions.font20,
                                                     ),
                                                     onPressed: () {
                                                       print(
@@ -313,15 +345,15 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                           ),
                                           FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
-                                            borderRadius: 30,
+                                            borderRadius: Dimensions.radius30,
                                             borderWidth: 1,
-                                            buttonSize: 40,
+                                            buttonSize: Dimensions.font20 * 2,
                                             icon: Icon(
                                               Icons.playlist_add,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryColor,
-                                              size: 20,
+                                              size: Dimensions.font20,
                                             ),
                                             onPressed: () {
                                               print('IconButton pressed ...');
@@ -332,7 +364,10 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                       //Column title
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            12, 12, 12, 0),
+                                            Dimensions.width24 / 2,
+                                            Dimensions.height24 / 2,
+                                            Dimensions.width24 / 2,
+                                            0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -341,7 +376,11 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 0, 0, 0),
+                                                      .fromSTEB(
+                                                          Dimensions.width10,
+                                                          0,
+                                                          0,
+                                                          0),
                                                   child: Text(
                                                     'Practioners',
                                                     style: FlutterFlowTheme.of(
@@ -366,7 +405,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                       //Data row
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 16, 0, 0),
+                                            0, Dimensions.height08 * 2, 0, 0),
                                         child: FutureBuilder(
                                             future: PractionerList,
                                             builder: (context,
@@ -445,7 +484,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height08 / 4),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -459,7 +498,11 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
           ],
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              Dimensions.width24 / 2,
+              Dimensions.height24 / 2,
+              Dimensions.width24 / 2,
+              Dimensions.height24 / 2),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -482,7 +525,8 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                     ))
                       //role
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0, Dimensions.height08 / 4, 0, 0),
                         child: Text(
                           snapshot.myRoles!,
                           style: FlutterFlowTheme.of(context).bodyText2,
@@ -497,71 +541,75 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    DropdownButton<String>(
-                      focusNode: dropDownFocus,
-                      isExpanded: true,
-                      borderRadius: BorderRadius.circular(30),
-                      iconSize: 40,
-                      icon: Icon(
-                        Icons.arrow_drop_down,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 20,
-                      ),
-                      onChanged: (value) {
-                        print(value);
-                        // if value doesnt contain just close the dropDown
-                        if (value == null) {
-                          dropDownFocus.unfocus();
-                        } else {
-                          switch (value) {
-                            case "Remove":
-                              print('Button pressed ...');
-                              service.deletePractioners(
-                                  context, snapshot.id.toString());
-                              _pullRefresh();
-                              break;
-                            case "Edit":
-                              print('Button pressed ...');
-                              dialogEditPractioner(context);
-                              setState(() {
-                                userId = snapshot.id;
-                                firstNameID = snapshot.firstName;
-                                lastNameID = snapshot.lastName;
-                                myApproachID = snapshot.myApproach;
-                                myBackgroundID = snapshot.myBackground;
-                                myQualificationsID = snapshot.myQualifications;
-                                mySpecialtyID = snapshot.mySpecialty;
-                                myRolesID = snapshot.myRoles;
-                                languagesID = snapshot.languages;
-                                titleMainID = snapshot.titleMain;
-                                schedulePractionerID =
-                                    snapshot.practionerSchedule;
-                              });
-                              break;
-                            default:
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        focusNode: dropDownFocus,
+                        isExpanded: true,
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        iconSize: Dimensions.font20 * 2,
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: Dimensions.font20,
+                        ),
+                        onChanged: (value) {
+                          print(value);
+                          // if value doesnt contain just close the dropDown
+                          if (value == null) {
+                            dropDownFocus.unfocus();
+                          } else {
+                            switch (value) {
+                              case "Remove":
+                                print('Button pressed ...');
+                                service.deletePractioners(
+                                    context, snapshot.id.toString());
+                                _pullRefresh();
+                                break;
+                              case "Edit":
+                                print('Button pressed ...');
+                                dialogEditPractioner(context);
+                                setState(() {
+                                  userId = snapshot.id;
+                                  firstNameID = snapshot.firstName;
+                                  lastNameID = snapshot.lastName;
+                                  myApproachID = snapshot.myApproach;
+                                  myBackgroundID = snapshot.myBackground;
+                                  myQualificationsID =
+                                      snapshot.myQualifications;
+                                  mySpecialtyID = snapshot.mySpecialty;
+                                  myRolesID = snapshot.myRoles;
+                                  languagesID = snapshot.languages;
+                                  titleMainID = snapshot.titleMain;
+                                  schedulePractionerID =
+                                      snapshot.practionerSchedule;
+                                });
+                                break;
+                              default:
+                            }
                           }
-                        }
-                      },
-                      // items: List.generate(
-                      //     dropDownItemValue2.length,
-                      //     (index) => DropdownMenuItem(
-                      //           value: dropDownItemValue2[index],
-                      //           child: Text(dropDownItemValue2[index]),
-                      //         )),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text('Action'),
-                          value: "Action",
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Edit'),
-                          value: "Edit",
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Remove'),
-                          value: "Remove",
-                        ),
-                      ],
+                        },
+                        // items: List.generate(
+                        //     dropDownItemValue2.length,
+                        //     (index) => DropdownMenuItem(
+                        //           value: dropDownItemValue2[index],
+                        //           child: Text(dropDownItemValue2[index]),
+                        //         )),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Action'),
+                            value: "Action",
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Edit'),
+                            value: "Edit",
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Remove'),
+                            value: "Remove",
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -580,15 +628,15 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
 
     return showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (context) {
           return AlertDialog(
             title: const Text("Edit Services"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(Dimensions.width10 * 4),
+                  top: -(Dimensions.height20 * 4),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -601,174 +649,188 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                 ),
                 Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _firstNamePractioner,
-                          decoration: InputDecoration(
-                            labelText: "First Name",
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        //First Name
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _firstNamePractioner,
+                            decoration: InputDecoration(
+                              labelText: "First Name",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _lastNamePractioner,
-                          decoration: InputDecoration(
-                            labelText: "Last Name",
+                        //Last Name
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _lastNamePractioner,
+                            decoration: InputDecoration(
+                              labelText: "Last Name",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myApproachPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Approach",
+                        //My Approach
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _myApproachPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Approach",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myBackgroundPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Backgrounds",
+                        //My Background
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _myBackgroundPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Backgrounds",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myQualificationsPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Qualifications",
+                        //My Qualifications
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _myQualificationsPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Qualifications",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _mySpecialtyPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Specialty",
+                        //My Speciality
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _mySpecialtyPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Specialty",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myRolesPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Roles",
+                        //My Roles
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _myRolesPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Roles",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _languagesPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Languages",
+                        //Languages
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _languagesPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Languages",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _titleMainPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Title Main",
+                        //Title Main
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _titleMainPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Title Main",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(
-                                    2022), //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2023));
+                        //Schedule
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(
+                                      2022), //DateTime.now() - not to allow to choose before today.
+                                  lastDate: DateTime(2023));
 
-                            var time = await showTimePicker(
-                                context: context, initialTime: TimeOfDay.now());
+                              var time = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now());
 
-                            // DateTimeRange? pickedRange =
-                            //     await showDateRangePicker(
-                            //   context: context,
-                            //   firstDate: DateTime.now(),
-                            //   lastDate: DateTime(2023),
-                            //   // initialDateRange: dateRange.value
-                            // );
+                              // DateTimeRange? pickedRange =
+                              //     await showDateRangePicker(
+                              //   context: context,
+                              //   firstDate: DateTime.now(),
+                              //   lastDate: DateTime(2023),
+                              //   // initialDateRange: dateRange.value
+                              // );
 
-                            if (pickedDate != null &&
-                                // pickedRange != null &&
-                                time != null) {
-                              print(
-                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
-                              //you can implement different kind of Date Format here according to your requirement
-                              setState(() {
-                                _schedulePractioner.text = formattedDate +
-                                    " " +
-                                    "${time.hour}:${time.minute}";
+                              if (pickedDate != null &&
+                                  // pickedRange != null &&
+                                  time != null) {
+                                print(
+                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                print(
+                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //you can implement different kind of Date Format here according to your requirement
+                                setState(() {
+                                  _schedulePractioner.text = formattedDate +
+                                      " " +
+                                      "${time.hour}:${time.minute}";
 
-                                //set output date to TextField value.
-                              });
-                            } else {
-                              print("Date is not selected");
-                            }
-                          },
-                          controller: _schedulePractioner,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: "Schedule",
+                                  //set output date to TextField value.
+                                });
+                              } else {
+                                print("Date is not selected");
+                              }
+                            },
+                            controller: _schedulePractioner,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: "Schedule",
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              PractionerData practionerData = PractionerData(
-                                  id: userId,
-                                  firstName: _firstNamePractioner.text,
-                                  lastName: _lastNamePractioner.text,
-                                  myApproach: _myApproachPractioner.text,
-                                  myBackground: _myBackgroundPractioner.text,
-                                  myQualifications:
-                                      _myQualificationsPractioner.text,
-                                  mySpecialty: _mySpecialtyPractioner.text,
-                                  myRoles: _myRolesPractioner.text,
-                                  languages: _languagesPractioner.text,
-                                  titleMain: _titleMainPractioner.text,
-                                  practionerSchedule: _schedulePractioner.text);
-                              await service.updatePractioners(practionerData);
-                              Navigator.pop(context);
-                              _pullRefresh();
-                            }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
-                          },
+                        SizedBox(
+                          height: Dimensions.height20 * 2,
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: ElevatedButton(
+                            child: Text("Submit"),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                PractionerData practionerData = PractionerData(
+                                    id: userId,
+                                    firstName: _firstNamePractioner.text,
+                                    lastName: _lastNamePractioner.text,
+                                    myApproach: _myApproachPractioner.text,
+                                    myBackground: _myBackgroundPractioner.text,
+                                    myQualifications:
+                                        _myQualificationsPractioner.text,
+                                    mySpecialty: _mySpecialtyPractioner.text,
+                                    myRoles: _myRolesPractioner.text,
+                                    languages: _languagesPractioner.text,
+                                    titleMain: _titleMainPractioner.text,
+                                    practionerSchedule:
+                                        _schedulePractioner.text);
+                                await service.updatePractioners(practionerData);
+                                Navigator.pop(context);
+                                _pullRefresh();
+                              }
+
+                              // if (_formKey.currentState!.validate()) {
+                              //   _formKey.currentState!.save();
+                              // }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -790,8 +852,8 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(Dimensions.width10 * 4),
+                  top: -(Dimensions.height20 * 4),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -808,7 +870,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _firstNamePractioner,
                           decoration: InputDecoration(
@@ -824,7 +886,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _lastNamePractioner,
                           decoration: InputDecoration(
@@ -840,7 +902,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _myApproachPractioner,
                           decoration: InputDecoration(
@@ -856,7 +918,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _myBackgroundPractioner,
                           decoration: InputDecoration(
@@ -872,7 +934,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _myQualificationsPractioner,
                           decoration: InputDecoration(
@@ -888,7 +950,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _mySpecialtyPractioner,
                           decoration: InputDecoration(
@@ -904,7 +966,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _myRolesPractioner,
                           decoration: InputDecoration(
@@ -920,7 +982,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _languagesPractioner,
                           decoration: InputDecoration(
@@ -936,7 +998,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: TextFormField(
                           controller: _titleMainPractioner,
                           decoration: InputDecoration(
@@ -952,10 +1014,10 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: Dimensions.height20 * 2,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(Dimensions.height08),
                         child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () async {

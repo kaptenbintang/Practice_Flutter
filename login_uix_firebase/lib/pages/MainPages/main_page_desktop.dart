@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
@@ -149,7 +151,7 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
                                       child: InkWell(
                                         onTap: () {
                                           Navigator.pushNamed(context,
-                                              RouteName.HistoryBooking);
+                                              RouteName.historyBookingRiverpod);
                                         },
                                         child: Text(
                                           'Booking History',
