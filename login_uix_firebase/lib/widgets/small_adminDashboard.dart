@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 import 'package:login_uix_firebase/helper/local_navigator.dart';
 
 class SmallAdminDashboard extends StatelessWidget {
@@ -7,7 +8,7 @@ class SmallAdminDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: Dimensions.width16),
       child: adminDashboardNavigator(),
     );
   }
