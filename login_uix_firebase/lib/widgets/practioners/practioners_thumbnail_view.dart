@@ -18,6 +18,7 @@ class PractionersThumbnailView extends StatelessWidget {
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
         child: Container(
+          constraints: const BoxConstraints(maxHeight: 500),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).lineColor,
             boxShadow: [
@@ -30,44 +31,43 @@ class PractionersThumbnailView extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             shape: BoxShape.rectangle,
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              // mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                  child: Text(
-                    practioner.firstName.toString() +
-                        ' ' +
-                        practioner.lastName.toString(),
-                    style: FlutterFlowTheme.of(context).title1,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
+                child: Text(
+                  practioner.firstName.toString() +
+                      ' ' +
+                      practioner.lastName.toString(),
+                  style: FlutterFlowTheme.of(context).title1,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    'lib/images/doctor.png',
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    fit: BoxFit.scaleDown,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      'lib/images/doctor.png',
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                child: Text(
+                  "Speciality: " + practioner.mySpecialty.toString(),
+                  textAlign: TextAlign.center,
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.italic,
+                      ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                  child: Text(
-                    "Speciality: " + practioner.mySpecialty.toString(),
-                    textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.italic,
-                        ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
