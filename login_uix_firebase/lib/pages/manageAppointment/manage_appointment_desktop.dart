@@ -779,7 +779,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                             });
                           },
                           onSaved: (value) {},
-                          items: <String>['ongoing', 'complete']
+                          items: <String>['ongoing', 'Complete', 'Cancel']
                               .map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
