@@ -126,7 +126,7 @@ class MyApp extends ConsumerWidget {
           // RegisterPage.routeName: (context) => RegisterPage(),
           DeleteAccount.routeName: (context) => const DeleteAccount(),
           CheckEmailView.routeName: (context) => const CheckEmailView(),
-          changePasswordPage.routeName: (context) => const changePasswordPage(),
+          // changePasswordPage.routeName: (context) => const changePasswordPage(),
           ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
           ProfilePage.routeName: (context) => const ProfilePage(),
           ProfileRiverpodPage.routeName: (context) =>
@@ -146,7 +146,7 @@ class MyApp extends ConsumerWidget {
           appointmentPage.routeName: (context) => const appointmentPage(),
           ManagePractioners.routeName: (context) => const ManagePractioners(),
           // ControllerPage.routeName: (context) => ControllerPage(),
-          RouteName.changePWPage: (context) => const changePasswordPage(),
+          RouteName.changePWPage: (context) => const changePWPage(),
           RouteName.checkEmailPage: (context) => const CheckEmailView(),
           RouteName.dashboard: (context) => const DashboardPage(),
           RouteName.loginPage: (context) => const LoginPage(),

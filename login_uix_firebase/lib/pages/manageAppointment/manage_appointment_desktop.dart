@@ -81,6 +81,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
     retrievedAppointmentList = await service.retrieveApppointmentAll();
 
     setState(() {
+      // CircularProgressIndicator();
       AppointmentList = service.retrieveApppointmentAll();
     });
   }
@@ -187,16 +188,16 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                                                 borderWidth: 1,
                                                 buttonSize: 50,
                                                 icon: Icon(
-                                                  Icons.playlist_add,
+                                                  Icons.refresh,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
                                                   size: 25,
                                                 ),
                                                 onPressed: () {
-                                                  print(
-                                                      'IconButton pressed ...');
-                                                  dialogaddPractioner(context);
+                                                  // print(
+                                                  //     'IconButton pressed ...');
+                                                  // dialogaddPractioner(context);
                                                   _pullRefresh();
                                                 },
                                               ),
@@ -838,132 +839,132 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
         });
   }
 
-  Future<dynamic> dialogaddPractioner(BuildContext context) {
-    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
-        .collection('servicesCategory')
-        .snapshots(includeMetadataChanges: true);
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Add new services"),
-            content: Stack(
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                Positioned(
-                  right: -40.0,
-                  top: -80.0,
-                  child: InkResponse(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: CircleAvatar(
-                      child: Icon(Icons.close),
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _clientcodeorname,
-                          decoration: InputDecoration(
-                            labelText: "Enter name/code",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter name/code";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _clientphnumber,
-                          decoration: InputDecoration(
-                            labelText: "Enter phone number",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter correct phone number";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _clientemail,
-                          decoration: InputDecoration(
-                            labelText: "Enter client email",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter email";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _statusAppointment,
-                          decoration: InputDecoration(
-                            labelText: "Status Appointment",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Status Appointment";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              AppointmentData appointmentData = AppointmentData(
-                                  id: userId,
-                                  clientNameorCode: _clientcodeorname.text,
-                                  clientphNumber: _clientphnumber.text,
-                                  clientEmail: _clientemail.text,
-                                  statusAppointment: _statusAppointment.text);
-                              await service.addAppointment(appointmentData);
-                              Navigator.pop(context);
-                              _pullRefresh();
-                            }
+  // Future<dynamic> dialogaddPractioner(BuildContext context) {
+  //   final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
+  //       .collection('servicesCategory')
+  //       .snapshots(includeMetadataChanges: true);
+  //   return showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: const Text("Add new services"),
+  //           content: Stack(
+  //             clipBehavior: Clip.none,
+  //             children: <Widget>[
+  //               Positioned(
+  //                 right: -40.0,
+  //                 top: -80.0,
+  //                 child: InkResponse(
+  //                   onTap: () {
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                   child: CircleAvatar(
+  //                     child: Icon(Icons.close),
+  //                     backgroundColor: Colors.red,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Form(
+  //                 key: _formKey,
+  //                 child: Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: <Widget>[
+  //                     Padding(
+  //                       padding: EdgeInsets.all(8.0),
+  //                       child: TextFormField(
+  //                         controller: _clientcodeorname,
+  //                         decoration: InputDecoration(
+  //                           labelText: "Enter name/code",
+  //                         ),
+  //                         validator: (value) {
+  //                           if (value!.isEmpty) {
+  //                             return "Enter name/code";
+  //                           } else {
+  //                             return null;
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: EdgeInsets.all(8.0),
+  //                       child: TextFormField(
+  //                         controller: _clientphnumber,
+  //                         decoration: InputDecoration(
+  //                           labelText: "Enter phone number",
+  //                         ),
+  //                         validator: (value) {
+  //                           if (value!.isEmpty) {
+  //                             return "Enter correct phone number";
+  //                           } else {
+  //                             return null;
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: EdgeInsets.all(8.0),
+  //                       child: TextFormField(
+  //                         controller: _clientemail,
+  //                         decoration: InputDecoration(
+  //                           labelText: "Enter client email",
+  //                         ),
+  //                         validator: (value) {
+  //                           if (value!.isEmpty) {
+  //                             return "Enter email";
+  //                           } else {
+  //                             return null;
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: EdgeInsets.all(8.0),
+  //                       child: TextFormField(
+  //                         controller: _statusAppointment,
+  //                         decoration: InputDecoration(
+  //                           labelText: "Status Appointment",
+  //                         ),
+  //                         validator: (value) {
+  //                           if (value!.isEmpty) {
+  //                             return "Status Appointment";
+  //                           } else {
+  //                             return null;
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 40,
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: ElevatedButton(
+  //                         child: Text("Submit"),
+  //                         onPressed: () async {
+  //                           if (_formKey.currentState!.validate()) {
+  //                             AppointmentData appointmentData = AppointmentData(
+  //                                 id: userId,
+  //                                 clientNameorCode: _clientcodeorname.text,
+  //                                 clientphNumber: _clientphnumber.text,
+  //                                 clientEmail: _clientemail.text,
+  //                                 statusAppointment: _statusAppointment.text);
+  //                             await service.addAppointment(appointmentData);
+  //                             Navigator.pop(context);
+  //                             _pullRefresh();
+  //                           }
 
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
-  }
+  //                           // if (_formKey.currentState!.validate()) {
+  //                           //   _formKey.currentState!.save();
+  //                           // }
+  //                         },
+  //                       ),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         );
+  //       });
+  // }
 }

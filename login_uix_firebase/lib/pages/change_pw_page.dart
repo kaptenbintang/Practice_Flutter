@@ -8,15 +8,15 @@ import 'package:login_uix_firebase/pages/profile_page.dart';
 
 import '../main.dart';
 
-class changePasswordPage extends StatefulWidget {
+class changePWPage extends StatefulWidget {
   static const routeName = '/changePwPage';
-  const changePasswordPage({super.key});
+  const changePWPage({super.key});
 
   @override
-  State<changePasswordPage> createState() => _changePasswordPageState();
+  State<changePWPage> createState() => _changePWPageState();
 }
 
-class _changePasswordPageState extends State<changePasswordPage> {
+class _changePWPageState extends State<changePWPage> {
   var newPassword = "";
   final newPasswordController = TextEditingController();
   final newConfirmPasswordController = TextEditingController();

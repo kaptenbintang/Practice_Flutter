@@ -11,7 +11,7 @@ class PageRoutes {
   static const dashboard = DashboardPage.routeName;
   // static const main = MainPage.routeName;
 
-  static const changePw = changePasswordPage.routeName;
+  static const changePw = changePWPage.routeName;
   static const checkEmail = CheckEmailView.routeName;
   static const forgotPw = ForgotPasswordPage.routeName;
   static const profile = ProfilePage.routeName;
