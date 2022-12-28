@@ -447,7 +447,7 @@ class _ManageServiceCategoryDesktopState
                                                     retrievedsCategoryList!
                                                         .length,
                                                 itemBuilder: (context, indexs) {
-                                                  return _buildTableUser(
+                                                  return _buildTableCategory(
                                                       context,
                                                       retrievedsCategoryList![
                                                           indexs],
@@ -501,7 +501,7 @@ class _ManageServiceCategoryDesktopState
     );
   }
 
-  _buildTableUser(BuildContext context, serviceCategoryClass snapshot,
+  _buildTableCategory(BuildContext context, serviceCategoryClass snapshot,
       List<serviceCategoryClass>? user, int indexs) {
     double screenWidth = MediaQuery.of(context).size.width;
     double width = ResponsiveWidget.isphoneScreen(context)
