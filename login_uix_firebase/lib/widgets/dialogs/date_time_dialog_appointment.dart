@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DateTimeAppointmentDialog extends ConsumerStatefulWidget {
   final String practioner;
@@ -25,63 +26,36 @@ class _DateTimeAppointmentDialogState
   final now = DateTime.now();
   late BookingService mockBookingService;
   final dateandtimeController = TextEditingController();
+  final DateRangePickerController _datePickerController =
+      DateRangePickerController();
 
-  @override
-  void initState() {
-    mockBookingService = BookingService(
-        serviceName: 'Mock Service',
-        serviceDuration: 30,
-        bookingEnd: DateTime(now.year, now.month, now.day, 18, 0),
-        bookingStart: DateTime(now.year, now.month, now.day, 9, 0));
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // _datePickerController.selectedDate = DateTime.now().add(Duration(days: 2));
+  //   mockBookingService = BookingService(
+  //     serviceName: 'Mock Service',
+  //     serviceDuration: 15,
+  //     bookingEnd: DateTime(now.year, now.month, now.day, 19, 30),
+  //     bookingStart: DateTime(now.year, now.month, now.day, 9, 0),
+  //   );
+  //   super.initState();
+  // }
 
-  Stream<dynamic>? getBookingStreamMock(
-      {required DateTime end, required DateTime start}) {
-    return Stream.value([]);
-  }
-
-  Future<dynamic> uploadBookingMock(
-      {required BookingService newBooking}) async {
-    await Future.delayed(const Duration(seconds: 1));
-    converted.add(DateTimeRange(
-        start: newBooking.bookingStart, end: newBooking.bookingEnd));
-    setState(() {
-      dateandtimeController.text = DateFormat('EEE, yyyy-MM-dd, kk:mm:a')
-          .format(newBooking.bookingStart)
-          .toString();
-      Navigator.pop(context, dateandtimeController.text);
-    });
-    print('${newBooking.toJson()} has been uploaded');
-  }
-
-  List<DateTimeRange> converted = [];
-
-  List<DateTimeRange> convertStreamResultMock({required dynamic streamResult}) {
-    ///here you can parse the streamresult and convert to [List<DateTimeRange>]
-    ///take care this is only mock, so if you add today as disabledDays it will still be visible on the first load
-    ///disabledDays will properly work with real data
-    DateTime first = now;
-    DateTime second = now.add(const Duration(minutes: 55));
-    DateTime third = now.subtract(const Duration(minutes: 240));
-    DateTime fourth = now.subtract(const Duration(minutes: 500));
-    converted.add(
-        DateTimeRange(start: first, end: now.add(const Duration(minutes: 30))));
-    converted.add(DateTimeRange(
-        start: second, end: second.add(const Duration(minutes: 23))));
-    converted.add(DateTimeRange(
-        start: third, end: third.add(const Duration(minutes: 15))));
-    converted.add(DateTimeRange(
-        start: fourth, end: fourth.add(const Duration(minutes: 50))));
-    return converted;
-  }
-
-  List<DateTimeRange> generatePauseSlots() {
-    return [
-      DateTimeRange(
-          start: DateTime(now.year, now.month, now.day, 12, 0),
-          end: DateTime(now.year, now.month, now.day, 13, 0))
-    ];
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    if (args.value is PickerDateRange) {
+      final DateTime rangeStartDate = args.value.startDate;
+      final DateTime rangeEndDate = args.value.endDate;
+    } else if (args.value is DateTime) {
+      final DateTime selectedDate = args.value;
+      final dataFormated = DateFormat('yyyy-MM-dd').format(selectedDate);
+      setState(() {
+        _datePickerController.selectedDate = selectedDate;
+      });
+    } else if (args.value is List<DateTime>) {
+      final List<DateTime> selectedDates = args.value;
+    } else {
+      final List<PickerDateRange> selectedRanges = args.value;
+    }
   }
 
   @override
@@ -89,25 +63,56 @@ class _DateTimeAppointmentDialogState
     return AlertDialog(
       title: Text('Please choose date'),
       content: Center(
-        child: Container(
-          width: 600,
-          child: BookingCalendar(
-            bookingService: mockBookingService,
-            convertStreamResultToDateTimeRanges: convertStreamResultMock,
-            getBookingStream: getBookingStreamMock,
-            uploadBooking: uploadBookingMock,
-            pauseSlots: generatePauseSlots(),
-            pauseSlotText: 'LUNCH',
-            hideBreakTime: false,
-            loadingWidget: Align(
-                alignment: Alignment.center,
-                child: const Text('Fetching data...')),
-            uploadingWidget: Align(
-                alignment: Alignment.center,
-                child: const Text('Submitting data...')),
-            locale: 'en_EN',
-            startingDayOfWeek: StartingDayOfWeek.monday,
-            disabledDays: const [6, 7],
+        child: SizedBox(
+          width: 500,
+          height: 700,
+          // constraints: BoxConstraints(minWidth: 300, minHeight: 250),
+          child: SfDateRangePicker(
+            // rangeTextStyle: TextStyle(
+            //     fontStyle: FontStyle.italic,
+            //     fontWeight: FontWeight.w500,
+            //     fontSize: 50,
+            //     color: Colors.black),
+
+            showNavigationArrow: true,
+            onSelectionChanged: _onSelectionChanged,
+            view: DateRangePickerView.month,
+            monthViewSettings: DateRangePickerMonthViewSettings(
+              dayFormat: 'EEE',
+              firstDayOfWeek: 1,
+              numberOfWeeksInView: 3,
+              blackoutDates: <DateTime>[
+                DateTime.now().add(Duration(days: 2)),
+                DateTime.now().add(Duration(days: 3)),
+                DateTime.now().add(Duration(days: 6)),
+                DateTime.now().add(Duration(days: 7)),
+              ],
+              weekendDays: [7, 6],
+              specialDates: [
+                DateTime(2023, 1, 5),
+                DateTime(2022, 12, 27),
+                DateTime(2022, 12, 28)
+              ],
+            ),
+            selectionMode: DateRangePickerSelectionMode.single,
+            controller: _datePickerController,
+            selectionRadius: 25,
+            // selectionShape: DateRangePickerSelectionShape.rectangle,
+            // initialSelectedRange: PickerDateRange(
+            //     DateTime.now(), DateTime.now().add(Duration(days: 3))),
+            showActionButtons: true,
+            minDate: DateTime.now(),
+            // toggleDaySelection: true,
+            onSubmit: (p0) {
+              Navigator.pop(
+                context,
+                DateFormat('yyyy-MM-dd')
+                    .format(_datePickerController.selectedDate as DateTime),
+              );
+            },
+            onCancel: () {
+              Navigator.pop(context);
+            },
           ),
         ),
       ),
