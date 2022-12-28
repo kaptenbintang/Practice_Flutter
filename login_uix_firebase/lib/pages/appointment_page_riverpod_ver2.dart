@@ -45,69 +45,9 @@ class _AppointmentPageRiverpodVersion2State
     final emailController = useTextEditingController();
     final phNumbController = useTextEditingController();
     final commentController = useTextEditingController();
-
-    late BookingService mockBookingService;
+    String? resultDate;
 
     final isAppointmentButtonEnable = useState(false);
-
-    final now = DateTime.now();
-
-    List<DateTimeRange> converted = [];
-
-    @override
-    void initState() {
-      mockBookingService = BookingService(
-          serviceName: 'Mock Service',
-          serviceDuration: 30,
-          bookingEnd: DateTime(now.year, now.month, now.day, 18, 0),
-          bookingStart: DateTime(now.year, now.month, now.day, 9, 0));
-    }
-
-    Stream<dynamic>? getBookingStreamMock(
-        {required DateTime end, required DateTime start}) {
-      return Stream.value([]);
-    }
-
-    Future<dynamic> uploadBookingMock(
-        {required BookingService newBooking}) async {
-      await Future.delayed(const Duration(seconds: 1));
-      converted.add(DateTimeRange(
-          start: newBooking.bookingStart, end: newBooking.bookingEnd));
-      setState(() {
-        dateandtimeController?.text = DateFormat('EEE, yyyy-MM-dd, kk:mm:a')
-            .format(newBooking.bookingStart)
-            .toString();
-      });
-      print('${newBooking.toJson()} has been uploaded');
-    }
-
-    List<DateTimeRange> convertStreamResultMock(
-        {required dynamic streamResult}) {
-      ///here you can parse the streamresult and convert to [List<DateTimeRange>]
-      ///take care this is only mock, so if you add today as disabledDays it will still be visible on the first load
-      ///disabledDays will properly work with real data
-      DateTime first = now;
-      DateTime second = now.add(const Duration(minutes: 55));
-      DateTime third = now.subtract(const Duration(minutes: 240));
-      DateTime fourth = now.subtract(const Duration(minutes: 500));
-      converted.add(DateTimeRange(
-          start: first, end: now.add(const Duration(minutes: 30))));
-      converted.add(DateTimeRange(
-          start: second, end: second.add(const Duration(minutes: 23))));
-      converted.add(DateTimeRange(
-          start: third, end: third.add(const Duration(minutes: 15))));
-      converted.add(DateTimeRange(
-          start: fourth, end: fourth.add(const Duration(minutes: 50))));
-      return converted;
-    }
-
-    List<DateTimeRange> generatePauseSlots() {
-      return [
-        DateTimeRange(
-            start: DateTime(now.year, now.month, now.day, 12, 0),
-            end: DateTime(now.year, now.month, now.day, 13, 0))
-      ];
-    }
 
     useEffect(
       () {
@@ -526,10 +466,14 @@ class _AppointmentPageRiverpodVersion2State
                                                     );
                                                   },
                                                 );
+                                                setState(() {
+                                                  dateandtimeController.text =
+                                                      result.toString();
+                                                });
 
-                                                print(result);
-                                                print(
-                                                    dateandtimeController.text);
+                                                print(resultDate);
+                                                // print(
+                                                //     dateandtimeController.text);
                                               },
                                               style:
                                                   FlutterFlowTheme.of(context)
