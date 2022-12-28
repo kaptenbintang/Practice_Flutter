@@ -14,6 +14,7 @@ import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart'
 import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/small_loading_animation_view.dart';
+import 'package:login_uix_firebase/widgets/dialogs/date_time_dialog_appointment.dart';
 
 class AppointmentPageRiverpodVersion2 extends StatefulHookConsumerWidget {
   static const routeName = '/appointmentPageRiverpod2';
@@ -410,311 +411,181 @@ class _AppointmentPageRiverpodVersion2State
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Text(
-                                          'Services: ',
-                                          style: FlutterFlowTheme.of(context)
-                                              .title1,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  20, 20, 20, 20),
-                                          child: Consumer(
-                                            builder: (BuildContext context,
-                                                WidgetRef ref, Widget? child) {
-                                              final services =
-                                                  ref.watch(servicesProvider);
-                                              String initService = ref
-                                                  .watch(
-                                                      selectedServiceProvider)
-                                                  .service;
-                                              // print(initService);
-
-                                              return services.when(
-                                                data: (data) {
-                                                  return FlutterFlowDropDown(
-                                                    options: List.generate(
-                                                        data.length,
-                                                        (index) => data
-                                                            .elementAt(index)
-                                                            .servicesName),
-                                                    onChanged: (val) {
-                                                      ref
-                                                          .read(
-                                                              selectedServiceProvider
-                                                                  .notifier)
-                                                          .changeServices(
-                                                            val.toString(),
-                                                          );
-                                                      // print(initService);
-                                                    },
-                                                    initialOption: initService,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.2,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.06,
-                                                    textStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .subtitle1,
-                                                    hintText: 'Please select..',
-                                                    fillColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .lineColor,
-                                                    elevation: 0,
-                                                    borderColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryText,
-                                                    borderWidth: 1,
-                                                    borderRadius: 8,
-                                                    margin:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                12, 4, 12, 4),
-                                                    hidesUnderline: true,
-                                                  );
-                                                },
-                                                error: (error, stackTrace) {
-                                                  return const SmallErrorAnimationView();
-                                                },
-                                                loading: () {
-                                                  return const SmallLoadingAnimationView();
-                                                },
-                                              );
-                                            },
+                                        Flexible(
+                                          child: Text(
+                                            'Services: ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1,
                                           ),
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  20, 20, 20, 20),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                'Date: ',
-                                                style:
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    20, 20, 20, 20),
+                                            child: Consumer(
+                                              builder: (BuildContext context,
+                                                  WidgetRef ref,
+                                                  Widget? child) {
+                                                final services =
+                                                    ref.watch(servicesProvider);
+                                                String initService = ref
+                                                    .watch(
+                                                        selectedServiceProvider)
+                                                    .service;
+                                                // print(initService);
+
+                                                return services.when(
+                                                  data: (data) {
+                                                    return FlutterFlowDropDown(
+                                                      options: List.generate(
+                                                          data.length,
+                                                          (index) => data
+                                                              .elementAt(index)
+                                                              .servicesName),
+                                                      onChanged: (val) {
+                                                        ref
+                                                            .read(
+                                                                selectedServiceProvider
+                                                                    .notifier)
+                                                            .changeServices(
+                                                              val.toString(),
+                                                            );
+                                                        // print(initService);
+                                                      },
+                                                      initialOption:
+                                                          initService,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.2,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.06,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle1,
+                                                      hintText:
+                                                          'Please select..',
+                                                      fillColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .lineColor,
+                                                      elevation: 0,
+                                                      borderColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      borderWidth: 1,
+                                                      borderRadius: 8,
+                                                      margin:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12, 4, 12, 4),
+                                                      hidesUnderline: true,
+                                                    );
+                                                  },
+                                                  error: (error, stackTrace) {
+                                                    return const SmallErrorAnimationView();
+                                                  },
+                                                  loading: () {
+                                                    return const SmallLoadingAnimationView();
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            'Date: ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: TextFormField(
+                                              controller: dateandtimeController,
+                                              autofocus: true,
+                                              obscureText: false,
+                                              readOnly: true,
+                                              onTap: () async {
+                                                final result = await showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return DateTimeAppointmentDialog(
+                                                      practioner: widget
+                                                          .practioner.firstName,
+                                                      context: context,
+                                                    );
+                                                  },
+                                                );
+
+                                                print(result);
+                                                print(
+                                                    dateandtimeController.text);
+                                              },
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                              keyboardType:
+                                                  TextInputType.datetime,
+                                              decoration: InputDecoration(
+                                                labelText: "Select date/time",
+                                                prefixIcon: Icon(
+                                                  Icons.calendar_today,
+                                                  color: Colors.blue,
+                                                ),
+                                                hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .title1,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
                                               ),
-                                              TextFormField(
-                                                controller:
-                                                    dateandtimeController,
-                                                autofocus: true,
-                                                obscureText: false,
-                                                readOnly: true,
-                                                onTap: () {
-                                                  // showDialog(
-                                                  //     context: context,
-                                                  //     builder: (context) {
-                                                  //       return AlertDialog(
-                                                  //         backgroundColor:
-                                                  //             Colors.white,
-                                                  //         // actions: <
-                                                  //         //     Widget>[
-                                                  //         //   Container(
-                                                  //         //     height:
-                                                  //         //         30,
-                                                  //         //     child:
-                                                  //         //         MaterialButton(
-                                                  //         //       color:
-                                                  //         //           Colors.green,
-                                                  //         //       child:
-                                                  //         //           Text(
-                                                  //         //         'Set',
-                                                  //         //         style: TextStyle(color: Colors.white),
-                                                  //         //       ),
-                                                  //         //       onPressed:
-                                                  //         //           () {
-                                                  //         //         setState(() {
-                                                  //         //           // date_of_birth = date_controller.text;
-                                                  //         //         });
-
-                                                  //         //         Navigator.of(context).pop();
-                                                  //         //       },
-                                                  //         //     ),
-                                                  //         //   ),
-                                                  //         //   TextButton(
-                                                  //         //     child:
-                                                  //         //         Text('Cancel'),
-                                                  //         //     onPressed:
-                                                  //         //         () {
-                                                  //         //       setState(() {
-                                                  //         //         // date_controller.text = date_of_birth;
-                                                  //         //       });
-
-                                                  //         //       Navigator.of(context).pop();
-                                                  //         //     },
-                                                  //         //   ),
-                                                  //         // ],
-                                                  //         content: Container(
-                                                  //           height: 600,
-                                                  //           width: 600,
-                                                  //           child:
-                                                  //               BookingCalendar(
-                                                  //             bookingService:
-                                                  //                 mockBookingService,
-                                                  //             convertStreamResultToDateTimeRanges:
-                                                  //                 convertStreamResultMock,
-                                                  //             getBookingStream:
-                                                  //                 getBookingStreamMock,
-                                                  //             uploadBooking:
-                                                  //                 uploadBookingMock,
-                                                  //             pauseSlots:
-                                                  //                 generatePauseSlots(),
-                                                  //             pauseSlotText:
-                                                  //                 'LUNCH',
-                                                  //             hideBreakTime:
-                                                  //                 false,
-                                                  //             loadingWidget: Align(
-                                                  //                 alignment:
-                                                  //                     Alignment
-                                                  //                         .center,
-                                                  //                 child: const Text(
-                                                  //                     'Fetching data...')),
-                                                  //             uploadingWidget: Align(
-                                                  //                 alignment:
-                                                  //                     Alignment
-                                                  //                         .center,
-                                                  //                 child: const Text(
-                                                  //                     'Submitting data...')),
-                                                  //             locale: 'en_EN',
-                                                  //             startingDayOfWeek:
-                                                  //                 StartingDayOfWeek
-                                                  //                     .monday,
-                                                  //             disabledDays: const [
-                                                  //               6,
-                                                  //               7
-                                                  //             ],
-                                                  //           ),
-                                                  //           //     SfDateRangePicker(
-                                                  //           //   initialSelectedDate:
-                                                  //           //       DateTime.now(),
-                                                  //           //   onSelectionChanged:
-                                                  //           //       _onSelectionChanged,
-                                                  //           //   selectionMode:
-                                                  //           //       DateRangePickerSelectionMode.single,
-                                                  //           //   view:
-                                                  //           //       DateRangePickerView.month,
-                                                  //           //   monthViewSettings:
-                                                  //           //       DateRangePickerMonthViewSettings(blackoutDates: [
-                                                  //           //     DateTime(
-                                                  //           //         2022,
-                                                  //           //         12,
-                                                  //           //         14)
-                                                  //           //   ], weekendDays: [
-                                                  //           //     7,
-                                                  //           //     6
-                                                  //           //   ], specialDates: [
-                                                  //           //     DateTime(
-                                                  //           //         2022,
-                                                  //           //         12,
-                                                  //           //         26),
-                                                  //           //     DateTime(
-                                                  //           //         2022,
-                                                  //           //         12,
-                                                  //           //         27),
-                                                  //           //     DateTime(
-                                                  //           //         2022,
-                                                  //           //         12,
-                                                  //           //         28)
-                                                  //           //   ], showTrailingAndLeadingDates: true),
-                                                  //           //   monthCellStyle:
-                                                  //           //       DateRangePickerMonthCellStyle(
-                                                  //           //     blackoutDatesDecoration: BoxDecoration(
-                                                  //           //         color: Colors.red,
-                                                  //           //         border: Border.all(color: const Color(0xFFF44436), width: 1),
-                                                  //           //         shape: BoxShape.circle),
-                                                  //           //     weekendDatesDecoration: BoxDecoration(
-                                                  //           //         color: const Color(0xFFDFDFDF),
-                                                  //           //         border: Border.all(color: const Color(0xFFB6B6B6), width: 1),
-                                                  //           //         shape: BoxShape.circle),
-                                                  //           //     specialDatesDecoration: BoxDecoration(
-                                                  //           //         color: Colors.green,
-                                                  //           //         border: Border.all(color: const Color(0xFF2B732F), width: 1),
-                                                  //           //         shape: BoxShape.circle),
-                                                  //           //     blackoutDateTextStyle:
-                                                  //           //         TextStyle(color: Colors.white, decoration: TextDecoration.lineThrough),
-                                                  //           //     specialDatesTextStyle:
-                                                  //           //         const TextStyle(color: Colors.white),
-                                                  //           //   ),
-                                                  //           // ),
-                                                  //         ),
-                                                  //       );
-                                                  //     });
-                                                },
-                                                // decoration: InputDecoration(
-                                                //   labelText: "Select date/time",
-                                                //   prefixIcon: Icon(
-                                                //     Icons.calendar_today,
-                                                //     color: Colors.blue,
-                                                //   ),
-                                                //   hintStyle:
-                                                //       FlutterFlowTheme.of(
-                                                //               context)
-                                                //           .title1,
-                                                //   enabledBorder:
-                                                //       OutlineInputBorder(
-                                                //     borderSide: BorderSide(
-                                                //       color:
-                                                //           FlutterFlowTheme.of(
-                                                //                   context)
-                                                //               .primaryText,
-                                                //       width: 1,
-                                                //     ),
-                                                //     borderRadius:
-                                                //         BorderRadius.circular(
-                                                //             8),
-                                                //   ),
-                                                //   focusedBorder:
-                                                //       OutlineInputBorder(
-                                                //     borderSide: BorderSide(
-                                                //       color:
-                                                //           FlutterFlowTheme.of(
-                                                //                   context)
-                                                //               .primaryText,
-                                                //       width: 1,
-                                                //     ),
-                                                //     borderRadius:
-                                                //         BorderRadius.circular(
-                                                //             8),
-                                                //   ),
-                                                //   errorBorder:
-                                                //       OutlineInputBorder(
-                                                //     borderSide: BorderSide(
-                                                //       color: Color(0x00000000),
-                                                //       width: 1,
-                                                //     ),
-                                                //     borderRadius:
-                                                //         BorderRadius.circular(
-                                                //             8),
-                                                //   ),
-                                                //   focusedErrorBorder:
-                                                //       OutlineInputBorder(
-                                                //     borderSide: BorderSide(
-                                                //       color: Color(0x00000000),
-                                                //       width: 1,
-                                                //     ),
-                                                //     borderRadius:
-                                                //         BorderRadius.circular(
-                                                //             8),
-                                                //   ),
-                                                // ),
-                                                // style:
-                                                //     FlutterFlowTheme.of(context)
-                                                //         .subtitle1,
-                                                // keyboardType:
-                                                //     TextInputType.datetime,
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ),
                                       ],

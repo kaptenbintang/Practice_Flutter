@@ -7,6 +7,7 @@ import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop.da
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_mobile.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_mobile_riverpod.dart';
+import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
 
 class ViewProfilePage extends StatefulWidget {
   const ViewProfilePage({super.key});
