@@ -36,7 +36,8 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
             ? 912
             : ResponsiveWidget.isLargeScreen(context)
                 ? 1920
-                : 1280;    final userUid = ref.watch(userIdProvider);
+                : 1280;
+    final userUid = ref.watch(userIdProvider);
     final userInfoModel = ref.watch(
       userInfoModelProvider(userUid.toString()),
     );
@@ -70,14 +71,15 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   title: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(
-                            0, 0, 0, screenWidth / (width / 14)),
+                        0, 0, 0, screenWidth / (width / 14)),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB( screenWidth / (width / 24), 0, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 24), 0, 0, 0),
                           child: Text(
                             'Profile',
                             style: FlutterFlowTheme.of(context).title2.override(
@@ -122,11 +124,11 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                             ],
                           ),
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(screenWidth / (width / 24),
-                                  screenWidth / (width / 12),
-                                  screenWidth / (width / 24),
-                                  screenWidth / (width / 12)),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 24),
+                                screenWidth / (width / 12),
+                                screenWidth / (width / 24),
+                                screenWidth / (width / 12)),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -137,17 +139,17 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                   decoration: BoxDecoration(
                                     color: Color(0xFFF1F4F8),
                                     borderRadius: BorderRadius.circular(
-                                          screenWidth / (width / 12)),
+                                        screenWidth / (width / 12)),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         screenWidth / (width / 2),
-                                          screenWidth / (width / 2),
-                                          screenWidth / (width / 2),
-                                          screenWidth / (width / 2)),
+                                        screenWidth / (width / 2),
+                                        screenWidth / (width / 2),
+                                        screenWidth / (width / 2)),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 12)),
+                                          screenWidth / (width / 12)),
                                       child: Icon(Icons.person),
                                       // CachedNetworkImage(
                                       //   imageUrl:
@@ -177,16 +179,13 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                               fontFamily: 'Urbanist',
                                               color: Color(0xFF101213),
                                               fontSize:
-                                                    screenWidth / (width / 20),
+                                                  screenWidth / (width / 20),
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0,
-                                                  screenWidth / (width / 4),
-                                                  0,
-                                                  0),
+                                            0, screenWidth / (width / 4), 0, 0),
                                         child: Text(
                                           data.email.toString(),
                                           style: FlutterFlowTheme.of(context)
@@ -194,8 +193,8 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                               .override(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF897DEE),
-                                                fontSize: screenWidth /
-                                                      (width / 14),
+                                                fontSize:
+                                                    screenWidth / (width / 14),
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),
@@ -219,10 +218,10 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                  0,
+                                0,
                                 screenWidth / (width / 12),
-                                  0,
-                                  screenWidth / (width / 12)),
+                                0,
+                                screenWidth / (width / 12)),
                             child: Text(
                               'Account Settings',
                               style: FlutterFlowTheme.of(context)
@@ -390,232 +389,225 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, screenWidth / (width / 12), 0, 0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, RouteName.editProfilePage);
-                                      },
-                                      child: Container(
-                                        width: screenWidth / (width / 500),
-                                        height: screenWidth / (width / 60),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius:
-                                                  screenWidth / (width / 5),
-                                              color: Color(0x3416202A),
-                                              offset: Offset(0, 2),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.circular(
-                                              screenWidth / (width / 12)),
-                                          shape: BoxShape.rectangle,
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  screenWidth / (width / 8),
-                                                  screenWidth / (width / 8),
-                                                  screenWidth / (width / 8),
-                                                  screenWidth / (width / 8)),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        screenWidth /
-                                                            (width / 12),
-                                                        0,
-                                                        0,
-                                                        0),
-                                                child: Text(
-                                                  'Edit Profile',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText2
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        color:
-                                                            Color(0xFF57636C),
-                                                        fontSize: screenWidth /
-                                                            (width / 14),
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          screenWidth /
-                                                              (width / 0.9),
-                                                          0),
-                                                  child: Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    color: Color(0xFF57636C),
-                                                    size: screenWidth /
-                                                        (width / 18),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // Padding(
-                              //   padding: EdgeInsetsDirectional.fromSTEB(
-                              //       0, screenWidth/(width/20), 0, screenWidth/(width/20)),
-                              //   child: Row(
-                              //     mainAxisSize: MainAxisSize.max,
-                              //     mainAxisAlignment: MainAxisAlignment.center,
-                              //     children: [
-                              //       FFButtonWidget(
-                              //         onPressed: () async {
-                              //           await ref
-                              //               .read(authStateProvider.notifier)
-                              //               .logOut()
-                              //               .then((value) {
-                              //             Navigator.of(context).pop();
-                              //             LandingLayout();
-                              //           });
-                              //         },
-                              //         text: 'Log Out',
-                              //         options: FFButtonOptions(
-                              //           height: screenWidth/(width/40),
-                              //           color: Colors.white,
-                              //           textStyle: FlutterFlowTheme.of(context)
-                              //               .bodyText2
-                              //               .override(
-                              //                 fontFamily: 'Lexend Deca',
-                              //                 color: Color(0xFF101213),
-                              //                 fontSize: screenWidth/(width/14),
-                              //                 fontWeight: FontWeight.normal,
-                              //               ),
-                              //           elevation: 1,
-                              //           borderSide: BorderSide(
-                              //             color: Colors.transparent,
-                              //             width: 1,
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                            ],
-                          )
-                        : Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, screenWidth / (width / 12), 0, 0),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, RouteName.editProfilePage);
-                                  },
-                                  child: Container(
-                                    width: screenWidth / (width / 500),
-                                    height: screenWidth / (width / 60),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: screenWidth / (width / 5),
-                                          color: Color(0x3416202A),
-                                          offset: Offset(0, 2),
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(
-                                          screenWidth / (width / 12)),
-                                      shape: BoxShape.rectangle,
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          screenWidth / (width / 8),
-                                          screenWidth / (width / 8),
-                                          screenWidth / (width / 8),
-                                          screenWidth / (width / 8)),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    screenWidth / (width / 12),
-                                                    0,
-                                                    0,
-                                                    0),
-                                            child: Text(
-                                              'Edit Profile',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        color:
-                                                            Color(0xFF57636C),
-                                                        fontSize: screenWidth /
-                                                            (width / 14),
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  screenWidth / (width / 0.9),
-                                                  0),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xFF57636C),
-                                                size:
-                                                    screenWidth / (width / 18),
-                                              ),
-                                            ),
-                                          ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, screenWidth / (width / 12), 0, 0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, RouteName.editProfilePage);
+                                    },
+                                    child: Container(
+                                      width: screenWidth / (width / 500),
+                                      height: screenWidth / (width / 60),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius:
+                                                screenWidth / (width / 5),
+                                            color: Color(0x3416202A),
+                                            offset: Offset(0, 2),
+                                          )
                                         ],
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 12)),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            screenWidth / (width / 8),
+                                            screenWidth / (width / 8),
+                                            screenWidth / (width / 8),
+                                            screenWidth / (width / 8)),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      screenWidth /
+                                                          (width / 12),
+                                                      0,
+                                                      0,
+                                                      0),
+                                              child: Text(
+                                                'Edit Profile',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                      fontFamily: 'Outfit',
+                                                      color: Color(0xFF57636C),
+                                                      fontSize: screenWidth /
+                                                          (width / 14),
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    screenWidth / (width / 0.9),
+                                                    0),
+                                                child: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: Color(0xFF57636C),
+                                                  size: screenWidth /
+                                                      (width / 18),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
+                              ],
+                            ),
+                            // Padding(
+                            //   padding: EdgeInsetsDirectional.fromSTEB(
+                            //       0, screenWidth/(width/20), 0, screenWidth/(width/20)),
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.max,
+                            //     mainAxisAlignment: MainAxisAlignment.center,
+                            //     children: [
+                            //       FFButtonWidget(
+                            //         onPressed: () async {
+                            //           await ref
+                            //               .read(authStateProvider.notifier)
+                            //               .logOut()
+                            //               .then((value) {
+                            //             Navigator.of(context).pop();
+                            //             LandingLayout();
+                            //           });
+                            //         },
+                            //         text: 'Log Out',
+                            //         options: FFButtonOptions(
+                            //           height: screenWidth/(width/40),
+                            //           color: Colors.white,
+                            //           textStyle: FlutterFlowTheme.of(context)
+                            //               .bodyText2
+                            //               .override(
+                            //                 fontFamily: 'Lexend Deca',
+                            //                 color: Color(0xFF101213),
+                            //                 fontSize: screenWidth/(width/14),
+                            //                 fontWeight: FontWeight.normal,
+                            //               ),
+                            //           elevation: 1,
+                            //           borderSide: BorderSide(
+                            //             color: Colors.transparent,
+                            //             width: 1,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, screenWidth / (width / 12), 0, 0),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RouteName.editProfilePage);
+                                },
+                                child: Container(
+                                  width: screenWidth / (width / 500),
+                                  height: screenWidth / (width / 60),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: screenWidth / (width / 5),
+                                        color: Color(0x3416202A),
+                                        offset: Offset(0, 2),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth / (width / 12)),
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 8)),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  screenWidth / (width / 12),
+                                                  0,
+                                                  0,
+                                                  0),
+                                          child: Text(
+                                            'Edit Profile',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Outfit',
+                                                  color: Color(0xFF57636C),
+                                                  fontSize: screenWidth /
+                                                      (width / 14),
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: AlignmentDirectional(
+                                                screenWidth / (width / 0.9), 0),
+                                            child: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Color(0xFF57636C),
+                                              size: screenWidth / (width / 18),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ],
-                          ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          0,
-                          screenWidth / (width / 20),
-                          0,
-                          screenWidth / (width / 20)),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FFButtonWidget(
-                            onPressed: () async {
-                              await ref
-                                  .read(authStateProvider.notifier)
-                                  .logOut()
-                                  .then((value) {
+                            ),
+                          ],
+                        ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        0,
+                        screenWidth / (width / 20),
+                        0,
+                        screenWidth / (width / 20)),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FFButtonWidget(
+                          onPressed: () async {
+                            await ref
+                                .read(authStateProvider.notifier)
+                                .logOut()
+                                .then(
+                              (value) {
                                 Navigator.of(context).pop();
                                 LandingLayout();
                                 menuController
