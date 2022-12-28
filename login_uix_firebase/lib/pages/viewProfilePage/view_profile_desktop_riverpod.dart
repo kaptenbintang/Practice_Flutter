@@ -20,6 +20,9 @@ import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dar
 import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
 import 'package:recase/recase.dart';
 
+import '../../constant/controllers.dart';
+import '../../routing/routes.dart';
+
 class ProfileRiverpodPage2 extends ConsumerWidget {
   static const routeName = '/profileViewPageRiverpod';
 
@@ -492,6 +495,8 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                   .then((value) {
                                 Navigator.of(context).pop();
                                 LandingLayout();
+                                menuController
+                                    .changeActiveitemTo(sideMenuItems[0]);
                               });
                             },
                             text: 'Log Out',

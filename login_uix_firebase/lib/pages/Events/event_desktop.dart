@@ -5,6 +5,7 @@ import 'package:timelines/timelines.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../helper/responsive.dart';
 
 class EventDesktop extends StatefulWidget {
   const EventDesktop({super.key});
@@ -16,6 +17,14 @@ class EventDesktop extends StatefulWidget {
 class _EventDesktopState extends State<EventDesktop> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return // Generated code for this MainColumn Widget...
         SingleChildScrollView(
       child: Column(
@@ -37,18 +46,26 @@ class _EventDesktopState extends State<EventDesktop> {
               children: [
                 Text(
                   'TIMELINE OF',
-                  style: FlutterFlowTheme.of(context).subtitle1,
+                  style: FlutterFlowTheme.of(context).subtitle1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 18),
+                      ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                   child: Text(
                     'Events',
-                    style: FlutterFlowTheme.of(context).title1,
+                    style: FlutterFlowTheme.of(context).title1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 24)),
                   ),
                 ),
                 Text(
                   '#ReachingOutIsAStrength',
-                  style: FlutterFlowTheme.of(context).subtitle1,
+                  style: FlutterFlowTheme.of(context).subtitle1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 18),
+                      ),
                 ),
                 Container(
                   width: 550,
@@ -61,7 +78,9 @@ class _EventDesktopState extends State<EventDesktop> {
                     child: Text(
                       'Coaching, Counseling, Assessments, Psychological Services, Employee Assistance Programs, and Professional Training Programs for all Ages',
                       textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: screenWidth / (width / 14)),
                     ),
                   ),
                 ),
@@ -76,18 +95,22 @@ class _EventDesktopState extends State<EventDesktop> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      0, screenWidth / (width / 10), 0, 0),
                   child: Text(
                     'Click on the event to RSVP your seat or buy your tickets.',
-                    style: FlutterFlowTheme.of(context).title3,
+                    style: FlutterFlowTheme.of(context).title3.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 20)),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      0, screenWidth / (width / 10), 0, 0),
                   child: FixedTimeline.tileBuilder(
                     theme: TimelineThemeData(
                         connectorTheme: ConnectorThemeData(
-                            space: 40,
+                            space: screenWidth / (width / 40),
                             color: FlutterFlowTheme.of(context).secondaryColor),
                         indicatorTheme: IndicatorThemeData(
                             color: FlutterFlowTheme.of(context).tertiaryColor)),
@@ -96,13 +119,15 @@ class _EventDesktopState extends State<EventDesktop> {
                       oppositeContentsBuilder:
                           (context, index1) => // Date Widget...
                               Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth / (width / 8)),
                         child: Container(
-                          width: 280,
-                          height: 140,
+                          width: screenWidth / (width / 280),
+                          height: screenWidth / (width / 140),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).tertiaryColor,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(
+                                screenWidth / (width / 8)),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -113,27 +138,35 @@ class _EventDesktopState extends State<EventDesktop> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 5, 8, 0),
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 5),
+                                        screenWidth / (width / 8),
+                                        0),
                                     child: Text(
                                       '28',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 18,
+                                            fontSize:
+                                                screenWidth / (width / 18),
                                           ),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 5, 8, 0),
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 5),
+                                        screenWidth / (width / 8),
+                                        0),
                                     child: Text(
                                       ' December 2022',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 14,
+                                            fontSize:
+                                                screenWidth / (width / 14),
                                           ),
                                     ),
                                   ),
@@ -145,23 +178,30 @@ class _EventDesktopState extends State<EventDesktop> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 5, 8, 0),
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 5),
+                                        screenWidth / (width / 8),
+                                        0),
                                     child: Icon(
                                       Icons.place_outlined,
                                       color: Colors.black,
-                                      size: 24,
+                                      size: screenWidth / (width / 24),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 5, 8, 0),
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 5),
+                                        screenWidth / (width / 8),
+                                        0),
                                     child: Text(
                                       'Online & In-Person, E-02-02 \nJalan Lagoon Selatan Subang Jaya, \nSelangor 47500 Malaysia',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
                                               fontFamily: 'Poppins',
-                                              fontSize: 12,
+                                              fontSize:
+                                                  screenWidth / (width / 12),
                                               fontWeight: FontWeight.w400),
                                     ),
                                   ),
@@ -172,23 +212,30 @@ class _EventDesktopState extends State<EventDesktop> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 5, 8, 0),
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 5),
+                                        screenWidth / (width / 8),
+                                        0),
                                     child: Icon(
                                       Icons.attach_money,
                                       color: Colors.black,
-                                      size: 24,
+                                      size: screenWidth / (width / 24),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 5, 8, 0),
+                                        screenWidth / (width / 8),
+                                        screenWidth / (width / 5),
+                                        screenWidth / (width / 8),
+                                        0),
                                     child: Text(
                                       'Free',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
                                               fontFamily: 'Poppins',
-                                              fontSize: 12,
+                                              fontSize:
+                                                  screenWidth / (width / 12),
                                               fontWeight: FontWeight.w400),
                                     ),
                                   ),
@@ -200,56 +247,70 @@ class _EventDesktopState extends State<EventDesktop> {
                       ),
                       contentsBuilder: (context, index) => // Event Widget...
                           Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth / (width / 8)),
                         child: Container(
-                          width: 300,
-                          height: 380,
+                          width: screenWidth / (width / 300),
+                          height: screenWidth / (width / 380),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).secondaryColor,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(
+                                screenWidth / (width / 8)),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 5, 8, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 8),
+                                    screenWidth / (width / 5),
+                                    screenWidth / (width / 8),
+                                    0),
                                 child: Text(
                                   'Relationships Matter – Wednesday Talk (FOC)',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 16,
+                                        fontSize: screenWidth / (width / 16),
                                       ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 5, 8, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 8),
+                                    screenWidth / (width / 5),
+                                    screenWidth / (width / 8),
+                                    0),
                                 child: Image.asset(
                                   'assets/images/talk.png',
-                                  height: 200,
+                                  height: screenWidth / (width / 200),
                                   fit: BoxFit.cover,
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 5, 8, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 8),
+                                    screenWidth / (width / 5),
+                                    screenWidth / (width / 8),
+                                    0),
                                 child: Text(
                                   'Join us and learn a tip or two about what makes a relationship (be it with your parents, children, spouse, friends, colleagues, boss, etc.) healthy and strong.  Every talk will […]',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 12,
+                                        fontSize: screenWidth / (width / 12),
                                         fontWeight: FontWeight.w400,
                                       ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 5, 8, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 8),
+                                    screenWidth / (width / 5),
+                                    screenWidth / (width / 8),
+                                    0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -261,19 +322,20 @@ class _EventDesktopState extends State<EventDesktop> {
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 12,
+                                            fontSize:
+                                                screenWidth / (width / 12),
                                           ),
                                     ),
                                     FlutterFlowIconButton(
                                       borderColor: Colors.transparent,
-                                      borderRadius: 20,
+                                      borderRadius: screenWidth / (width / 20),
                                       borderWidth: 1,
-                                      buttonSize: 30,
+                                      buttonSize: screenWidth / (width / 30),
                                       icon: Icon(
                                         Icons.add,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
-                                        size: 15,
+                                        size: screenWidth / (width / 15),
                                       ),
                                       onPressed: () {
                                         print('IconButton pressed ...');
