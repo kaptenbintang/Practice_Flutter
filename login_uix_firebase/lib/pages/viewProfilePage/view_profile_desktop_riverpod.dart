@@ -14,6 +14,11 @@ import 'package:login_uix_firebase/route.dart';
 import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
 import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
+import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
+import 'package:recase/recase.dart';
+
+import '../../constant/controllers.dart';
+import '../../routing/routes.dart';
 
 class ProfileRiverpodPage2 extends ConsumerWidget {
   static const routeName = '/profileViewPageRiverpod';
@@ -475,6 +480,8 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                               () {
                                 Navigator.pop(context);
                                 LandingLayout();
+                                menuController
+                                    .changeActiveitemTo(sideMenuItems[0]);
                               },
                             );
                             //     .then((_) {

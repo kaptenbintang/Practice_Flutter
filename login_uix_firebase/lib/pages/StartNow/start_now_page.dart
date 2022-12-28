@@ -1,33 +1,26 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
+import 'package:login_uix_firebase/pages/StartNow/start_now_desktop.dart';
+import 'package:login_uix_firebase/pages/StartNow/start_now_mobile.dart';
 
-import '../../constant/controllers.dart';
 import '../../helper/responsive.dart';
-import '../../widgets/custom_text.dart';
 
-class StartNowPage extends StatelessWidget {
+class StartNowPage extends StatefulWidget {
   const StartNowPage({super.key});
 
   @override
+  State<StartNowPage> createState() => _StartNowPageState();
+}
+
+class _StartNowPageState extends State<StartNowPage> {
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Obx(() => Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      top: ResponsiveWidget.isSmallScreen(context) ? 56 : 6),
-                  child: CustomText(
-                    text: menuController.activeItem.value,
-                    size: 24,
-                    weight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ))
-      ],
-    );
+    if (ResponsiveWidget.isLargeScreen(context)) {
+      return StartNowDesktop();
+    } else {
+      return StartNowMobile();
+    }
   }
 }

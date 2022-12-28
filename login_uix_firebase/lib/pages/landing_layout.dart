@@ -22,16 +22,18 @@ class LandingLayout extends StatelessWidget {
       key: _scaffoldKey,
       extendBodyBehindAppBar: true,
       appBar: topNavigationBar(context, _scaffoldKey),
-      drawer: Container(
+      drawer: SizedBox(
         width: Dimensions.width100 * 2,
         child: Drawer(
           child: SideMenu(),
         ),
       ),
-      body: ResponsiveWidget(
-        largeScreen: LargeScreen(),
-        mediumScreen: MediumScreen(),
-        smallScreen: SmallScreen(),
+      body: SafeArea(
+        child: ResponsiveWidget(
+          largeScreen: LargeScreen(),
+          mediumScreen: MediumScreen(),
+          smallScreen: SmallScreen(),
+        ),
       ),
     );
   }

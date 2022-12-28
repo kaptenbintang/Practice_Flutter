@@ -1,33 +1,25 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
+import 'package:login_uix_firebase/pages/Events/event_desktop.dart';
+import 'package:login_uix_firebase/pages/Events/event_mobile.dart';
 
-import '../../constant/controllers.dart';
 import '../../helper/responsive.dart';
-import '../../widgets/custom_text.dart';
 
-class EventPage extends StatelessWidget {
+class EventPage extends StatefulWidget {
   const EventPage({super.key});
 
   @override
+  State<EventPage> createState() => _EventPageState();
+}
+
+class _EventPageState extends State<EventPage> {
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Obx(() => Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      top: ResponsiveWidget.isSmallScreen(context) ? 56 : 6),
-                  child: CustomText(
-                    text: menuController.activeItem.value,
-                    size: 24,
-                    weight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ))
-      ],
-    );
+    if (ResponsiveWidget.isLargeScreen(context)) {
+      return EventDesktop();
+    } else {
+      return EventMobile();
+    }
   }
 }

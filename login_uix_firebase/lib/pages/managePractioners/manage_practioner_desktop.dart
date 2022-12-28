@@ -12,6 +12,7 @@ import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
+import '../../helper/responsive.dart';
 import '../../model/practioner_data.dart';
 
 class ManagePractionerDesktop extends StatefulWidget {
@@ -88,14 +89,25 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    return // Generated code for this Column Widget...
-        Expanded(
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
+    return Expanded(
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16),
+                  screenWidth / (width / 16)),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -107,7 +119,8 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                       offset: Offset(0, 2),
                     )
                   ],
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius:
+                      BorderRadius.circular(screenWidth / (width / 16)),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -116,7 +129,11 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                   children: [
                     //Title and subtitle
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 16),
+                          screenWidth / (width / 16),
+                          0,
+                          screenWidth / (width / 16)),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -124,20 +141,31 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                         children: [
                           Text(
                             'Dashboard',
-                            style: FlutterFlowTheme.of(context).title3,
+                            style: FlutterFlowTheme.of(context).title3.override(
+                                fontFamily: 'Poppins',
+                                fontSize: screenWidth / (width / 20)),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, screenWidth / (width / 4), 0, 0),
                             child: Text(
                               'Your project status is appearing here.',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 14)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 12),
+                          0,
+                          screenWidth / (width / 12),
+                          0),
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -149,14 +177,18 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 4),
+                                0,
+                                screenWidth / (width / 4),
+                                screenWidth / (width / 24)),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 16)),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).lineColor,
                                   width: 1,
@@ -164,7 +196,10 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 12),
+                                    0,
+                                    screenWidth / (width / 16),
+                                    0,
+                                    screenWidth / (width / 12)),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,18 +216,25 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                           children: [
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5, 0, 0, 0),
+                                                  .fromSTEB(
+                                                      screenWidth / (width / 5),
+                                                      0,
+                                                      0,
+                                                      0),
                                               child: FlutterFlowIconButton(
                                                 borderColor: Colors.transparent,
-                                                borderRadius: 30,
+                                                borderRadius:
+                                                    screenWidth / (width / 30),
                                                 borderWidth: 1,
-                                                buttonSize: 50,
+                                                buttonSize:
+                                                    screenWidth / (width / 50),
                                                 icon: Icon(
                                                   Icons.playlist_add,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
-                                                  size: 25,
+                                                  size: screenWidth /
+                                                      (width / 25),
                                                 ),
                                                 onPressed: () {
                                                   print(
@@ -204,12 +246,20 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5, 0, 0, 0),
+                                                  .fromSTEB(
+                                                      screenWidth / (width / 5),
+                                                      0,
+                                                      0,
+                                                      0),
                                               child: Text(
                                                 'Practioners',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title3,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .title3
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 20)),
                                               ),
                                             ),
                                           ],
@@ -219,22 +269,36 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Container(
-                                              width: 200,
+                                              width:
+                                                  screenWidth / (width / 200),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 5),
+                                                    .fromSTEB(
+                                                        0,
+                                                        screenWidth /
+                                                            (width / 16),
+                                                        0,
+                                                        screenWidth /
+                                                            (width / 5)),
                                                 child: Container(
-                                                  width: 200,
+                                                  width: screenWidth /
+                                                      (width / 200),
                                                   child: TextFormField(
                                                     controller: textController,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       hintText: 'Search...',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
+                                                      hintStyle: FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText2
+                                                          .override(
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontSize:
+                                                                  screenWidth /
+                                                                      (width /
+                                                                          14)),
                                                       enabledBorder:
                                                           OutlineInputBorder(
                                                         borderSide: BorderSide(
@@ -244,8 +308,10 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
@@ -256,8 +322,10 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       errorBorder:
                                                           OutlineInputBorder(
@@ -267,8 +335,10 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                       focusedErrorBorder:
                                                           OutlineInputBorder(
@@ -278,28 +348,40 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                screenWidth /
+                                                                    (width /
+                                                                        10)),
                                                       ),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1,
+                                                        .bodyText1
+                                                        .override(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize:
+                                                                screenWidth /
+                                                                    (width /
+                                                                        14)),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                             FlutterFlowIconButton(
                                               borderColor: Colors.transparent,
-                                              borderRadius: 30,
+                                              borderRadius:
+                                                  screenWidth / (width / 30),
                                               borderWidth: 1,
-                                              buttonSize: 50,
+                                              buttonSize:
+                                                  screenWidth / (width / 50),
                                               icon: Icon(
                                                 Icons.search,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                size: 25,
+                                                size:
+                                                    screenWidth / (width / 25),
                                               ),
                                               onPressed: () {
                                                 print('IconButton pressed ...');
@@ -312,7 +394,10 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                     //Column Title
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 12, 12, 0),
+                                          screenWidth / (width / 12),
+                                          screenWidth / (width / 12),
+                                          screenWidth / (width / 12),
+                                          0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -328,13 +413,23 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                8, 0, 0, 0),
+                                                                screenWidth /
+                                                                    (width / 8),
+                                                                0,
+                                                                0,
+                                                                0),
                                                     child: Text(
                                                       'Practioners',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyText2
+                                                          .override(
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontSize:
+                                                                  screenWidth /
+                                                                      (width /
+                                                                          14)),
                                                     ),
                                                   ),
                                                 ),
@@ -350,9 +445,13 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                               flex: 2,
                                               child: Text(
                                                 'Title',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 14)),
                                               ),
                                             ),
                                           if (responsiveVisibility(
@@ -362,9 +461,13 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                             Expanded(
                                               child: Text(
                                                 'Roles',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 14)),
                                               ),
                                             ),
                                           if (responsiveVisibility(
@@ -375,9 +478,13 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                             Expanded(
                                               child: Text(
                                                 'Speciality',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 14)),
                                               ),
                                             ),
                                           Expanded(
@@ -386,7 +493,12 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                               textAlign: TextAlign.end,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                                      .bodyText2
+                                                      .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 14)),
                                             ),
                                           ),
                                         ],
@@ -395,7 +507,7 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                     //Data Row
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 16, 0, 0),
+                                          0, screenWidth / (width / 16), 0, 0),
                                       child: FutureBuilder(
                                           future: PractionerList,
                                           builder: (context,
@@ -468,10 +580,19 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
 
   _buildTableUser(BuildContext context, PractionerData snapshot,
       List<PractionerData>? user, int indexs) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     // print(_isChecked);
     // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+      padding:
+          EdgeInsetsDirectional.fromSTEB(0, 0, 0, screenWidth / (width / 2)),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -485,7 +606,11 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
           ],
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              screenWidth / (width / 12),
+              screenWidth / (width / 12),
+              screenWidth / (width / 12),
+              screenWidth / (width / 12)),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -500,7 +625,7 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                       snapshot.firstName! + ' ' + snapshot.lastName!,
                       style: FlutterFlowTheme.of(context).subtitle1.override(
                             fontFamily: 'Poppins',
-                            fontSize: 16,
+                            fontSize: screenWidth / (width / 16),
                           ),
                     ),
                   ],
@@ -516,7 +641,9 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                   flex: 2,
                   child: Text(
                     snapshot.titleMain!,
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 14)),
                   ),
                 ),
               if (responsiveVisibility(
@@ -527,7 +654,9 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                 Expanded(
                   child: Text(
                     snapshot.myRoles!,
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 14)),
                   ),
                 ),
               if (responsiveVisibility(
@@ -539,7 +668,9 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                 Expanded(
                   child: Text(
                     snapshot.mySpecialty!,
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 14)),
                   ),
                 ),
               //Action Button
@@ -550,7 +681,8 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                   children: [
                     //Edit button
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          0, 0, screenWidth / (width / 5), 0),
                       child: FFButtonWidget(
                         onPressed: () {
                           print('Button pressed ...');
@@ -571,8 +703,8 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                         },
                         text: 'Edit',
                         options: FFButtonOptions(
-                            width: 75,
-                            height: 35,
+                            width: screenWidth / (width / 75),
+                            height: screenWidth / (width / 35),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             textStyle: FlutterFlowTheme.of(context)
@@ -581,18 +713,19 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                   fontFamily: 'Poppins',
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
-                                  fontSize: 15,
+                                  fontSize: screenWidth / (width / 15),
                                 ),
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.of(context).primaryColor,
-                              width: 2.5,
+                              width: screenWidth / (width / 2.5),
                             ),
-                            borderRadius: 8),
+                            borderRadius: screenWidth / (width / 8)),
                       ),
                     ),
                     //Delete Button
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 5), 0, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           print('Button pressed ...');
@@ -602,8 +735,8 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                         },
                         text: 'Delete',
                         options: FFButtonOptions(
-                            width: 75,
-                            height: 35,
+                            width: screenWidth / (width / 75),
+                            height: screenWidth / (width / 35),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             textStyle: FlutterFlowTheme.of(context)
@@ -611,13 +744,13 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                 .override(
                                   fontFamily: 'Poppins',
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  fontSize: 15,
+                                  fontSize: screenWidth / (width / 15),
                                 ),
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.of(context).alternate,
-                              width: 2.5,
+                              width: screenWidth / (width / 2.5),
                             ),
-                            borderRadius: 8),
+                            borderRadius: screenWidth / (width / 8)),
                       ),
                     ),
                   ],
@@ -631,6 +764,14 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
   }
 
   Future<dynamic> dialogEditPractioner(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
         .collection('servicesCategory')
         .snapshots(includeMetadataChanges: true);
@@ -644,8 +785,8 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(screenWidth / (width / 40)),
+                  top: -(screenWidth / (width / 80)),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -658,174 +799,178 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                 ),
                 Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _firstNamePractioner,
-                          decoration: InputDecoration(
-                            labelText: "First Name",
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _firstNamePractioner,
+                            decoration: InputDecoration(
+                              labelText: "First Name",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _lastNamePractioner,
-                          decoration: InputDecoration(
-                            labelText: "Last Name",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _lastNamePractioner,
+                            decoration: InputDecoration(
+                              labelText: "Last Name",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myApproachPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Approach",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _myApproachPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Approach",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myBackgroundPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Backgrounds",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _myBackgroundPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Backgrounds",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myQualificationsPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Qualifications",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _myQualificationsPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Qualifications",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _mySpecialtyPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Specialty",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _mySpecialtyPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Specialty",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myRolesPractioner,
-                          decoration: InputDecoration(
-                            labelText: "My Roles",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _myRolesPractioner,
+                            decoration: InputDecoration(
+                              labelText: "My Roles",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _languagesPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Languages",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _languagesPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Languages",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _titleMainPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Title Main",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _titleMainPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Title Main",
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(
-                                    2022), //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2023));
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(
+                                      2022), //DateTime.now() - not to allow to choose before today.
+                                  lastDate: DateTime(2023));
 
-                            var time = await showTimePicker(
-                                context: context, initialTime: TimeOfDay.now());
+                              var time = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now());
 
-                            // DateTimeRange? pickedRange =
-                            //     await showDateRangePicker(
-                            //   context: context,
-                            //   firstDate: DateTime.now(),
-                            //   lastDate: DateTime(2023),
-                            //   // initialDateRange: dateRange.value
-                            // );
+                              // DateTimeRange? pickedRange =
+                              //     await showDateRangePicker(
+                              //   context: context,
+                              //   firstDate: DateTime.now(),
+                              //   lastDate: DateTime(2023),
+                              //   // initialDateRange: dateRange.value
+                              // );
 
-                            if (pickedDate != null &&
-                                // pickedRange != null &&
-                                time != null) {
-                              print(
-                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
-                              //you can implement different kind of Date Format here according to your requirement
-                              setState(() {
-                                _schedulePractioner.text = formattedDate +
-                                    " " +
-                                    "${time.hour}:${time.minute}";
+                              if (pickedDate != null &&
+                                  // pickedRange != null &&
+                                  time != null) {
+                                print(
+                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                print(
+                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //you can implement different kind of Date Format here according to your requirement
+                                setState(() {
+                                  _schedulePractioner.text = formattedDate +
+                                      " " +
+                                      "${time.hour}:${time.minute}";
 
-                                //set output date to TextField value.
-                              });
-                            } else {
-                              print("Date is not selected");
-                            }
-                          },
-                          controller: _schedulePractioner,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: "Schedule",
+                                  //set output date to TextField value.
+                                });
+                              } else {
+                                print("Date is not selected");
+                              }
+                            },
+                            controller: _schedulePractioner,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: "Schedule",
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              PractionerData practionerData = PractionerData(
-                                  id: userId,
-                                  firstName: _firstNamePractioner.text,
-                                  lastName: _lastNamePractioner.text,
-                                  myApproach: _myApproachPractioner.text,
-                                  myBackground: _myBackgroundPractioner.text,
-                                  myQualifications:
-                                      _myQualificationsPractioner.text,
-                                  mySpecialty: _mySpecialtyPractioner.text,
-                                  myRoles: _myRolesPractioner.text,
-                                  languages: _languagesPractioner.text,
-                                  titleMain: _titleMainPractioner.text,
-                                  practionerSchedule: _schedulePractioner.text);
-                              await service.updatePractioners(practionerData);
-                              Navigator.pop(context);
-                              _pullRefresh();
-                            }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
-                          },
+                        SizedBox(
+                          height: screenWidth / (width / 40),
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: ElevatedButton(
+                            child: Text("Submit"),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                PractionerData practionerData = PractionerData(
+                                    id: userId,
+                                    firstName: _firstNamePractioner.text,
+                                    lastName: _lastNamePractioner.text,
+                                    myApproach: _myApproachPractioner.text,
+                                    myBackground: _myBackgroundPractioner.text,
+                                    myQualifications:
+                                        _myQualificationsPractioner.text,
+                                    mySpecialty: _mySpecialtyPractioner.text,
+                                    myRoles: _myRolesPractioner.text,
+                                    languages: _languagesPractioner.text,
+                                    titleMain: _titleMainPractioner.text,
+                                    practionerSchedule:
+                                        _schedulePractioner.text);
+                                await service.updatePractioners(practionerData);
+                                Navigator.pop(context);
+                                _pullRefresh();
+                              }
+
+                              // if (_formKey.currentState!.validate()) {
+                              //   _formKey.currentState!.save();
+                              // }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -835,6 +980,14 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
   }
 
   Future<dynamic> dialogaddPractioner(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
         .collection('servicesCategory')
         .snapshots(includeMetadataChanges: true);
@@ -847,8 +1000,8 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
               clipBehavior: Clip.none,
               children: <Widget>[
                 Positioned(
-                  right: -40.0,
-                  top: -80.0,
+                  right: -(screenWidth / (width / 40)),
+                  top: -(screenWidth / (width / 80)),
                   child: InkResponse(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -861,187 +1014,189 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                 ),
                 Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _firstNamePractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter First Name",
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _firstNamePractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter First Name",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter correct name";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter correct name";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _lastNamePractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter last name",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _lastNamePractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter last name",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter correct name";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter correct name";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myApproachPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my approach",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _myApproachPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my approach",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter approach";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter approach";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myBackgroundPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my background",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _myBackgroundPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my background",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter background";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter background";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myQualificationsPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my qualifications",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _myQualificationsPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my qualifications",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter qualifications";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter qualifications";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _mySpecialtyPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my specialty",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _mySpecialtyPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my specialty",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter specialty";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter specialty";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _myRolesPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my roles",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _myRolesPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my roles",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter roles";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter roles";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _languagesPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my languges",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _languagesPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my languges",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter languages";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter languages";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _titleMainPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter title main",
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: TextFormField(
+                            controller: _titleMainPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter title main",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter title main";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter title main";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              PractionerData practionerData = PractionerData(
-                                id: userId,
-                                firstName: _firstNamePractioner.text,
-                                lastName: _lastNamePractioner.text,
-                                myApproach: _myApproachPractioner.text,
-                                myBackground: _myBackgroundPractioner.text,
-                                myQualifications:
-                                    _myQualificationsPractioner.text,
-                                mySpecialty: _mySpecialtyPractioner.text,
-                                myRoles: _myRolesPractioner.text,
-                                languages: _languagesPractioner.text,
-                                titleMain: _titleMainPractioner.text,
-                              );
-                              await service.addPractioners(practionerData);
-                              Navigator.pop(context);
-                              _pullRefresh();
-                            }
+                        SizedBox(
+                          height: screenWidth / (width / 40),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: ElevatedButton(
+                            child: Text("Submit"),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                PractionerData practionerData = PractionerData(
+                                  id: userId,
+                                  firstName: _firstNamePractioner.text,
+                                  lastName: _lastNamePractioner.text,
+                                  myApproach: _myApproachPractioner.text,
+                                  myBackground: _myBackgroundPractioner.text,
+                                  myQualifications:
+                                      _myQualificationsPractioner.text,
+                                  mySpecialty: _mySpecialtyPractioner.text,
+                                  myRoles: _myRolesPractioner.text,
+                                  languages: _languagesPractioner.text,
+                                  titleMain: _titleMainPractioner.text,
+                                );
+                                await service.addPractioners(practionerData);
+                                Navigator.pop(context);
+                                _pullRefresh();
+                              }
 
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
-                          },
-                        ),
-                      )
-                    ],
+                              // if (_formKey.currentState!.validate()) {
+                              //   _formKey.currentState!.save();
+                              // }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
