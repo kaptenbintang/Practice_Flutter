@@ -44,14 +44,14 @@ import 'package:login_uix_firebase/provider/loading_provider/is_loading_provider
 import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 import 'package:login_uix_firebase/route.dart';
 import 'package:login_uix_firebase/widgets/loading/loading_screen.dart';
-import 'controllers/menu_controller.dart';
+import 'controllers/menu_controller.dart' as r;
 import 'controllers/navigation_controller.dart';
 import 'firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'pages/LandingPage/landing_page.dart';
 
 void main() async {
-  Get.put(MenuController());
+  Get.put(r.MenuController());
   Get.put(NavigationController());
   Get.put(SideBarAdminController());
   WidgetsFlutterBinding.ensureInitialized();
