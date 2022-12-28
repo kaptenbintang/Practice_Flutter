@@ -21,6 +21,7 @@ import 'package:login_uix_firebase/widgets/animations/small_error_animation_view
 import 'package:recase/recase.dart';
 
 import '../../constant/controllers.dart';
+import '../../helper/responsive.dart';
 import '../../routing/routes.dart';
 
 class ProfileRiverpodPage2 extends ConsumerWidget {
@@ -31,7 +32,14 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
-
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return Scaffold(
       body: Consumer(builder: (context, ref, child) {
         final userUid = ref.watch(userIdProvider)!;
@@ -47,20 +55,20 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                 key: scaffoldKey,
                 backgroundColor: Color(0xFFF1F4F8),
                 appBar: PreferredSize(
-                  preferredSize: Size.fromHeight(100),
+                  preferredSize: Size.fromHeight(screenWidth / (width / 100)),
                   child: AppBar(
                     actions: const [],
                     backgroundColor: Colors.white,
                     automaticallyImplyLeading: false,
                     leading: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
-                      borderRadius: 30,
+                      borderRadius: screenWidth / (width / 30),
                       borderWidth: 1,
-                      buttonSize: 50,
+                      buttonSize: screenWidth / (width / 50),
                       icon: Icon(
                         Icons.arrow_back_rounded,
                         color: Colors.black,
-                        size: 50,
+                        size: screenWidth / (width / 50),
                       ),
                       onPressed: () {
                         print('IconButton pressed ...');
@@ -69,15 +77,16 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                     ),
                     flexibleSpace: FlexibleSpaceBar(
                       title: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0, 0, 0, screenWidth / (width / 14)),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  screenWidth / (width / 24), 0, 0, 0),
                               child: Text(
                                 'Profile',
                                 style: FlutterFlowTheme.of(context)
@@ -85,7 +94,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                     .override(
                                       fontFamily: 'Poppins',
                                       color: Colors.black,
-                                      fontSize: 30,
+                                      fontSize: screenWidth / (width / 30),
                                     ),
                               ),
                             ),
@@ -124,23 +133,31 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  24, 12, 24, 12),
+                                  screenWidth / (width / 24),
+                                  screenWidth / (width / 12),
+                                  screenWidth / (width / 24),
+                                  screenWidth / (width / 12)),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    width: 70,
-                                    height: 70,
+                                    width: screenWidth / (width / 70),
+                                    height: screenWidth / (width / 70),
                                     decoration: BoxDecoration(
                                       color: Color(0xFFF1F4F8),
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth / (width / 12)),
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          2, 2, 2, 2),
+                                          screenWidth / (width / 2),
+                                          screenWidth / (width / 2),
+                                          screenWidth / (width / 2),
+                                          screenWidth / (width / 2)),
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 12)),
                                         child: Icon(Icons.person),
                                         // CachedNetworkImage(
                                         //   imageUrl:
@@ -154,7 +171,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 0, 0, 0),
+                                        screenWidth / (width / 16), 0, 0, 0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
@@ -169,14 +186,18 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                               .override(
                                                 fontFamily: 'Urbanist',
                                                 color: Color(0xFF101213),
-                                                fontSize: 20,
+                                                fontSize:
+                                                    screenWidth / (width / 20),
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 4, 0, 0),
+                                                  0,
+                                                  screenWidth / (width / 4),
+                                                  0,
+                                                  0),
                                           child: Text(
                                             data.email.toString(),
                                             style: FlutterFlowTheme.of(context)
@@ -184,7 +205,8 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                                 .override(
                                                   fontFamily: 'Outfit',
                                                   color: Color(0xFF897DEE),
-                                                  fontSize: 14,
+                                                  fontSize: screenWidth /
+                                                      (width / 14),
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -207,8 +229,11 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0,
+                                  screenWidth / (width / 12),
+                                  0,
+                                  screenWidth / (width / 12)),
                               child: Text(
                                 'Account Settings',
                                 style: FlutterFlowTheme.of(context)
@@ -216,7 +241,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                     .override(
                                       fontFamily: 'Urbanist',
                                       color: Color(0xFF101213),
-                                      fontSize: 14,
+                                      fontSize: screenWidth / (width / 14),
                                       fontWeight: FontWeight.w500,
                                     ),
                               ),
@@ -240,52 +265,64 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                           context, RouteName.changePWPage);
                                     },
                                     child: Container(
-                                      width: 500,
-                                      height: 60,
+                                      width: screenWidth / (width / 500),
+                                      height: screenWidth / (width / 60),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         boxShadow: [
                                           BoxShadow(
-                                            blurRadius: 5,
+                                            blurRadius:
+                                                screenWidth / (width / 5),
                                             color: Color(0x3416202A),
                                             offset: Offset(0, 2),
                                           )
                                         ],
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 12)),
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 8, 8, 8),
+                                            screenWidth / (width / 8),
+                                            screenWidth / (width / 8),
+                                            screenWidth / (width / 8),
+                                            screenWidth / (width / 8)),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                                  .fromSTEB(
+                                                      screenWidth /
+                                                          (width / 12),
+                                                      0,
+                                                      0,
+                                                      0),
                                               child: Text(
                                                 'Change Password',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF57636C),
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                      fontFamily: 'Outfit',
+                                                      color: Color(0xFF57636C),
+                                                      fontSize: screenWidth /
+                                                          (width / 14),
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
                                               ),
                                             ),
                                             Expanded(
                                               child: Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.9, 0),
+                                                    screenWidth / (width / 0.9),
+                                                    0),
                                                 child: Icon(
                                                   Icons.arrow_forward_ios,
                                                   color: Color(0xFF57636C),
-                                                  size: 18,
+                                                  size: screenWidth /
+                                                      (width / 18),
                                                 ),
                                               ),
                                             ),
@@ -302,38 +339,47 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 12, 0, 0),
+                                        0, screenWidth / (width / 12), 0, 0),
                                     child: InkWell(
                                       onTap: () {
                                         Navigator.pushNamed(
                                             context, RouteName.editProfilePage);
                                       },
                                       child: Container(
-                                        width: 500,
-                                        height: 60,
+                                        width: screenWidth / (width / 500),
+                                        height: screenWidth / (width / 60),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           boxShadow: [
                                             BoxShadow(
-                                              blurRadius: 5,
+                                              blurRadius:
+                                                  screenWidth / (width / 5),
                                               color: Color(0x3416202A),
                                               offset: Offset(0, 2),
                                             )
                                           ],
-                                          borderRadius:
-                                              BorderRadius.circular(12),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 12)),
                                           shape: BoxShape.rectangle,
                                         ),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  8, 8, 8, 8),
+                                                  screenWidth / (width / 8),
+                                                  screenWidth / (width / 8),
+                                                  screenWidth / (width / 8),
+                                                  screenWidth / (width / 8)),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 0, 0, 0),
+                                                    .fromSTEB(
+                                                        screenWidth /
+                                                            (width / 12),
+                                                        0,
+                                                        0,
+                                                        0),
                                                 child: Text(
                                                   'Edit Profile',
                                                   style: FlutterFlowTheme.of(
@@ -343,7 +389,8 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                                         fontFamily: 'Outfit',
                                                         color:
                                                             Color(0xFF57636C),
-                                                        fontSize: 14,
+                                                        fontSize: screenWidth /
+                                                            (width / 14),
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -353,11 +400,14 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                                 child: Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.9, 0),
+                                                          screenWidth /
+                                                              (width / 0.9),
+                                                          0),
                                                   child: Icon(
                                                     Icons.arrow_forward_ios,
                                                     color: Color(0xFF57636C),
-                                                    size: 18,
+                                                    size: screenWidth /
+                                                        (width / 18),
                                                   ),
                                                 ),
                                               ),
@@ -371,7 +421,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                               ),
                               // Padding(
                               //   padding: EdgeInsetsDirectional.fromSTEB(
-                              //       0, 20, 0, 20),
+                              //       0, screenWidth/(width/20), 0, screenWidth/(width/20)),
                               //   child: Row(
                               //     mainAxisSize: MainAxisSize.max,
                               //     mainAxisAlignment: MainAxisAlignment.center,
@@ -388,14 +438,14 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                               //         },
                               //         text: 'Log Out',
                               //         options: FFButtonOptions(
-                              //           height: 40,
+                              //           height: screenWidth/(width/40),
                               //           color: Colors.white,
                               //           textStyle: FlutterFlowTheme.of(context)
                               //               .bodyText2
                               //               .override(
                               //                 fontFamily: 'Lexend Deca',
                               //                 color: Color(0xFF101213),
-                              //                 fontSize: 14,
+                              //                 fontSize: screenWidth/(width/14),
                               //                 fontWeight: FontWeight.normal,
                               //               ),
                               //           elevation: 1,
@@ -415,38 +465,45 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0, screenWidth / (width / 12), 0, 0),
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.pushNamed(
                                         context, RouteName.editProfilePage);
                                   },
                                   child: Container(
-                                    width: 500,
-                                    height: 60,
+                                    width: screenWidth / (width / 500),
+                                    height: screenWidth / (width / 60),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       boxShadow: [
                                         BoxShadow(
-                                          blurRadius: 5,
+                                          blurRadius: screenWidth / (width / 5),
                                           color: Color(0x3416202A),
                                           offset: Offset(0, 2),
                                         )
                                       ],
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth / (width / 12)),
                                       shape: BoxShape.rectangle,
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 8, 8, 8),
+                                          screenWidth / (width / 8),
+                                          screenWidth / (width / 8),
+                                          screenWidth / (width / 8),
+                                          screenWidth / (width / 8)),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                                    screenWidth / (width / 12),
+                                                    0,
+                                                    0,
+                                                    0),
                                             child: Text(
                                               'Edit Profile',
                                               style:
@@ -456,7 +513,8 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                                         fontFamily: 'Outfit',
                                                         color:
                                                             Color(0xFF57636C),
-                                                        fontSize: 14,
+                                                        fontSize: screenWidth /
+                                                            (width / 14),
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -464,12 +522,14 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                           ),
                                           Expanded(
                                             child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0.9, 0),
+                                              alignment: AlignmentDirectional(
+                                                  screenWidth / (width / 0.9),
+                                                  0),
                                               child: Icon(
                                                 Icons.arrow_forward_ios,
                                                 color: Color(0xFF57636C),
-                                                size: 18,
+                                                size:
+                                                    screenWidth / (width / 18),
                                               ),
                                             ),
                                           ),
@@ -482,7 +542,11 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                             ],
                           ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          0,
+                          screenWidth / (width / 20),
+                          0,
+                          screenWidth / (width / 20)),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -501,14 +565,14 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                             },
                             text: 'Log Out',
                             options: FFButtonOptions(
-                              height: 40,
+                              height: screenWidth / (width / 40),
                               color: Colors.white,
                               textStyle: FlutterFlowTheme.of(context)
                                   .bodyText2
                                   .override(
                                     fontFamily: 'Lexend Deca',
                                     color: Color(0xFF101213),
-                                    fontSize: 14,
+                                    fontSize: screenWidth / (width / 14),
                                     fontWeight: FontWeight.normal,
                                   ),
                               elevation: 1,

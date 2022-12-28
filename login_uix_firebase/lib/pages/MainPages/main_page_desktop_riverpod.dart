@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
@@ -10,6 +12,8 @@ import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dar
 import 'package:login_uix_firebase/widgets/appointments/appointments_grid_view.dart';
 import 'package:login_uix_firebase/widgets/practioners/practioners_grid_view.dart';
 
+import '../../helper/responsive.dart';
+
 class MainPageDesktopRiverpod extends ConsumerWidget {
   static const routeName = '/mainPageDesktopRiverpod';
 
@@ -17,6 +21,14 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     TextEditingController? textController;
     final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
@@ -46,23 +58,31 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-0.95, 0),
+                            alignment: AlignmentDirectional(
+                                screenWidth / (width / -0.95), 0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  100, 40, 0, 100),
+                                  screenWidth / (width / 100),
+                                  screenWidth / (width / 40),
+                                  0,
+                                  screenWidth / (width / 100)),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.3,
                                 height:
-                                    MediaQuery.of(context).size.height * 0.06,
+                                    MediaQuery.of(context).size.height * 0.07,
                                 decoration: BoxDecoration(),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
+                                    //Home navigation
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            20, 20, 20, 20),
+                                            screenWidth / (width / 20),
+                                            screenWidth / (width / 20),
+                                            screenWidth / (width / 20),
+                                            screenWidth / (width / 20)),
                                         child: InkWell(
                                           onTap: () {
                                             Navigator.pushNamed(
@@ -74,14 +94,22 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                             'Home',
                                             textAlign: TextAlign.justify,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1,
+                                                .bodyText1
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: screenWidth /
+                                                        (width / 14)),
                                           ),
                                         ),
                                       ),
                                     ),
+                                    //Profile navigation
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20)),
                                       child: InkWell(
                                         onTap: () {
                                           Navigator.pushNamed(context,
@@ -90,13 +118,21 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                         child: Text(
                                           'Profile',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyText1
+                                              .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: screenWidth /
+                                                      (width / 14)),
                                         ),
                                       ),
                                     ),
+                                    //Booking History
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20)),
                                       child: InkWell(
                                         onTap: () {
                                           Navigator.pushNamed(context,
@@ -105,10 +141,15 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                         child: Text(
                                           'Booking History',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyText1
+                                              .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: screenWidth /
+                                                      (width / 14)),
                                         ),
                                       ),
                                     ),
+                                    //Search Text field
                                     Expanded(
                                       child: TextFormField(
                                         controller: textController,
@@ -126,8 +167,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                                       .primaryText,
                                               width: 1,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                                            borderRadius: BorderRadius.circular(
+                                                screenWidth / (width / 20)),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
@@ -136,16 +177,16 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                                       .primaryText,
                                               width: 1,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                                            borderRadius: BorderRadius.circular(
+                                                screenWidth / (width / 20)),
                                           ),
                                           errorBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                                            borderRadius: BorderRadius.circular(
+                                                screenWidth / (width / 20)),
                                           ),
                                           focusedErrorBorder:
                                               OutlineInputBorder(
@@ -153,15 +194,19 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                               color: Color(0x00000000),
                                               width: 1,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                                            borderRadius: BorderRadius.circular(
+                                                screenWidth / (width / 20)),
                                           ),
                                           prefixIcon: Icon(
                                             Icons.search,
                                           ),
                                         ),
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1,
+                                            .bodyText1
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize:
+                                                    screenWidth / (width / 14)),
                                       ),
                                     ),
                                   ],
@@ -170,13 +215,16 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 40, 100, 100),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0,
+                                screenWidth / (width / 100),
+                                screenWidth / (width / 100),
+                                screenWidth / (width / 100)),
                             child: Image.asset(
                               'lib/images/Logo-Slogan-BL-H400-W1080.png',
                               width: MediaQuery.of(context).size.width * 0.12,
                               height: MediaQuery.of(context).size.height * 0.06,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitHeight,
                             ),
                           ),
                         ],
@@ -188,30 +236,33 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, screenWidth / (width / 40)),
                               child: Text(
                                 'Begin your 1st Session!',
                                 style: FlutterFlowTheme.of(context)
                                     .title1
                                     .override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 40,
+                                      fontSize: screenWidth / (width / 40),
                                     ),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Text(
                                 'We believe anyone can attain true happiness, whether adults, children, youth, male and female.',
                                 textAlign: TextAlign.justify,
                                 style: FlutterFlowTheme.of(context)
                                     .subtitle1
                                     .override(
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: screenWidth / (width / 18)),
                               ),
                             ),
                           ],
@@ -224,41 +275,53 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Image.asset(
                                 'lib/images/Adjustment-Icon-7.png',
-                                width: 100,
-                                height: 100,
+                                width: screenWidth / (width / 100),
+                                height: screenWidth / (width / 100),
                                 fit: BoxFit.cover,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Image.asset(
                                 'lib/images/7.png',
-                                width: 100,
-                                height: 100,
+                                width: screenWidth / (width / 100),
+                                height: screenWidth / (width / 100),
                                 fit: BoxFit.cover,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Image.asset(
                                 'lib/images/9.png',
-                                width: 100,
-                                height: 100,
+                                width: screenWidth / (width / 100),
+                                height: screenWidth / (width / 100),
                                 fit: BoxFit.cover,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Image.asset(
                                 'lib/images/10.png',
-                                width: 100,
-                                height: 100,
+                                width: screenWidth / (width / 100),
+                                height: screenWidth / (width / 100),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -289,7 +352,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                               .secondaryBackground,
                                           boxShadow: [
                                             BoxShadow(
-                                              blurRadius: 12,
+                                              blurRadius:
+                                                  screenWidth / (width / 12),
                                               color: Color(0x33000000),
                                               offset: Offset(0, 2),
                                             )
@@ -297,15 +361,20 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           borderRadius: BorderRadius.only(
                                             bottomLeft: Radius.circular(0),
                                             bottomRight: Radius.circular(0),
-                                            topLeft: Radius.circular(60),
-                                            topRight: Radius.circular(60),
+                                            topLeft: Radius.circular(
+                                                screenWidth / (width / 60)),
+                                            topRight: Radius.circular(
+                                                screenWidth / (width / 60)),
                                           ),
                                           shape: BoxShape.rectangle,
                                         ),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  60, 60, 60, 60),
+                                                  screenWidth / (width / 60),
+                                                  screenWidth / (width / 60),
+                                                  screenWidth / (width / 60),
+                                                  screenWidth / (width / 60)),
                                           child: PractionersGridView(
                                               practioners: data),
                                         ),
@@ -315,12 +384,19 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  20, 20, 20, 20),
+                                                  screenWidth / (width / 20),
+                                                  screenWidth / (width / 20),
+                                                  screenWidth / (width / 20),
+                                                  screenWidth / (width / 20)),
                                           child: Text(
                                             'Practioner',
                                             textAlign: TextAlign.justify,
                                             style: FlutterFlowTheme.of(context)
-                                                .title1,
+                                                .title1
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: screenWidth /
+                                                        (width / 24)),
                                           ),
                                         ),
                                       ),
@@ -369,11 +445,18 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          26, 20, 20, 20),
+                                          screenWidth / (width / 26),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20)),
                                       child: Text(
                                         'On going appointment',
-                                        style:
-                                            FlutterFlowTheme.of(context).title1,
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize:
+                                                    screenWidth / (width / 24)),
                                       ),
                                     ),
                                   ],
@@ -413,8 +496,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(0),
                         bottomRight: Radius.circular(0),
-                        topLeft: Radius.circular(60),
-                        topRight: Radius.circular(60),
+                        topLeft: Radius.circular(screenWidth / (width / 60)),
+                        topRight: Radius.circular(screenWidth / (width / 60)),
                       ),
                     ),
                     child: Column(
@@ -425,14 +508,17 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                         Align(
                           alignment: AlignmentDirectional(0, 0),
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 0, 20, 30),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                0,
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 30)),
                             child: Text(
                               'Your Happiness Center',
                               style:
                                   FlutterFlowTheme.of(context).title1.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 28,
+                                        fontSize: screenWidth / (width / 28),
                                       ),
                             ),
                           ),
@@ -440,14 +526,14 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                         Align(
                           alignment: AlignmentDirectional(0, 0),
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, screenWidth / (width / 20)),
                             child: Text(
                               '#ReachingOutIsAStrength',
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: 22,
+                                        fontSize: screenWidth / (width / 22),
                                       ),
                             ),
                           ),
@@ -459,7 +545,7 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                             style:
                                 FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Poppins',
-                                      fontSize: 20,
+                                      fontSize: screenWidth / (width / 20),
                                     ),
                           ),
                         ),
@@ -469,7 +555,10 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.15,
                                 height:
@@ -481,11 +570,14 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20)),
                                       child: Icon(
                                         Icons.location_on,
                                         color: Colors.black,
-                                        size: 60,
+                                        size: screenWidth / (width / 60),
                                       ),
                                     ),
                                     Text(
@@ -494,7 +586,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .title1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 18,
+                                            fontSize:
+                                                screenWidth / (width / 18),
                                           ),
                                     ),
                                     Text(
@@ -504,7 +597,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .subtitle1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 14,
+                                            fontSize:
+                                                screenWidth / (width / 14),
                                           ),
                                     ),
                                   ],
@@ -513,7 +607,10 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.15,
                                 height:
@@ -525,11 +622,14 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20)),
                                       child: Icon(
                                         Icons.call,
                                         color: Colors.black,
-                                        size: 60,
+                                        size: screenWidth / (width / 60),
                                       ),
                                     ),
                                     Text(
@@ -538,7 +638,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .title1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 18,
+                                            fontSize:
+                                                screenWidth / (width / 18),
                                           ),
                                     ),
                                     Text(
@@ -548,7 +649,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .subtitle1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 14,
+                                            fontSize:
+                                                screenWidth / (width / 14),
                                           ),
                                     ),
                                   ],
@@ -557,7 +659,10 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.15,
                                 height:
@@ -569,11 +674,14 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20)),
                                       child: Icon(
                                         Icons.email_outlined,
                                         color: Colors.black,
-                                        size: 60,
+                                        size: screenWidth / (width / 60),
                                       ),
                                     ),
                                     Text(
@@ -582,7 +690,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .title1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 18,
+                                            fontSize:
+                                                screenWidth / (width / 18),
                                           ),
                                     ),
                                     Text(
@@ -592,7 +701,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .subtitle1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 14,
+                                            fontSize:
+                                                screenWidth / (width / 14),
                                           ),
                                     ),
                                   ],
@@ -601,7 +711,10 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.15,
                                 height:
@@ -613,11 +726,14 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20)),
                                       child: Icon(
                                         Icons.access_time,
                                         color: Colors.black,
-                                        size: 60,
+                                        size: screenWidth / (width / 60),
                                       ),
                                     ),
                                     Text(
@@ -626,7 +742,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .title1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 18,
+                                            fontSize:
+                                                screenWidth / (width / 18),
                                           ),
                                     ),
                                     Text(
@@ -636,7 +753,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .subtitle1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 14,
+                                            fontSize:
+                                                screenWidth / (width / 14),
                                           ),
                                     ),
                                   ],
@@ -645,7 +763,10 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.15,
                                 height:
@@ -657,11 +778,14 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20),
+                                          screenWidth / (width / 20)),
                                       child: Icon(
                                         Icons.chat_bubble_outline_outlined,
                                         color: Colors.black,
-                                        size: 60,
+                                        size: screenWidth / (width / 60),
                                       ),
                                     ),
                                     Text(
@@ -670,7 +794,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .title1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 18,
+                                            fontSize:
+                                                screenWidth / (width / 18),
                                           ),
                                     ),
                                     Text(
@@ -680,7 +805,8 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                                           .subtitle1
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 14,
+                                            fontSize:
+                                                screenWidth / (width / 14),
                                           ),
                                     ),
                                   ],
@@ -695,7 +821,7 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                             '© 2022-2023 Blue Harmony',
                             style: FlutterFlowTheme.of(context).title1.override(
                                   fontFamily: 'Poppins',
-                                  fontSize: 12,
+                                  fontSize: screenWidth / (width / 12),
                                 ),
                           ),
                         ),

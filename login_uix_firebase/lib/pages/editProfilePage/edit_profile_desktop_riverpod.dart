@@ -18,11 +18,21 @@ import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.
 import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
 
+import '../../helper/responsive.dart';
+
 class EditProfileDesktopWidget2 extends ConsumerWidget {
   const EditProfileDesktopWidget2({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     final _scaffoldKey = GlobalKey<ScaffoldState>();
     final nameController = TextEditingController();
     final lastsNameController = TextEditingController();
@@ -32,19 +42,19 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(screenWidth / (width / 100)),
         child: AppBar(
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
-            borderRadius: 30,
+            borderRadius: screenWidth / (width / 30),
             borderWidth: 1,
-            buttonSize: 50,
+            buttonSize: screenWidth / (width / 50),
             icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.black,
-              size: 50,
+              size: screenWidth / (width / 50),
             ),
             onPressed: () {
               print('IconButton pressed ...');
@@ -53,20 +63,22 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
           ),
           flexibleSpace: FlexibleSpaceBar(
             title: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  0, 0, 0, screenWidth / (width / screenWidth / (width / 14))),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        screenWidth / (width / 24), 0, 0, 0),
                     child: Text(
                       'Edit Profile',
                       style: FlutterFlowTheme.of(context).title2.override(
                             fontFamily: 'Poppins',
                             color: Colors.black,
-                            fontSize: 30,
+                            fontSize: screenWidth / (width / 30),
                           ),
                     ),
                   ),
@@ -99,36 +111,41 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          0, screenWidth / (width / 20), 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: 100,
-                            height: 100,
+                            width: screenWidth / (width / 100),
+                            height: screenWidth / (width / 100),
                             decoration: BoxDecoration(
                               color: Color(0xFFDBE2E7),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  screenWidth / (width / 2),
+                                  screenWidth / (width / 2),
+                                  screenWidth / (width / 2),
+                                  screenWidth / (width / 2)),
                               child: Container(
-                                width: 90,
-                                height: 90,
+                                width: screenWidth / (width / 90),
+                                height: screenWidth / (width / 90),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 12)),
                                   child: Icon(Icons.person),
                                   // CachedNetworkImage(
                                   //   imageUrl:
                                   //       'https://images.unsplash.com/photo-1592520113018-180c8bc831c9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI3fHxwcm9maWxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                                  //   width: 100,
-                                  //   height: 100,
+                                  //   width: screenWidth / (width / 100),
+                                  //   height: screenWidth / (width / 100),
                                   //   fit: BoxFit.cover,
                                   // ),
                                 ),
@@ -144,7 +161,11 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          0,
+                          screenWidth / (width / 12),
+                          0,
+                          screenWidth / (width / 16)),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -155,15 +176,15 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                             },
                             text: 'Change Photo',
                             options: FFButtonOptions(
-                              width: 130,
-                              height: 40,
+                              width: screenWidth / (width / 130),
+                              height: screenWidth / (width / 40),
                               color: Color(0xFFF1F4F8),
                               textStyle: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Lexend Deca',
                                     color: Color(0xFF4B39EF),
-                                    fontSize: 14,
+                                    fontSize: screenWidth / (width / 14),
                                     fontWeight: FontWeight.normal,
                                   ),
                               elevation: 1,
@@ -177,9 +198,14 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 20),
+                          0,
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 16)),
                       child: Container(
-                        width: 500,
+                        width: screenWidth / (width / 500),
+                        height: screenWidth / (width / 80),
                         child: TextFormField(
                           controller: nameController,
                           obscureText: false,
@@ -189,14 +215,14 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                                 FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily: 'Poppins',
                                       color: Color(0xFF95A1AC),
-                                      fontSize: 14,
+                                      fontSize: screenWidth / (width / 14),
                                       fontWeight: FontWeight.normal,
                                     ),
                             hintStyle:
                                 FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily: 'Lexend Deca',
                                       color: Color(0xFF95A1AC),
-                                      fontSize: 14,
+                                      fontSize: screenWidth / (width / 14),
                                       fontWeight: FontWeight.normal,
                                     ),
                             enabledBorder: OutlineInputBorder(
@@ -204,39 +230,46 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                                 color: Color(0xFFF1F4F8),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xFFF1F4F8),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+                            contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 24),
+                                0,
+                                screenWidth / (width / 24)),
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyText1.override(
                                     fontFamily: 'Lexend Deca',
                                     color: Color(0xFF090F13),
-                                    fontSize: 14,
+                                    fontSize: screenWidth / (width / 14),
                                     fontWeight: FontWeight.normal,
                                   ),
                           maxLines: null,
@@ -244,78 +277,98 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 20),
+                          0,
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 16)),
                       child: Container(
-                        width: 500,
+                        width: screenWidth / (width / 500),
+                        height: screenWidth / (width / 80),
                         child: TextFormField(
                           controller: lastsNameController,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Last Name',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF95A1AC),
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                            hintStyle:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF95A1AC),
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .bodyText2
+                                .override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF95A1AC),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: screenWidth / (width / 14)),
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .bodyText2
+                                .override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: Color(0xFF95A1AC),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: screenWidth / (width / 14)),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xFFF1F4F8),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xFFF1F4F8),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+                            contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 24),
+                                0,
+                                screenWidth / (width / 24)),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Color(0xFF090F13),
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: Color(0xFF090F13),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: screenWidth / (width / 14)),
                           textAlign: TextAlign.start,
                           maxLines: null,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 20),
+                          0,
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 16)),
                       child: Container(
-                        width: 500,
+                        width: screenWidth / (width / 500),
+                        height: screenWidth / (width / 80),
                         child: IntlPhoneField(
                           pickerDialogStyle: PickerDialogStyle(
-                            width: 400,
+                            width: screenWidth / (width / 400),
                           ),
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
@@ -332,57 +385,67 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Phone Number',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF95A1AC),
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                            hintStyle:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF95A1AC),
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .bodyText2
+                                .override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF95A1AC),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: screenWidth / (width / 14)),
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .bodyText2
+                                .override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: Color(0xFF95A1AC),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: screenWidth / (width / 14)),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xFFF1F4F8),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xFFF1F4F8),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+                            contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 24),
+                                0,
+                                screenWidth / (width / 24)),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Color(0xFF090F13),
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: Color(0xFF090F13),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: screenWidth / (width / 14)),
                           textAlign: TextAlign.start,
                           validator: (value) {
                             if (value!.toString().isEmpty) {
@@ -395,66 +458,81 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 20),
+                          0,
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 16)),
                       child: Container(
-                        width: 500,
+                        width: screenWidth / (width / 500),
+                        height: screenWidth / (width / 80),
                         child: TextFormField(
                           controller: dateofbirthController,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Date of Birth',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF95A1AC),
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                            hintStyle:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF95A1AC),
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .bodyText2
+                                .override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF95A1AC),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: screenWidth / (width / 14)),
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .bodyText2
+                                .override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: Color(0xFF95A1AC),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: screenWidth / (width / 14)),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xFFF1F4F8),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xFFF1F4F8),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 8)),
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+                            contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 24),
+                                0,
+                                screenWidth / (width / 24)),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Color(0xFF090F13),
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: Color(0xFF090F13),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: screenWidth / (width / 14)),
                           textAlign: TextAlign.start,
                           maxLines: null,
                           onTap: () async {
@@ -485,9 +563,11 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0, 0.05),
+                      alignment:
+                          AlignmentDirectional(0, screenWidth / (width / 0.05)),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0, screenWidth / (width / 24), 0, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             UserData userData = UserData(
@@ -505,14 +585,14 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                           },
                           text: 'Save Changes',
                           options: FFButtonOptions(
-                            width: 340,
-                            height: 60,
+                            width: screenWidth / (width / 340),
+                            height: screenWidth / (width / 60),
                             color: Color(0xFF4B39EF),
                             textStyle:
                                 FlutterFlowTheme.of(context).subtitle2.override(
                                       fontFamily: 'Lexend Deca',
                                       color: Colors.white,
-                                      fontSize: 16,
+                                      fontSize: screenWidth / (width / 16),
                                       fontWeight: FontWeight.normal,
                                     ),
                             elevation: 2,
