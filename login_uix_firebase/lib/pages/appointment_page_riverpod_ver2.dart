@@ -335,12 +335,9 @@ class _AppointmentPageRiverpodVersion2State
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Services: ',
-                                      style:
-                                          FlutterFlowTheme.of(context).title1,
-                                    ),
+                                  Text(
+                                    'Services: ',
+                                    style: FlutterFlowTheme.of(context).title1,
                                   ),
                                   Expanded(
                                     flex: 2,
@@ -413,12 +410,10 @@ class _AppointmentPageRiverpodVersion2State
                                       ),
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      'Date: ',
-                                      style:
-                                          FlutterFlowTheme.of(context).title1,
-                                    ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    'Date: ',
+                                    style: FlutterFlowTheme.of(context).title1,
                                   ),
                                   Expanded(
                                     flex: 2,
@@ -441,10 +436,10 @@ class _AppointmentPageRiverpodVersion2State
                                                 },
                                               ) ??
                                               '';
-                                          setState(() {
-                                            dateandtimeController.text =
-                                                result.toString();
-                                          });
+                                          // setState(() {
+                                          dateandtimeController.text =
+                                              result.toString();
+                                          // });
 
                                           // print(resultDate);
                                           // print(
@@ -503,12 +498,10 @@ class _AppointmentPageRiverpodVersion2State
                                       ),
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      'Time: ',
-                                      style:
-                                          FlutterFlowTheme.of(context).title1,
-                                    ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    'Time: ',
+                                    style: FlutterFlowTheme.of(context).title1,
                                   ),
                                   Expanded(
                                     flex: 2,
@@ -517,6 +510,8 @@ class _AppointmentPageRiverpodVersion2State
                                       child: Consumer(
                                         builder: (context, ref, child) {
                                           return DropdownButtonFormField2(
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1,
                                             decoration: InputDecoration(
                                               isDense: true,
                                               contentPadding: EdgeInsets.zero,
@@ -594,12 +589,47 @@ class _AppointmentPageRiverpodVersion2State
                                   ),
                                   Expanded(
                                     child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            15, 10, 10, 0),
+                                        padding: EdgeInsets.all(8.0),
                                         child: locations.when(
                                           data: (data) {
                                             print(data.first.type);
                                             return DropdownButtonFormField2(
+                                              icon: const Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.black45,
+                                              ),
+                                              iconSize: 30,
+                                              buttonHeight: 60,
+                                              buttonPadding:
+                                                  const EdgeInsets.only(
+                                                      left: 20, right: 10),
+                                              dropdownDecoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                contentPadding: EdgeInsets.zero,
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                              ),
+                                              hint: Text(
+                                                'Select Location',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle1,
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
                                               items: List.generate(
                                                 data.length,
                                                 (index) => DropdownMenuItem(

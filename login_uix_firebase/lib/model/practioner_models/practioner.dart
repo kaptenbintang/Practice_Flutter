@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:login_uix_firebase/model/practioner_models/practioner_key.dart';
+import 'package:login_uix_firebase/model/practioner_models/schedule.dart';
 
 @immutable
 class Practioner {
@@ -32,6 +33,12 @@ class Practioner {
         languages = json[PractionerKey.languages],
         titleMain = json[PractionerKey.titleMain],
         schedules = json[PractionerKey.schedules];
+  // schedules = {
+  //   for(final entry in json[PractionerKey.schedules].entries)
+  //   Schedule.values.firstWhere((element) => element.dayName == entry.key,
+
+  //   ): entry.value,};
+
   // practionerSchedule = json[PractionerKey.practionerSchedule];
 
   // bool get allowsLikes => postSettings[PostSetting.allowLikes] ?? false;
