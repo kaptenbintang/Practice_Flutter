@@ -1,3 +1,4 @@
+import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
@@ -21,10 +22,12 @@ class timeSchedulePage extends StatefulWidget {
 class _timeSchedulePageState extends State<timeSchedulePage> {
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final dayNameController = TextEditingController();
 
   @override
   void dispose() {
     _unfocusNode.dispose();
+    dayNameController.dispose();
     super.dispose();
   }
 
@@ -209,6 +212,13 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                             size: 24,
                           ),
                         ),
+                        // TextField(
+                        //   controller: dayNameController,
+                        //   style: FlutterFlowTheme.of(context).title1.override(
+                        //         fontFamily: 'Poppins',
+                        //         fontSize: 26,
+                        //       ),
+                        // )
                         Text(
                           data["dayName"].toString(),
                           style: FlutterFlowTheme.of(context).title1.override(
@@ -267,7 +277,13 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                               size: 30,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              // Navigator.of(context).push(
+                              //   showPicker(
+                              //     context: context,
+                              //     value: _time,
+                              //     onChange: onTimeChanged,
+                              //   ),
+                              // );
                             },
                           ),
                         ),
