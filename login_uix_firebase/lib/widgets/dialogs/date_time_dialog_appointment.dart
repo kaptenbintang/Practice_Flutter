@@ -43,11 +43,12 @@ class _DateTimeAppointmentDialogState
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     if (args.value is PickerDateRange) {
-      final DateTime rangeStartDate = args.value.startDate;
-      final DateTime rangeEndDate = args.value.endDate;
+      // final DateTime rangeStartDate = args.value.startDate;
+      // final DateTime rangeEndDate = args.value.endDate;
     } else if (args.value is DateTime) {
       final DateTime selectedDate = args.value;
-      final dataFormated = DateFormat('yyyy-MM-dd').format(selectedDate);
+
+      // final dataFormated = DateFormat('yyyy-MM-dd').format(selectedDate);
       setState(() {
         _datePickerController.selectedDate = selectedDate;
       });
