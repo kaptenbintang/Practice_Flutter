@@ -243,26 +243,75 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.08,
+                width: MediaQuery.of(context).size.width * 0.1,
                 decoration: BoxDecoration(),
-                child: Column(
+                child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    FlutterFlowIconButton(
-                      borderColor: FlutterFlowTheme.of(context).primaryText,
-                      borderRadius: 30,
-                      borderWidth: 2,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.navigate_next_sharp,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 40,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+                          child: FlutterFlowIconButton(
+                            borderColor:
+                                FlutterFlowTheme.of(context).primaryText,
+                            borderRadius: 30,
+                            borderWidth: 2,
+                            buttonSize: 60,
+                            icon: Icon(
+                              Icons.more_time_rounded,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              print('IconButton pressed ...');
+                            },
+                          ),
+                        ),
+                        Text(
+                          'Start Time',
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 10,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+                          child: FlutterFlowIconButton(
+                            borderColor:
+                                FlutterFlowTheme.of(context).primaryText,
+                            borderRadius: 30,
+                            borderWidth: 2,
+                            buttonSize: 60,
+                            icon: Icon(
+                              Icons.timer_off_outlined,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              print('IconButton pressed ...');
+                            },
+                          ),
+                        ),
+                        Text(
+                          'End Time',
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 10,
+                                  ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
