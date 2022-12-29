@@ -606,14 +606,14 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                             await ref
                                 .read(authStateProvider.notifier)
                                 .logOut()
-                                .then(
-                              (value) {
-                                Navigator.of(context).pop();
-                                LandingLayout();
-                                menuController
-                                    .changeActiveitemTo(sideMenuItems[0]);
-                              },
-                            );
+                                .then((_) {
+                              Navigator.popUntil(
+                                  context, ModalRoute.withName('/'));
+                              LandingLayout();
+                              menuController
+                                  .changeActiveitemTo(sideMenuItems[0]);
+                            });
+
                             //     .then((_) {
                             //   // Navigator.pushReplacement(
                             //   //   context,
