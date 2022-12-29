@@ -206,7 +206,7 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 4, 0, 0),
                                             child: Text(
-                                              data?['clientcode'],
+                                              data['clientcode'],
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText2

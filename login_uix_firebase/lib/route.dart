@@ -27,4 +27,6 @@ class RouteName {
   static const manageClientsTypePage = '/ManageClientsTypePage';
   static const MainPagesPage = '/MainPagesPage';
   static const historyBookingRiverpod = '/HistoryBooking';
+  static const mainSchedulePage = '/mainSchedulePage';
+  static const timeSchedulePage = '/timeSchedulePage';
 }

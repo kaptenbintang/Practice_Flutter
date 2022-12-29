@@ -42,53 +42,44 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenWidth / (width / 100)),
+        preferredSize: Size.fromHeight(screenWidth / (width / 70)),
         child: AppBar(
+          actions: const [],
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: screenWidth / (width / 30),
-            borderWidth: 1,
-            buttonSize: screenWidth / (width / 50),
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.black,
-              size: screenWidth / (width / 50),
-            ),
-            onPressed: () {
-              print('IconButton pressed ...');
-              Navigator.pop(context);
-            },
-          ),
-          flexibleSpace: FlexibleSpaceBar(
-            title: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                  0, 0, 0, screenWidth / (width / screenWidth / (width / 14))),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        screenWidth / (width / 24), 0, 0, 0),
-                    child: Text(
-                      'Edit Profile',
-                      style: FlutterFlowTheme.of(context).title2.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.black,
-                            fontSize: screenWidth / (width / 30),
-                          ),
-                    ),
-                  ),
-                ],
+          leading: Padding(
+            padding: EdgeInsets.only(top: screenWidth / (width / 10)),
+            child: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: screenWidth / (width / 30),
+              borderWidth: 1,
+              buttonSize: screenWidth / (width / 50),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.black,
+                size: screenWidth / (width / 30),
               ),
+              onPressed: () {
+                print('IconButton pressed ...');
+                Navigator.pop(context);
+              },
             ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
           ),
-          actions: [],
+
+          title: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(
+                0, screenWidth / (width / 10), 0, 0),
+            child: Text(
+              'Edit Profile',
+              style: FlutterFlowTheme.of(context).title2.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.black,
+                    fontSize: screenWidth / (width / 30),
+                  ),
+            ),
+          ),
+
+          // actions: [],
           centerTitle: true,
           elevation: 2,
         ),
@@ -554,7 +545,6 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
 
                               dateofbirthController.text =
                                   formattedDate; //set output date to TextField value.
-
                             } else {
                               print("Date is not selected");
                             }
