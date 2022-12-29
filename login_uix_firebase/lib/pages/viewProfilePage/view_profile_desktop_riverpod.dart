@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,8 +14,6 @@ import 'package:login_uix_firebase/route.dart';
 import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
 import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
-import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
-import 'package:recase/recase.dart';
 
 import '../../constant/controllers.dart';
 import '../../helper/responsive.dart';
@@ -48,53 +46,43 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
             key: scaffoldKey,
             backgroundColor: Color(0xFFF1F4F8),
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(screenWidth / (width / 100)),
+              preferredSize: Size.fromHeight(screenWidth / (width / 70)),
               child: AppBar(
                 actions: const [],
                 backgroundColor: Colors.white,
                 automaticallyImplyLeading: false,
-                leading: FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: screenWidth / (width / 30),
-                  borderWidth: 1,
-                  buttonSize: screenWidth / (width / 50),
-                  icon: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.black,
-                    size: screenWidth / (width / 50),
-                  ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
-                    Navigator.pop(context);
-                  },
-                ),
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        0, 0, 0, screenWidth / (width / 14)),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              screenWidth / (width / 24), 0, 0, 0),
-                          child: Text(
-                            'Profile',
-                            style: FlutterFlowTheme.of(context).title2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black,
-                                  fontSize: screenWidth / (width / 30),
-                                ),
-                          ),
-                        ),
-                      ],
+                leading: Padding(
+                  padding: EdgeInsets.only(top: screenWidth / (width / 10)),
+                  child: FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: screenWidth / (width / 30),
+                    borderWidth: 1,
+                    buttonSize: screenWidth / (width / 50),
+                    icon: Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.black,
+                      size: screenWidth / (width / 30),
                     ),
+                    onPressed: () {
+                      print('IconButton pressed ...');
+                      Navigator.pop(context);
+                    },
                   ),
-                  centerTitle: true,
-                  expandedTitleScale: 1.0,
                 ),
+
+                title: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      0, screenWidth / (width / 10), 0, 0),
+                  child: Text(
+                    'Profile',
+                    style: FlutterFlowTheme.of(context).title2.override(
+                          fontFamily: 'Poppins',
+                          color: Colors.black,
+                          fontSize: screenWidth / (width / 30),
+                        ),
+                  ),
+                ),
+
                 // actions: [],
                 centerTitle: true,
                 elevation: 2,
@@ -107,134 +95,167 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                 children: [
                   //ProfileInfo
                   // Generated code for this profileInfo Widget...
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 1,
-                                color: Color(0xFFF1F4F8),
-                                offset: Offset(0, 0),
-                              )
-                            ],
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 1,
+                          color: Color(0xFFF1F4F8),
+                          offset: Offset(0, 0),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 24),
+                          screenWidth / (width / 12),
+                          screenWidth / (width / 24),
+                          screenWidth / (width / 12)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: screenWidth / (width / 70),
+                            height: screenWidth / (width / 70),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF1F4F8),
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 12)),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  screenWidth / (width / 2),
+                                  screenWidth / (width / 2),
+                                  screenWidth / (width / 2),
+                                  screenWidth / (width / 2)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth / (width / 12)),
+                                child: Icon(Icons.person),
+                                // CachedNetworkImage(
+                                //   imageUrl:
+                                //       'https://images.unsplash.com/photo-1592520113018-180c8bc831c9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI3fHxwcm9maWxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+                                //   width: 100,
+                                //   height: 100,
+                                //   fit: BoxFit.cover,
+                                // ),
+                              ),
+                            ),
                           ),
-                          child: Padding(
+                          Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                screenWidth / (width / 24),
-                                screenWidth / (width / 12),
-                                screenWidth / (width / 24),
-                                screenWidth / (width / 12)),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: screenWidth / (width / 70),
-                                  height: screenWidth / (width / 70),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFF1F4F8),
-                                    borderRadius: BorderRadius.circular(
-                                        screenWidth / (width / 12)),
+                                screenWidth / (width / 16), 0, 0, 0),
+                            child: SizedBox(
+                              width: screenWidth / (width / 250),
+                              height: screenWidth / (width / 70),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${data.firstName}' +
+                                        ' ' +
+                                        '${data.lastName}',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Urbanist',
+                                          color: Color(0xFF101213),
+                                          fontSize: screenWidth / (width / 20),
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                   ),
-                                  child: Padding(
+                                  Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        screenWidth / (width / 2),
-                                        screenWidth / (width / 2),
-                                        screenWidth / (width / 2),
-                                        screenWidth / (width / 2)),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          screenWidth / (width / 12)),
-                                      child: Icon(Icons.person),
-                                      // CachedNetworkImage(
-                                      //   imageUrl:
-                                      //       'https://images.unsplash.com/photo-1592520113018-180c8bc831c9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI3fHxwcm9maWxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                                      //   width: 100,
-                                      //   height: 100,
-                                      //   fit: BoxFit.cover,
-                                      // ),
+                                        0, screenWidth / (width / 4), 0, 0),
+                                    child: Text(
+                                      data.email.toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF897DEE),
+                                            fontSize:
+                                                screenWidth / (width / 14),
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      screenWidth / (width / 16), 0, 0, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${data.firstName}' +
-                                            ' ' +
-                                            '${data.lastName}',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title3
-                                            .override(
-                                              fontFamily: 'Urbanist',
-                                              color: Color(0xFF101213),
-                                              fontSize:
-                                                  screenWidth / (width / 20),
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, screenWidth / (width / 4), 0, 0),
-                                        child: Text(
-                                          data.email.toString(),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 4),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data.roles.toString(),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
                                                 fontFamily: 'Outfit',
-                                                color: Color(0xFF897DEE),
+                                                color: Colors.black,
                                                 fontSize:
                                                     screenWidth / (width / 14),
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),
-                                      ),
-                                    ],
+                                        Text(
+                                          data.clientType.toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Outfit',
+                                                color: Colors.black,
+                                                fontSize:
+                                                    screenWidth / (width / 14),
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                        Text(
+                                          data['clientcode'],
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Outfit',
+                                                color: Colors.black,
+                                                fontSize:
+                                                    screenWidth / (width / 14),
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                  Column(
+                  Row(
                     mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0,
-                                screenWidth / (width / 12),
-                                0,
-                                screenWidth / (width / 12)),
-                            child: Text(
-                              'Account Settings',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0,
+                            screenWidth / (width / 12),
+                            0,
+                            screenWidth / (width / 12)),
+                        child: Text(
+                          'Account Settings',
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
                                     fontFamily: 'Urbanist',
                                     color: Color(0xFF101213),
                                     fontSize: screenWidth / (width / 14),
                                     fontWeight: FontWeight.w500,
                                   ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
@@ -286,7 +307,8 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                                         fontFamily: 'Outfit',
                                                         color:
                                                             Color(0xFF57636C),
-                                                        fontSize: 14,
+                                                        fontSize: screenWidth /
+                                                            (width / 14),
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -474,45 +496,6 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                            // Padding(
-                            //   padding: EdgeInsetsDirectional.fromSTEB(
-                            //       0, screenWidth/(width/20), 0, screenWidth/(width/20)),
-                            //   child: Row(
-                            //     mainAxisSize: MainAxisSize.max,
-                            //     mainAxisAlignment: MainAxisAlignment.center,
-                            //     children: [
-                            //       FFButtonWidget(
-                            //         onPressed: () async {
-                            //           await ref
-                            //               .read(authStateProvider.notifier)
-                            //               .logOut()
-                            //               .then((value) {
-                            //             Navigator.of(context).pop();
-                            //             LandingLayout();
-                            //           });
-                            //         },
-                            //         text: 'Log Out',
-                            //         options: FFButtonOptions(
-                            //           height: screenWidth/(width/40),
-                            //           color: Colors.white,
-                            //           textStyle: FlutterFlowTheme.of(context)
-                            //               .bodyText2
-                            //               .override(
-                            //                 fontFamily: 'Lexend Deca',
-                            //                 color: Color(0xFF101213),
-                            //                 fontSize: screenWidth/(width/14),
-                            //                 fontWeight: FontWeight.normal,
-                            //               ),
-                            //           elevation: 1,
-                            //           borderSide: BorderSide(
-                            //             color: Colors.transparent,
-                            //             width: 1,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                           ],
                         )
                       : Row(
@@ -614,16 +597,6 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                     .changeActiveitemTo(sideMenuItems[0]);
                               },
                             );
-                            //     .then((_) {
-                            //   // Navigator.pushReplacement(
-                            //   //   context,
-                            //   //   MaterialPageRoute(
-                            //   //     builder: (context) => LandingLayout(),
-                            //   //   ),
-                            //   // );
-                            //   Navigator.of(context).pop();
-                            //   LandingLayout();
-                            // });
                           },
                           text: 'Log Out',
                           options: FFButtonOptions(

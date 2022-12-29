@@ -50,7 +50,7 @@ class AppointmentPageRiverpod extends ConsumerWidget {
       converted.add(DateTimeRange(
           start: newBooking.bookingStart, end: newBooking.bookingEnd));
 
-      dateandtimeController?.text = DateFormat('EEE, yyyy-MM-dd, kk:mm:a')
+      dateandtimeController.text = DateFormat('EEE, yyyy-MM-dd, kk:mm:a')
           .format(newBooking.bookingStart)
           .toString();
 
