@@ -123,6 +123,7 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                       final schedule = ref.watch(timeScheduleProvider);
                       return schedule.when(data: (data) {
                         if (data.isNotEmpty) {
+                          final listDay = data.elementAt(0).schedules;
                           return Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -140,16 +141,15 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                                 ),
                               ),
                               ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: data.length,
-                                  itemBuilder: (context, index) {
-                                    final practionerData =
-                                        data.elementAt(index);
-                                    return tableDepanTimeSchedule(
-                                        context, practionerData);
-                                  })
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: listDay.length,
+                                itemBuilder: (context, index) {
+                                  final key = listDay.values.elementAt(index);
+                                  return tableDepanTimeSchedule(context, key);
+                                },
+                              ),
                             ],
                           );
                         } else {
@@ -172,7 +172,8 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
     );
   }
 
-  Widget tableDepanTimeSchedule(BuildContext context, Practioner data) {
+  Widget tableDepanTimeSchedule(BuildContext context, data) {
+    // print(data);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
       child: Container(
@@ -209,7 +210,7 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                           ),
                         ),
                         Text(
-                          'Monday',
+                          data["dayName"].toString(),
                           style: FlutterFlowTheme.of(context).title1.override(
                                 fontFamily: 'Poppins',
                                 fontSize: 26,
@@ -230,7 +231,7 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                           ),
                         ),
                         Text(
-                          '09.00 - 18.00',
+                          data["resultTime"].toString(),
                           style: FlutterFlowTheme.of(context).title2,
                         ),
                       ],
