@@ -12,6 +12,7 @@ class PractionerKey {
   static const mySpecialty = 'mySpecialty';
   static const languages = 'languages';
   static const titleMain = 'titleMain';
+  static const schedules = 'schedules';
   // static const practionerSchedule = 'practionerSchedule';
 
   const PractionerKey._();

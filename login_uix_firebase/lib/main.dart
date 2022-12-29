@@ -37,6 +37,8 @@ import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_p
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
+import 'package:login_uix_firebase/pages/schedulePage/mainSchedulePage.dart';
+import 'package:login_uix_firebase/pages/schedulePage/timeSchedulePage.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
@@ -170,6 +172,8 @@ class MyApp extends ConsumerWidget {
               const historyBookingRiverpod(),
           // RouteName.controllerPage: (context) => ControllerPage(),
           RouteName.MainPagesPage: (context) => MainPagesPage(),
+          RouteName.mainSchedulePage: (context) => mainSchedulePage(),
+          RouteName.timeSchedulePage: (context) => timeSchedulePage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }

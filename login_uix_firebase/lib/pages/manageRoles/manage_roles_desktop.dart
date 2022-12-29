@@ -906,7 +906,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                         child: DropdownButtonFormField(
                           value: _isRead,
                           decoration: InputDecoration(
-                            labelText: "Can Delete?",
+                            labelText: "Can Read?",
                           ),
                           icon: Icon(
                             Icons.manage_search,
