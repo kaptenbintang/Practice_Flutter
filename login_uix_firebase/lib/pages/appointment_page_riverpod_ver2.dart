@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
@@ -11,6 +12,7 @@ import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/provider/appointment_page/location_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/services_provider.dart';
 import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
 import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
@@ -40,13 +42,16 @@ class _AppointmentPageRiverpodVersion2State
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
     final locations = ref.watch(locationProvider);
+    final userUid = ref.watch(userIdProvider);
+    final userInfo = ref.watch(userInfoModelProvider(userUid.toString()));
+    final locationSelected = ref.watch(locationSelectedProvider);
 
     final pNameController = useTextEditingController();
     final dateandtimeController = useTextEditingController();
     final emailController = useTextEditingController();
     final phNumbController = useTextEditingController();
     final commentController = useTextEditingController();
-    String? resultDate;
+    // String? resultDate;
 
     final isAppointmentButtonEnable = useState(false);
 
@@ -55,7 +60,7 @@ class _AppointmentPageRiverpodVersion2State
       'Female',
     ];
 
-    String? selectedValue;
+    String? selectedLocation;
 
     useEffect(
       () {
@@ -227,9 +232,9 @@ class _AppointmentPageRiverpodVersion2State
               height: MediaQuery.of(context).size.height * 1.5,
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
+                  // mainAxisSize: MainAxisSize.max,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -567,7 +572,7 @@ class _AppointmentPageRiverpodVersion2State
                                               //Do something when changing the item if you want.
                                             },
                                             onSaved: (value) {
-                                              selectedValue = value.toString();
+                                              // selectedValue = value.toString();
                                             },
                                           );
                                         },
@@ -592,7 +597,7 @@ class _AppointmentPageRiverpodVersion2State
                                         padding: EdgeInsets.all(8.0),
                                         child: locations.when(
                                           data: (data) {
-                                            print(data.first.type);
+                                            print(selectedLocation);
                                             return DropdownButtonFormField2(
                                               icon: const Icon(
                                                 Icons.arrow_drop_down,
@@ -645,43 +650,20 @@ class _AppointmentPageRiverpodVersion2State
                                                 ),
                                               ),
                                               onChanged: (value) {
+                                                selectedLocation = value;
+                                                // ref
+                                                //     .read(
+                                                //         locationSelectedProvider
+                                                //             .notifier)
+                                                //     .changeLocation(
+                                                //         value.toString());
                                                 //Do something when changing the item if you want.
                                               },
                                               onSaved: (value) {
-                                                selectedValue =
-                                                    value.toString();
+                                                // selectedValue =
+                                                //     value.toString();
                                               },
                                             );
-                                            // return FlutterFlowDropDown(
-                                            //   options: [],
-                                            //   onChanged: (val) =>
-                                            //       setState(() => val),
-                                            //   // initialOption: dropDownLocation,
-                                            //   width: MediaQuery.of(context)
-                                            //           .size
-                                            //           .width *
-                                            //       0.2,
-                                            //   height: MediaQuery.of(context)
-                                            //           .size
-                                            //           .height *
-                                            //       0.06,
-                                            //   textStyle:
-                                            //       FlutterFlowTheme.of(context)
-                                            //           .subtitle1,
-                                            //   hintText: 'Please select..',
-                                            //   fillColor:
-                                            //       FlutterFlowTheme.of(context)
-                                            //           .lineColor,
-                                            //   elevation: 0,
-                                            //   borderColor:
-                                            //       FlutterFlowTheme.of(context)
-                                            //           .primaryText,
-                                            //   borderWidth: 1,
-                                            //   borderRadius: 8,
-                                            //   margin: EdgeInsetsDirectional
-                                            //       .fromSTEB(12, 4, 12, 4),
-                                            //   hidesUnderline: true,
-                                            // );
                                           },
                                           error: (error, stackTrace) {
                                             return SmallErrorAnimationView();
@@ -693,6 +675,138 @@ class _AppointmentPageRiverpodVersion2State
                                   ),
                                 ],
                               ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 20, 20, 20),
+                                child: Text(
+                                  'Your Details',
+                                  style: FlutterFlowTheme.of(context).title1,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: userInfo.when(
+                                data: (data) {
+                                  return Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        'Code/Name: ',
+                                        style:
+                                            FlutterFlowTheme.of(context).title1,
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10, 10, 10, 10),
+                                          child: DropdownButtonFormField2(
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Colors.black45,
+                                            ),
+                                            iconSize: 30,
+                                            buttonHeight: 60,
+                                            buttonPadding:
+                                                const EdgeInsets.only(
+                                                    left: 20, right: 10),
+                                            dropdownDecoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              contentPadding: EdgeInsets.zero,
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                            ),
+                                            hint: Text(
+                                              'Select Name/Code',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1,
+                                            items: [
+                                              DropdownMenuItem(
+                                                value:
+                                                    '${data.firstName} ${data.lastName}',
+                                                child: Text(
+                                                    '${data.firstName} ${data.lastName}'),
+                                              ),
+                                              DropdownMenuItem(
+                                                value: data.clientcode,
+                                                child: Text(data.clientcode),
+                                              ),
+                                            ],
+                                            onChanged: (value) {
+                                              //Do something when changing the item if you want.
+                                            },
+                                            onSaved: (value) {
+                                              // selectedValue = value.toString();
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                                error: (error, stackTrace) {},
+                                loading: () {},
+                              ),
+                              // Row(
+                              //   mainAxisSize: MainAxisSize.max,
+                              //   children: [
+                              //     Text(
+                              //       'Code/Name: ',
+                              //       style: FlutterFlowTheme.of(context).title1,
+                              //     ),
+                              //     Expanded(
+                              //       child: Padding(
+                              //         padding: EdgeInsetsDirectional.fromSTEB(
+                              //             10, 10, 10, 10),
+                              //         child: ,
+                              //         // FlutterFlowDropDown(
+                              //         //   options: [],
+                              //         //   onChanged: (val) => setState(() => val),
+                              //         //   width:
+                              //         //       MediaQuery.of(context).size.width *
+                              //         //           0.2,
+                              //         //   height:
+                              //         //       MediaQuery.of(context).size.height *
+                              //         //           0.06,
+                              //         //   textStyle: FlutterFlowTheme.of(context)
+                              //         //       .subtitle1,
+                              //         //   hintText: 'Please select..',
+                              //         //   fillColor: FlutterFlowTheme.of(context)
+                              //         //       .lineColor,
+                              //         //   elevation: 0,
+                              //         //   borderColor:
+                              //         //       FlutterFlowTheme.of(context)
+                              //         //           .primaryText,
+                              //         //   borderWidth: 1,
+                              //         //   borderRadius: 8,
+                              //         //   margin: EdgeInsetsDirectional.fromSTEB(
+                              //         //       12, 4, 12, 4),
+                              //         //   hidesUnderline: true,
+                              //         // ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                             ),
                           ],
                         ),

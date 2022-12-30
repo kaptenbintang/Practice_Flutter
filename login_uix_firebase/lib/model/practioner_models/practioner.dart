@@ -17,6 +17,7 @@ class Practioner {
   final String languages;
   final String titleMain;
   final Map schedules;
+
   // final String practionerSchedule;
 
   Practioner({

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:login_uix_firebase/provider/appointment_page/date_selected.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DateTimeAppointmentDialog extends ConsumerStatefulWidget {
@@ -26,20 +27,8 @@ class _DateTimeAppointmentDialogState
   final now = DateTime.now();
   late BookingService mockBookingService;
   final dateandtimeController = TextEditingController();
-  final DateRangePickerController _datePickerController =
-      DateRangePickerController();
-
-  // @override
-  // void initState() {
-  //   // _datePickerController.selectedDate = DateTime.now().add(Duration(days: 2));
-  //   mockBookingService = BookingService(
-  //     serviceName: 'Mock Service',
-  //     serviceDuration: 15,
-  //     bookingEnd: DateTime(now.year, now.month, now.day, 19, 30),
-  //     bookingStart: DateTime(now.year, now.month, now.day, 9, 0),
-  //   );
-  //   super.initState();
-  // }
+  // final DateRangePickerController _datePickerController =
+  //     DateRangePickerController();
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     if (args.value is PickerDateRange) {
@@ -47,11 +36,12 @@ class _DateTimeAppointmentDialogState
       // final DateTime rangeEndDate = args.value.endDate;
     } else if (args.value is DateTime) {
       final DateTime selectedDate = args.value;
+      ref.read(dateProvider.notifier).changeDate(selectedDate);
 
       // final dataFormated = DateFormat('yyyy-MM-dd').format(selectedDate);
-      setState(() {
-        _datePickerController.selectedDate = selectedDate;
-      });
+      // setState(() {
+      //   _datePickerController.selectedDate = selectedDate;
+      // });
     } else if (args.value is List<DateTime>) {
       final List<DateTime> selectedDates = args.value;
     } else {
@@ -61,13 +51,13 @@ class _DateTimeAppointmentDialogState
 
   @override
   Widget build(BuildContext context) {
+    final selectedDate = ref.watch(dateProvider);
     return AlertDialog(
       title: Text('Please choose date'),
       content: Center(
         child: SizedBox(
           width: 500,
           height: 700,
-          // constraints: BoxConstraints(minWidth: 300, minHeight: 250),
           child: SfDateRangePicker(
             // rangeTextStyle: TextStyle(
             //     fontStyle: FontStyle.italic,
@@ -96,7 +86,7 @@ class _DateTimeAppointmentDialogState
               ],
             ),
             selectionMode: DateRangePickerSelectionMode.single,
-            controller: _datePickerController,
+            // controller: _datePickerController,
             selectionRadius: 25,
             // selectionShape: DateRangePickerSelectionShape.rectangle,
             // initialSelectedRange: PickerDateRange(
@@ -104,11 +94,10 @@ class _DateTimeAppointmentDialogState
             showActionButtons: true,
             minDate: DateTime.now(),
             // toggleDaySelection: true,
-            onSubmit: (p0) {
+            onSubmit: (_) {
               Navigator.pop(
                 context,
-                DateFormat('yyyy-MM-dd')
-                    .format(_datePickerController.selectedDate as DateTime),
+                DateFormat('yyyy-MM-dd').format(selectedDate),
               );
             },
             onCancel: () {

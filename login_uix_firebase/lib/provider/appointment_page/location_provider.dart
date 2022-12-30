@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/model/location_models/location.dart';
 import 'package:login_uix_firebase/model/services/services.dart';
+import 'package:login_uix_firebase/provider/appointment_page/location_notifier.dart';
 
 final locationProvider = StreamProvider.autoDispose<Iterable<Location>>(
   (ref) {
@@ -35,3 +36,8 @@ final locationProvider = StreamProvider.autoDispose<Iterable<Location>>(
     return controller.stream;
   },
 );
+
+final locationSelectedProvider =
+    StateNotifierProvider<LocationNotifier, String>((ref) {
+  return LocationNotifier();
+});
