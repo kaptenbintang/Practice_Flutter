@@ -15,6 +15,7 @@ class Practioner {
   final String mySpecialty;
   final String languages;
   final String titleMain;
+  final Map schedules;
   // final String practionerSchedule;
 
   Practioner({
@@ -29,7 +30,8 @@ class Practioner {
         myRoles = json[PractionerKey.myRoles],
         mySpecialty = json[PractionerKey.mySpecialty],
         languages = json[PractionerKey.languages],
-        titleMain = json[PractionerKey.titleMain];
+        titleMain = json[PractionerKey.titleMain],
+        schedules = json[PractionerKey.schedules];
   // practionerSchedule = json[PractionerKey.practionerSchedule];
 
   // bool get allowsLikes => postSettings[PostSetting.allowLikes] ?? false;
