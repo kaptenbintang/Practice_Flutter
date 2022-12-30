@@ -281,6 +281,8 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                 ),
                                 onPressed: () {
                                   print('IconButton pressed ...');
+                                  dialogaddPractioner(context);
+                                  _pullRefresh();
                                 },
                               ),
                             ],
