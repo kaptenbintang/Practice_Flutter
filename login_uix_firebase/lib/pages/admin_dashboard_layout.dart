@@ -9,6 +9,7 @@ import 'package:login_uix_firebase/widgets/medium_adminDashboard.dart';
 import 'package:login_uix_firebase/widgets/side_bar_admin.dart';
 import 'package:login_uix_firebase/widgets/small_adminDashboard.dart';
 
+import '../flutter_flow/flutter_flow_theme.dart';
 import '../widgets/top_nav.dart';
 
 class AdminDashboardLayout extends StatelessWidget {
@@ -28,6 +29,7 @@ class AdminDashboardLayout extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       extendBodyBehindAppBar: true,
+      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       // appBar: ResponsiveWidget.isSmallScreen(context)
       //     ? topNavigationBar(context, _scaffoldKey)
       //     : null,

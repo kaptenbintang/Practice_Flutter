@@ -178,549 +178,414 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
           },
         );
       },
-      child: Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //header space
-              if (ResponsiveWidget.isSmallScreen(context))
-                Align(
-                  alignment: AlignmentDirectional(0, 0),
-                  child: Container(
-                    width: double.infinity,
-                    height: Dimensions.height24 + Dimensions.height20,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    alignment: AlignmentDirectional(0, 0),
-                  ),
-                ),
-              //Dashboard container
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                    Dimensions.width16,
-                    Dimensions.height15 + Dimensions.height10 / 10,
-                    Dimensions.width16,
-                    Dimensions.height15 + Dimensions.height10 / 10),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 4,
-                        color: Color(0x33000000),
-                        offset: Offset(0, 2),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.radius15 + Dimensions.radius10 / 10),
-                  ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(
+              Dimensions.width16,
+              Dimensions.height15 + Dimensions.height10 / 10,
+              Dimensions.width16,
+              Dimensions.height15 + Dimensions.height10 / 10),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(0, 2),
+                )
+              ],
+              borderRadius: BorderRadius.circular(
+                  Dimensions.radius15 + Dimensions.radius10 / 10),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //Title
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      Dimensions.width16,
+                      Dimensions.height15 + Dimensions.height10 / 10,
+                      0,
+                      Dimensions.height15 + Dimensions.height10 / 10),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //Title
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            Dimensions.width16,
-                            Dimensions.height15 + Dimensions.height10 / 10,
-                            0,
-                            Dimensions.height15 + Dimensions.height10 / 10),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Dashboard',
-                              style: FlutterFlowTheme.of(context).title3,
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0,
-                                  Dimensions.height05 -
-                                      Dimensions.height10 / 10,
-                                  0,
-                                  0),
-                              child: Text(
-                                'Your project status is appearing here.',
-                                style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                            ),
-                          ],
-                        ),
+                      Text(
+                        'Dashboard',
+                        style: FlutterFlowTheme.of(context).title3,
                       ),
-                      //COntent wrap
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            Dimensions.width24 / 12,
                             0,
-                            Dimensions.width24 / 2,
+                            Dimensions.height05 - Dimensions.height10 / 10,
+                            0,
                             0),
-                        child: Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  Dimensions.width08 / 2,
-                                  0,
-                                  Dimensions.width08 / 2,
-                                  Dimensions.height24),
-                              //Staff COntainer
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radius15 +
-                                          Dimensions.radius10 / 10),
-                                  border: Border.all(
-                                    color:
-                                        FlutterFlowTheme.of(context).lineColor,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0,
-                                      Dimensions.height15 +
-                                          Dimensions.height10 / 10,
-                                      0,
-                                      Dimensions.height24 / 2),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        //My Staff
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  Dimensions.width16, 0, 0, 0),
-                                          child: Text(
-                                            'My Staff',
-                                            style: FlutterFlowTheme.of(context)
-                                                .title3,
-                                          ),
-                                        ),
-                                        //Search delete row
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  //searchbox
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                Dimensions
-                                                                    .width10,
-                                                                Dimensions
-                                                                    .height05,
-                                                                0,
-                                                                Dimensions
-                                                                    .height05),
-                                                    child: Container(
-                                                      width: Dimensions
-                                                              .width100 +
-                                                          Dimensions.width10 *
-                                                              5,
-                                                      child: TextFormField(
-                                                        controller:
-                                                            controllerSearch,
-                                                        autofocus: true,
-                                                        obscureText: false,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          hintText: 'Search...',
-                                                          hintStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyText2,
-                                                          enabledBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              width: 1.5,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    Dimensions
-                                                                            .radius15 /
-                                                                        3),
-                                                          ),
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              width: 1.5,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    Dimensions
-                                                                            .radius15 /
-                                                                        3),
-                                                          ),
-                                                          errorBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: Color(
-                                                                  0x00000000),
-                                                              width: 1.5,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    Dimensions
-                                                                            .radius15 /
-                                                                        3),
-                                                          ),
-                                                          focusedErrorBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: Color(
-                                                                  0x00000000),
-                                                              width: 1.5,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    Dimensions
-                                                                            .radius15 /
-                                                                        3),
-                                                          ),
-                                                        ),
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodyText1
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Poppins',
-                                                              lineHeight: 1.01,
-                                                            ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  //searchicon
-                                                  Padding(
-                                                    padding: EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            Dimensions.width30 /
-                                                                10,
-                                                            0,
-                                                            0,
-                                                            0),
-                                                    child:
-                                                        FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius:
-                                                          Dimensions.radius30,
-                                                      borderWidth: 1,
-                                                      buttonSize:
-                                                          Dimensions.font10 * 3,
-                                                      icon: Icon(
-                                                        Icons.search,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        size: Dimensions.font18,
-                                                      ),
-                                                      onPressed: () {
-                                                        controllerSearch
-                                                                .text.isNotEmpty
-                                                            ? search()
-                                                            : _pullRefresh();
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: Dimensions.height10),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Visibility(
-                                                      visible: selectedUser
-                                                              .isNotEmpty
-                                                          ? true
-                                                          : false,
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 5.0),
-                                                        child: Text(
-                                                          'Selected ${selectedUser.length} Users out of ${retrievedUserList?.length}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText2
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Poppins',
-                                                                fontSize: Dimensions
-                                                                        .font15 /
-                                                                    2,
-                                                              ),
-                                                        ),
-                                                      )),
-                                                  SizedBox(
-                                                    width:
-                                                        Dimensions.width10 / 2,
-                                                  ),
-                                                  //Deleteiconbutton
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                      right:
-                                                          Dimensions.width10 /
-                                                              2,
-                                                    ),
-                                                    child:
-                                                        FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius:
-                                                          Dimensions.radius30,
-                                                      borderWidth: 1,
-                                                      buttonSize:
-                                                          Dimensions.font10 * 3,
-                                                      icon: Icon(
-                                                        Icons.delete_sweep,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        size: Dimensions.font18,
-                                                      ),
-                                                      onPressed: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (contextm) {
-                                                            return AlertDialogConfirm(
-                                                                type: 'Remove',
-                                                                ids: selectedUser
-                                                                    .map((e) =>
-                                                                        e.id!)
-                                                                    .toList(),
-                                                                contexts:
-                                                                    context,
-                                                                textDesc:
-                                                                    'Are you sure?');
-                                                          },
-                                                        ).whenComplete(
-                                                          () => Future.delayed(
-                                                            Duration(
-                                                                seconds: 2),
-                                                            () {
-                                                              controllerSearch
-                                                                      .text
-                                                                      .isNotEmpty
-                                                                  ? search()
-                                                                  : _pullRefresh();
-                                                              setState(() {
-                                                                selectedUser =
-                                                                    [];
-                                                              });
-                                                            },
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        //TitleRow
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  Dimensions.width24 / 2,
-                                                  Dimensions.height24 / 2,
-                                                  Dimensions.width24 / 2,
-                                                  0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  //select all button
-                                                  Checkbox(
-                                                    splashRadius:
-                                                        Dimensions.radius30,
-                                                    value:
-                                                        selectedUser.isNotEmpty
-                                                            ? true
-                                                            : false,
-                                                    onChanged: (value) {
-                                                      setState(() =>
-                                                          selectedUser = value!
-                                                              ? retrievedUserList!
-                                                              : []);
-
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          duration:
-                                                              const Duration(
-                                                                  milliseconds:
-                                                                      1500),
-                                                          width: Dimensions
-                                                                  .width100 *
-                                                              3,
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                            horizontal:
-                                                                Dimensions
-                                                                    .width08,
-                                                          ),
-                                                          behavior:
-                                                              SnackBarBehavior
-                                                                  .floating,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    Dimensions
-                                                                        .radius10),
-                                                          ),
-                                                          content: Text(
-                                                            'All user selected: $value',
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                Dimensions
-                                                                    .width10,
-                                                                0,
-                                                                0,
-                                                                0),
-                                                    child: Text(
-                                                      'CT Code',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  'Action',
-                                                  textAlign: TextAlign.end,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText2,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        //ListView
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0,
-                                                  Dimensions.height08 * 2,
-                                                  0,
-                                                  0),
-                                          child: //staff data row
-                                              FutureBuilder(
-                                                  future: userList,
-                                                  builder: (context,
-                                                      AsyncSnapshot<
-                                                              List<UserData>>
-                                                          snapshot) {
-                                                    if (snapshot.hasData &&
-                                                        snapshot
-                                                            .data!.isNotEmpty) {
-                                                      return ListView.builder(
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                        shrinkWrap: true,
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        itemCount:
-                                                            retrievedUserList!
-                                                                .length,
-                                                        itemBuilder:
-                                                            (context, indexs) {
-                                                          return _buildTableUser(
-                                                              context,
-                                                              retrievedUserList![
-                                                                  indexs],
-                                                              indexs);
-                                                        },
-                                                      );
-                                                    } else if (snapshot
-                                                                .connectionState ==
-                                                            ConnectionState
-                                                                .done &&
-                                                        retrievedUserList!
-                                                            .isEmpty) {
-                                                      return Center();
-                                                    } else {
-                                                      return ColoredBox(
-                                                          color: Colors.black);
-                                                    }
-                                                  }),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          'Your project status is appearing here.',
+                          style: FlutterFlowTheme.of(context).bodyText2,
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                //COntent
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      Dimensions.width24 - Dimensions.width10,
+                      0,
+                      Dimensions.width24 - Dimensions.width10,
+                      Dimensions.height24),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(
+                          Dimensions.radius15 + Dimensions.radius10 / 10),
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).lineColor,
+                        width: 1,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          Dimensions.width24 / 2,
+                          Dimensions.height15 + Dimensions.height10 / 10,
+                          0,
+                          Dimensions.height24 / 2),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //My Staff
+                            Text(
+                              'My Staff',
+                              style: FlutterFlowTheme.of(context).title3,
+                            ),
+                            //Search delete row
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //Search
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      //searchbox
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0,
+                                            Dimensions.height05,
+                                            0,
+                                            Dimensions.height05),
+                                        child: Container(
+                                          width: Dimensions.width100 +
+                                              Dimensions.width10 * 5,
+                                          child: TextFormField(
+                                            controller: controllerSearch,
+                                            autofocus: true,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              hintText: 'Search...',
+                                              hintStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1.5,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.radius15 /
+                                                            3),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1.5,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.radius15 /
+                                                            3),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.5,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.radius15 /
+                                                            3),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.5,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.radius15 /
+                                                            3),
+                                              ),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  lineHeight: 1.01,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                      //searchicon
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            Dimensions.width30 / 10, 0, 0, 0),
+                                        child: FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: Dimensions.radius30,
+                                          borderWidth: 1,
+                                          buttonSize: Dimensions.font10 * 3,
+                                          icon: Icon(
+                                            Icons.search,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: Dimensions.font18,
+                                          ),
+                                          onPressed: () {
+                                            controllerSearch.text.isNotEmpty
+                                                ? search()
+                                                : _pullRefresh();
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                //Delete
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(top: Dimensions.height10),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Visibility(
+                                          visible: selectedUser.isNotEmpty
+                                              ? true
+                                              : false,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 5.0),
+                                            child: Text(
+                                              'Selected ${selectedUser.length} Users out of ${retrievedUserList?.length}',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize:
+                                                            Dimensions.font15 /
+                                                                2,
+                                                      ),
+                                            ),
+                                          )),
+                                      SizedBox(
+                                        width: Dimensions.width10 / 2,
+                                      ),
+                                      //Deleteiconbutton
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: Dimensions.width10 / 2,
+                                        ),
+                                        child: FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: Dimensions.radius30,
+                                          borderWidth: 1,
+                                          buttonSize: Dimensions.font10 * 3,
+                                          icon: Icon(
+                                            Icons.delete_sweep,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: Dimensions.font18,
+                                          ),
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (contextm) {
+                                                return AlertDialogConfirm(
+                                                    type: 'Remove',
+                                                    ids: selectedUser
+                                                        .map((e) => e.id!)
+                                                        .toList(),
+                                                    contexts: context,
+                                                    textDesc: 'Are you sure?');
+                                              },
+                                            ).whenComplete(
+                                              () => Future.delayed(
+                                                Duration(seconds: 2),
+                                                () {
+                                                  controllerSearch
+                                                          .text.isNotEmpty
+                                                      ? search()
+                                                      : _pullRefresh();
+                                                  setState(() {
+                                                    selectedUser = [];
+                                                  });
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //Checkbox and TitleRow
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0,
+                                  Dimensions.height24 / 2,
+                                  Dimensions.width24 / 2,
+                                  0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      //select all button
+                                      Checkbox(
+                                        splashRadius: Dimensions.radius30,
+                                        value: selectedUser.isNotEmpty
+                                            ? true
+                                            : false,
+                                        onChanged: (value) {
+                                          setState(() => selectedUser =
+                                              value! ? retrievedUserList! : []);
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              duration: const Duration(
+                                                  milliseconds: 1500),
+                                              width: Dimensions.width100 * 3,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: Dimensions.width08,
+                                              ),
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.radius10),
+                                              ),
+                                              content: Text(
+                                                'All user selected: $value',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            Dimensions.width10, 0, 0, 0),
+                                        child: Text(
+                                          'CT Code',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      'Action',
+                                      textAlign: TextAlign.end,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            //ListView
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, Dimensions.height08 * 2, 0, 0),
+                              child: //staff data row
+                                  FutureBuilder(
+                                      future: userList,
+                                      builder: (context,
+                                          AsyncSnapshot<List<UserData>>
+                                              snapshot) {
+                                        if (snapshot.hasData &&
+                                            snapshot.data!.isNotEmpty) {
+                                          return ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount:
+                                                retrievedUserList!.length,
+                                            itemBuilder: (context, indexs) {
+                                              return _buildTableUser(
+                                                  context,
+                                                  retrievedUserList![indexs],
+                                                  indexs);
+                                            },
+                                          );
+                                        } else if (snapshot.connectionState ==
+                                                ConnectionState.done &&
+                                            retrievedUserList!.isEmpty) {
+                                          return Center(
+                                            child: ListView(
+                                              physics:
+                                                  const AlwaysScrollableScrollPhysics(),
+                                              children: const <Widget>[
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional
+                                                          .center,
+                                                  child:
+                                                      Text('No Data Availble'),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        }
+                                      }),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -759,7 +624,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
             ),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(
-                  Dimensions.width24 / 2,
+                  0,
                   Dimensions.height24 / 2,
                   Dimensions.width24 / 2,
                   Dimensions.height24 / 2),
@@ -767,14 +632,14 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     //box,name
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0, 0, Dimensions.width24 / 2, 0),
+                              0, 0, Dimensions.width20 / 2, 0),
                           child: Checkbox(
                             value: selectedUser.contains(snapshot),
                             onChanged: (isSelected) {
@@ -787,12 +652,14 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                     : selectedUser.remove(snapshot);
                               });
                             },
+                            splashRadius: Dimensions.radius30,
                           ),
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //name
                             AutoSizeText(
                               snapshot.clientCode as String,
                               style: FlutterFlowTheme.of(context).subtitle1,
@@ -802,6 +669,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               tabletLandscape: false,
                               desktop: false,
                             ))
+                              //email
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0, Dimensions.height10 / 5, 0, 0),
@@ -817,95 +685,85 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                   ),
                   //dropdown
                   Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            focusNode: dropDownFocus,
-                            isExpanded: true,
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius30),
-                            iconSize: Dimensions.font20 * 2,
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: Dimensions.font20,
-                            ),
-                            onChanged: (value) {
-                              print(value);
-                              if (value == null) {
-                                dropDownFocus.unfocus();
-                              } else {
-                                switch (value) {
-                                  case "Edit":
-                                    dialogEdit(context);
-                                    setState(() {
-                                      _emailController.text =
-                                          snapshot.emailUser!;
-                                      _clientTypeController.text =
-                                          snapshot.clientType as String;
-                                      _rolesController.text =
-                                          snapshot.roles as String;
-                                      _firstNameController.text =
-                                          snapshot.firstName;
-                                      _lastNameController.text =
-                                          snapshot.lastName;
-                                      _ageController.text = snapshot.doBirth;
-                                      _clientCodeController.text =
-                                          snapshot.clientCode as String;
-                                      _phoneController.text =
-                                          snapshot.phoneNumber;
-                                      userId = snapshot.id;
-
-                                      selectedValue = snapshot.clientType;
-                                      selectedValueRoles = snapshot.roles;
-                                      createAt = snapshot.createdAt;
-                                      marDeleted = snapshot.markDeleted;
-                                    });
-                                    break;
-                                  case "ResetPassword":
-                                    dialogResetPassword(context);
-                                    setState(() {
-                                      _emailController.text =
-                                          snapshot.emailUser!;
-                                    });
-                                    break;
-                                  default:
-                                }
-                              }
-                            },
-                            // items: List.generate(
-                            //     dropDownItemValue2.length,
-                            //     (index) => DropdownMenuItem(
-                            //           value: dropDownItemValue2[index],
-                            //           child: Text(dropDownItemValue2[index]),
-                            //         )),
-                            items: [
-                              DropdownMenuItem(
-                                child: Text('Action'),
-                                value: "Action",
-                              ),
-                              if (authoRoles['canWrite'] != false)
-                                DropdownMenuItem(
-                                  child: Text('Edit'),
-                                  value: "Edit",
-                                ),
-                              // if (currentUser.uid.toString != snapshot.id.toString &&
-                              //     authoRoles!['canDelete'] != false)
-                              //   DropdownMenuItem(
-                              //     child: Text('Remove'),
-                              //     value: "Remove",
-                              //   ),
-                              DropdownMenuItem(
-                                child: Text('Change Password'),
-                                value: "ResetPassword",
-                              ),
-                            ],
-                          ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        focusNode: dropDownFocus,
+                        isExpanded: true,
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        iconSize: Dimensions.font20 * 2,
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: Dimensions.font20,
                         ),
-                      ],
+                        onChanged: (value) {
+                          print(value);
+                          if (value == null) {
+                            dropDownFocus.unfocus();
+                          } else {
+                            switch (value) {
+                              case "Edit":
+                                dialogEdit(context);
+                                setState(() {
+                                  _emailController.text = snapshot.emailUser!;
+                                  _clientTypeController.text =
+                                      snapshot.clientType as String;
+                                  _rolesController.text =
+                                      snapshot.roles as String;
+                                  _firstNameController.text =
+                                      snapshot.firstName;
+                                  _lastNameController.text = snapshot.lastName;
+                                  _ageController.text = snapshot.doBirth;
+                                  _clientCodeController.text =
+                                      snapshot.clientCode as String;
+                                  _phoneController.text = snapshot.phoneNumber;
+                                  userId = snapshot.id;
+
+                                  selectedValue = snapshot.clientType;
+                                  selectedValueRoles = snapshot.roles;
+                                  createAt = snapshot.createdAt;
+                                  marDeleted = snapshot.markDeleted;
+                                });
+                                break;
+                              case "ResetPassword":
+                                dialogResetPassword(context);
+                                setState(() {
+                                  _emailController.text = snapshot.emailUser!;
+                                });
+                                break;
+                              default:
+                            }
+                          }
+                        },
+                        // items: List.generate(
+                        //     dropDownItemValue2.length,
+                        //     (index) => DropdownMenuItem(
+                        //           value: dropDownItemValue2[index],
+                        //           child: Text(dropDownItemValue2[index]),
+                        //         )),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Action'),
+                            value: "Action",
+                          ),
+                          if (authoRoles['canWrite'] != false)
+                            DropdownMenuItem(
+                              child: Text('Edit'),
+                              value: "Edit",
+                            ),
+                          // if (currentUser.uid.toString != snapshot.id.toString &&
+                          //     authoRoles!['canDelete'] != false)
+                          //   DropdownMenuItem(
+                          //     child: Text('Remove'),
+                          //     value: "Remove",
+                          //   ),
+                          DropdownMenuItem(
+                            child: Text('Change Password'),
+                            value: "ResetPassword",
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

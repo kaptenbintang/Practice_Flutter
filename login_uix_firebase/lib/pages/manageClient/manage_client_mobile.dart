@@ -113,375 +113,294 @@ class _ManageClientMobileState extends State<ManageClientMobile> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            if (responsiveVisibility(
-              context: context,
-              tabletLandscape: false,
-              desktop: false,
-            ))
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Container(
-                  width: double.infinity,
-                  height: Dimensions.height24 + Dimensions.height20,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    borderRadius: BorderRadius.circular(0),
-                  ),
-                  alignment: AlignmentDirectional(0, 0),
-                ),
-              ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                  Dimensions.width16,
-                  Dimensions.height08 * 2,
-                  Dimensions.width16,
-                  Dimensions.height08 * 2),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 4,
-                      color: Color(0x33000000),
-                      offset: Offset(0, 2),
-                    )
-                  ],
-                  borderRadius: BorderRadius.circular(Dimensions.font16),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          Dimensions.width16,
-                          Dimensions.height08 * 2,
-                          0,
-                          Dimensions.height08 * 2),
+    return RefreshIndicator(
+      onRefresh: () {
+        return Future.delayed(
+          Duration(seconds: 1),
+          () {
+            // html.window.location.reload;
+            _pullRefresh();
+            _scaffoldKey!.currentState!.showBottomSheet(
+              (context) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: Dimensions.height10 * 5,
+                    color: Colors.orange,
+                    child: Center(
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Dashboard',
-                            style: FlutterFlowTheme.of(context).title3,
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0, Dimensions.height08 / 2, 0, 0),
-                            child: Text(
-                              'Your project status is appearing here.',
-                              style: FlutterFlowTheme.of(context).bodyText2,
-                            ),
-                          ),
-                        ],
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [Text('Done')],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          Dimensions.width24 / 2, 0, Dimensions.width24 / 2, 0),
-                      child: Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        runAlignment: WrapAlignment.start,
-                        verticalDirection: VerticalDirection.down,
-                        clipBehavior: Clip.none,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                Dimensions.width08 / 2,
-                                0,
-                                Dimensions.width08 / 2,
-                                Dimensions.height24),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.font16),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).lineColor,
-                                  width: 1,
-                                ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(
+              Dimensions.width16,
+              Dimensions.height08 * 2,
+              Dimensions.width16,
+              Dimensions.height08 * 2),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(0, 2),
+                )
+              ],
+              borderRadius: BorderRadius.circular(Dimensions.font16),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //Title and subtitle
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(Dimensions.width16,
+                      Dimensions.height08 * 2, 0, Dimensions.height08 * 2),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Dashboard',
+                        style: FlutterFlowTheme.of(context).title3,
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0, Dimensions.height08 / 2, 0, 0),
+                        child: Text(
+                          'Your project status is appearing here.',
+                          style: FlutterFlowTheme.of(context).bodyText2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //Content
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      Dimensions.width24 - Dimensions.width10,
+                      0,
+                      Dimensions.width24 - Dimensions.width10,
+                      Dimensions.height24),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(Dimensions.font16),
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).lineColor,
+                        width: 1,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0,
+                          Dimensions.height08 * 2, 0, Dimensions.height24 / 2),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //Title
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  Dimensions.width16, 0, 0, 0),
+                              child: Text(
+                                'Client',
+                                style: FlutterFlowTheme.of(context).title3,
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0,
-                                    Dimensions.height08 * 2,
-                                    0,
-                                    Dimensions.height24 / 2),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      //Title
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            Dimensions.width16, 0, 0, 0),
-                                        child: Text(
-                                          'Client',
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                      ),
-                                      //Search Row
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          Dimensions.width10,
-                                                          Dimensions.height05,
-                                                          0,
-                                                          Dimensions.height05),
-                                                  child: Container(
-                                                    width: Dimensions.width100 +
-                                                        Dimensions.width10 * 5,
-                                                    child: TextFormField(
-                                                      controller:
-                                                          textController,
-                                                      autofocus: true,
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        hintText: 'Search...',
-                                                        hintStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2,
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                            width: 1.5,
-                                                          ),
-                                                          borderRadius: BorderRadius
-                                                              .circular(Dimensions
-                                                                      .radius15 /
-                                                                  3),
-                                                        ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                            width: 1.5,
-                                                          ),
-                                                          borderRadius: BorderRadius
-                                                              .circular(Dimensions
-                                                                      .radius15 /
-                                                                  3),
-                                                        ),
-                                                        errorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.5,
-                                                          ),
-                                                          borderRadius: BorderRadius
-                                                              .circular(Dimensions
-                                                                      .radius15 /
-                                                                  3),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.5,
-                                                          ),
-                                                          borderRadius: BorderRadius
-                                                              .circular(Dimensions
-                                                                      .radius15 /
-                                                                  3),
-                                                        ),
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText1
-                                                          .override(
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            lineHeight: 1.01,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          Dimensions.width10 /
-                                                              2,
-                                                          0,
-                                                          0,
-                                                          0),
-                                                  child: FlutterFlowIconButton(
-                                                    borderColor:
-                                                        Colors.transparent,
-                                                    borderRadius:
-                                                        Dimensions.radius30,
-                                                    borderWidth: 1,
-                                                    buttonSize:
-                                                        Dimensions.font20 * 2,
-                                                    icon: Icon(
-                                                      Icons.search,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      size: Dimensions.font20,
-                                                    ),
-                                                    onPressed: () {
-                                                      print(
-                                                          'IconButton pressed ...');
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                            ),
+                            //Search Row
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                //Search textfield
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      Dimensions.width10,
+                                      Dimensions.height05,
+                                      0,
+                                      Dimensions.height05),
+                                  child: Container(
+                                    width: Dimensions.width100 +
+                                        Dimensions.width10 * 5,
+                                    child: TextFormField(
+                                      controller: textController,
+                                      autofocus: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'Search...',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodyText2,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            width: 1.5,
                                           ),
-                                        ],
-                                      ),
-                                      //Sub Title of each column
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            Dimensions.width24 / 2,
-                                            Dimensions.height24 / 2,
-                                            Dimensions.width24 / 2,
-                                            0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            //CT Code Column
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          Dimensions.width10,
-                                                          0,
-                                                          0,
-                                                          0),
-                                                  child: Text(
-                                                    'CT Code',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            //ACtion Column
-                                            Expanded(
-                                              child: Text(
-                                                'Action',
-                                                textAlign: TextAlign.end,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
-                                              ),
-                                            ),
-                                          ],
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius15 / 3),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            width: 1.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius15 / 3),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius15 / 3),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius15 / 3),
                                         ),
                                       ),
-                                      //Data ListVIew
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, Dimensions.height08 * 2, 0, 0),
-                                        child: FutureBuilder(
-                                            future: userList,
-                                            builder: (context,
-                                                AsyncSnapshot<List<UserData>>
-                                                    snapshot) {
-                                              if (snapshot.hasData &&
-                                                  snapshot.data!.isNotEmpty) {
-                                                return ListView.builder(
-                                                  padding: EdgeInsets.zero,
-                                                  shrinkWrap: true,
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  itemCount:
-                                                      retrievedUserList!.length,
-                                                  itemBuilder:
-                                                      (context, indexs) {
-                                                    return _buildTableUser(
-                                                        context,
-                                                        retrievedUserList![
-                                                            indexs],
-                                                        indexs);
-                                                  },
-                                                );
-                                              } else if (snapshot
-                                                          .connectionState ==
-                                                      ConnectionState.done &&
-                                                  retrievedUserList!.isEmpty) {
-                                                return Center(
-                                                  child: ListView(
-                                                    physics:
-                                                        const AlwaysScrollableScrollPhysics(),
-                                                    children: const <Widget>[
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional
-                                                                .center,
-                                                        child: Text(
-                                                            'No Data Availble'),
-                                                      )
-                                                    ],
-                                                  ),
-                                                );
-                                              } else {
-                                                return const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                );
-                                              }
-                                            }),
-                                      ),
-                                    ],
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            lineHeight: 1.01,
+                                          ),
+                                    ),
                                   ),
                                 ),
+                                //Search iconbutton
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      Dimensions.width10 / 2, 0, 0, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: Dimensions.radius30,
+                                    borderWidth: 1,
+                                    buttonSize: Dimensions.font20 * 2,
+                                    icon: Icon(
+                                      Icons.search,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: Dimensions.font20,
+                                    ),
+                                    onPressed: () {
+                                      print('IconButton pressed ...');
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //Sub Title of each column
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  Dimensions.width24 / 2,
+                                  Dimensions.height24 / 2,
+                                  Dimensions.width24 / 2,
+                                  0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  //CT Code Column
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        Dimensions.width10, 0, 0, 0),
+                                    child: Text(
+                                      'CT Code',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                    ),
+                                  ),
+                                  //ACtion Column
+                                  Expanded(
+                                    child: Text(
+                                      'Action',
+                                      textAlign: TextAlign.end,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
+                            //Data ListVIew
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, Dimensions.height08 * 2, 0, 0),
+                              child: FutureBuilder(
+                                  future: userList,
+                                  builder: (context,
+                                      AsyncSnapshot<List<UserData>> snapshot) {
+                                    if (snapshot.hasData &&
+                                        snapshot.data!.isNotEmpty) {
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: retrievedUserList!.length,
+                                        itemBuilder: (context, indexs) {
+                                          return _buildTableUser(
+                                              context,
+                                              retrievedUserList![indexs],
+                                              indexs);
+                                        },
+                                      );
+                                    } else if (snapshot.connectionState ==
+                                            ConnectionState.done &&
+                                        retrievedUserList!.isEmpty) {
+                                      return Center(
+                                        child: ListView(
+                                          physics:
+                                              const AlwaysScrollableScrollPhysics(),
+                                          children: const <Widget>[
+                                            Align(
+                                              alignment:
+                                                  AlignmentDirectional.center,
+                                              child: Text('No Data Availble'),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
