@@ -764,8 +764,12 @@ class _AppointmentPageRiverpodVersion2State
                                     ],
                                   );
                                 },
-                                error: (error, stackTrace) {},
-                                loading: () {},
+                                error: (error, stackTrace) {
+                                  const ErrorAnimationView();
+                                },
+                                loading: () {
+                                  const LoadingAnimationView();
+                                },
                               ),
                               // Row(
                               //   mainAxisSize: MainAxisSize.max,
