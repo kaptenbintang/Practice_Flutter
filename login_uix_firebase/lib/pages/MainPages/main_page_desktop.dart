@@ -826,7 +826,7 @@ class _mainPageDesktopState extends State<mainPageDesktop> {
               style: FlutterFlowTheme.of(context).bodyText1,
             ),
             Text(
-              "Booking Date: " + snapshot.dateandtime.toString(),
+              "Booking Date: " + snapshot.date.toString(),
               style: FlutterFlowTheme.of(context).bodyText1,
             ),
           ],
