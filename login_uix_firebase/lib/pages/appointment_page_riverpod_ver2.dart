@@ -8,7 +8,9 @@ import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
+import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
+import 'package:login_uix_firebase/provider/appointment_page/appointment_upload_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/location_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/services_provider.dart';
 import 'package:login_uix_firebase/route.dart';
@@ -41,17 +43,21 @@ class _AppointmentPageRiverpodVersion2State
     final formKey = GlobalKey<FormState>();
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
-    final locations = ref.watch(locationProvider);
     final userUid = ref.watch(userIdProvider);
     final userInfo = ref.watch(userInfoModelProvider(userUid.toString()));
-    final locationSelected = ref.watch(locationSelectedProvider);
 
     final pNameController = useTextEditingController();
     final dateandtimeController = useTextEditingController();
     final emailController = useTextEditingController();
     final phNumbController = useTextEditingController();
     final commentController = useTextEditingController();
-    // String? resultDate;
+    String? selectedService,
+        selectedDate,
+        selectedTime,
+        selectedEmail,
+        selectedPhone,
+        selectedLocation,
+        selectedCodeorName;
 
     final isAppointmentButtonEnable = useState(false);
 
@@ -60,38 +66,29 @@ class _AppointmentPageRiverpodVersion2State
       'Female',
     ];
 
-    String? selectedLocation;
+    // String? selectedLocation;
 
     useEffect(
       () {
         void listener() {
-          isAppointmentButtonEnable.value = pNameController.text.isNotEmpty &&
-              dateandtimeController.text.isNotEmpty &&
-              emailController.text.isNotEmpty &&
-              phNumbController.text.isNotEmpty &&
-              commentController.text.isNotEmpty;
+          isAppointmentButtonEnable.value =
+              dateandtimeController.text.isNotEmpty;
         }
 
-        pNameController.addListener(listener);
         dateandtimeController.addListener(listener);
-        emailController.addListener(listener);
-        phNumbController.addListener(listener);
-        commentController.addListener(listener);
+
+        // commentController.addListener(listener);
 
         return () {
-          pNameController.removeListener(listener);
           dateandtimeController.removeListener(listener);
-          emailController.removeListener(listener);
-          phNumbController.removeListener(listener);
-          commentController.removeListener(listener);
+
+          // commentController.removeListener(listener);
         };
       },
       [
-        pNameController,
         dateandtimeController,
-        emailController,
-        phNumbController,
-        commentController,
+
+        // commentController,
       ],
     );
 
@@ -375,6 +372,7 @@ class _AppointmentPageRiverpodVersion2State
                                                       .changeServices(
                                                         val.toString(),
                                                       );
+                                                  selectedService = val;
                                                   // print(initService);
                                                 },
                                                 initialOption: initService,
@@ -444,6 +442,8 @@ class _AppointmentPageRiverpodVersion2State
                                           // setState(() {
                                           dateandtimeController.text =
                                               result.toString();
+
+                                          selectedDate = result.toString();
                                           // });
 
                                           // print(resultDate);
@@ -569,6 +569,8 @@ class _AppointmentPageRiverpodVersion2State
                                               }
                                             },
                                             onChanged: (value) {
+                                              selectedTime = value;
+
                                               //Do something when changing the item if you want.
                                             },
                                             onSaved: (value) {
@@ -595,81 +597,100 @@ class _AppointmentPageRiverpodVersion2State
                                   Expanded(
                                     child: Padding(
                                         padding: EdgeInsets.all(8.0),
-                                        child: locations.when(
-                                          data: (data) {
-                                            print(selectedLocation);
-                                            return DropdownButtonFormField2(
-                                              icon: const Icon(
-                                                Icons.arrow_drop_down,
-                                                color: Colors.black45,
-                                              ),
-                                              iconSize: 30,
-                                              buttonHeight: 60,
-                                              buttonPadding:
-                                                  const EdgeInsets.only(
-                                                      left: 20, right: 10),
-                                              dropdownDecoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                contentPadding: EdgeInsets.zero,
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    width: 1,
+                                        child: Consumer(
+                                          builder: (context, ref, child) {
+                                            final locations =
+                                                ref.watch(locationProvider);
+                                            // final locationSelected = ref.watch(
+                                            //     locationSelectedProvider);
+
+                                            return locations.when(
+                                              data: (data) {
+                                                // print(selectedLocation);
+                                                return DropdownButtonFormField2(
+                                                  // value: locationSelected,
+                                                  icon: const Icon(
+                                                    Icons.arrow_drop_down,
+                                                    color: Colors.black45,
                                                   ),
-                                                ),
-                                              ),
-                                              hint: Text(
-                                                'Select Location',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .subtitle1,
-                                              items: List.generate(
-                                                data.length,
-                                                (index) => DropdownMenuItem(
-                                                  value: data
-                                                      .elementAt(index)
-                                                      .type,
-                                                  child: Text(
-                                                    data.elementAt(index).type,
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
+                                                  iconSize: 30,
+                                                  buttonHeight: 60,
+                                                  buttonPadding:
+                                                      const EdgeInsets.only(
+                                                          left: 20, right: 10),
+                                                  dropdownDecoration:
+                                                      BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    contentPadding:
+                                                        EdgeInsets.zero,
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        width: 1,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                              onChanged: (value) {
-                                                selectedLocation = value;
-                                                // ref
-                                                //     .read(
-                                                //         locationSelectedProvider
-                                                //             .notifier)
-                                                //     .changeLocation(
-                                                //         value.toString());
-                                                //Do something when changing the item if you want.
+                                                  hint: Text(
+                                                    'Select Location',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle1,
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle1,
+                                                  items: List.generate(
+                                                    data.length,
+                                                    (index) => DropdownMenuItem(
+                                                      value: data
+                                                          .elementAt(index)
+                                                          .type,
+                                                      child: Text(
+                                                        data
+                                                            .elementAt(index)
+                                                            .type,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onChanged: (value) {
+                                                    // selectedLocation = value;
+                                                    ref
+                                                        .read(
+                                                            locationSelectedProvider
+                                                                .notifier)
+                                                        .changeLocation(
+                                                            value.toString());
+
+                                                    selectedLocation = value;
+                                                    //Do something when changing the item if you want.
+                                                  },
+                                                  onSaved: (value) {
+                                                    // selectedValue =
+                                                    //     value.toString();
+                                                  },
+                                                );
                                               },
-                                              onSaved: (value) {
-                                                // selectedValue =
-                                                //     value.toString();
+                                              error: (error, stackTrace) {
+                                                return const SmallErrorAnimationView();
+                                              },
+                                              loading: () {
+                                                return const SmallLoadingAnimationView();
                                               },
                                             );
-                                          },
-                                          error: (error, stackTrace) {
-                                            return SmallErrorAnimationView();
-                                          },
-                                          loading: () {
-                                            return SmallLoadingAnimationView();
                                           },
                                         )),
                                   ),
@@ -692,125 +713,421 @@ class _AppointmentPageRiverpodVersion2State
                                   20, 20, 20, 20),
                               child: userInfo.when(
                                 data: (data) {
-                                  return Row(
-                                    mainAxisSize: MainAxisSize.max,
+                                  emailController.text = data.email.toString();
+                                  phNumbController.text =
+                                      data.phoneNumber.toString();
+
+                                  return Column(
                                     children: [
-                                      Text(
-                                        'Code/Name: ',
-                                        style:
-                                            FlutterFlowTheme.of(context).title1,
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10, 10, 10, 10),
-                                          child: DropdownButtonFormField2(
-                                            icon: const Icon(
-                                              Icons.arrow_drop_down,
-                                              color: Colors.black45,
-                                            ),
-                                            iconSize: 30,
-                                            buttonHeight: 60,
-                                            buttonPadding:
-                                                const EdgeInsets.only(
-                                                    left: 20, right: 10),
-                                            dropdownDecoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            decoration: InputDecoration(
-                                              isDense: true,
-                                              contentPadding: EdgeInsets.zero,
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  width: 1,
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Code/Name: ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1,
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 10),
+                                              child: DropdownButtonFormField2(
+                                                icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.black45,
                                                 ),
+                                                iconSize: 30,
+                                                buttonHeight: 60,
+                                                buttonPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 20, right: 10),
+                                                dropdownDecoration:
+                                                    BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                ),
+                                                hint: Text(
+                                                  'Select Name/Code',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle1,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle1,
+                                                items: [
+                                                  DropdownMenuItem(
+                                                    value:
+                                                        '${data.firstName} ${data.lastName}',
+                                                    child: Text(
+                                                        '${data.firstName} ${data.lastName}'),
+                                                  ),
+                                                  DropdownMenuItem(
+                                                    value: data.clientcode,
+                                                    child:
+                                                        Text(data.clientcode),
+                                                  ),
+                                                ],
+                                                onChanged: (value) {
+                                                  selectedCodeorName = value;
+                                                  //Do something when changing the item if you want.
+                                                },
+                                                onSaved: (value) {
+                                                  // selectedValue = value.toString();
+                                                },
                                               ),
                                             ),
-                                            hint: Text(
-                                              'Select Name/Code',
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Email: ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1,
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 10),
+                                              child: TextFormField(
+                                                // initialValue: data.email,
+
+                                                controller: emailController,
+                                                // onChanged: (value) {
+                                                //   selectedEmail = emailController.text;
+                                                // },
+                                                autofocus: true,
+                                                obscureText: false,
+                                                readOnly: true,
+                                                decoration: InputDecoration(
+                                                  hintText: data.email,
+                                                  // enabled: false,
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .subtitle2,
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle1,
+                                                keyboardType:
+                                                    TextInputType.name,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Phone Number: ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1,
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 10),
+                                              child: TextFormField(
+                                                // initialValue: data.phoneNumber,
+                                                controller: phNumbController,
+                                                // onChanged: (value) {
+                                                //   selectedPhone = value;
+                                                // },
+                                                autofocus: true,
+                                                obscureText: false,
+                                                readOnly: true,
+                                                decoration: InputDecoration(
+                                                  hintText: data.phoneNumber,
+                                                  // enabled: false,
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .subtitle2,
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle1,
+                                                keyboardType:
+                                                    TextInputType.name,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Comment: ',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .subtitle1,
+                                                      .title1,
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                            items: [
-                                              DropdownMenuItem(
-                                                value:
-                                                    '${data.firstName} ${data.lastName}',
-                                                child: Text(
-                                                    '${data.firstName} ${data.lastName}'),
-                                              ),
-                                              DropdownMenuItem(
-                                                value: data.clientcode,
-                                                child: Text(data.clientcode),
-                                              ),
-                                            ],
-                                            onChanged: (value) {
-                                              //Do something when changing the item if you want.
-                                            },
-                                            onSaved: (value) {
-                                              // selectedValue = value.toString();
-                                            },
                                           ),
-                                        ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(20, 20, 20, 20),
+                                              child: TextFormField(
+                                                controller: commentController,
+                                                autofocus: true,
+                                                obscureText: false,
+                                                // readOnly: true,
+                                                decoration: InputDecoration(
+                                                  hintText:
+                                                      "What would you like to gain from this session?",
+                                                  // enabled: false,
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .subtitle2,
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle1,
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   );
                                 },
                                 error: (error, stackTrace) {
-                                  const ErrorAnimationView();
+                                  return const ErrorAnimationView();
                                 },
                                 loading: () {
-                                  const LoadingAnimationView();
+                                  return const LoadingAnimationView();
                                 },
                               ),
-                              // Row(
-                              //   mainAxisSize: MainAxisSize.max,
-                              //   children: [
-                              //     Text(
-                              //       'Code/Name: ',
-                              //       style: FlutterFlowTheme.of(context).title1,
-                              //     ),
-                              //     Expanded(
-                              //       child: Padding(
-                              //         padding: EdgeInsetsDirectional.fromSTEB(
-                              //             10, 10, 10, 10),
-                              //         child: ,
-                              //         // FlutterFlowDropDown(
-                              //         //   options: [],
-                              //         //   onChanged: (val) => setState(() => val),
-                              //         //   width:
-                              //         //       MediaQuery.of(context).size.width *
-                              //         //           0.2,
-                              //         //   height:
-                              //         //       MediaQuery.of(context).size.height *
-                              //         //           0.06,
-                              //         //   textStyle: FlutterFlowTheme.of(context)
-                              //         //       .subtitle1,
-                              //         //   hintText: 'Please select..',
-                              //         //   fillColor: FlutterFlowTheme.of(context)
-                              //         //       .lineColor,
-                              //         //   elevation: 0,
-                              //         //   borderColor:
-                              //         //       FlutterFlowTheme.of(context)
-                              //         //           .primaryText,
-                              //         //   borderWidth: 1,
-                              //         //   borderRadius: 8,
-                              //         //   margin: EdgeInsetsDirectional.fromSTEB(
-                              //         //       12, 4, 12, 4),
-                              //         //   hidesUnderline: true,
-                              //         // ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    side: MaterialStateProperty.all(
+                                      BorderSide(
+                                          width: 1.0,
+                                          color: Colors.transparent),
+                                    ),
+                                  ),
+                                  onPressed: isAppointmentButtonEnable.value
+                                      ? () async {
+                                          final appointmentData =
+                                              AppointmentData(
+                                            clientId: userUid.toString(),
+                                            practionerId: widget
+                                                .practioner.practionerId
+                                                .toString(),
+                                            practionerName:
+                                                '${widget.practioner.firstName} ${widget.practioner.lastName}',
+                                            services:
+                                                selectedService.toString(),
+                                            date: dateandtimeController.text
+                                                .toString(),
+                                            time: selectedTime,
+                                            location:
+                                                selectedLocation.toString(),
+                                            clientNameorCode:
+                                                selectedCodeorName.toString(),
+                                            clientEmail: emailController.text,
+                                            clientphNumber:
+                                                phNumbController.text,
+                                            clientComment: commentController
+                                                .text
+                                                .toString(),
+                                          );
+                                          final isUploaded = await ref
+                                              .read(appointmentUploaderProvider
+                                                  .notifier)
+                                              .upload(
+                                                appointmentData:
+                                                    appointmentData,
+                                              );
+                                          if (isUploaded && mounted) {
+                                            Navigator.of(context).pop();
+                                          }
+                                        }
+                                      : null,
+                                  child: Text(
+                                    'Submit',
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
