@@ -18,7 +18,7 @@ import 'package:login_uix_firebase/pages/appointment_page_riverpod.dart';
 import 'package:login_uix_firebase/pages/appointment_page_riverpod_ver2.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
-import 'package:login_uix_firebase/pages/dashboard_page.dart';
+
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
 import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_page.dart';
@@ -125,7 +125,7 @@ class MyApp extends ConsumerWidget {
         ),
         routes: {
           // MainPage.routeName: (context) => const MainPage(),
-          DashboardPage.routeName: (context) => const DashboardPage(),
+
           // LoginPage.routeName: (context) => LoginPage(),
           // RegisterPage.routeName: (context) => RegisterPage(),
           DeleteAccount.routeName: (context) => const DeleteAccount(),
@@ -162,7 +162,7 @@ class MyApp extends ConsumerWidget {
           // ControllerPage.routeName: (context) => ControllerPage(),
           RouteName.changePWPage: (context) => const changePWPage(),
           RouteName.checkEmailPage: (context) => const CheckEmailView(),
-          RouteName.dashboard: (context) => const DashboardPage(),
+
           RouteName.loginPage: (context) => const LoginPage(),
           RouteName.registerPage: (context) => const RegisterPage(),
           RouteName.landingPage: (context) => const LandingPage(),

@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
 
 import '../helper/database_service.dart';
 
@@ -116,7 +115,7 @@ class _UserTablePageState extends State<UserTablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerDashBoard(),
+      // drawer: const DrawerDashBoard(),
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
