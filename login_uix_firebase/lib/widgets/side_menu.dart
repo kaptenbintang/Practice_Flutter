@@ -27,8 +27,8 @@ class SideMenu extends StatelessWidget {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: Dimensions.height20 * 2,
                 ),
                 Row(
                   children: [
@@ -42,7 +42,7 @@ class SideMenu extends StatelessWidget {
                     Flexible(
                         child: CustomText(
                       text: "Relationary",
-                      size: 20,
+                      size: Dimensions.height20,
                       weight: FontWeight.bold,
                       color: active,
                     )),
@@ -74,114 +74,95 @@ class SideMenu extends StatelessWidget {
           ),
           // Generated code for this Column Widget...
           ResponsiveWidget.isCustomSize(context)
-              ? Row(
-                  children: [
-                    Container(
-                      child: Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: SocialWidget(
-                                    placeholderText:
-                                        'Facebook', //text visible to viewers
-                                    iconData: SocialIconsFlutter
-                                        .facebook_box, //use the respective social logo
-                                    iconColor:
-                                        Color.fromARGB(255, 26, 119, 196),
-                                    iconSize: ResponsiveWidget.isLargeScreen(
-                                            context)
-                                        ? _width / (1920 / 28)
-                                        : Dimensions
-                                            .iconSize28, //(optional, default - grey)
-                                    link:
-                                        'https://www.facebook.com/pg/TheRelationary/', //provide the link
-                                    placeholderStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: Dimensions
-                                            .font10), //placeholder text style
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                                child: SocialWidget(
-                                  placeholderText:
-                                      'Twitter', //text visible to viewers
-                                  iconData: SocialIconsFlutter
-                                      .instagram, //use the respective social logo
-                                  iconColor: Colors.pink,
-                                  iconSize: ResponsiveWidget.isLargeScreen(
-                                          context)
-                                      ? _width / (1920 / 28)
-                                      : Dimensions
-                                          .iconSize28, //(optional, default - grey)
-                                  link:
-                                      'https://twitter.com/TheRelationary', //provide the link
-                                  placeholderStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: Dimensions
-                                          .font10), //placeholder text style
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                                child: SocialWidget(
-                                  placeholderText:
-                                      'Instagram', //text visible to viewers
-                                  iconData: SocialIconsFlutter
-                                      .twitter, //use the respective social logo
-                                  iconColor: Colors.blueAccent,
-                                  iconSize: ResponsiveWidget.isLargeScreen(
-                                          context)
-                                      ? _width / (1920 / 28)
-                                      : Dimensions
-                                          .iconSize28, //(optional, default - grey)
-                                  link:
-                                      'https://www.instagram.com/therelationary/', //provide the link
-                                  placeholderStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: Dimensions
-                                          .font10), //placeholder text style
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                                child: SocialWidget(
-                                  placeholderText:
-                                      'Youtube', //text visible to viewers
-                                  iconData: SocialIconsFlutter
-                                      .youtube, //use the respective social logo
-                                  iconColor: Color.fromARGB(255, 235, 25, 25),
-                                  iconSize: ResponsiveWidget.isLargeScreen(
-                                          context)
-                                      ? _width / (1920 / 28)
-                                      : Dimensions
-                                          .iconSize28, //(optional, default - grey)
-                                  link:
-                                      'https://www.youtube.com/channel/UCJDgsezvoL79bTAycsJtTog', //provide the link
-                                  placeholderStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: Dimensions
-                                          .font10), //placeholder text style
-                                ),
-                              ),
-                            ],
+              ? Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                        child: InkWell(
+                          onTap: () {},
+                          child: SocialWidget(
+                            placeholderText:
+                                'Facebook', //text visible to viewers
+                            iconData: SocialIconsFlutter
+                                .facebook_box, //use the respective social logo
+                            iconColor: Color.fromARGB(255, 26, 119, 196),
+                            iconSize: ResponsiveWidget.isLargeScreen(context)
+                                ? _width / (1920 / 28)
+                                : Dimensions
+                                    .iconSize28, //(optional, default - grey)
+                            link:
+                                'https://www.facebook.com/pg/TheRelationary/', //provide the link
+                            placeholderStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize:
+                                    Dimensions.font10), //placeholder text style
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                        child: SocialWidget(
+                          placeholderText: 'Twitter', //text visible to viewers
+                          iconData: SocialIconsFlutter
+                              .instagram, //use the respective social logo
+                          iconColor: Colors.pink,
+                          iconSize: ResponsiveWidget.isLargeScreen(context)
+                              ? _width / (1920 / 28)
+                              : Dimensions
+                                  .iconSize28, //(optional, default - grey)
+                          link:
+                              'https://twitter.com/TheRelationary', //provide the link
+                          placeholderStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize:
+                                  Dimensions.font10), //placeholder text style
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                        child: SocialWidget(
+                          placeholderText:
+                              'Instagram', //text visible to viewers
+                          iconData: SocialIconsFlutter
+                              .twitter, //use the respective social logo
+                          iconColor: Colors.blueAccent,
+                          iconSize: ResponsiveWidget.isLargeScreen(context)
+                              ? _width / (1920 / 28)
+                              : Dimensions
+                                  .iconSize28, //(optional, default - grey)
+                          link:
+                              'https://www.instagram.com/therelationary/', //provide the link
+                          placeholderStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize:
+                                  Dimensions.font10), //placeholder text style
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                        child: SocialWidget(
+                          placeholderText: 'Youtube', //text visible to viewers
+                          iconData: SocialIconsFlutter
+                              .youtube, //use the respective social logo
+                          iconColor: Color.fromARGB(255, 235, 25, 25),
+                          iconSize: ResponsiveWidget.isLargeScreen(context)
+                              ? _width / (1920 / 28)
+                              : Dimensions
+                                  .iconSize28, //(optional, default - grey)
+                          link:
+                              'https://www.youtube.com/channel/UCJDgsezvoL79bTAycsJtTog', //provide the link
+                          placeholderStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize:
+                                  Dimensions.font10), //placeholder text style
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               : Row(
                   mainAxisSize: MainAxisSize.max,
