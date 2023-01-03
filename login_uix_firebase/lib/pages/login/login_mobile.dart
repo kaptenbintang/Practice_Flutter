@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/route.dart';
 
+import '../../auth/controller_page.dart';
 import '../forgot_pw_page.dart';
 
 class LoginMobile extends StatefulWidget {
@@ -21,7 +22,7 @@ class _LoginMobileState extends State<LoginMobile> {
   //text controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   bool isEmail(String input) => EmailValidator.validate(input);
   bool _isHidden = true;
   void _togglePasswordView() {
@@ -32,17 +33,19 @@ class _LoginMobileState extends State<LoginMobile> {
 
   Future signIn() async {
 //loading circle
-
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Center(child: CircularProgressIndicator());
-        });
+    FirebaseAuth.instance.signOut();
+    // showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return Center(child: CircularProgressIndicator());
+    //     });
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim())
+          .then((value) => ControllerPage());
     } on FirebaseAuthException catch (e) {
       print(e);
       await showDialog(
@@ -53,7 +56,7 @@ class _LoginMobileState extends State<LoginMobile> {
             );
           });
     }
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   @override
@@ -67,15 +70,14 @@ class _LoginMobileState extends State<LoginMobile> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Center(
-            child: SizedBox(
-              width: 300,
+    return SafeArea(
+      child: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Center(
               child: Form(
-                  key: formKey,
+                  key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -168,64 +170,54 @@ class _LoginMobileState extends State<LoginMobile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Flexible(
-                            //Rememeber ME
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  height: 24,
-                                  width: 24,
-                                  child: Checkbox(
-                                      value: _isChecked, onChanged: onChanged),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Remember me',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 25),
-                          Flexible(
-                              //Forgot Password
-                              child: Row(
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return ForgotPasswordPage();
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  'Forgot password?',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    color:
-                                        const Color.fromARGB(255, 0, 84, 152),
-                                  ),
+                              SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: Checkbox(
+                                    value: _isChecked, onChanged: onChanged),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Remember me',
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  color: Colors.black,
                                 ),
                               ),
                             ],
-                          )),
+                          ),
+                          const SizedBox(width: 25),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ForgotPasswordPage();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Forgot password?',
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                color: const Color.fromARGB(255, 0, 84, 152),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 30),
                       TextButton(
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             signIn();
-                            return;
                           }
+                          return;
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.green,

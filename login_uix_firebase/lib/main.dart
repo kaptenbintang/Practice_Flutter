@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/pages/LandingPage/landing_desktop.dart';
 import 'package:login_uix_firebase/pages/LandingPage/landing_mobile.dart';
@@ -18,10 +19,14 @@ import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/responsive_login_template.dart';
 import 'package:login_uix_firebase/route.dart';
+import 'controllers/menu_controller.dart';
+import 'controllers/navigation_controller.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
+  Get.put(MenuController());
+  Get.put(NavigationController());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -42,7 +47,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         home: ControllerPage(),
@@ -55,7 +60,7 @@ class MyApp extends StatelessWidget {
           RouteName.landingPage: (context) => const LandingPage(),
           RouteName.editProfilePage: (context) => const EditProfilePage(),
           RouteName.viewProfilePage: (context) => const ViewProfilePage(),
-          RouteName.controllerPage: (context) => const ControllerPage(),
+          RouteName.controllerPage: (context) => ControllerPage(),
         });
   }
 }
