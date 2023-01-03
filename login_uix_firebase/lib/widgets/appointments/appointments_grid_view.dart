@@ -50,7 +50,8 @@ class AppointmentsGridView extends StatelessWidget {
                             onPressed: () async {
                               Navigator.of(context).pop();
                               AppointmentData appointmentData = AppointmentData(
-                                id: FirebaseAuth.instance.currentUser!.uid,
+                                clientId:
+                                    FirebaseAuth.instance.currentUser!.uid,
                                 statusAppointment:
                                     editStatusAppointment.toString(),
                               );
