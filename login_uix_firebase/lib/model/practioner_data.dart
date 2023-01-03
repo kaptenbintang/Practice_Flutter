@@ -13,7 +13,6 @@ class PractionerData {
   final String? mySpecialty;
   final String? languages;
   final String? titleMain;
-  final String? practionerSchedule;
 
   PractionerData({
     this.id,
@@ -26,7 +25,6 @@ class PractionerData {
     this.mySpecialty,
     this.languages,
     this.titleMain,
-    this.practionerSchedule,
   });
 
   Map<String, dynamic> toMap() {
@@ -40,7 +38,6 @@ class PractionerData {
       "mySpecialty": mySpecialty,
       "languages": languages,
       "titleMain": titleMain,
-      "practionerSchedule": practionerSchedule,
     };
   }
 
@@ -77,6 +74,5 @@ class PractionerData {
         myRoles = doc.data()!["myRoles"],
         mySpecialty = doc.data()!["mySpecialty"],
         languages = doc.data()!["languages"],
-        titleMain = doc.data()!["titleMain"],
-        practionerSchedule = doc.data()!["practionerSchedule"];
+        titleMain = doc.data()!["titleMain"];
 }
