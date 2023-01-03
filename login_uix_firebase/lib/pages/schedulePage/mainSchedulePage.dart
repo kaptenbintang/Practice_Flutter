@@ -296,6 +296,81 @@ class mainSchedulePage extends ConsumerWidget {
                           ),
                         ],
                       ),
+                      // Row(
+                      //   mainAxisSize: MainAxisSize.max,
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Padding(
+                      //       padding:
+                      //           EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                      //       child: InkWell(
+                      //         onTap: () {
+                      //           Navigator.pushNamed(
+                      //               context, RouteName.editProfilePage);
+                      //         },
+                      //         child: Container(
+                      //           width: screenWidth / (width / 500),
+                      //           height: screenWidth / (width / 60),
+                      //           decoration: BoxDecoration(
+                      //             color: Colors.white,
+                      //             boxShadow: [
+                      //               BoxShadow(
+                      //                 blurRadius: screenWidth / (width / 5),
+                      //                 color: Color(0x3416202A),
+                      //                 offset: Offset(0, 2),
+                      //               )
+                      //             ],
+                      //             borderRadius: BorderRadius.circular(
+                      //                 screenWidth / (width / 12)),
+                      //             shape: BoxShape.rectangle,
+                      //           ),
+                      //           child: Padding(
+                      //             padding: EdgeInsetsDirectional.fromSTEB(
+                      //                 screenWidth / (width / 8),
+                      //                 screenWidth / (width / 8),
+                      //                 screenWidth / (width / 8),
+                      //                 screenWidth / (width / 8)),
+                      //             child: Row(
+                      //               mainAxisSize: MainAxisSize.max,
+                      //               children: [
+                      //                 Padding(
+                      //                   padding: EdgeInsetsDirectional.fromSTEB(
+                      //                       screenWidth / (width / 12),
+                      //                       0,
+                      //                       0,
+                      //                       0),
+                      //                   child: Text(
+                      //                     'Blackout Date',
+                      //                     style: FlutterFlowTheme.of(context)
+                      //                         .bodyText2
+                      //                         .override(
+                      //                           fontFamily: 'Outfit',
+                      //                           color: Color(0xFF57636C),
+                      //                           fontSize:
+                      //                               screenWidth / (width / 14),
+                      //                           fontWeight: FontWeight.normal,
+                      //                         ),
+                      //                   ),
+                      //                 ),
+                      //                 Expanded(
+                      //                   child: Align(
+                      //                     alignment: AlignmentDirectional(
+                      //                         screenWidth / (width / 0.9), 0),
+                      //                     child: Icon(
+                      //                       Icons.arrow_forward_ios,
+                      //                       color: Color(0xFF57636C),
+                      //                       size: screenWidth / (width / 18),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -306,82 +381,7 @@ class mainSchedulePage extends ConsumerWidget {
                             child: InkWell(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, RouteName.editProfilePage);
-                              },
-                              child: Container(
-                                width: screenWidth / (width / 500),
-                                height: screenWidth / (width / 60),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: screenWidth / (width / 5),
-                                      color: Color(0x3416202A),
-                                      offset: Offset(0, 2),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(
-                                      screenWidth / (width / 12)),
-                                  shape: BoxShape.rectangle,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      screenWidth / (width / 8),
-                                      screenWidth / (width / 8),
-                                      screenWidth / (width / 8),
-                                      screenWidth / (width / 8)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            screenWidth / (width / 12),
-                                            0,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          'Blackout Date',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize:
-                                                    screenWidth / (width / 14),
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: AlignmentDirectional(
-                                              screenWidth / (width / 0.9), 0),
-                                          child: Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Color(0xFF57636C),
-                                            size: screenWidth / (width / 18),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.editProfilePage);
+                                    context, RouteName.specialDatePage);
                               },
                               child: Container(
                                 width: screenWidth / (width / 500),

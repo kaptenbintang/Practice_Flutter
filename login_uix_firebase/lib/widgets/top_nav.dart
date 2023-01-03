@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/constant/style.dart';
 import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/widgets/custom_text.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../provider/profile_provider/user_profile_provider.dart';
 
 AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
   double _width = MediaQuery.of(context).size.width;
@@ -17,16 +19,10 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
               : 1280;
   return AppBar(
     leading: !ResponsiveWidget.isSmallScreen(context)
-        ? Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  print('pressed');
-                },
-                icon: Icon(Icons.menu, size: _width / (_maxWidth / 25)),
-                color: Colors.black,
-              )
-            ],
+        ? Icon(
+            Icons.menu,
+            size: _width / (_maxWidth / 25),
+            color: Colors.black,
           )
         : IconButton(
             onPressed: () {
@@ -39,19 +35,21 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
             color: Colors.black),
     backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
     automaticallyImplyLeading: true,
-    title: Align(
-      alignment: AlignmentDirectional(0.15, 0),
-      child: SelectionArea(
-          child: Text(
-        'Welcome',
+    title: Consumer(builder: (context, ref, child) {
+      final userData = ref.watch(
+        userDetailProvider,
+      );
+      final model = userData.value;
+      return Text(
+        'Welcome' + ' ' + (model?['firstName'] ?? ''),
         textAlign: TextAlign.center,
         style: FlutterFlowTheme.of(context).title3.override(
               fontFamily: 'Poppins',
               color: FlutterFlowTheme.of(context).primaryText,
               fontSize: _width / (_maxWidth / 20),
             ),
-      )),
-    ),
+      );
+    }),
     actions: [
       Padding(
         padding: EdgeInsetsDirectional.fromSTEB(
@@ -64,7 +62,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
         ),
       ),
     ],
-    centerTitle: false,
+    centerTitle: true,
     elevation: ResponsiveWidget.isphoneScreen(context) ? 3 : 0,
     toolbarHeight: _width / (_maxWidth / 70),
   );

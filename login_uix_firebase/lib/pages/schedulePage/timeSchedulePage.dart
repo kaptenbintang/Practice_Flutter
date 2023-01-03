@@ -1,5 +1,10 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/model/practioner_data.dart';
+
+import '../../flutter_flow/flutter_flow.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../helper/responsive.dart';
 import '../../model/practioner_models/practioner.dart';
+import '../../provider/time_schedule/schedule_get_provider.dart';
 import '../../provider/time_schedule/schedule_provider.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
@@ -20,11 +26,22 @@ class timeSchedulePage extends StatefulWidget {
 
 class _timeSchedulePageState extends State<timeSchedulePage> {
   final _unfocusNode = FocusNode();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final scaffoldvalue = GlobalKey<ScaffoldState>();
+  TextEditingController? textController1;
+  TextEditingController? textController2;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // textController1 = TextEditingController(text: 'From: ' );
+  //   // textController2 = TextEditingController(text: 'To: 18.00');
+  // }
 
   @override
   void dispose() {
     _unfocusNode.dispose();
+    textController1?.dispose();
+    textController2?.dispose();
     super.dispose();
   }
 
@@ -39,7 +56,7 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                 ? 1920
                 : 1280;
     return Scaffold(
-      key: scaffoldKey,
+      key: scaffoldvalue,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenWidth / (width / 100)),
@@ -146,8 +163,11 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                                 scrollDirection: Axis.vertical,
                                 itemCount: listDay.length,
                                 itemBuilder: (context, index) {
-                                  final key = listDay.values.elementAt(index);
-                                  return tableDepanTimeSchedule(context, key);
+                                  final value = listDay.values.elementAt(index);
+                                  final key = listDay.keys.elementAt(index);
+
+                                  return tableDepanTimeSchedule(
+                                      context, value, key, index);
                                 },
                               ),
                             ],
@@ -172,13 +192,13 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
     );
   }
 
-  Widget tableDepanTimeSchedule(BuildContext context, data) {
+  Widget tableDepanTimeSchedule(BuildContext context, data, key, index) {
     // print(data);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
       child: Container(
         width: 100,
-        height: 100,
+        height: 120,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryColor,
           borderRadius: BorderRadius.circular(20),
@@ -199,7 +219,7 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
@@ -216,25 +236,156 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                                 fontSize: 26,
                               ),
                         ),
+                        // InkWell(
+                        //   onTap: () {},
+                        //   child: Padding(
+                        //     padding:
+                        //         EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        //     child: Text(
+                        //       'Disable this day',
+                        //       style: FlutterFlowTheme.of(context)
+                        //           .subtitle2
+                        //           .override(
+                        //             fontFamily: 'Poppins',
+                        //             fontSize: 10,
+                        //             fontStyle: FontStyle.italic,
+                        //             decoration: TextDecoration.underline,
+                        //           ),
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                          child: Icon(
-                            Icons.access_time_sharp,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 24,
+                    Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: textController1,
+                              autofocus: true,
+                              readOnly: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'From: ' +
+                                    data["startTime"].toString() +
+                                    ",",
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.more_time_rounded,
+                                ),
+                              ),
+                              style:
+                                  FlutterFlowTheme.of(context).title2.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 16,
+                                      ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                        Text(
-                          data["resultTime"].toString(),
-                          style: FlutterFlowTheme.of(context).title2,
-                        ),
-                      ],
+                          Expanded(
+                            child: TextFormField(
+                              controller: textController2,
+                              autofocus: true,
+                              readOnly: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'To: ' + data["endTime"].toString(),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.timer_off_outlined,
+                                ),
+                              ),
+                              style:
+                                  FlutterFlowTheme.of(context).title2.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 16,
+                                      ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -243,26 +394,117 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.08,
+                width: MediaQuery.of(context).size.width * 0.1,
                 decoration: BoxDecoration(),
-                child: Column(
+                child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    FlutterFlowIconButton(
-                      borderColor: FlutterFlowTheme.of(context).primaryText,
-                      borderRadius: 30,
-                      borderWidth: 2,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.navigate_next_sharp,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 40,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Consumer(builder: (context, ref, child) {
+                          return Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+                            child: FlutterFlowIconButton(
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              borderRadius: 30,
+                              borderWidth: 2,
+                              buttonSize: 60,
+                              icon: Icon(
+                                Icons.more_time_rounded,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 30,
+                              ),
+                              onPressed: () async {
+                                var time = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now());
+
+                                if (time != null) {
+                                  await ref
+                                      .read(editStartTimePractioner.notifier)
+                                      .editStartTime(
+                                        schedule: "${time.hour}:${time.minute}",
+                                        index: index + 1,
+                                      )
+                                      .then((value) => ref.refresh(
+                                          timeScheduleProvider.future));
+                                  // setState(() {
+                                  //   textController1?.text =
+                                  //       "${time.hour}:${time.minute}";
+                                  // });
+                                } else {
+                                  print("not selected");
+                                }
+                              },
+                            ),
+                          );
+                        }),
+                        Text(
+                          'Start Time',
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 10,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Consumer(builder: (context, ref, child) {
+                          return Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+                            child: FlutterFlowIconButton(
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              borderRadius: 30,
+                              borderWidth: 2,
+                              buttonSize: 60,
+                              icon: Icon(
+                                Icons.timer_off_outlined,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 30,
+                              ),
+                              onPressed: () async {
+                                var time = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now());
+
+                                if (time != null) {
+                                  await ref
+                                      .read(editEndTimePractioner.notifier)
+                                      .editEndTime(
+                                        schedule: "${time.hour}:${time.minute}",
+                                        index: index + 1,
+                                      )
+                                      .then((value) => ref.refresh(
+                                          timeScheduleProvider.future));
+                                  // setState(() {
+                                  //   textController1?.text =
+                                  //       "${time.hour}:${time.minute}";
+                                  // });
+                                } else {
+                                  print("not selected");
+                                }
+                              },
+                            ),
+                          );
+                        }),
+                        Text(
+                          'End Time',
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 10,
+                                  ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

@@ -11,7 +11,6 @@ import 'package:login_uix_firebase/pages/appointment_page.dart';
 import '../../flutter_flow/flutter_flow.dart';
 import '../../helper/database_service.dart';
 import '../../main.dart';
-import '../../widgets/drawer_dashboard.dart';
 
 class ManagePractioners extends StatefulWidget {
   static const routeName = '/ManagePractionersPage';
@@ -87,7 +86,7 @@ class _ManagePractionersState extends State<ManagePractioners> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerDashBoard(),
+      // drawer: const DrawerDashBoard(),
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Practioner Dashboard"),
@@ -215,7 +214,6 @@ class _ManagePractionersState extends State<ManagePractioners> {
                 //     child: Icon(Icons.add),
                 //     // backgroundColor: Colors.green,
                 //   )
-
               } else if (snapshot.connectionState == ConnectionState.done &&
                   retrievedPractionerList!.isEmpty) {
                 return Center(
@@ -268,7 +266,6 @@ class _ManagePractionersState extends State<ManagePractioners> {
         DataCell(Text(snapshot.myRoles as String)),
         DataCell(Text(snapshot.languages as String)),
         DataCell(Text(snapshot.titleMain as String)),
-        DataCell(Text(snapshot.practionerSchedule as String)),
         DataCell(ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.green,
@@ -292,7 +289,6 @@ class _ManagePractionersState extends State<ManagePractioners> {
                 myRolesID = snapshot.myRoles;
                 languagesID = snapshot.languages;
                 titleMainID = snapshot.titleMain;
-                schedulePractionerID = snapshot.practionerSchedule;
               });
             },
             child: const Text('Edit'))),
@@ -481,18 +477,18 @@ class _ManagePractionersState extends State<ManagePractioners> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               PractionerData practionerData = PractionerData(
-                                  id: userId,
-                                  firstName: _firstNamePractioner.text,
-                                  lastName: _lastNamePractioner.text,
-                                  myApproach: _myApproachPractioner.text,
-                                  myBackground: _myBackgroundPractioner.text,
-                                  myQualifications:
-                                      _myQualificationsPractioner.text,
-                                  mySpecialty: _mySpecialtyPractioner.text,
-                                  myRoles: _myRolesPractioner.text,
-                                  languages: _languagesPractioner.text,
-                                  titleMain: _titleMainPractioner.text,
-                                  practionerSchedule: _schedulePractioner.text);
+                                id: userId,
+                                firstName: _firstNamePractioner.text,
+                                lastName: _lastNamePractioner.text,
+                                myApproach: _myApproachPractioner.text,
+                                myBackground: _myBackgroundPractioner.text,
+                                myQualifications:
+                                    _myQualificationsPractioner.text,
+                                mySpecialty: _mySpecialtyPractioner.text,
+                                myRoles: _myRolesPractioner.text,
+                                languages: _languagesPractioner.text,
+                                titleMain: _titleMainPractioner.text,
+                              );
                               await service.updatePractioners(practionerData);
                               Navigator.pop(context);
                               _pullRefresh();

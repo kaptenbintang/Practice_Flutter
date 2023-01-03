@@ -485,8 +485,6 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                   myRolesID = snapshot.myRoles;
                                   languagesID = snapshot.languages;
                                   titleMainID = snapshot.titleMain;
-                                  schedulePractionerID =
-                                      snapshot.practionerSchedule;
                                 });
                                 break;
                               default:
@@ -709,19 +707,18 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 PractionerData practionerData = PractionerData(
-                                    id: userId,
-                                    firstName: _firstNamePractioner.text,
-                                    lastName: _lastNamePractioner.text,
-                                    myApproach: _myApproachPractioner.text,
-                                    myBackground: _myBackgroundPractioner.text,
-                                    myQualifications:
-                                        _myQualificationsPractioner.text,
-                                    mySpecialty: _mySpecialtyPractioner.text,
-                                    myRoles: _myRolesPractioner.text,
-                                    languages: _languagesPractioner.text,
-                                    titleMain: _titleMainPractioner.text,
-                                    practionerSchedule:
-                                        _schedulePractioner.text);
+                                  id: userId,
+                                  firstName: _firstNamePractioner.text,
+                                  lastName: _lastNamePractioner.text,
+                                  myApproach: _myApproachPractioner.text,
+                                  myBackground: _myBackgroundPractioner.text,
+                                  myQualifications:
+                                      _myQualificationsPractioner.text,
+                                  mySpecialty: _mySpecialtyPractioner.text,
+                                  myRoles: _myRolesPractioner.text,
+                                  languages: _languagesPractioner.text,
+                                  titleMain: _titleMainPractioner.text,
+                                );
                                 await service.updatePractioners(practionerData);
                                 Navigator.pop(context);
                                 _pullRefresh();
