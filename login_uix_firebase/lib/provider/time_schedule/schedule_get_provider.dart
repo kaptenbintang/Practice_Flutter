@@ -9,3 +9,8 @@ final editStartTimePractioner =
     StateNotifierProvider<changeStatusStartTime, IsLoading>(
   (ref) => changeStatusStartTime(),
 );
+
+final editEndTimePractioner =
+    StateNotifierProvider<changeStatusEndTime, IsLoading>(
+  (ref) => changeStatusEndTime(),
+);

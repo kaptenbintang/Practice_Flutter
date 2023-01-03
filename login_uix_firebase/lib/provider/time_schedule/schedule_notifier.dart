@@ -19,7 +19,8 @@ class changeStatusStartTime extends StateNotifier<IsLoading> {
   set isLoading(bool value) => state = value;
 
   Future<bool> editStartTime({
-    required Map schedule,
+    required String schedule,
+    required int index,
   }) async {
     try {
       isLoading = true;
@@ -33,7 +34,42 @@ class changeStatusStartTime extends StateNotifier<IsLoading> {
       if (userInfo.docs.isNotEmpty) {
         await userInfo.docs.first.reference.update(
           {
-            FirebaseFieldName.schedules: schedule,
+            'schedules.$index.startTime': schedule,
+          },
+        );
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+}
+
+class changeStatusEndTime extends StateNotifier<IsLoading> {
+  changeStatusEndTime() : super(false);
+
+  set isLoading(bool value) => state = value;
+
+  Future<bool> editEndTime({
+    required String schedule,
+    required int index,
+  }) async {
+    try {
+      isLoading = true;
+      final userInfo = await FirebaseFirestore.instance
+          .collection(
+            FirebaseCollectionName.practioners,
+          )
+          .where(FirebaseFieldName.schedules)
+          .limit(1)
+          .get();
+      if (userInfo.docs.isNotEmpty) {
+        await userInfo.docs.first.reference.update(
+          {
+            'schedules.$index.endTime': schedule,
           },
         );
       }

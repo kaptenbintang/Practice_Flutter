@@ -26,7 +26,7 @@ class timeSchedulePage extends StatefulWidget {
 
 class _timeSchedulePageState extends State<timeSchedulePage> {
   final _unfocusNode = FocusNode();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final scaffoldvalue = GlobalKey<ScaffoldState>();
   TextEditingController? textController1;
   TextEditingController? textController2;
 
@@ -56,7 +56,7 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                 ? 1920
                 : 1280;
     return Scaffold(
-      key: scaffoldKey,
+      key: scaffoldvalue,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenWidth / (width / 100)),
@@ -163,8 +163,11 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                                 scrollDirection: Axis.vertical,
                                 itemCount: listDay.length,
                                 itemBuilder: (context, index) {
-                                  final key = listDay.values.elementAt(index);
-                                  return tableDepanTimeSchedule(context, key);
+                                  final value = listDay.values.elementAt(index);
+                                  final key = listDay.keys.elementAt(index);
+
+                                  return tableDepanTimeSchedule(
+                                      context, value, key, index);
                                 },
                               ),
                             ],
@@ -189,7 +192,7 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
     );
   }
 
-  Widget tableDepanTimeSchedule(BuildContext context, data) {
+  Widget tableDepanTimeSchedule(BuildContext context, data, key, index) {
     // print(data);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
@@ -403,10 +406,18 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                                     initialTime: TimeOfDay.now());
 
                                 if (time != null) {
-                                  setState(() {
-                                    textController1?.text =
-                                        "${time.hour}:${time.minute}";
-                                  });
+                                  await ref
+                                      .read(editStartTimePractioner.notifier)
+                                      .editStartTime(
+                                        schedule: "${time.hour}:${time.minute}",
+                                        index: index + 1,
+                                      )
+                                      .then((value) => ref.refresh(
+                                          timeScheduleProvider.future));
+                                  // setState(() {
+                                  //   textController1?.text =
+                                  //       "${time.hour}:${time.minute}";
+                                  // });
                                 } else {
                                   print("not selected");
                                 }
@@ -428,35 +439,45 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
-                          child: FlutterFlowIconButton(
-                            borderColor:
-                                FlutterFlowTheme.of(context).primaryText,
-                            borderRadius: 30,
-                            borderWidth: 2,
-                            buttonSize: 60,
-                            icon: Icon(
-                              Icons.timer_off_outlined,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 30,
-                            ),
-                            onPressed: () async {
-                              var time = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now());
+                        Consumer(builder: (context, ref, child) {
+                          return Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+                            child: FlutterFlowIconButton(
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              borderRadius: 30,
+                              borderWidth: 2,
+                              buttonSize: 60,
+                              icon: Icon(
+                                Icons.timer_off_outlined,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 30,
+                              ),
+                              onPressed: () async {
+                                var time = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now());
 
-                              if (time != null) {
-                                setState(() {
-                                  textController2?.text =
-                                      "${time.hour}:${time.minute}";
-                                });
-                              } else {
-                                print("not selected");
-                              }
-                            },
-                          ),
-                        ),
+                                if (time != null) {
+                                  await ref
+                                      .read(editEndTimePractioner.notifier)
+                                      .editEndTime(
+                                        schedule: "${time.hour}:${time.minute}",
+                                        index: index + 1,
+                                      )
+                                      .then((value) => ref.refresh(
+                                          timeScheduleProvider.future));
+                                  // setState(() {
+                                  //   textController1?.text =
+                                  //       "${time.hour}:${time.minute}";
+                                  // });
+                                } else {
+                                  print("not selected");
+                                }
+                              },
+                            ),
+                          );
+                        }),
                         Text(
                           'End Time',
                           style:
