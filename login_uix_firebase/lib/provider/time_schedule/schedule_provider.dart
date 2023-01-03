@@ -34,18 +34,13 @@ final timeScheduleProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
         .snapshots()
         .listen(
       (snapshot) {
-        final documents = snapshot.docs;
-        final schedules = documents
-            .where(
-              (doc) => !doc.metadata.hasPendingWrites,
-            )
-            .map(
-              (doc) => Practioner(
-                practionerId: doc.id,
-                json: doc.data(),
-              ),
-            );
-        controller.sink.add(schedules);
+        final practioner = snapshot.docs.map(
+          (doc) => Practioner(
+            practionerId: doc.id,
+            json: doc.data(),
+          ),
+        );
+        controller.sink.add(practioner);
       },
     );
 
