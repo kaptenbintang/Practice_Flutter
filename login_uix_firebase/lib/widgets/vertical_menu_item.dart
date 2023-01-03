@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../constant/controllers.dart';
 import '../constant/style.dart';
@@ -33,8 +34,8 @@ class VerticalMenuItem extends StatelessWidget {
                   maintainState: true,
                   maintainAnimation: true,
                   child: Container(
-                    width: 3,
-                    height: 72,
+                    width: Dimensions.height30 / 10,
+                    height: Dimensions.height60 + Dimensions.height10,
                     color: dark,
                   ),
                 ),
@@ -46,23 +47,23 @@ class VerticalMenuItem extends StatelessWidget {
                         padding: const EdgeInsets.all(16),
                         child: menuController.returnIconFor(itemName!),
                       ),
-                      if (!menuController.isActive(itemName!))
-                        Flexible(
-                            child: CustomText(
-                          text: itemName!,
-                          color: menuController.isHovering(itemName!)
-                              ? dark
-                              : lightGrey,
-                        ))
-                      else
-                        Flexible(
-                          child: CustomText(
-                            text: itemName!,
-                            color: dark,
-                            size: 18,
-                            weight: FontWeight.bold,
-                          ),
-                        )
+                      (!menuController.isActive(itemName!))
+                          ? Flexible(
+                              child: CustomText(
+                              text: itemName!,
+                              color: menuController.isHovering(itemName!)
+                                  ? dark
+                                  : lightGrey,
+                              size: Dimensions.font18,
+                            ))
+                          : Flexible(
+                              child: CustomText(
+                                text: itemName!,
+                                color: dark,
+                                size: Dimensions.font18,
+                                weight: FontWeight.bold,
+                              ),
+                            )
                     ],
                   ),
                 )

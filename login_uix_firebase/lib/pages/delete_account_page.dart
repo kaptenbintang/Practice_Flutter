@@ -8,6 +8,8 @@ import 'package:login_uix_firebase/main.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
 class DeleteAccount extends StatefulWidget {
+  static const routeName = '/deleteAccountPage';
+
   const DeleteAccount({super.key});
 
   @override
@@ -102,6 +104,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
             maxLength: 30,
             labelText: "Email",
             obscure: false,
+            readonly: false,
           ),
           SizedBox(height: 20),
           ProfileTextInput(
@@ -110,6 +113,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
             maxLength: 30,
             labelText: "Password",
             obscure: true,
+            readonly: false,
           ),
           // ElevatedButton(
           //   onPressed: authChenk,

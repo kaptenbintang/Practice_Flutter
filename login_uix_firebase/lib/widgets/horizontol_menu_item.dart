@@ -5,6 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:login_uix_firebase/constant/controllers.dart';
 import 'package:login_uix_firebase/constant/style.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
+import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/widgets/custom_text.dart';
 
 // ignore: must_be_immutable
@@ -37,7 +39,7 @@ class HorizontolMenuItem extends StatelessWidget {
                   maintainAnimation: true,
                   child: Container(
                     width: 6,
-                    height: 40,
+                    height: _width / (1920 / 40),
                     color: dark,
                   ),
                 ),
@@ -48,22 +50,24 @@ class HorizontolMenuItem extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: menuController.returnIconFor(itemName!),
                 ),
-                if (!menuController.isActive(itemName!))
-                  Flexible(
-                      child: CustomText(
-                    text: itemName!,
-                    color:
-                        menuController.isHovering(itemName!) ? dark : lightGrey,
-                  ))
-                else
-                  Flexible(
-                    child: CustomText(
-                      text: itemName!,
-                      color: dark,
-                      size: 18,
-                      weight: FontWeight.bold,
-                    ),
-                  )
+                (!menuController.isActive(itemName!))
+                    ? Flexible(
+                        child: CustomText(
+                        text: itemName!,
+                        color: menuController.isHovering(itemName!)
+                            ? dark
+                            : lightGrey,
+                      ))
+                    : Flexible(
+                        child: CustomText(
+                          text: itemName!,
+                          color: dark,
+                          size: ResponsiveWidget.isLargeScreen(context)
+                              ? _width / (1920 / 18)
+                              : Dimensions.font18,
+                          weight: FontWeight.bold,
+                        ),
+                      )
               ],
             ),
           ))),

@@ -1,24 +1,26 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'dart:html' as html;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/auth/controller_page.dart';
+import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
-import 'package:login_uix_firebase/route.dart';
+import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/widgets/alert_confirm.dart';
 import 'package:login_uix_firebase/widgets/drawer_dashboard.dart';
-
+import 'package:recase/recase.dart';
+import 'package:login_uix_firebase/route.dart';
+import '../../main.dart';
+import 'package:intl/intl.dart';
 import '../helper/database_service.dart';
-import '../main.dart';
+import '../helper/user_privilege.dart';
 
 class DashboardPage extends StatefulWidget {
   static const routeName = '/dashBoardPage';
@@ -29,6 +31,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  PowerChecker rolePriv = PowerChecker();
   DataService service = DataService();
   Future<List<UserData>>? userList;
   // Map<String, dynamic>? currentUserData;
@@ -38,6 +41,7 @@ class _DashboardPageState extends State<DashboardPage> {
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   UserData? dataU;
+  List<RolesData>? rolesList;
 
   final _scrollController = ScrollController();
 
@@ -57,18 +61,25 @@ class _DashboardPageState extends State<DashboardPage> {
   final db = FirebaseFirestore.instance;
   String? userId;
 
+  bool isEmail(String input) => EmailValidator.validate(input);
+
+  List<UserData> selectedUser = [];
+
   String? selectedValueRoles;
   String? selectedValue;
-  late String selectedValue2;
-  late String initialDropDownVal;
   var newPassword = "";
   var rolesType;
   var marDeleted, createAt;
+  var authoRoles;
 
-  int _currentSortColumn = 0;
-  bool _isAscending = true;
+  int? _currentSortColumn;
+  bool _isAscending = false;
 
-  List<String> listOfValueRoles = ['Developer', 'user', 'admin', 'superadmin'];
+  // bool _sortAscending = true;
+  // int? _sortColumnIndex;
+
+  List<String> listOfValueRoles = [];
+  // ['Developer', 'user', 'admin', 'superadmin'];
 
   List<String> listOfValue = [
     'satu',
@@ -91,49 +102,54 @@ class _DashboardPageState extends State<DashboardPage> {
   final FocusNode dropDownFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
+  final controllerSearch = TextEditingController();
+
   @override
   void initState() {
-    // TODO: implement initState
-
-    selectedValue2 = dropDownItemValue2[0];
+    // selectedValue2 = dropDownItemValue2[0];
 
     _scaffoldKey = GlobalKey();
-    rolesType = 'superadmin'.toString();
-
-    // rolesType = "superadmin";
 
     _initRetrieval();
     super.initState();
   }
 
-  Future<void> _initRetrieval() async {
-    // futureUserData = service.currentUsers(currentUser.uid);
-    // currentUserData = await service.currentUsers(currentUser.uid);
-    // rolesType = currentUserData!['roles'];
-    // final docRef = db.collection("users").doc(currentUser!.uid);
-    // docRef.get().then(
-    //   (DocumentSnapshot doc) {
-    //     final data = doc.data() as Map<String, dynamic>;
-    //     setState(() {
-    //       rolesType = data['roles'];
-    //     });
-    //   },
-    //   onError: (e) => print("Error getting document: $e"),
-    // );
+  Future _initRetrieval() async {
+    Map<String, dynamic> currentUserData =
+        await service.currentUsers(currentUser.uid);
 
-    userList = service.retrieveAllUsers(rolesType);
-    retrievedUserList = await service.retrieveAllUsers(rolesType);
+    setState(() {
+      rolesType = currentUserData['roles'];
+    });
+    Map<String, dynamic> rolesPriv = await rolePriv.getRoles(rolesType);
+    setState(() {
+      authoRoles = rolesPriv;
+    });
+    userList = service.retrieveAllStaff(rolesType);
+    retrievedUserList = await service.retrieveAllStaff(rolesType);
     selected =
         List<bool>.generate(retrievedUserList!.length, (int index) => false);
     valuesList = List<String>.generate(
         retrievedUserList!.length, (int index) => 'Action');
+    rolesList = await service.retrieveRoles();
+    rolesList?.forEach((element) {
+      listOfValueRoles.add(element.rolesName.toString());
+    });
   }
 
   Future<void> _pullRefresh() async {
-    retrievedUserList = await service.retrieveAllUsers(rolesType);
+    retrievedUserList = await service.retrieveAllStaff(rolesType);
 
     setState(() {
-      userList = service.retrieveAllUsers(rolesType);
+      userList = service.retrieveAllStaff(rolesType);
+    });
+  }
+
+  Future search() async {
+    retrievedUserList =
+        await service.searchUser(controllerSearch.text.sentenceCase);
+    setState(() {
+      userList = service.searchUser(controllerSearch.text.sentenceCase);
     });
   }
 
@@ -143,8 +159,111 @@ class _DashboardPageState extends State<DashboardPage> {
       drawer: const DrawerDashBoard(),
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("Dashboard Home"),
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            Text("Dashboard Home"),
+            SizedBox(
+              width: 50.0,
+            ),
+            SizedBox(
+              width: 400,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: controllerSearch,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    hintText: 'Search',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () =>
+                  controllerSearch.text.isNotEmpty ? search() : _pullRefresh(),
+              icon: Icon(Icons.search),
+            ),
+          ],
+        ),
         actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.pushNamed(context, AddUserPage.routeName);
+              },
+            ),
+          ),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  // final names = selectedUser.map((e) => e.firstName).join(', ');
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(
+                  //     duration: const Duration(milliseconds: 1500),
+                  //     width: 300.0,
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 8.0,
+                  //     ),
+                  //     behavior: SnackBarBehavior.floating,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //     ),
+                  //     content: Text(
+                  //       'Selected User: $names',
+                  //     ),
+                  //   ),
+                  // );
+                  showDialog(
+                    context: context,
+                    builder: (contextm) {
+                      return AlertDialogConfirm(
+                          type: 'Remove',
+                          ids: selectedUser.map((e) => e.id!).toList(),
+                          contexts: context,
+                          textDesc: 'Are you sure?');
+                    },
+                  ).whenComplete(
+                    () => Future.delayed(
+                      Duration(seconds: 2),
+                      () {
+                        controllerSearch.text.isNotEmpty
+                            ? search()
+                            : _pullRefresh();
+                        setState(() {
+                          selectedUser = [];
+                        });
+                      },
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete_sweep_outlined,
+                      size: 26.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Visibility(
+                        visible: selectedUser.isNotEmpty ? true : false,
+                        child: Text(
+                            'Selected ${selectedUser.length} Users out of ${retrievedUserList?.length}')),
+                  ],
+                ),
+              )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -158,9 +277,9 @@ class _DashboardPageState extends State<DashboardPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  FirebaseAuth.instance.signOut().then((value) =>
-                      Navigator.pushReplacementNamed(
-                          context, RouteName.controllerPage));
+                  FirebaseAuth.instance.signOut();
+                  Navigator.popAndPushNamed(context, RouteName.controllerPage);
+                  navigatorKey.currentState!.popUntil((route) => route.isFirst);
                 },
                 child: Icon(Icons.logout),
               )),
@@ -186,7 +305,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
-                          children: [const Text('Done')],
+                          children: const [Text('Done')],
                         ),
                       ),
                     ),
@@ -206,6 +325,27 @@ class _DashboardPageState extends State<DashboardPage> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: DataTable2(
+                    onSelectAll: (value) {
+                      setState(() =>
+                          selectedUser = value! ? retrievedUserList! : []);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(milliseconds: 1500),
+                          width: 300.0,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          content: Text(
+                            'All user selected: $value',
+                          ),
+                        ),
+                      );
+                    },
                     columnSpacing: 12,
                     horizontalMargin: 12,
                     minWidth: 600,
@@ -214,24 +354,9 @@ class _DashboardPageState extends State<DashboardPage> {
                     columns: [
                       DataColumn(
                         onSort: (columnIndex, ascending) {
-                          setState(() {
-                            _currentSortColumn = columnIndex;
-                            // _currentSortColumn = columnIndex;
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                              // sort the product list in Ascending, order by Price
-                              retrievedUserList!.sort((productA, productB) =>
-                                  productB.clientCode!.compareTo(
-                                      productA.clientCode as String));
-                            } else {
-                              _isAscending = true;
-                              // sort the product list in Descending, order by Price
-                              retrievedUserList!.sort((productA, productB) =>
-                                  productA.clientCode!.compareTo(
-                                      productB.clientCode as String));
-                            }
-                          });
+                          onSort(columnIndex, ascending);
                         },
+                        // onSort,
                         label: Text(
                           'CT Code',
                           style: TextStyle(
@@ -239,6 +364,8 @@ class _DashboardPageState extends State<DashboardPage> {
                         ),
                       ),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('First Name',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
@@ -247,6 +374,8 @@ class _DashboardPageState extends State<DashboardPage> {
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('Email',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
@@ -259,32 +388,31 @@ class _DashboardPageState extends State<DashboardPage> {
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('Client Type',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
-                      // currentUserData!.containsKey("roles")
-                      // currentUserData?["roles"] == 'Developer'
-                      // ?
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('Roles',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
-                      // : DataColumn(
-                      //     label: Text('',
-                      //         style: TextStyle(
-                      //             fontSize: 18,
-                      //             fontWeight: FontWeight.bold))),
                       DataColumn(
+                          onSort: (columnIndex, ascending) =>
+                              onSort(columnIndex, ascending),
                           label: Text('Created Date',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold))),
-                      if (rolesType! == "superadmin")
+                      if (authoRoles['canDelete'] != false)
                         DataColumn(
+                            onSort: (columnIndex, ascending) =>
+                                onSort(columnIndex, ascending),
                             label: Text('Marked Deleted',
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold))),
-
                       DataColumn(
                           label: Text('Action',
                               style: TextStyle(
@@ -330,61 +458,59 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                 );
               } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return ColoredBox(
+                  color: Colors.white.withAlpha(128),
+                  child: Center(
+                    child: Container(
+                      color: Colors.blue,
+                      padding: const EdgeInsets.all(8),
+                      width: 150,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                          Text('Loading'),
+                        ],
+                      ),
+                    ),
+                  ),
                 );
               }
             },
           ),
         ),
       ),
-      //     ElevatedButton(
-      //       child: Text("Log out"),
-      //       onPressed: () {
-      //         FirebaseAuth.instance.signOut();
-      //       },
-      //     )
-      //   ],
-      // ),
     );
   }
-
-  // List<DataRow> _buildList(BuildContext context, snapshot) {
-  //   return snapshot.map((data) => _buildTableUser(context, data)).toList();
-  // }
-
-  // DataRow _buildTableUser(BuildContext context, DocumentSnapshot snapshot) {
-  //   final record = UserData.fromDocumentSnapshot();
-
-  //   return DataRow(
-  //     cells: [
-  //       DataCell(Text(snapshot.firstName)),
-  //       DataCell(Text(snapshot.lastName)),
-  //       DataCell(Text(snapshot.emailUser)),
-  //     ],
-  //   );
-  // }
 
   DataRow _buildTableUser(BuildContext context, UserData snapshot, int indexs) {
     // int idx = int.parse(dropDownItemValue2[indexs]);
     if (rolesType! != "superadmin") {
       return DataRow(
-        color: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-          // All rows will have the same selected color.
-          if (states.contains(MaterialState.selected)) {
-            return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-          }
-          // Even rows will have a grey color.
-          if (indexs.isEven) {
-            return Colors.grey.withOpacity(0.3);
-          }
-          return null; // Use default value for other states and odd rows.
-        }),
-        selected: selected![indexs],
-        onSelectChanged: (bool? value) {
+        // color: MaterialStateProperty.resolveWith<Color?>(
+        //     (Set<MaterialState> states) {
+        //   // All rows will have the same selected color.
+        //   if (states.contains(MaterialState.selected)) {
+        //     return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+        //   }
+        //   // Even rows will have a grey color.
+        //   if (indexs.isEven) {
+        //     return Colors.grey.withOpacity(0.3);
+        //   }
+        //   return null; // Use default value for other states and odd rows.
+        // }),
+        selected: selectedUser.contains(snapshot),
+        onSelectChanged: (isSelected) {
           setState(() {
-            selected![indexs] = value!;
+            final isAdding = isSelected != null && isSelected;
+
+            isAdding
+                ? selectedUser.add(snapshot)
+                : selectedUser.remove(snapshot);
           });
         },
         cells: [
@@ -393,7 +519,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           DataCell(Text(snapshot.firstName)),
           DataCell(Text(snapshot.lastName)),
-          DataCell(Text(snapshot.emailUser)),
+          DataCell(Text(snapshot.emailUser as String)),
           DataCell(Text(snapshot.doBirth)),
           DataCell(Text(snapshot.phoneNumber)),
           DataCell(Text(snapshot.clientType as String)),
@@ -402,7 +528,7 @@ class _DashboardPageState extends State<DashboardPage> {
           DataCell(
             DropdownButton<String>(
               hint: valuesList![indexs] == null
-                  ? Text("Dropdown")
+                  ? Text("Action")
                   : Text(
                       valuesList![indexs],
                       style: TextStyle(color: Colors.blue),
@@ -412,17 +538,14 @@ class _DashboardPageState extends State<DashboardPage> {
               elevation: 8,
               onChanged: (value) {
                 print(value);
-                // if value doesnt contain just close the dropDown
                 if (value == null) {
                   dropDownFocus.unfocus();
                 } else {
                   switch (value) {
-                    case "Remove":
-                      break;
                     case "Edit":
                       dialogEdit(context);
                       setState(() {
-                        _emailController.text = snapshot.emailUser;
+                        _emailController.text = snapshot.emailUser as String;
                         _clientTypeController.text =
                             snapshot.clientType as String;
                         _rolesController.text = snapshot.roles as String;
@@ -443,7 +566,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     case "ResetPassword":
                       dialogResetPassword(context);
                       setState(() {
-                        _emailController.text = snapshot.emailUser;
+                        _emailController.text = snapshot.emailUser as String;
                       });
                       break;
                     default:
@@ -461,15 +584,17 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: Text('Action'),
                   value: "Action",
                 ),
-                DropdownMenuItem(
-                  child: Text('Edit'),
-                  value: "Edit",
-                ),
-                if (currentUser.uid.toString != snapshot.id.toString)
+                if (authoRoles['canWrite'] != false)
                   DropdownMenuItem(
-                    child: Text('Remove'),
-                    value: "Remove",
+                    child: Text('Edit'),
+                    value: "Edit",
                   ),
+                // if (currentUser.uid.toString != snapshot.id.toString &&
+                //     authoRoles!['canDelete'] != false)
+                //   DropdownMenuItem(
+                //     child: Text('Remove'),
+                //     value: "Remove",
+                //   ),
                 DropdownMenuItem(
                   child: Text('Change Password'),
                   value: "ResetPassword",
@@ -493,10 +618,20 @@ class _DashboardPageState extends State<DashboardPage> {
           }
           return null; // Use default value for other states and odd rows.
         }),
-        selected: selected![indexs],
-        onSelectChanged: (bool? value) {
+        // selected: selected![indexs],
+        // onSelectChanged: (bool? value) {
+        //   setState(() {
+        //     selected![indexs] = value!;
+        //   });
+        // },
+        selected: selectedUser.contains(snapshot),
+        onSelectChanged: (isSelected) {
           setState(() {
-            selected![indexs] = value!;
+            final isAdding = isSelected != null && isSelected;
+
+            isAdding
+                ? selectedUser.add(snapshot)
+                : selectedUser.remove(snapshot);
           });
         },
         cells: [
@@ -505,15 +640,13 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           DataCell(Text(snapshot.firstName)),
           DataCell(Text(snapshot.lastName)),
-          DataCell(Text(snapshot.emailUser)),
+          DataCell(Text(snapshot.emailUser as String)),
           DataCell(Text(snapshot.doBirth)),
           DataCell(Text(snapshot.phoneNumber)),
           DataCell(Text(snapshot.clientType as String)),
           DataCell(Text(snapshot.roles as String)),
           DataCell(Text(snapshot.createdAt as String)),
           DataCell(Text(snapshot.markDeleted.toString())),
-
-          // DataCell(Text(snapshot.markDeleted.toString())),
           DataCell(
             DropdownButton<String>(
               hint: valuesList![indexs] == null
@@ -546,7 +679,9 @@ class _DashboardPageState extends State<DashboardPage> {
                         () => Future.delayed(
                           Duration(seconds: 2),
                           () {
-                            _pullRefresh();
+                            controllerSearch.text.isNotEmpty
+                                ? search()
+                                : _pullRefresh();
                           },
                         ),
                       );
@@ -557,7 +692,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     case "Edit":
                       dialogEdit(context);
                       setState(() {
-                        _emailController.text = snapshot.emailUser;
+                        _emailController.text = snapshot.emailUser as String;
                         _clientTypeController.text =
                             snapshot.clientType as String;
                         _rolesController.text = snapshot.roles as String;
@@ -578,7 +713,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     case "ResetPassword":
                       dialogResetPassword(context);
                       setState(() {
-                        _emailController.text = snapshot.emailUser;
+                        _emailController.text = snapshot.emailUser as String;
                       });
                       break;
                     case "Restore":
@@ -588,7 +723,9 @@ class _DashboardPageState extends State<DashboardPage> {
                             () => Future.delayed(
                               Duration(seconds: 2),
                               () {
-                                _pullRefresh();
+                                controllerSearch.text.isNotEmpty
+                                    ? search()
+                                    : _pullRefresh();
                               },
                             ),
                           );
@@ -661,17 +798,25 @@ class _DashboardPageState extends State<DashboardPage> {
                           padding: const EdgeInsets.only(
                               left: 8, right: 8, bottom: 8),
                           child: TextFormField(
-                            enabled: rolesType == 'superadmin' ? true : false,
+                            enabled: authoRoles['canWriteAll'] != false
+                                ? true
+                                : false,
                             controller: _clientCodeController,
                             decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
                                 labelText: "Client Code",
                                 enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
+                                    borderSide:
+                                        BorderSide(color: Colors.orange),
                                     borderRadius: BorderRadius.circular(12)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.blue),
                                     borderRadius: BorderRadius.circular(12)),
-                                fillColor: Colors.grey[200],
+                                fillColor: authoRoles['canWriteAll'] != false
+                                    ? Colors.grey[200]
+                                    : Colors.grey[400],
                                 filled: true),
                           ),
                         ),
@@ -698,6 +843,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                               BorderRadius.circular(12)),
                                       fillColor: Colors.grey[200],
                                       filled: true),
+                                  validator: (value) {
+                                    if (value!.isEmpty ||
+                                        RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]')
+                                            .hasMatch(value)) {
+                                      return "Enter correct name";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
                                 ),
                               ),
                             ),
@@ -720,6 +874,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                               BorderRadius.circular(12)),
                                       fillColor: Colors.grey[200],
                                       filled: true),
+                                  validator: (value) {
+                                    if (value!.isEmpty ||
+                                        RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]')
+                                            .hasMatch(value)) {
+                                      return "Enter correct name";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
                                 ),
                               ),
                             ),
@@ -739,6 +902,13 @@ class _DashboardPageState extends State<DashboardPage> {
                                     borderRadius: BorderRadius.circular(12)),
                                 fillColor: Colors.grey[200],
                                 filled: true),
+                            validator: (value) {
+                              if (value!.isEmpty || !isEmail(value)) {
+                                return "Enter correct email";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
                         ),
                         Padding(
@@ -746,15 +916,57 @@ class _DashboardPageState extends State<DashboardPage> {
                           child: TextFormField(
                             controller: _ageController,
                             decoration: InputDecoration(
-                                labelText: "Age",
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(12)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(12)),
-                                fillColor: Colors.grey[200],
-                                filled: true),
+                              labelText: "Date of Birth",
+                              prefixIcon: Icon(
+                                Icons.calendar_today,
+                                color: Colors.blue,
+                              ),
+                              // icon: Icon(
+                              //   Icons.calendar_today,
+                              //   color: Colors.blue,
+                              // ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(12)),
+                              fillColor: Colors.grey[200],
+                              filled: true,
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter correct date of birth";
+                              } else {
+                                return null;
+                              }
+                            },
+                            readOnly: true,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(
+                                      1950), //DateTime.now() - not to allow to choose before today.
+                                  lastDate: DateTime.now());
+
+                              if (pickedDate != null) {
+                                print(
+                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                print(
+                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //you can implement different kind of Date Format here according to your requirement
+
+                                setState(() {
+                                  _ageController.text =
+                                      formattedDate; //set output date to TextField value.
+                                });
+                              } else {
+                                print("Date is not selected");
+                              }
+                            },
                           ),
                         ),
                         Padding(
@@ -921,6 +1133,117 @@ class _DashboardPageState extends State<DashboardPage> {
                               },
                             ),
                           ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButtonFormField2(
+                              scrollbarAlwaysShow: true,
+                              offset: const Offset(0, 0),
+                              dropdownMaxHeight: 250,
+                              value: selectedValue!.isNotEmpty
+                                  ? selectedValue
+                                  : selectedValue = "",
+                              buttonDecoration: BoxDecoration(
+                                color: authoRoles['canWriteAll'] != false
+                                    ? Colors.grey[200]
+                                    : Colors.grey[400],
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              decoration: InputDecoration(
+                                //Add isDense true and zero Padding.
+                                //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                                isDense: true,
+                                // labelText: 'Client Type',
+                                label: const Text("Client Type"),
+
+                                contentPadding: EdgeInsets.zero,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                //Add more decoration as you want here
+                                //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                              ),
+                              isExpanded: true,
+                              hint: const Text(
+                                'Select Client Type',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              icon: const Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.black45,
+                              ),
+                              iconSize: 30,
+                              buttonHeight: 50,
+                              buttonPadding:
+                                  const EdgeInsets.only(left: 20, right: 10),
+                              dropdownDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              items: listOfValue
+                                  .map((item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ))
+                                  .toList(),
+                              validator: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      if (value == null) {
+                                        return 'Please Client Type.';
+                                      }
+                                      return null;
+                                    }
+                                  : null,
+                              onChanged: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      setState(() {
+                                        selectedValue = value.toString();
+                                      });
+                                    }
+                                  : null,
+
+                              onSaved: (value) {
+                                selectedValue = value.toString();
+                              },
+                              searchController: searchDropClientType,
+                              searchInnerWidget: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 8,
+                                  bottom: 4,
+                                  right: 8,
+                                  left: 8,
+                                ),
+                                child: TextFormField(
+                                  controller: searchDropClientType,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 8,
+                                    ),
+                                    hintText: 'Search for an item...',
+                                    hintStyle: const TextStyle(fontSize: 12),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              searchMatchFn: (item, searchValue) {
+                                return (item.value
+                                    .toString()
+                                    .contains(searchValue));
+                              },
+                              //This to clear the search value when you close the menu
+                              onMenuStateChange: (isOpen) {
+                                if (!isOpen) {
+                                  searchDropClientType.clear();
+                                }
+                              },
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -982,21 +1305,22 @@ class _DashboardPageState extends State<DashboardPage> {
                                         ),
                                       ))
                                   .toList(),
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please Client Type.';
-                                }
-                              },
-                              onChanged:
-                                  // rolesType == "Developer"
-                                  (value) {
-                                setState(() {
-                                  selectedValueRoles = value.toString();
-                                });
+                              validator: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      if (value == null) {
+                                        return 'Please Client Type.';
+                                      }
+                                      return null;
+                                    }
+                                  : null,
+                              onChanged: authoRoles['canWriteAll'] != false
+                                  ? (value) {
+                                      setState(() {
+                                        selectedValueRoles = value.toString();
+                                      });
+                                    }
+                                  : null,
 
-                                //Do something when changing the item if you want.
-                              },
-                              // : null,
                               onSaved: (value) {
                                 selectedValueRoles = value.toString();
                               },
@@ -1057,6 +1381,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                               ),
                             ),
+                            //https://stackoverflow.com/questions/54412712/flutter-firebase-authentication-create-user-without-logging-in
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -1079,7 +1404,22 @@ class _DashboardPageState extends State<DashboardPage> {
                                         phoneNumber: _phoneController.text,
                                         clientType: selectedValue as String,
                                       );
-                                      await service.updateUser(userData);
+                                      await service
+                                          .updateUser(userData)
+                                          .then((value) {
+                                        Navigator.pop(context);
+                                        controllerSearch.text.isNotEmpty
+                                            ? search()
+                                            : _pullRefresh();
+                                      }).whenComplete(() => showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    content: Text(
+                                                        'Data have been updated'),
+                                                  );
+                                                },
+                                              ));
                                     }
                                   }),
                                   child: const Text('Confirm'),
@@ -1163,7 +1503,9 @@ class _DashboardPageState extends State<DashboardPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
-                                  onPressed: passwordReset,
+                                  onPressed: () {
+                                    passwordReset(context);
+                                  },
                                   child: const Text('Confirm'),
                                 ),
                               ),
@@ -1180,7 +1522,7 @@ class _DashboardPageState extends State<DashboardPage> {
         });
   }
 
-  Future passwordReset() async {
+  Future passwordReset(context) async {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
@@ -1223,7 +1565,6 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     searchDropRoles.dispose();
     searchDropClientType.dispose();
     _ageController.dispose();
@@ -1240,4 +1581,33 @@ class _DashboardPageState extends State<DashboardPage> {
     _formKey.currentState?.dispose();
     super.dispose();
   }
+
+  void onSort(int columnIndex, bool ascending) {
+    if (columnIndex == 0) {
+      retrievedUserList!.sort((user1, user2) =>
+          compareString(ascending, user1.clientCode, user2.clientCode));
+    } else if (columnIndex == 1) {
+      retrievedUserList!.sort((user1, user2) =>
+          compareString(ascending, user1.firstName, user2.firstName));
+    } else if (columnIndex == 3) {
+      retrievedUserList!.sort((user1, user2) =>
+          compareString(ascending, user1.emailUser, user2.emailUser));
+    } else if (columnIndex == 8) {
+      retrievedUserList!.sort((user1, user2) =>
+          compareString(ascending, '${user1.createdAt}', '${user2.createdAt}'));
+    } else if (columnIndex == 9) {
+      retrievedUserList!.sort((user1, user2) => compareString(
+          ascending, '${user1.markDeleted}', '${user2.markDeleted}'));
+    }
+
+    setState(() {
+      _currentSortColumn = columnIndex;
+      _isAscending = ascending;
+    });
+  }
+
+  int compareString(bool ascending, String? clientCode, String? clientCode2) =>
+      ascending
+          ? clientCode!.compareTo(clientCode2!)
+          : clientCode2!.compareTo(clientCode!);
 }

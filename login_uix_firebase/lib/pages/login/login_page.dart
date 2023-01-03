@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/pages/login/login_desktop.dart';
 import 'package:login_uix_firebase/pages/login/login_mobile.dart';
+import 'package:login_uix_firebase/pages/login/login_mobile_riverpod.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,10 +23,10 @@ class _LoginPageState extends State<LoginPage> {
         resizeToAvoidBottomInset: false,
         body: LayoutBuilder(
           builder: (context, constraints) {
-            if (constraints.maxWidth > 600) {
-              return LoginDesktop();
+            if (ResponsiveWidget.isSmallScreen(context)) {
+              return LoginMobileRiverpod();
             } else {
-              return LoginMobile();
+              return LoginDesktop2();
             }
           },
         ),

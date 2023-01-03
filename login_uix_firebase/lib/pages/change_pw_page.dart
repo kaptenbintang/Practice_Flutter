@@ -3,19 +3,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-
+import 'package:login_uix_firebase/auth/backend/authenticator.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 
 import '../main.dart';
 
-class changePasswordPage extends StatefulWidget {
-  const changePasswordPage({super.key});
+class changePWPage extends StatefulWidget {
+  static const routeName = '/changePwPage';
+  const changePWPage({super.key});
 
   @override
-  State<changePasswordPage> createState() => _changePasswordPageState();
+  State<changePWPage> createState() => _changePWPageState();
 }
 
-class _changePasswordPageState extends State<changePasswordPage> {
+class _changePWPageState extends State<changePWPage> {
   var newPassword = "";
   final newPasswordController = TextEditingController();
   final newConfirmPasswordController = TextEditingController();

@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
 class UserData {
   final String? id;
   final String firstName;
   final String lastName;
-  final String emailUser;
+  final String? emailUser;
   // final int ageUser;
   final String? clientCode;
   final String? roles;
@@ -21,7 +21,7 @@ class UserData {
     this.id,
     required this.firstName,
     required this.lastName,
-    required this.emailUser,
+    this.emailUser,
     // required this.ageUser,
     this.clientCode,
     this.roles,
@@ -47,7 +47,7 @@ class UserData {
       "clientType": clientType,
       "createdAt": createdAt,
       "markDeleted": markDeleted,
-    };
+    }..removeWhere((key, value) => value == null);
   }
 
   // factory UserData.fromFirestore(
@@ -86,4 +86,24 @@ class UserData {
         clientType = doc.data()!["clientType"],
         createdAt = doc.data()!["createdAt"],
         markDeleted = doc.data()!["markDeleted"];
+}
+
+class UserDataSource extends DataTableSource {
+  @override
+  DataRow? getRow(int index) {
+    // TODO: implement getRow
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement isRowCountApproximate
+  bool get isRowCountApproximate => throw UnimplementedError();
+
+  @override
+  // TODO: implement rowCount
+  int get rowCount => throw UnimplementedError();
+
+  @override
+  // TODO: implement selectedRowCount
+  int get selectedRowCount => throw UnimplementedError();
 }

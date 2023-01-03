@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/pages/dashboard_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_client_type_page.dart';
+import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_servicesCategory_page.dart';
 import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_page.dart';
@@ -29,33 +30,44 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
           createDrawerBodyItem(
             icon: Icons.book_outlined,
             text: 'Staff Table',
-            onTap: () => Navigator.pushNamed(context, DashboardPage.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, DashboardPage.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.verified_user,
             text: 'Client Table',
-            onTap: () => Navigator.pushNamed(context, UserTablePage.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, UserTablePage.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.manage_accounts,
             text: 'Manage Roles',
-            onTap: () => Navigator.pushNamed(context, ManageRoles.routeName),
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, ManageRoles.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.manage_search,
             text: 'Manage Client Type',
-            onTap: () => Navigator.pushNamed(context, ManageClients.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, ManageClients.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.medical_services,
             text: 'Manage Services',
-            onTap: () => Navigator.pushNamed(context, ManageServices.routeName),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, ManageServices.routeName),
           ),
           createDrawerBodyItem(
             icon: Icons.category,
             text: 'Manage Services Category',
+            onTap: () => Navigator.pushReplacementNamed(
+                context, ManageServiceCategory.routeName),
+          ),
+          createDrawerBodyItem(
+            icon: Icons.person_pin,
+            text: 'Manage Practioners',
             onTap: () =>
-                Navigator.pushNamed(context, ManageServiceCategory.routeName),
+                Navigator.pushNamed(context, ManagePractioners.routeName),
           ),
         ],
       ),

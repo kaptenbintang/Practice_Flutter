@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_uix_firebase/constant/style.dart';
+import 'package:login_uix_firebase/helper/dimensions.dart';
+import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/routing/routes.dart';
 
 class MenuController extends GetxController {
@@ -30,6 +32,8 @@ class MenuController extends GetxController {
         return _customIcon(Icons.event, itemName);
       case LoginRoute:
         return _customIcon(Icons.person, itemName);
+      case RegisterRoute:
+        return _customIcon(Icons.app_registration_sharp, itemName);
       default:
         return _customIcon(Icons.home, itemName);
     }
@@ -39,13 +43,17 @@ class MenuController extends GetxController {
     if (isActive(itemName)) {
       return Icon(
         icon,
-        size: 22,
+        size: ResponsiveWidget.isLargeScreen(Get.context!)
+            ? 22
+            : Dimensions.font22,
         color: dark,
       );
     }
     return Icon(
       icon,
       color: isHovering(itemName) ? dark : lightGrey,
+      size:
+          ResponsiveWidget.isLargeScreen(Get.context!) ? 22 : Dimensions.font22,
     );
   }
 }

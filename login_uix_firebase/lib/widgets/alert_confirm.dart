@@ -5,7 +5,8 @@ import 'package:login_uix_firebase/helper/database_service.dart';
 
 class AlertDialogConfirm extends StatefulWidget {
   final String type;
-  final String id;
+  final String? id;
+  final List<String>? ids;
   final BuildContext contexts;
   final String textDesc;
   final String? title;
@@ -13,10 +14,11 @@ class AlertDialogConfirm extends StatefulWidget {
   AlertDialogConfirm(
       {super.key,
       required this.type,
-      required this.id,
+      this.id,
       required this.contexts,
       required this.textDesc,
-      this.title});
+      this.title,
+      this.ids});
 
   @override
   State<AlertDialogConfirm> createState() => _AlertDialogConfirmState();
@@ -47,7 +49,13 @@ class _AlertDialogConfirmState extends State<AlertDialogConfirm> {
             style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge),
             onPressed: () {
-              service.markdeleteUser(widget.contexts, widget.id);
+              if (widget.ids == null) {
+                service.markdeleteUser(widget.contexts, widget.id.toString());
+              } else {
+                for (var element in widget.ids!) {
+                  service.markdeleteUser(widget.contexts, element.toString());
+                }
+              }
 
               Navigator.pop(context);
             },

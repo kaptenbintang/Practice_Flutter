@@ -1,410 +1,670 @@
-// ignore_for_file: prefer_const_constructors
+// import 'package:hive/hive.dart';
+// import 'package:login_uix_firebase/helper/database_service.dart';
+// import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:login_uix_firebase/pages/profile_page.dart';
-import 'package:login_uix_firebase/route.dart';
+// import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
+// import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
+// import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
+// import 'package:login_uix_firebase/route.dart';
 
-import '../main.dart';
+// import '../flutter_flow/flutter_flow_theme.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+// import 'package:flutter/material.dart';
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
+// import '../model/practioner_data.dart';
 
-class DoctorItem extends StatelessWidget {
-  final String image;
-  final String name;
-  final String specialist;
-  const DoctorItem({
-    Key? key,
-    required this.image,
-    required this.name,
-    required this.specialist,
-  }) : super(key: key);
+// class MainPage extends StatefulWidget {
+//   static const routeName = '/mainPage';
+//   const MainPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    if (FirebaseAuth.instance.currentUser != null) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Container(
-          width: 160,
-          decoration: BoxDecoration(
-              color: const Color.fromARGB(95, 179, 173, 173),
-              borderRadius: BorderRadius.circular(15.0)),
-          padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage(image),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "$name",
-                overflow: TextOverflow.fade,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                specialist,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.black54),
-              )
-            ],
-          ),
-        ),
-      );
-    } else {
-      return const Center(child: CircularProgressIndicator());
-    }
-  }
-}
+//   @override
+//   State<MainPage> createState() => _MainPageState();
+//   // State<LoginPage> createState() => _LoginPageState();
 
-class SpecialistItem extends StatelessWidget {
-  final String imagePath;
-  final String imageName;
-  const SpecialistItem({
-    Key? key,
-    required this.imagePath,
-    required this.imageName,
-  }) : super(key: key);
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(95, 179, 173, 173),
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Row(
-        children: [
-          Image.asset(
-            imagePath,
-            width: 32,
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          Text(
-            imageName,
-            style: const TextStyle(fontSize: 14),
-          )
-        ],
-      ),
-    );
-  }
-}
+// class _MainPageState extends State<MainPage> {
+//   TextEditingController? textController;
+//   final scaffoldKey = GlobalKey<ScaffoldState>();
+//   DataService service = DataService();
+//   Future<List<PractionerData>>? PractionerList;
+//   Map<String, dynamic>? currentServicesData;
+//   List<PractionerData>? retrievedPractionerList;
+//   List<Map<String, dynamic>>? listofColumn;
+//   PractionerData? dataU;
 
-class _MainPageState extends State<MainPage> {
-  // final user = FirebaseAuth.instance.currentUser!;
-  // final auth = FirebaseAuth.instance;
-  // final db = FirebaseFirestore.instance;
-  // var uid;
-  // var fName, lName, age;
+//   @override
+//   void initState() {
+//     super.initState();
+//     _initRetrieval();
+//     textController = TextEditingController();
+//   }
 
-  // Future<void> getDataFromDb() async {
-  //   if (auth.currentUser != null) {
-  //     uid = auth.currentUser?.uid;
-  //     await db.collection("users").doc(uid).get().then((DocumentSnapshot doc) {
-  //       final data = doc.data() as Map<String, dynamic>;
-  //       fName = data["firstName"];
-  //       lName = data["lastName"];
-  //       age = data["age"];
-  //     });
-  //   }
-  // }
+//   @override
+//   void dispose() {
+//     textController?.dispose();
+//     super.dispose();
+//   }
 
-  // @override
-  // void initState() {
-  //   getDataFromDb();
-  //   super.initState();
-  // }
+//   Future<void> _initRetrieval() async {
+//     // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
+//     PractionerList = service.retrievePractionerAll();
+//     retrievedPractionerList = await service.retrievePractionerAll();
+//   }
 
-  // CollectionReference _getUsername =
-  //     FirebaseFirestore.instance.collection('users');
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       key: scaffoldKey,
+//       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+//       body: SafeArea(
+//         child: GestureDetector(
+//           onTap: () => FocusScope.of(context).unfocus(),
+//           child: SingleChildScrollView(
+//             child: Column(
+//               mainAxisSize: MainAxisSize.max,
+//               children: [
+//                 Container(
+//                   width: double.infinity,
+//                   constraints: BoxConstraints(
+//                     maxHeight: double.infinity,
+//                   ),
+//                   decoration: BoxDecoration(
+//                     color: FlutterFlowTheme.of(context).secondaryColor,
+//                   ),
+//                   child: SingleChildScrollView(
+//                     child: Column(
+//                       mainAxisSize: MainAxisSize.max,
+//                       mainAxisAlignment: MainAxisAlignment.start,
+//                       children: [
+//                         Row(
+//                           mainAxisSize: MainAxisSize.max,
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           children: [
+//                             Align(
+//                               alignment: AlignmentDirectional(-0.95, 0),
+//                               child: Padding(
+//                                 padding: EdgeInsetsDirectional.fromSTEB(
+//                                     100, 40, 0, 100),
+//                                 child: Container(
+//                                   width:
+//                                       MediaQuery.of(context).size.width * 0.3,
+//                                   height:
+//                                       MediaQuery.of(context).size.height * 0.06,
+//                                   decoration: BoxDecoration(),
+//                                   child: Row(
+//                                     mainAxisSize: MainAxisSize.max,
+//                                     children: [
+//                                       Align(
+//                                         alignment: AlignmentDirectional(-1, 0),
+//                                         child: Padding(
+//                                           padding:
+//                                               EdgeInsetsDirectional.fromSTEB(
+//                                                   20, 20, 20, 20),
+//                                           child: InkWell(
+//                                             onTap: () {
+//                                               Navigator.pushNamed(
+//                                                   context, MainPage.routeName);
+//                                             },
+//                                             child: Text(
+//                                               'Home',
+//                                               textAlign: TextAlign.justify,
+//                                               style:
+//                                                   FlutterFlowTheme.of(context)
+//                                                       .bodyText1,
+//                                             ),
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: EdgeInsetsDirectional.fromSTEB(
+//                                             20, 20, 20, 20),
+//                                         child: InkWell(
+//                                           onTap: () {
+//                                             Navigator.pushNamed(context,
+//                                                 RouteName.viewProfilePage);
+//                                             // ViewProfilePage();
+//                                           },
+//                                           child: Text(
+//                                             'Profile',
+//                                             style: FlutterFlowTheme.of(context)
+//                                                 .bodyText1,
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: EdgeInsetsDirectional.fromSTEB(
+//                                             20, 20, 20, 20),
+//                                         child: Text(
+//                                           'Contact us',
+//                                           style: FlutterFlowTheme.of(context)
+//                                               .bodyText1,
+//                                         ),
+//                                       ),
+//                                       Expanded(
+//                                         child: TextFormField(
+//                                           controller: textController,
+//                                           autofocus: true,
+//                                           obscureText: false,
+//                                           decoration: InputDecoration(
+//                                             hintText: 'Search Something here..',
+//                                             hintStyle:
+//                                                 FlutterFlowTheme.of(context)
+//                                                     .bodyText2,
+//                                             enabledBorder: OutlineInputBorder(
+//                                               borderSide: BorderSide(
+//                                                 color:
+//                                                     FlutterFlowTheme.of(context)
+//                                                         .primaryText,
+//                                                 width: 1,
+//                                               ),
+//                                               borderRadius:
+//                                                   BorderRadius.circular(20),
+//                                             ),
+//                                             focusedBorder: OutlineInputBorder(
+//                                               borderSide: BorderSide(
+//                                                 color:
+//                                                     FlutterFlowTheme.of(context)
+//                                                         .primaryText,
+//                                                 width: 1,
+//                                               ),
+//                                               borderRadius:
+//                                                   BorderRadius.circular(20),
+//                                             ),
+//                                             errorBorder: OutlineInputBorder(
+//                                               borderSide: BorderSide(
+//                                                 color: Color(0x00000000),
+//                                                 width: 1,
+//                                               ),
+//                                               borderRadius:
+//                                                   BorderRadius.circular(20),
+//                                             ),
+//                                             focusedErrorBorder:
+//                                                 OutlineInputBorder(
+//                                               borderSide: BorderSide(
+//                                                 color: Color(0x00000000),
+//                                                 width: 1,
+//                                               ),
+//                                               borderRadius:
+//                                                   BorderRadius.circular(20),
+//                                             ),
+//                                             prefixIcon: Icon(
+//                                               Icons.search,
+//                                             ),
+//                                           ),
+//                                           style: FlutterFlowTheme.of(context)
+//                                               .bodyText1,
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+//                             Padding(
+//                               padding: EdgeInsetsDirectional.fromSTEB(
+//                                   0, 40, 100, 100),
+//                               child: Image.asset(
+//                                 'lib/images/Logo-Slogan-BL-H400-W1080.png',
+//                                 width: MediaQuery.of(context).size.width * 0.12,
+//                                 height:
+//                                     MediaQuery.of(context).size.height * 0.06,
+//                                 fit: BoxFit.cover,
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                         SingleChildScrollView(
+//                           child: Column(
+//                             mainAxisSize: MainAxisSize.min,
+//                             mainAxisAlignment: MainAxisAlignment.end,
+//                             crossAxisAlignment: CrossAxisAlignment.center,
+//                             children: [
+//                               Padding(
+//                                 padding:
+//                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
+//                                 child: Text(
+//                                   'Begin your 1st Session!',
+//                                   style: FlutterFlowTheme.of(context)
+//                                       .title1
+//                                       .override(
+//                                         fontFamily: 'Poppins',
+//                                         fontSize: 40,
+//                                       ),
+//                                 ),
+//                               ),
+//                               Padding(
+//                                 padding: EdgeInsetsDirectional.fromSTEB(
+//                                     20, 20, 20, 20),
+//                                 child: Text(
+//                                   'We believe anyone can attain true happiness, whether adults, children, youth, male and female.',
+//                                   textAlign: TextAlign.justify,
+//                                   style: FlutterFlowTheme.of(context)
+//                                       .subtitle1
+//                                       .override(
+//                                         fontFamily: 'Poppins',
+//                                         fontWeight: FontWeight.w600,
+//                                       ),
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         SingleChildScrollView(
+//                           scrollDirection: Axis.horizontal,
+//                           child: Row(
+//                             mainAxisSize: MainAxisSize.max,
+//                             children: [
+//                               Padding(
+//                                 padding: EdgeInsetsDirectional.fromSTEB(
+//                                     20, 20, 20, 20),
+//                                 child: Image.asset(
+//                                   'lib/images/Adjustment-Icon-7.png',
+//                                   width: 100,
+//                                   height: 100,
+//                                   fit: BoxFit.cover,
+//                                 ),
+//                               ),
+//                               Padding(
+//                                 padding: EdgeInsetsDirectional.fromSTEB(
+//                                     20, 20, 20, 20),
+//                                 child: Image.asset(
+//                                   'lib/images/7.png',
+//                                   width: 100,
+//                                   height: 100,
+//                                   fit: BoxFit.cover,
+//                                 ),
+//                               ),
+//                               Padding(
+//                                 padding: EdgeInsetsDirectional.fromSTEB(
+//                                     20, 20, 20, 20),
+//                                 child: Image.asset(
+//                                   'lib/images/9.png',
+//                                   width: 100,
+//                                   height: 100,
+//                                   fit: BoxFit.cover,
+//                                 ),
+//                               ),
+//                               Padding(
+//                                 padding: EdgeInsetsDirectional.fromSTEB(
+//                                     20, 20, 20, 20),
+//                                 child: Image.asset(
+//                                   'lib/images/10.png',
+//                                   width: 100,
+//                                   height: 100,
+//                                   fit: BoxFit.cover,
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         FutureBuilder(
+//                             future: PractionerList,
+//                             builder: (context,
+//                                 AsyncSnapshot<List<PractionerData>> snapshot) {
+//                               if (snapshot.hasData &&
+//                                   snapshot.data!.isNotEmpty) {
+//                                 return Container(
+//                                   width: double.infinity,
+//                                   height:
+//                                       MediaQuery.of(context).size.height * 0.8,
+//                                   child: Stack(
+//                                     children: [
+//                                       Container(
+//                                         width: double.infinity,
+//                                         height: double.infinity,
+//                                         decoration: BoxDecoration(
+//                                           color: FlutterFlowTheme.of(context)
+//                                               .secondaryBackground,
+//                                           boxShadow: [
+//                                             BoxShadow(
+//                                               blurRadius: 12,
+//                                               color: Color(0x33000000),
+//                                               offset: Offset(0, 2),
+//                                             )
+//                                           ],
+//                                           borderRadius: BorderRadius.only(
+//                                             bottomLeft: Radius.circular(0),
+//                                             bottomRight: Radius.circular(0),
+//                                             topLeft: Radius.circular(60),
+//                                             topRight: Radius.circular(60),
+//                                           ),
+//                                           shape: BoxShape.rectangle,
+//                                         ),
+//                                         child: Padding(
+//                                           padding:
+//                                               EdgeInsetsDirectional.fromSTEB(
+//                                                   60, 60, 60, 60),
+//                                           child: GridView.builder(
+//                                             padding: EdgeInsets.zero,
+//                                             itemCount:
+//                                                 retrievedPractionerList!.length,
+//                                             gridDelegate:
+//                                                 SliverGridDelegateWithFixedCrossAxisCount(
+//                                               crossAxisCount: 3,
+//                                               crossAxisSpacing: 10,
+//                                               mainAxisSpacing: 8,
+//                                               childAspectRatio: 1,
+//                                             ),
+//                                             itemBuilder: (context, index) {
+//                                               return tableDepanPractioner(
+//                                                   context,
+//                                                   retrievedPractionerList![
+//                                                       index],
+//                                                   retrievedPractionerList,
+//                                                   index);
+//                                             },
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.blueAccent,
-        items: <Widget>[
-          Icon(Icons.home_outlined, size: 30),
-          Icon(Icons.calendar_month_outlined, size: 30),
-          Icon(Icons.chat_bubble_outline, size: 30),
-          Icon(Icons.notifications_none_outlined, size: 30),
-        ],
-        onTap: (index) {
-          //Handle button tap
-        },
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Hello,",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  // StreamBuilder<QuerySnapshot>(
-                  //     stream: _getUsername.snapshots(),
-                  //     builder: ((BuildContext context, AsyncSnapshot snapshot) {
-                  //       if (snapshot.hasError) {
-                  //         return Center(child: Text(snapshot.error.toString()));
-                  //       }
-                  //       if (snapshot.connectionState ==
-                  //           ConnectionState.active) {
-                  //         QuerySnapshot querySnapshot = snapshot.data;
-                  //       }
-                  //       return Center(child: CircularProgressIndicator());
-                  //     })),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 150),
-                    child: Text(
-                      "Welcome Back!",
-                      style: TextStyle(
-                        color: Colors.black,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, RouteName.viewProfilePage);
-                    },
-                    child: const CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Colors.grey,
-                      child: CircleAvatar(
-                        radius: 22,
-                        backgroundImage: AssetImage("lib/icons/user.png"),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(95, 179, 173, 173),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset(
-                      "lib/icons/consultation.png",
-                      width: 92,
-                      height: 100,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "How do you feel?",
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        const SizedBox(
-                          width: 120,
-                          child: Text(
-                            "Fill out your medical right now",
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 150,
-                          height: 35,
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                              color: Colors.blueAccent,
-                              borderRadius: BorderRadius.circular(12.0)),
-                          child: const Center(
-                            child: Text(
-                              "Get Started",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.only(left: 16),
-                height: 64,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(95, 179, 173, 173),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  children: const [
-                    Icon(
-                      Icons.search,
-                      size: 32,
-                      color: Colors.black54,
-                    ),
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Text(
-                      "How can we help you?",
-                      style: TextStyle(
-                        color: Colors.black54,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 60,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    SpecialistItem(
-                      imagePath: "lib/icons/calendar.png",
-                      imageName: "Booking",
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    SpecialistItem(
-                      imagePath: "lib/icons/calendar.png",
-                      imageName: "Booking",
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    SpecialistItem(
-                      imagePath: "lib/icons/calendar.png",
-                      imageName: "Booking",
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    SpecialistItem(
-                      imagePath: "lib/icons/calendar.png",
-                      imageName: "Booking",
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Consultant list",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    "See all",
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 200,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    DoctorItem(
-                      image: "lib/images/doctor.png",
-                      name: "Bintang",
-                      specialist: "Consultant",
-                    ),
-                    DoctorItem(
-                      image: "lib/images/doctor.png",
-                      name: "Gilland",
-                      specialist: "Consultant",
-                    ),
-                    DoctorItem(
-                      image: "lib/images/doctor.png",
-                      name: "Zul",
-                      specialist: "Consultant",
-                    ),
-                    DoctorItem(
-                      image: "lib/images/doctor.png",
-                      name: "test",
-                      specialist: "Consultant",
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+// //                                             primary: true,
+// //                                             shrinkWrap: true,
+// //                                             scrollDirection: Axis.vertical,
 
-//test123
+// //                                             // Padding(
+// //                                             //   padding: EdgeInsetsDirectional
+// //                                             //       .fromSTEB(20, 20, 20, 20),
+// //                                             //   child: Container(
+// //                                             //     decoration: BoxDecoration(
+// //                                             //       color: FlutterFlowTheme.of(
+// //                                             //               context)
+// //                                             //           .lineColor,
+// //                                             //       boxShadow: [
+// //                                             //         BoxShadow(
+// //                                             //           blurRadius: 12,
+// //                                             //           color:
+// //                                             //               Color(0x33000000),
+// //                                             //           offset: Offset(0, 2),
+// //                                             //         )
+// //                                             //       ],
+// //                                             //       borderRadius:
+// //                                             //           BorderRadius.circular(
+// //                                             //               20),
+// //                                             //       shape: BoxShape.rectangle,
+// //                                             //     ),
+// //                                             //     child: Column(
+// //                                             //       mainAxisSize:
+// //                                             //           MainAxisSize.max,
+// //                                             //       children: [
+// //                                             //         Padding(
+// //                                             //           padding:
+// //                                             //               EdgeInsetsDirectional
+// //                                             //                   .fromSTEB(20,
+// //                                             //                       20, 20, 20),
+// //                                             //           child: Text(
+// //                                             //             'Test',
+// //                                             //             style: FlutterFlowTheme
+// //                                             //                     .of(context)
+// //                                             //                 .title1,
+// //                                             //           ),
+// //                                             //         ),
+// //                                             //         Padding(
+// //                                             //           padding:
+// //                                             //               EdgeInsetsDirectional
+// //                                             //                   .fromSTEB(20, 0,
+// //                                             //                       20, 0),
+// //                                             //           child: ClipRRect(
+// //                                             //             borderRadius:
+// //                                             //                 BorderRadius
+// //                                             //                     .circular(20),
+// //                                             //             child: Image.asset(
+// //                                             //               'lib/images/doctor.png',
+// //                                             //               width: MediaQuery.of(
+// //                                             //                           context)
+// //                                             //                       .size
+// //                                             //                       .width *
+// //                                             //                   0.2,
+// //                                             //               height: MediaQuery.of(
+// //                                             //                           context)
+// //                                             //                       .size
+// //                                             //                       .height *
+// //                                             //                   0.2,
+// //                                             //               fit: BoxFit.cover,
+// //                                             //             ),
+// //                                             //           ),
+// //                                             //         ),
+// //                                             //         Padding(
+// //                                             //           padding:
+// //                                             //               EdgeInsetsDirectional
+// //                                             //                   .fromSTEB(0, 10,
+// //                                             //                       0, 0),
+// //                                             //           child: Text(
+// //                                             //             '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"',
+// //                                             //             textAlign:
+// //                                             //                 TextAlign.center,
+// //                                             //             style: FlutterFlowTheme
+// //                                             //                     .of(context)
+// //                                             //                 .bodyText1
+// //                                             //                 .override(
+// //                                             //                   fontFamily:
+// //                                             //                       'Poppins',
+// //                                             //                   fontStyle:
+// //                                             //                       FontStyle
+// //                                             //                           .italic,
+// //                                             //                 ),
+// //                                             //           ),
+// //                                             //         ),
+// //                                             //       ],
+// //                                             //     ),
+// //                                             //   ),
+// //                                             // ),
+// //                                           ),
+// //                                         ),
+// //                                       ),
+// //                                       Align(
+// //                                         alignment: AlignmentDirectional(-1, -1),
+// //                                         child: Padding(
+// //                                           padding:
+// //                                               EdgeInsetsDirectional.fromSTEB(
+// //                                                   20, 20, 20, 20),
+// //                                           child: Text(
+// //                                             'Practioner',
+// //                                             textAlign: TextAlign.justify,
+// //                                             style: FlutterFlowTheme.of(context)
+// //                                                 .title1,
+// //                                           ),
+// //                                         ),
+// //                                       ),
+// //                                     ],
+// //                                   ),
+// //                                 );
+// //                               } else if (snapshot.connectionState ==
+// //                                       ConnectionState.done &&
+// //                                   retrievedPractionerList!.isEmpty) {
+// //                                 return Center(
+// //                                   child: ListView(
+// //                                     physics:
+// //                                         const AlwaysScrollableScrollPhysics(),
+// //                                     children: const <Widget>[
+// //                                       Align(
+// //                                         alignment: AlignmentDirectional.center,
+// //                                         child: Text('No Data Availble'),
+// //                                       )
+// //                                     ],
+// //                                   ),
+// //                                 );
+// //                               } else {
+// //                                 return const Center(
+// //                                   child: CircularProgressIndicator(),
+// //                                 );
+// //                               }
+// //                             }),
+// //                       ],
+// //                     ),
+// //                   ),
+// //                 ),
+// //                 Container(
+// //                   width: MediaQuery.of(context).size.width,
+// //                   height: MediaQuery.of(context).size.height * 0.7,
+// //                   decoration: BoxDecoration(
+// //                     color: FlutterFlowTheme.of(context).secondaryBackground,
+// //                   ),
+// //                   child: Column(
+// //                     mainAxisSize: MainAxisSize.max,
+// //                     children: [
+// //                       Align(
+// //                         alignment: AlignmentDirectional(-0.95, 0),
+// //                         child: Padding(
+// //                           padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+// //                           child: Text(
+// //                             'On going appointment',
+// //                             style: FlutterFlowTheme.of(context).title1,
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       Padding(
+// //                         padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+// //                         child: Container(
+// //                           width: MediaQuery.of(context).size.width * 0.4,
+// //                           height: MediaQuery.of(context).size.height * 0.4,
+// //                           decoration: BoxDecoration(
+// //                             borderRadius: BorderRadius.circular(20),
+// //                           ),
+// //                           child: Column(
+// //                             mainAxisSize: MainAxisSize.max,
+// //                             children: [
+// //                               Padding(
+// //                                 padding: EdgeInsetsDirectional.fromSTEB(
+// //                                     20, 30, 20, 0),
+// //                                 child: ClipRRect(
+// //                                   borderRadius: BorderRadius.circular(20),
+// //                                   child: Image.asset(
+// //                                     'lib/images/noappointment.png',
+// //                                     width:
+// //                                         MediaQuery.of(context).size.width * 0.3,
+// //                                     height: MediaQuery.of(context).size.height *
+// //                                         0.3,
+// //                                     fit: BoxFit.scaleDown,
+// //                                   ),
+// //                                 ),
+// //                               ),
+// //                               Padding(
+// //                                 padding:
+// //                                     EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+// //                                 child: Text(
+// //                                   'No Appointment',
+// //                                   style: FlutterFlowTheme.of(context).title1,
+// //                                 ),
+// //                               ),
+// //                             ],
+// //                           ),
+// //                         ),
+// //                       ),
+// //                     ],
+// //                   ),
+// //                 ),
+// //                 Stack(
+// //                   children: [
+// //                     Container(
+// //                       width: MediaQuery.of(context).size.width,
+// //                       height: MediaQuery.of(context).size.height * 0.5,
+// //                       decoration: BoxDecoration(
+// //                         color: FlutterFlowTheme.of(context).secondaryColor,
+// //                         borderRadius: BorderRadius.only(
+// //                           bottomLeft: Radius.circular(0),
+// //                           bottomRight: Radius.circular(0),
+// //                           topLeft: Radius.circular(60),
+// //                           topRight: Radius.circular(60),
+// //                         ),
+// //                       ),
+// //                       child: Column(
+// //                         mainAxisSize: MainAxisSize.max,
+// //                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+// //                         children: [
+// //                           Text(
+// //                             'footer here',
+// //                             style: FlutterFlowTheme.of(context).title1,
+// //                           ),
+// //                         ],
+// //                       ),
+// //                     ),
+// //                   ],
+// //                 ),
+// //               ],
+// //             ),
+// //           ),
+// //         ),
+// //       ),
+// //     );
+// //   }
+
+// //   Widget tableDepanPractioner(BuildContext context, PractionerData snapshot,
+// //       List<PractionerData>? user, int indexs) {
+// //     // print(snapshot.firstName);
+// //     // print(indexs);
+// //     // print(user);
+// //     // print(_isChecked);
+// //     // int idx = int.parse(dropDownItemValue2[indexs]);
+// //     // return Text(snapshot.firstName as String);
+// //     final _myBox = Hive.box('myBox');
+// //     return Padding(
+// //       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+// //       child: InkWell(
+// //         onTap: () {
+// //           _myBox.put(
+// //               'name',
+// //               snapshot.firstName.toString() +
+// //                   " " +
+// //                   snapshot.lastName.toString());
+// //           _myBox.put('id', snapshot.id);
+// //           print(_myBox.get('name'));
+// //           print(_myBox.get('id'));
+// //           Navigator.pushNamed(context, DetailPagePractioner.routeName,
+// //               arguments: snapshot);
+// //         },
+// //         child: Container(
+// //           decoration: BoxDecoration(
+// //             color: FlutterFlowTheme.of(context).lineColor,
+// //             boxShadow: [
+// //               BoxShadow(
+// //                 blurRadius: 12,
+// //                 color: Color(0x33000000),
+// //                 offset: Offset(0, 2),
+// //               )
+// //             ],
+// //             borderRadius: BorderRadius.circular(20),
+// //             shape: BoxShape.rectangle,
+// //           ),
+// //           child: SingleChildScrollView(
+// //             child: Column(
+// //               // mainAxisSize: MainAxisSize.max,
+// //               children: [
+// //                 Padding(
+// //                   padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+// //                   child: Text(
+// //                     snapshot.firstName.toString() +
+// //                         ' ' +
+// //                         snapshot.lastName.toString(),
+// //                     style: FlutterFlowTheme.of(context).title1,
+// //                   ),
+// //                 ),
+// //                 Padding(
+// //                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+// //                   child: ClipRRect(
+// //                     borderRadius: BorderRadius.circular(20),
+// //                     child: Image.asset(
+// //                       'lib/images/doctor.png',
+// //                       width: MediaQuery.of(context).size.width * 0.2,
+// //                       height: MediaQuery.of(context).size.height * 0.2,
+// //                       fit: BoxFit.scaleDown,
+// //                     ),
+// //                   ),
+// //                 ),
+// //                 Padding(
+// //                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+// //                   child: Text(
+// //                     snapshot.myBackground as String,
+// //                     textAlign: TextAlign.center,
+// //                     style: FlutterFlowTheme.of(context).bodyText1.override(
+// //                           fontFamily: 'Poppins',
+// //                           fontStyle: FontStyle.italic,
+// //                         ),
+// //                   ),
+// //                 ),
+// //               ],
+// //             ),
+// //           ),
+// //         ),
+// //       ),
+// //     );
+// //   }
+// // }

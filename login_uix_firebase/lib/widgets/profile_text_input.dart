@@ -7,22 +7,24 @@ class ProfileTextInput extends StatefulWidget {
   final String labelText;
   final bool obscure;
   void Function()? fungsitap;
+  final bool readonly;
   // final TextInputType inputType;
   // final Widget prefixIcon;
   // final Widget suffixIcon;
 
-  ProfileTextInput({
-    super.key,
-    required this.textEditingController,
-    required this.hintTextString,
-    required this.maxLength,
-    required this.labelText,
-    required this.obscure,
-    this.fungsitap,
-    // required this.inputType,
-    // required this.prefixIcon,
-    // required this.suffixIcon,
-  });
+  ProfileTextInput(
+      {super.key,
+      required this.textEditingController,
+      required this.hintTextString,
+      required this.maxLength,
+      required this.labelText,
+      required this.obscure,
+      this.fungsitap,
+      required this.readonly
+      // required this.inputType,
+      // required this.prefixIcon,
+      // required this.suffixIcon,
+      });
 
   @override
   State<ProfileTextInput> createState() => _ProfileTextInputState();
@@ -33,7 +35,7 @@ class _ProfileTextInputState extends State<ProfileTextInput> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: TextField(
+      child: TextFormField(
         obscureText: widget.obscure,
         controller: widget.textEditingController,
         decoration: InputDecoration(
@@ -49,6 +51,7 @@ class _ProfileTextInputState extends State<ProfileTextInput> {
           labelText: widget.labelText,
           isDense: true,
         ),
+        readOnly: widget.readonly,
         onTap: widget.fungsitap,
         // maxLength: widget.maxLength,
       ),

@@ -2,12 +2,17 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
+import 'package:login_uix_firebase/constant/firebase_field_name.dart';
+import 'package:login_uix_firebase/model/appointment_data.dart';
+import 'package:login_uix_firebase/model/practioner_data.dart';
+import 'package:login_uix_firebase/model/roles_data.dart';
+import 'package:login_uix_firebase/model/serviceCategory_data.dart';
+import 'package:login_uix_firebase/model/services_data.dart';
 
 import '../model/clientType_data.dart';
-import '../model/roles_data.dart';
-import '../model/serviceCategory_data.dart';
-import '../model/services_data.dart';
 import '../model/user_data.dart';
 
 class DataService {
@@ -29,12 +34,26 @@ class DataService {
     await _db.collection("services").add(servicesData.toMap());
   }
 
+  addPractioners(PractionerData practionerData) async {
+    await _db.collection("practioners").add(practionerData.toMap());
+  }
+
+  addAppointment(AppointmentData appointmentData) async {
+    await _db.collection("appointment").add(appointmentData.toMap());
+  }
+
   addServicesCategory(serviceCategoryClass servicesDataCategory) async {
     await _db.collection("servicesCategory").add(servicesDataCategory.toMap());
   }
 
+  static Future<void> updateUserI(UserData employeeData) async =>
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(employeeData.id)
+          .update(employeeData.toMap());
+
   Future<void> updateUser(UserData employeeData) async {
-    await _db
+    await FirebaseFirestore.instance
         .collection("users")
         .doc(employeeData.id)
         .update(employeeData.toMap());
@@ -59,6 +78,20 @@ class DataService {
         .collection("services")
         .doc(servicesData.id)
         .update(servicesData.toMap());
+  }
+
+  Future<void> updatePractioners(PractionerData practionerData) async {
+    await _db
+        .collection("practioners")
+        .doc(practionerData.id)
+        .update(practionerData.toMap());
+  }
+
+  Future<void> updateAppointment(AppointmentData appointmentData) async {
+    await _db
+        .collection("appointment")
+        .doc(appointmentData.id)
+        .update(appointmentData.toMap());
   }
 
   Future<void> updateServicesCategory(
@@ -137,6 +170,42 @@ class DataService {
     );
   }
 
+  Future<void> deletePractioners(
+      BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("practioners").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Practioner"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> deleteAppointment(
+      BuildContext context, String documentId) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("appointment").doc(documentId);
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Deleted Appointment"),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<void> deleteServicesCategory(
       BuildContext context, String documentId) async {
     // await _db.collection("users").doc(documentId).delete();
@@ -192,10 +261,12 @@ class DataService {
     );
   }
 
-  Future<List<UserData>> retrieveAllUsers(String? roles) async {
+  Future<List<UserData>> retrieveAllStaff(String? roles) async {
     if (roles == 'superadmin') {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
-          await _db.collection("users").get();
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+          .collection("users")
+          .where('roles', isNotEqualTo: 'user')
+          .get();
       return snapshot.docs
           .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
           .toList();
@@ -203,31 +274,13 @@ class DataService {
       QuerySnapshot<Map<String, dynamic>> snapshot = await _db
           .collection("users")
           .where('roles', isNotEqualTo: 'user')
-          // .where('markDeleted', isEqualTo: false)s
+          .where('markDeleted', isEqualTo: false)
           .get();
-      // ignore: avoid_print
 
       return snapshot.docs
           .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
           .toList();
     }
-
-    // final ref = _db.collection("users").doc().withConverter(
-    //       fromFirestore: UserData.fromFirestore,
-    //       toFirestore: (UserData data, _) => data.toFireStore(),
-    //     );
-    // final docSnap = await ref.get();
-    // return docSnap.data();
-  }
-
-  Future<List<UserData>> retrieveAllUsersNotDeleted() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
-        .collection("users")
-        .where('markDeleted', isEqualTo: false)
-        .get();
-    return snapshot.docs
-        .map((docSnapshot) => UserData.fromDocumentSnapshot(docSnapshot))
-        .toList();
 
     // final ref = _db.collection("users").doc().withConverter(
     //       fromFirestore: UserData.fromFirestore,
@@ -289,10 +342,82 @@ class DataService {
         .toList();
   }
 
-  Future<Map<String, dynamic>> currentUsers(uid) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("users").doc(uid).get();
-    Map<String, dynamic>? data = snapshot.data();
-    return data!;
+  Future<List<PractionerData>> retrievePractionerAll() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("practioners")
+        // .where("displayMain", isEqualTo: true)
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => PractionerData.fromDocumentSnapshot(docSnapshot))
+        .toList();
   }
+
+  Future<List<AppointmentData>> retrieveApppointmentAll() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("appointment")
+        // .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => AppointmentData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<AppointmentData>> retrieveApppointment() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("appointment")
+        .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .where('statusAppointment', isEqualTo: 'ongoing')
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => AppointmentData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<AppointmentData>> retrieveApppointment2() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
+        .collection("appointment")
+        .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .where('statusAppointment', isNotEqualTo: 'ongoing')
+        .get();
+    return snapshot.docs
+        .map((docSnapshot) => AppointmentData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<Map<String, dynamic>> currentUsers(uid) async {
+    final snapshot = await _db
+        .collection("users")
+        .where(FirebaseFieldName.userId, isEqualTo: uid)
+        .limit(1)
+        .get();
+    final cruser = snapshot.docs[0];
+    // Map<String, dynamic> data = snapshot.data()!;
+    return cruser.data();
+  }
+
+  Future<List<UserData>> searchUser(String name) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection('users').where('firstName', isEqualTo: name).get();
+    return snapshot.docs.map((e) => UserData.fromDocumentSnapshot(e)).toList();
+  }
+
+  // static Future<UserCredential> register(
+  //   String email,
+  //   String password,
+  // ) async {
+  //   FirebaseApp app = await Firebase.initializeApp(
+  //       name: 'Secondary', options: Firebase.app().options);
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  //   } on FirebaseAuthException catch (e) {
+  //     // Do something with exception. This try/catch is here to make sure
+  //     // that even if the user creation fails, app.delete() runs, if is not,
+  //     // next time Firebase.initializeApp() will fail as the previous one was
+  //     // not deleted.
+  //   }
+
+  //   await app.delete();
+  //   return Future.sync(() => userCredential);
+  // }
 }
