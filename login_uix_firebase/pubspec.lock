@@ -1070,7 +1070,8 @@ packages:
     dependency: "direct main"
     description:
       name: social_media_flutter
-      url: "https://pub.dartlang.org"
+      sha256: d38f22a56066a6b993a0aced1a4e475b13a9a6ae6dfecb9348b3cd16de992fd7
+      url: "https://pub.dev"
     source: hosted
     version: "0.0.2"
   source_span:
