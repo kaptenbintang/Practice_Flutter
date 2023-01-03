@@ -12,7 +12,8 @@ class Appointment {
   final String clientNameorCode;
   final String clientphNumber;
   final String createdAt;
-  final String dateandtime;
+  final String date;
+  final String time;
   final String location;
   final String practionerName;
   final String services;
@@ -27,7 +28,8 @@ class Appointment {
         clientNameorCode = json[AppointmentKey.clientNameorCode],
         clientphNumber = json[AppointmentKey.clientphNumber],
         createdAt = json[AppointmentKey.createdAt],
-        dateandtime = json[AppointmentKey.dateandtime],
+        date = json[AppointmentKey.date],
+        time = json[AppointmentKey.time],
         location = json[AppointmentKey.location],
         practionerName = json[AppointmentKey.practionerName],
         services = json[AppointmentKey.services],
