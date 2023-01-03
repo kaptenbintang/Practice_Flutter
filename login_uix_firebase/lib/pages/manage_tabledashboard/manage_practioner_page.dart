@@ -11,7 +11,6 @@ import 'package:login_uix_firebase/pages/appointment_page.dart';
 import '../../flutter_flow/flutter_flow.dart';
 import '../../helper/database_service.dart';
 import '../../main.dart';
-import '../../widgets/drawer_dashboard.dart';
 
 class ManagePractioners extends StatefulWidget {
   static const routeName = '/ManagePractionersPage';
@@ -87,7 +86,7 @@ class _ManagePractionersState extends State<ManagePractioners> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerDashBoard(),
+      // drawer: const DrawerDashBoard(),
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Practioner Dashboard"),
@@ -215,7 +214,6 @@ class _ManagePractionersState extends State<ManagePractioners> {
                 //     child: Icon(Icons.add),
                 //     // backgroundColor: Colors.green,
                 //   )
-
               } else if (snapshot.connectionState == ConnectionState.done &&
                   retrievedPractionerList!.isEmpty) {
                 return Center(

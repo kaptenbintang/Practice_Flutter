@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import '../../helper/database_service.dart';
-import '../../widgets/drawer_dashboard.dart';
 
 class ManageRoles extends StatefulWidget {
   static const routeName = '/manageRolesPage';
@@ -67,7 +66,7 @@ class _ManageRolesState extends State<ManageRoles> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerDashBoard(),
+      // drawer: const DrawerDashBoard(),
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
