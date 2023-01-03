@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentData {
-  final String? id;
+  final String? clientId;
+  final String? practionerId;
   final String? practionerName;
   final String? services;
-  final String? dateandtime;
+  final String? date;
+  final String? time;
   final String? location;
   final String? clientNameorCode;
   final String? clientEmail;
@@ -16,10 +18,12 @@ class AppointmentData {
   final String? createdAt;
 
   AppointmentData(
-      {this.id,
+      {this.clientId,
+      this.practionerId,
       this.practionerName,
       this.services,
-      this.dateandtime,
+      this.date,
+      this.time,
       this.location,
       this.clientNameorCode,
       this.clientEmail,
@@ -30,10 +34,12 @@ class AppointmentData {
 
   Map<String, dynamic> toMap() {
     return {
-      "clientId": id,
+      "clientId": clientId,
+      "practionerId": practionerId,
       "practionerName": practionerName,
       "services": services,
-      "dateandtime": dateandtime,
+      "date": date,
+      "time": time,
       "location": location,
       "clientNameorCode": clientNameorCode,
       "clientEmail": clientEmail,
@@ -46,10 +52,12 @@ class AppointmentData {
 
   AppointmentData.fromDocumentSnapshot(
       DocumentSnapshot<Map<String, dynamic>> doc)
-      : id = doc.id,
+      : clientId = doc.data()!["clientId"],
+        practionerId = doc.data()!["practionerid"],
         practionerName = doc.data()!["practionerName"],
         services = doc.data()!["services"],
-        dateandtime = doc.data()!["dateandtime"],
+        date = doc.data()!["date"],
+        time = doc.data()!["time"],
         location = doc.data()!["location"],
         clientNameorCode = doc.data()!["clientNameorCode"],
         clientEmail = doc.data()!["clientEmail"],
@@ -58,4 +66,3 @@ class AppointmentData {
         statusAppointment = doc.data()!["statusAppointment"],
         createdAt = doc.data()!["createdAt"];
 }
-///test

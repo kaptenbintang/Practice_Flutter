@@ -148,7 +148,7 @@ class MyApp extends ConsumerWidget {
                 practioner:
                     ModalRoute.of(context)?.settings.arguments as Practioner,
               ),
-          appointmentPage.routeName: (context) => const appointmentPage(),
+          // appointmentPage.routeName: (context) => const appointmentPage(),
           AppointmentPageRiverpod.routeName: (context) =>
               AppointmentPageRiverpod(
                 practioner:
