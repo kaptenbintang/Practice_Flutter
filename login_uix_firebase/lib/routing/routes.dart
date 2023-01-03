@@ -26,6 +26,9 @@ List sideBarAdminItems = [
   AppointmentRoute,
   LogOutRoute
 ];
+List sideBarPractionerItem = [
+  AppointmentRoute,
+];
 
 List sideMenuItems = [
   LandingRoute,

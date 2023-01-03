@@ -24,3 +24,24 @@ class SideBarAdminItem extends StatelessWidget {
     );
   }
 }
+
+class SideBarPractionerItem extends StatelessWidget {
+  final String? itemName;
+  final void Function()? onTap;
+  const SideBarPractionerItem({super.key, this.itemName, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    if (ResponsiveWidget.isCustomSize(context)) {
+      return VerticalSideAdminItem(
+        itemName: itemName,
+        onTap: onTap,
+      );
+    }
+
+    return HorizontalAdminBarItem(
+      itemName: itemName,
+      onTap: onTap,
+    );
+  }
+}

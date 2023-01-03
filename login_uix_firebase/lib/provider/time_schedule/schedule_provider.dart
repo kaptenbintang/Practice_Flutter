@@ -23,7 +23,7 @@ final timeScheduleProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
           FirebaseCollectionName.practioners,
         )
         // .orderBy(
-        //   FirebaseFieldName.createdAt,
+        //   'schedules.1',
         //   descending: false,
         // )
         .where(

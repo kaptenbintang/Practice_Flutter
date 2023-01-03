@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/clientType_data.dart';
 import '../../helper/database_service.dart';
-import '../../widgets/drawer_dashboard.dart';
 
 class ManageClients extends StatefulWidget {
   static const routeName = '/ManageClientsTypePage';
@@ -63,7 +62,7 @@ class _ManageClientsState extends State<ManageClients> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerDashBoard(),
+      // drawer: const DrawerDashBoard(),
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Dashboard Home"),
