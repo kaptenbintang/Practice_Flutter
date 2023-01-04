@@ -412,7 +412,7 @@ class historyBookingRiverpod extends ConsumerWidget {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                   child: Text(
-                    data.dateandtime.toString(),
+                    data.date.toString(),
                     style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                 ),

@@ -50,7 +50,7 @@ class AppointmentsThumbnailView extends StatelessWidget {
                 style: FlutterFlowTheme.of(context).bodyText1,
               ),
               Text(
-                "Booking Date: " + appointment.dateandtime.toString(),
+                "Booking Date: " + appointment.date.toString(),
                 style: FlutterFlowTheme.of(context).bodyText1,
               ),
             ],

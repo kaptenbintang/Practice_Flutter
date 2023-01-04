@@ -90,7 +90,7 @@ class DataService {
   Future<void> updateAppointment(AppointmentData appointmentData) async {
     await _db
         .collection("appointment")
-        .doc(appointmentData.id)
+        .doc(appointmentData.clientId)
         .update(appointmentData.toMap());
   }
 

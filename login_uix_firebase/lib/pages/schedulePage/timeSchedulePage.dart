@@ -236,6 +236,24 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                                 fontSize: 26,
                               ),
                         ),
+                        // InkWell(
+                        //   onTap: () {},
+                        //   child: Padding(
+                        //     padding:
+                        //         EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        //     child: Text(
+                        //       'Disable this day',
+                        //       style: FlutterFlowTheme.of(context)
+                        //           .subtitle2
+                        //           .override(
+                        //             fontFamily: 'Poppins',
+                        //             fontSize: 10,
+                        //             fontStyle: FontStyle.italic,
+                        //             decoration: TextDecoration.underline,
+                        //           ),
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                     Expanded(

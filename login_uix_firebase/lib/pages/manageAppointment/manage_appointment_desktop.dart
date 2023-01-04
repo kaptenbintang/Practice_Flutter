@@ -499,7 +499,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AutoSizeText(
-                      snapshot.id!,
+                      snapshot.clientId!,
                       style: FlutterFlowTheme.of(context).subtitle1.override(
                             fontFamily: 'Poppins',
                             fontSize: 16,
@@ -544,7 +544,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
 
               Expanded(
                 child: Text(
-                  snapshot.dateandtime!,
+                  snapshot.date!,
                   style: FlutterFlowTheme.of(context).bodyText1,
                 ),
               ),
@@ -574,12 +574,12 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                           print('Button pressed ...');
                           dialogEditAppointment(context);
                           setState(() {
-                            userId = snapshot.id;
+                            userId = snapshot.clientId;
                             _practionername.text =
                                 snapshot.practionerName.toString();
                             _services.text = snapshot.services.toString();
                             _location.text = snapshot.location.toString();
-                            _dateandtime.text = snapshot.dateandtime.toString();
+                            _dateandtime.text = snapshot.date.toString();
                             _clientcodeorname.text =
                                 snapshot.clientNameorCode.toString();
                             _clientphnumber.text =
@@ -620,7 +620,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                         onPressed: () async {
                           print('Button pressed ...');
                           await service.deleteAppointment(
-                              context, snapshot.id.toString());
+                              context, snapshot.clientId.toString());
                           _pullRefresh();
                         },
                         text: 'Delete',
@@ -802,11 +802,11 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               AppointmentData appointmentData = AppointmentData(
-                                  id: userId,
+                                  clientId: userId,
                                   practionerName: _practionername.text,
                                   services: _services.text,
                                   location: _location.text,
-                                  dateandtime: _dateandtime.text,
+                                  date: _dateandtime.text,
                                   clientNameorCode: _clientcodeorname.text,
                                   clientphNumber: _clientphnumber.text,
                                   clientEmail: _clientemail.text,

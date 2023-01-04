@@ -38,6 +38,7 @@ import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/pages/schedulePage/mainSchedulePage.dart';
+import 'package:login_uix_firebase/pages/schedulePage/specialDatePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/timeSchedulePage.dart';
 import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
@@ -147,7 +148,7 @@ class MyApp extends ConsumerWidget {
                 practioner:
                     ModalRoute.of(context)?.settings.arguments as Practioner,
               ),
-          appointmentPage.routeName: (context) => const appointmentPage(),
+          // appointmentPage.routeName: (context) => const appointmentPage(),
           AppointmentPageRiverpod.routeName: (context) =>
               AppointmentPageRiverpod(
                 practioner:
@@ -174,6 +175,7 @@ class MyApp extends ConsumerWidget {
           RouteName.MainPagesPage: (context) => MainPagesPage(),
           RouteName.mainSchedulePage: (context) => mainSchedulePage(),
           RouteName.timeSchedulePage: (context) => timeSchedulePage(),
+          RouteName.specialDatePage: (context) => specialDatePage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }
