@@ -88,389 +88,383 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    return // Generated code for this Column Widget...
-        Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 4,
-                      color: Color(0x33000000),
-                      offset: Offset(0, 2),
-                    )
-                  ],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //Title and subtitle
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Dashboard',
-                            style: FlutterFlowTheme.of(context).title3,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    color: Color(0x33000000),
+                    offset: Offset(0, 2),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //Title and subtitle
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Dashboard',
+                          style: FlutterFlowTheme.of(context).title3,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                          child: Text(
+                            'Your project status is appearing here.',
+                            style: FlutterFlowTheme.of(context).bodyText2,
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                            child: Text(
-                              'Your project status is appearing here.',
-                              style: FlutterFlowTheme.of(context).bodyText2,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
-                      child: Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        runAlignment: WrapAlignment.start,
-                        verticalDirection: VerticalDirection.down,
-                        clipBehavior: Clip.none,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).lineColor,
-                                  width: 1,
-                                ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      runAlignment: WrapAlignment.start,
+                      verticalDirection: VerticalDirection.down,
+                      clipBehavior: Clip.none,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(4, 0, 4, 24),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).lineColor,
+                                width: 1,
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 12),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    //Add button, Title, Search textfield and icon
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        //Add Button and Title
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5, 0, 0, 0),
-                                              child: FlutterFlowIconButton(
-                                                borderColor: Colors.transparent,
-                                                borderRadius: 30,
-                                                borderWidth: 1,
-                                                buttonSize: 50,
-                                                icon: Icon(
-                                                  Icons.refresh,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 25,
-                                                ),
-                                                onPressed: () {
-                                                  // print(
-                                                  //     'IconButton pressed ...');
-                                                  // dialogaddPractioner(context);
-                                                  _pullRefresh();
-                                                },
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5, 0, 0, 0),
-                                              child: Text(
-                                                'Appointment',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title3,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        //Search textfield and icon
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Container(
-                                              width: 200,
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 5),
-                                                child: Container(
-                                                  width: 200,
-                                                  child: TextFormField(
-                                                    controller: textController,
-                                                    autofocus: true,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      hintText: 'Search...',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2,
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          width: 2,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          width: 2,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 2,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 2,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            FlutterFlowIconButton(
+                            ),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 12),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //Add button, Title, Search textfield and icon
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      //Add Button and Title
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    5, 0, 0, 0),
+                                            child: FlutterFlowIconButton(
                                               borderColor: Colors.transparent,
                                               borderRadius: 30,
                                               borderWidth: 1,
                                               buttonSize: 50,
                                               icon: Icon(
-                                                Icons.search,
+                                                Icons.refresh,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                        .primaryColor,
                                                 size: 25,
                                               ),
                                               onPressed: () {
-                                                print('IconButton pressed ...');
+                                                // print(
+                                                //     'IconButton pressed ...');
+                                                // dialogaddPractioner(context);
+                                                _pullRefresh();
                                               },
                                             ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    //Column Title
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 12, 12, 0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            // flex: 2,
-                                            child: Text(
-                                              'Appointment ID',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2,
-                                            ),
                                           ),
-                                          Expanded(
-                                            // flex: 2,
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    5, 0, 0, 0),
                                             child: Text(
-                                              'Client Name/Code',
+                                              'Appointment',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2,
-                                            ),
-                                          ),
-                                          if (responsiveVisibility(
-                                            context: context,
-                                            phone: false,
-                                            tablet: false,
-                                          ))
-                                            Expanded(
-                                              // flex: 2,
-                                              child: Text(
-                                                'Client Phone Number',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
-                                              ),
-                                            ),
-                                          if (responsiveVisibility(
-                                            context: context,
-                                            phone: false,
-                                          ))
-                                            Expanded(
-                                              child: Text(
-                                                'Client E-mail',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
-                                              ),
-                                            ),
-                                          if (responsiveVisibility(
-                                            context: context,
-                                            phone: false,
-                                            tablet: false,
-                                          ))
-                                            Expanded(
-                                              child: Text(
-                                                'Booking Date',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
-                                              ),
-                                            ),
-                                          Expanded(
-                                            child: Text(
-                                              'Status',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2,
-                                            ),
-                                          ),
-                                          // Expanded(
-                                          //   child: Text(
-                                          //     'Created at',
-                                          //     style:
-                                          //         FlutterFlowTheme.of(context)
-                                          //             .bodyText2,
-                                          //   ),
-                                          // ),
-                                          Expanded(
-                                            child: Text(
-                                              'Action',
-                                              textAlign: TextAlign.end,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                                      .title3,
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    //Data Row
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 16, 0, 0),
-                                      child: FutureBuilder(
-                                          future: AppointmentList,
-                                          builder: (context,
-                                              AsyncSnapshot<
-                                                      List<AppointmentData>>
-                                                  snapshot) {
-                                            if (snapshot.hasData &&
-                                                snapshot.data!.isNotEmpty) {
-                                              return ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount:
-                                                    retrievedAppointmentList!
-                                                        .length,
-                                                itemBuilder: (context, indexs) {
-                                                  return _buildTableUser(
-                                                      context,
-                                                      retrievedAppointmentList![
-                                                          indexs],
-                                                      retrievedAppointmentList,
-                                                      indexs);
-                                                },
-                                              );
-                                            } else if (snapshot
-                                                        .connectionState ==
-                                                    ConnectionState.done &&
-                                                retrievedAppointmentList!
-                                                    .isEmpty) {
-                                              return Center(
-                                                child: ListView(
-                                                  physics:
-                                                      const AlwaysScrollableScrollPhysics(),
-                                                  children: const <Widget>[
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional
-                                                              .center,
-                                                      child: Text(
-                                                          'No Data Availble'),
-                                                    )
-                                                  ],
+                                      //Search textfield and icon
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 200,
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 5, 0, 5),
+                                              child: Container(
+                                                width: 200,
+                                                child: TextFormField(
+                                                  controller: textController,
+                                                  autofocus: true,
+                                                  obscureText: false,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Search...',
+                                                    hintStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyText2,
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    errorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    focusedErrorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1,
                                                 ),
-                                              );
-                                            } else {
-                                              return const Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                            }
-                                          }),
+                                              ),
+                                            ),
+                                          ),
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 50,
+                                            icon: Icon(
+                                              Icons.search,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 25,
+                                            ),
+                                            onPressed: () {
+                                              print('IconButton pressed ...');
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  //Column Title
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12, 12, 12, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          // flex: 2,
+                                          child: Text(
+                                            'Appointment ID',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          // flex: 2,
+                                          child: Text(
+                                            'Client Name/Code',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2,
+                                          ),
+                                        ),
+                                        if (responsiveVisibility(
+                                          context: context,
+                                          phone: false,
+                                          tablet: false,
+                                        ))
+                                          Expanded(
+                                            // flex: 2,
+                                            child: Text(
+                                              'Client Phone Number',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                        if (responsiveVisibility(
+                                          context: context,
+                                          phone: false,
+                                        ))
+                                          Expanded(
+                                            child: Text(
+                                              'Client E-mail',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                        if (responsiveVisibility(
+                                          context: context,
+                                          phone: false,
+                                          tablet: false,
+                                        ))
+                                          Expanded(
+                                            child: Text(
+                                              'Booking Date',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                        Expanded(
+                                          child: Text(
+                                            'Status',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2,
+                                          ),
+                                        ),
+                                        // Expanded(
+                                        //   child: Text(
+                                        //     'Created at',
+                                        //     style:
+                                        //         FlutterFlowTheme.of(context)
+                                        //             .bodyText2,
+                                        //   ),
+                                        // ),
+                                        Expanded(
+                                          child: Text(
+                                            'Action',
+                                            textAlign: TextAlign.end,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  //Data Row
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 16, 0, 0),
+                                    child: FutureBuilder(
+                                        future: AppointmentList,
+                                        builder: (context,
+                                            AsyncSnapshot<List<AppointmentData>>
+                                                snapshot) {
+                                          if (snapshot.hasData &&
+                                              snapshot.data!.isNotEmpty) {
+                                            return ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount:
+                                                  retrievedAppointmentList!
+                                                      .length,
+                                              itemBuilder: (context, indexs) {
+                                                return _buildTableUser(
+                                                    context,
+                                                    retrievedAppointmentList![
+                                                        indexs],
+                                                    retrievedAppointmentList,
+                                                    indexs);
+                                              },
+                                            );
+                                          } else if (snapshot.connectionState ==
+                                                  ConnectionState.done &&
+                                              retrievedAppointmentList!
+                                                  .isEmpty) {
+                                            return Center(
+                                              child: ListView(
+                                                physics:
+                                                    const AlwaysScrollableScrollPhysics(),
+                                                children: const <Widget>[
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .center,
+                                                    child: Text(
+                                                        'No Data Availble'),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          } else {
+                                            return const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          }
+                                        }),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
