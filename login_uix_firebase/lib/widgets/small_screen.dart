@@ -10,9 +10,6 @@ class SmallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.width16),
-      child: localNavigator(),
-    );
+    return localNavigator();
   }
 }
