@@ -13,6 +13,7 @@ class PractionerKey {
   static const languages = 'languages';
   static const titleMain = 'titleMain';
   static const schedules = 'schedules';
+  static const dayoff = 'dayoff';
   // static const practionerSchedule = 'practionerSchedule';
 
   const PractionerKey._();
