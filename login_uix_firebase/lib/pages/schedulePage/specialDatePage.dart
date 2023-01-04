@@ -10,18 +10,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../helper/responsive.dart';
+import '../../provider/appointment_page/date_selected.dart';
 import '../../provider/specialdate_provider/specialdate_get_provider.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
 
-class specialDatePage extends StatefulWidget {
+class specialDatePage extends ConsumerStatefulWidget {
   const specialDatePage({Key? key}) : super(key: key);
-
   @override
-  _specialDatePageState createState() => _specialDatePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _specialDatePageState();
+  // @override
+  // _specialDatePageState createState() => _specialDatePageState();
 }
 
-class _specialDatePageState extends State<specialDatePage> {
+class _specialDatePageState extends ConsumerState<specialDatePage> {
   TextEditingController? textController;
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -441,16 +444,18 @@ class _specialDatePageState extends State<specialDatePage> {
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onPressed: () async {
+                                        final selectedDate =
+                                            ref.watch(dateRangeProvider);
                                         await ref
                                             .read(editSpecialDateProvider
                                                 .notifier)
                                             .editstartDayoff(
-                                              dayoffs: DateFormat('dd/MM/yyyy')
-                                                  .toString(),
+                                              dayoffs: selectedDate,
                                               index: index + 1,
                                             )
                                             .then((value) => ref.refresh(
                                                 specialDateProvider.future));
+                                        Navigator.of(context).pop();
                                       },
                                     ),
                                   );
@@ -569,14 +574,13 @@ class _specialDatePageState extends State<specialDatePage> {
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     if (args.value is PickerDateRange) {
-      final DateTime rangeStartDate = args.value.startDate;
-      final DateTime rangeEndDate = args.value.endDate;
-    } else if (args.value is DateTime) {
-      final DateTime selectedDate = args.value;
-    } else if (args.value is List<DateTime>) {
-      final List<DateTime> selectedDates = args.value;
-    } else {
-      final List<PickerDateRange> selectedRanges = args.value;
+      // final DateTime rangeStartDate = args.value.startDate;
+      // final DateTime rangeEndDate = args.value.endDate;
+      final _range =
+          '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+          // ignore: lines_longer_than_80_chars
+          ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate)}';
+      ref.read(dateRangeProvider.notifier).changeDateRange(_range);
     }
   }
   //   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
