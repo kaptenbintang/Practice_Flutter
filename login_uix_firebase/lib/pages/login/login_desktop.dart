@@ -594,6 +594,8 @@ class LoginDesktop2 extends ConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               navigationController.navigateTo(sideMenuItems[4]);
+                              menuController
+                                  .changeActiveitemTo(sideMenuItems[4]);
                             },
                             child: Text(
                               " Register now!",
