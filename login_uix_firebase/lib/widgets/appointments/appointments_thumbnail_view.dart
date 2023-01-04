@@ -14,10 +14,10 @@ class AppointmentsThumbnailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTapped,
-      child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: InkWell(
+        onTap: onTapped,
         child: Container(
           width: MediaQuery.of(context).size.width * 0.2,
           height: MediaQuery.of(context).size.height * 0.2,
