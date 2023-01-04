@@ -508,80 +508,80 @@ class _AppointmentPageRiverpodVersion2State
                                     'Time: ',
                                     style: FlutterFlowTheme.of(context).title1,
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Consumer(
-                                        builder: (context, ref, child) {
-                                          return 
-                                          // return DropdownButtonFormField2(
-                                          //   style: FlutterFlowTheme.of(context)
-                                          //       .subtitle1,
-                                          //   decoration: InputDecoration(
-                                          //     isDense: true,
-                                          //     contentPadding: EdgeInsets.zero,
-                                          //     border: OutlineInputBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8),
-                                          //       borderSide: BorderSide(
-                                          //         color: FlutterFlowTheme.of(
-                                          //                 context)
-                                          //             .primaryText,
-                                          //         width: 1,
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          //   isExpanded: true,
-                                          //   hint: Text(
-                                          //     'Select Time',
-                                          //     style:
-                                          //         FlutterFlowTheme.of(context)
-                                          //             .subtitle1,
-                                          //   ),
-                                          //   icon: const Icon(
-                                          //     Icons.arrow_drop_down,
-                                          //     color: Colors.black45,
-                                          //   ),
-                                          //   iconSize: 30,
-                                          //   buttonHeight: 60,
-                                          //   buttonPadding:
-                                          //       const EdgeInsets.only(
-                                          //           left: 20, right: 10),
-                                          //   dropdownDecoration: BoxDecoration(
-                                          //     borderRadius:
-                                          //         BorderRadius.circular(15),
-                                          //   ),
-                                          //   items: genderItems
-                                          //       .map((item) =>
-                                          //           DropdownMenuItem<String>(
-                                          //             value: item,
-                                          //             child: Text(
-                                          //               item,
-                                          //               style: const TextStyle(
-                                          //                 fontSize: 14,
-                                          //               ),
-                                          //             ),
-                                          //           ))
-                                          //       .toList(),
-                                          //   validator: (value) {
-                                          //     if (value == null) {
-                                          //       return 'Please select gender.';
-                                          //     }
-                                          //   },
-                                          //   onChanged: (value) {
-                                          //     selectedTime = value;
+                                  // Expanded(
+                                  //   flex: 2,
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.all(8.0),
+                                  //     child: Consumer(
+                                  //       builder: (context, ref, child) {
+                                  //         return
+                                  //         // return DropdownButtonFormField2(
+                                  //         //   style: FlutterFlowTheme.of(context)
+                                  //         //       .subtitle1,
+                                  //         //   decoration: InputDecoration(
+                                  //         //     isDense: true,
+                                  //         //     contentPadding: EdgeInsets.zero,
+                                  //         //     border: OutlineInputBorder(
+                                  //         //       borderRadius:
+                                  //         //           BorderRadius.circular(8),
+                                  //         //       borderSide: BorderSide(
+                                  //         //         color: FlutterFlowTheme.of(
+                                  //         //                 context)
+                                  //         //             .primaryText,
+                                  //         //         width: 1,
+                                  //         //       ),
+                                  //         //     ),
+                                  //         //   ),
+                                  //         //   isExpanded: true,
+                                  //         //   hint: Text(
+                                  //         //     'Select Time',
+                                  //         //     style:
+                                  //         //         FlutterFlowTheme.of(context)
+                                  //         //             .subtitle1,
+                                  //         //   ),
+                                  //         //   icon: const Icon(
+                                  //         //     Icons.arrow_drop_down,
+                                  //         //     color: Colors.black45,
+                                  //         //   ),
+                                  //         //   iconSize: 30,
+                                  //         //   buttonHeight: 60,
+                                  //         //   buttonPadding:
+                                  //         //       const EdgeInsets.only(
+                                  //         //           left: 20, right: 10),
+                                  //         //   dropdownDecoration: BoxDecoration(
+                                  //         //     borderRadius:
+                                  //         //         BorderRadius.circular(15),
+                                  //         //   ),
+                                  //         //   items: genderItems
+                                  //         //       .map((item) =>
+                                  //         //           DropdownMenuItem<String>(
+                                  //         //             value: item,
+                                  //         //             child: Text(
+                                  //         //               item,
+                                  //         //               style: const TextStyle(
+                                  //         //                 fontSize: 14,
+                                  //         //               ),
+                                  //         //             ),
+                                  //         //           ))
+                                  //         //       .toList(),
+                                  //         //   validator: (value) {
+                                  //         //     if (value == null) {
+                                  //         //       return 'Please select gender.';
+                                  //         //     }
+                                  //         //   },
+                                  //         //   onChanged: (value) {
+                                  //         //     selectedTime = value;
 
-                                          //     //Do something when changing the item if you want.
-                                          //   },
-                                          //   onSaved: (value) {
-                                          //     // selectedValue = value.toString();
-                                          //   },
-                                          // );
-                                        },
-                                      ),
-                                    ),
-                                  ),
+                                  //         //     //Do something when changing the item if you want.
+                                  //         //   },
+                                  //         //   onSaved: (value) {
+                                  //         //     // selectedValue = value.toString();
+                                  //         //   },
+                                  //         // );
+                                  //       },
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
