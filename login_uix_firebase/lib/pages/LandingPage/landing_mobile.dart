@@ -405,21 +405,21 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                   ),
                 ),
                 //4 Listview
-                ListView(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    Container(
-                      height: Dimensions.height20 * 4,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
-                      ),
-                      child: Align(
-                        alignment: AlignmentDirectional(-0.05, 0),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.width08),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      Container(
+                        height: Dimensions.height20 * 4,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                        ),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -434,7 +434,7 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                             Icon(
                               Icons.settings_outlined,
                               color: Color(0xFFD9DD12),
-                              size: 24,
+                              size: Dimensions.iconSize24,
                             ),
                             Container(
                               width: Dimensions.width15,
@@ -460,173 +460,176 @@ class _LandingPageMobileWidgetState extends State<LandingPageMobileWidget> {
                           ],
                         ),
                       ),
-                    ),
-                    Container(
-                      width: Dimensions.width100,
-                      height: Dimensions.height10,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      Container(
+                        width: Dimensions.width100,
+                        height: Dimensions.height10,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: Dimensions.width100,
-                      height: Dimensions.height20 * 4,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: Dimensions.width10,
-                            height: Dimensions.height20 * 4,
-                            decoration: BoxDecoration(
-                              color: Color(0x00FFFFFF),
+                      Container(
+                        width: Dimensions.width100,
+                        height: Dimensions.height20 * 4,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: Dimensions.width10,
+                              height: Dimensions.height20 * 4,
+                              decoration: BoxDecoration(
+                                color: Color(0x00FFFFFF),
+                              ),
                             ),
-                          ),
-                          Icon(
-                            Icons.favorite_outlined,
-                            color: Color(0xFFD9DD12),
-                            size: 24,
-                          ),
-                          Container(
-                            width: Dimensions.width15,
-                            height: Dimensions.height20 * 4,
-                            decoration: BoxDecoration(
-                              color: Color(0x00FFFFFF),
+                            Icon(
+                              Icons.favorite_outlined,
+                              color: Color(0xFFD9DD12),
+                              size: Dimensions.iconSize24,
                             ),
-                          ),
-                          Expanded(
-                            child: SelectionArea(
-                                child: Text(
-                              'Fostering Lifelong Holistic Wellbeing Globally',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
-                                    fontSize: Dimensions.font18,
-                                  ),
-                            )),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: Dimensions.width100,
-                      height: Dimensions.height10,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: Dimensions.height20 * 4,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: Dimensions.width10,
-                            height: Dimensions.height20 * 4,
-                            decoration: BoxDecoration(
-                              color: Color(0x00FFFFFF),
+                            Container(
+                              width: Dimensions.width15,
+                              height: Dimensions.height20 * 4,
+                              decoration: BoxDecoration(
+                                color: Color(0x00FFFFFF),
+                              ),
                             ),
-                          ),
-                          Icon(
-                            Icons.stairs_sharp,
-                            color: Color(0xFFD9DD12),
-                            size: 24,
-                          ),
-                          Container(
-                            width: Dimensions.width15,
-                            height: Dimensions.height20 * 4,
-                            decoration: BoxDecoration(
-                              color: Color(0x00FFFFFF),
+                            Expanded(
+                              child: SelectionArea(
+                                  child: Text(
+                                'Fostering Lifelong Holistic Wellbeing Globally',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                      fontSize: Dimensions.font18,
+                                    ),
+                              )),
                             ),
-                          ),
-                          Expanded(
-                            child: SelectionArea(
-                                child: Text(
-                              'Comprehensive Approach Towards Career & Organization Success',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
-                                    fontSize: Dimensions.font18,
-                                  ),
-                            )),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: Dimensions.width100,
-                      height: Dimensions.height10,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      Container(
+                        width: Dimensions.width100,
+                        height: Dimensions.height10,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: 200,
-                      height: Dimensions.height20 * 4,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: Dimensions.width10,
-                            height: Dimensions.height20 * 4,
-                            decoration: BoxDecoration(
-                              color: Color(0x00FFFFFF),
+                      Container(
+                        width: double.infinity,
+                        height: Dimensions.height20 * 4,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: Dimensions.width10,
+                              height: Dimensions.height20 * 4,
+                              decoration: BoxDecoration(
+                                color: Color(0x00FFFFFF),
+                              ),
                             ),
-                          ),
-                          Icon(
-                            Icons.saved_search,
-                            color: Color(0xFFD9DD12),
-                            size: 24,
-                          ),
-                          Container(
-                            width: Dimensions.width15,
-                            height: Dimensions.height20 * 4,
-                            decoration: BoxDecoration(
-                              color: Color(0x00FFFFFF),
+                            Icon(
+                              Icons.stairs_sharp,
+                              color: Color(0xFFD9DD12),
+                              size: Dimensions.iconSize24,
                             ),
-                          ),
-                          Expanded(
-                            child: SelectionArea(
-                                child: Text(
-                              'Personalized Evidence-Based Approaches to Assessment and Treatment',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
-                                    fontSize: Dimensions.font18,
-                                  ),
-                            )),
-                          ),
-                        ],
+                            Container(
+                              width: Dimensions.width15,
+                              height: Dimensions.height20 * 4,
+                              decoration: BoxDecoration(
+                                color: Color(0x00FFFFFF),
+                              ),
+                            ),
+                            Expanded(
+                              child: SelectionArea(
+                                  child: Text(
+                                'Comprehensive Approach Towards Career & Organization Success',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                      fontSize: Dimensions.font18,
+                                    ),
+                              )),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        width: Dimensions.width100,
+                        height: Dimensions.height10,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                      ),
+                      Container(
+                        width: 200,
+                        height: Dimensions.height20 * 4,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: Dimensions.width10,
+                              height: Dimensions.height20 * 4,
+                              decoration: BoxDecoration(
+                                color: Color(0x00FFFFFF),
+                              ),
+                            ),
+                            Icon(
+                              Icons.saved_search,
+                              color: Color(0xFFD9DD12),
+                              size: Dimensions.iconSize24,
+                            ),
+                            Container(
+                              width: Dimensions.width15,
+                              height: Dimensions.height20 * 4,
+                              decoration: BoxDecoration(
+                                color: Color(0x00FFFFFF),
+                              ),
+                            ),
+                            Expanded(
+                              child: SelectionArea(
+                                  child: Text(
+                                'Personalized Evidence-Based Approaches to Assessment and Treatment',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                      fontSize: Dimensions.font18,
+                                    ),
+                              )),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
                   width: double.infinity,

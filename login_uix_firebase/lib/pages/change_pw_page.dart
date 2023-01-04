@@ -6,6 +6,10 @@ import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:login_uix_firebase/auth/backend/authenticator.dart';
 import 'package:login_uix_firebase/pages/profile_page.dart';
 
+import '../flutter_flow/flutter_flow_icon_button.dart';
+import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
+import '../helper/responsive.dart';
 import '../main.dart';
 
 class changePWPage extends StatefulWidget {
@@ -78,183 +82,228 @@ class _changePWPageState extends State<changePWPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: Colors.blueAccent[200],
-          elevation: 0,
+          actions: const [],
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          leading: Padding(
+            padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 8)),
+            child: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: screenWidth / (width / 30),
+              borderWidth: 1,
+              buttonSize: screenWidth / (width / 50),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.black,
+                size: screenWidth / (width / 30),
+              ),
+              onPressed: () {
+                print('IconButton pressed ...');
+                Navigator.pop(context);
+              },
+            ),
+          ),
+
+          title: Padding(
+            padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 8)),
+            child: Text(
+              'Change Password',
+              style: FlutterFlowTheme.of(context).title2.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.black,
+                    fontSize: screenWidth / (width / 30),
+                  ),
+            ),
+          ),
+
+          // actions: [],
+          centerTitle: true,
+          elevation: 2,
         ),
-        body: Container(
-          color: Colors.white,
-          child: SingleChildScrollView(
-            child: Form(
-              key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 10,
+        body: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    'Create new pasword',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Your new password must be different \n"
+                    "from previous used passwords",
+                    style: TextStyle(color: Color(0xFF8a929f), fontSize: 12),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      'Password',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      'Create new pasword',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Your new password must be different \n"
-                      "from previous used passwords",
-                      style: TextStyle(color: Color(0xFF8a929f), fontSize: 15),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            'Password',
-                            style: TextStyle(
-                                fontSize: 15, color: Colors.grey[600]),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: SizedBox(
+                      width: 500,
+                      child: TextFormField(
+                        // maxLines: 1,
+                        // maxLength: 6,
+                        obscureText: _isHidden,
+                        decoration: InputDecoration(
+                          hintText: "Enter your new password",
+                          hintStyle: TextStyle(color: Color(0xFF6f6f6f)),
+                          counterText: '',
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(color: Colors.grey),
                           ),
-                        ),
-                        TextFormField(
-                          // maxLines: 1,
-                          // maxLength: 6,
-                          obscureText: _isHidden,
-                          decoration: InputDecoration(
-                            hintText: "Enter your new password",
-                            hintStyle: TextStyle(color: Color(0xFF6f6f6f)),
-                            counterText: '',
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(color: Colors.grey),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Color(0xFFf3f5f6),
-                                width: 2.0,
-                              ),
-                            ),
-                            fillColor: Colors.white,
-                            filled: true,
-                            suffix: InkWell(
-                              onTap: _togglePasswordView,
-                              child: Icon(_isHidden
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFFf3f5f6),
+                              width: 2.0,
                             ),
                           ),
-                          controller: newPasswordController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter password';
-                            }
-                            return null;
-                          },
-                        ),
-                        FlutterPwValidator(
-                            width: 350,
-                            height: 110,
-                            minLength: 6,
-                            uppercaseCharCount: 1,
-                            numericCharCount: 1,
-                            specialCharCount: 1,
-                            onSuccess: () {
-                              print("submitted");
-                            },
-                            controller: newPasswordController),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            'Confirm Password',
-                            style: TextStyle(
-                                fontSize: 15, color: Colors.grey[600]),
+                          fillColor: Colors.white,
+                          filled: true,
+                          suffix: InkWell(
+                            onTap: _togglePasswordView,
+                            child: Icon(_isHidden
+                                ? Icons.visibility
+                                : Icons.visibility_off),
                           ),
                         ),
-                        TextFormField(
-                          // maxLines: 1,
-                          // maxLength: 3,
-                          obscureText: _isHidden,
-                          decoration: InputDecoration(
-                            hintText: "Confirm your password",
-                            hintStyle: TextStyle(color: Color(0xFF6f6f6f)),
-                            counterText: '',
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(color: Colors.grey),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: BorderSide(
-                                color: Color(0xFFf3f5f6),
-                                width: 2.0,
-                              ),
-                            ),
-                            fillColor: Colors.white,
-                            filled: true,
-                            suffix: InkWell(
-                              onTap: _togglePasswordView,
-                              child: Icon(_isHidden
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                            ),
-                          ),
-                          controller: newConfirmPasswordController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter password';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      child: MaterialButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            setState(() {
-                              newPassword = newPasswordController.text;
-                            });
-                            changePassword();
+                        controller: newPasswordController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter password';
                           }
+                          return null;
                         },
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.all(0.0),
-                        child: Container(
-                          height: 55,
-                          width: 400,
-                          decoration: new BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blue),
-                          padding: const EdgeInsets.all(10.0),
-                          child: Center(
-                            child: Text(
-                              "Change Password",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17),
+                      ),
+                    ),
+                  ),
+                  FlutterPwValidator(
+                      width: 350,
+                      height: 110,
+                      minLength: 6,
+                      uppercaseCharCount: 1,
+                      numericCharCount: 1,
+                      specialCharCount: 1,
+                      onSuccess: () {
+                        print("submitted");
+                      },
+                      controller: newPasswordController),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      'Confirm Password',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: SizedBox(
+                      width: 500,
+                      child: TextFormField(
+                        // maxLines: 1,
+                        // maxLength: 3,
+                        obscureText: _isHidden,
+                        decoration: InputDecoration(
+                          hintText: "Confirm your password",
+                          hintStyle: TextStyle(color: Color(0xFF6f6f6f)),
+                          counterText: '',
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFFf3f5f6),
+                              width: 2.0,
                             ),
                           ),
+                          fillColor: Colors.white,
+                          filled: true,
+                          suffix: InkWell(
+                            onTap: _togglePasswordView,
+                            child: Icon(_isHidden
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
                         ),
+                        controller: newConfirmPasswordController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter password';
+                          }
+                          return null;
+                        },
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  FFButtonWidget(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        setState(() {
+                          newPassword = newPasswordController.text;
+                        });
+                        changePassword();
+                      }
+                    },
+                    text: 'Change Password',
+                    options: FFButtonOptions(
+                      height: screenWidth / (width / 40),
+                      color: Colors.white,
+                      textStyle:
+                          FlutterFlowTheme.of(context).bodyText2.override(
+                                fontFamily: 'Lexend Deca',
+                                color: Color(0xFF101213),
+                                fontSize: screenWidth / (width / 14),
+                                fontWeight: FontWeight.normal,
+                              ),
+                      elevation: 1,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

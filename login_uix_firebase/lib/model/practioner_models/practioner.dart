@@ -17,6 +17,7 @@ class Practioner {
   final String languages;
   final String titleMain;
   final Map schedules;
+  final Map dayoff;
 
   // final String practionerSchedule;
 
@@ -33,7 +34,8 @@ class Practioner {
         mySpecialty = json[PractionerKey.mySpecialty],
         languages = json[PractionerKey.languages],
         titleMain = json[PractionerKey.titleMain],
-        schedules = json[PractionerKey.schedules];
+        schedules = json[PractionerKey.schedules],
+        dayoff = json[PractionerKey.dayoff];
   // schedules = {
   //   for(final entry in json[PractionerKey.schedules].entries)
   //   Schedule.values.firstWhere((element) => element.dayName == entry.key,

@@ -46,58 +46,46 @@ class mainSchedulePage extends ConsumerWidget {
         return Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF1F4F8),
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(screenWidth / (width / 100)),
-              child: AppBar(
-                actions: const [],
-                backgroundColor: Colors.white,
-                automaticallyImplyLeading: false,
-                leading: FlutterFlowIconButton(
+            appBar: AppBar(
+              actions: const [],
+              backgroundColor: Colors.white,
+              automaticallyImplyLeading: false,
+              leading: Padding(
+                padding:
+                    EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
+                child: FlutterFlowIconButton(
                   borderColor: Colors.transparent,
                   borderRadius: screenWidth / (width / 30),
                   borderWidth: 1,
-                  buttonSize: screenWidth / (width / 50),
+                  buttonSize: screenWidth / (width / 30),
                   icon: Icon(
                     Icons.arrow_back_rounded,
                     color: Colors.black,
-                    size: screenWidth / (width / 50),
+                    size: screenWidth / (width / 20),
                   ),
                   onPressed: () {
                     print('IconButton pressed ...');
                     Navigator.pop(context);
                   },
                 ),
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        0, 0, 0, screenWidth / (width / 14)),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              screenWidth / (width / 24), 0, 0, 0),
-                          child: Text(
-                            'Schedule',
-                            style: FlutterFlowTheme.of(context).title2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black,
-                                  fontSize: screenWidth / (width / 30),
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  centerTitle: true,
-                  expandedTitleScale: 1.0,
-                ),
-                // actions: [],
-                centerTitle: true,
-                elevation: 2,
               ),
+
+              title: Padding(
+                padding:
+                    EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
+                child: Text(
+                  'Schedule',
+                  style: FlutterFlowTheme.of(context).title2.override(
+                        fontFamily: 'Poppins',
+                        color: Colors.black,
+                        fontSize: screenWidth / (width / 30),
+                      ),
+                ),
+              ),
+
+              // actions: [],
+              centerTitle: true,
+              elevation: 2,
             ),
             body: Center(
               child: Column(
@@ -234,217 +222,196 @@ class mainSchedulePage extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, RouteName.timeSchedulePage);
-                            },
-                            child: Container(
-                              width: 500,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    color: Color(0x3416202A),
-                                    offset: Offset(0, 2),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(12),
-                                shape: BoxShape.rectangle,
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
-                                      child: Text(
-                                        'Time Schedule',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText2
-                                            .override(
-                                              fontFamily: 'Outfit',
-                                              color: Color(0xFF57636C),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Align(
-                                        alignment: AlignmentDirectional(0.9, 0),
-                                        child: Icon(
-                                          Icons.arrow_forward_ios,
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RouteName.timeSchedulePage);
+                        },
+                        child: Container(
+                          width: screenWidth / (width / 500),
+                          height: screenWidth / (width / 60),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5,
+                                color: Color(0x3416202A),
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(
+                                screenWidth / (width / 12)),
+                            shape: BoxShape.rectangle,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 8),
+                                screenWidth / (width / 8),
+                                screenWidth / (width / 8),
+                                screenWidth / (width / 8)),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      screenWidth / (width / 12), 0, 0, 0),
+                                  child: Text(
+                                    'Time Schedule',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Outfit',
                                           color: Color(0xFF57636C),
-                                          size: 18,
+                                          fontSize: screenWidth / (width / 14),
+                                          fontWeight: FontWeight.normal,
                                         ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Align(
+                                    alignment: AlignmentDirectional(0.9, 0),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Color(0xFF57636C),
+                                      size: screenWidth / (width / 18),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: EdgeInsetsDirectional.fromSTEB(
+                      //       0, screenWidth / (width / 12), 0, 0),
+                      //   child: InkWell(
+                      //     onTap: () {
+                      //       Navigator.pushNamed(
+                      //           context, RouteName.editProfilePage);
+                      //     },
+                      //     child: Container(
+                      //       width: screenWidth / (width / 500),
+                      //       height: screenWidth / (width / 60),
+                      //       decoration: BoxDecoration(
+                      //         color: Colors.white,
+                      //         boxShadow: [
+                      //           BoxShadow(
+                      //             blurRadius: screenWidth / (width / 5),
+                      //             color: Color(0x3416202A),
+                      //             offset: Offset(0, 2),
+                      //           )
+                      //         ],
+                      //         borderRadius: BorderRadius.circular(
+                      //             screenWidth / (width / 12)),
+                      //         shape: BoxShape.rectangle,
+                      //       ),
+                      //       child: Padding(
+                      //         padding: EdgeInsetsDirectional.fromSTEB(
+                      //             screenWidth / (width / 8),
+                      //             screenWidth / (width / 8),
+                      //             screenWidth / (width / 8),
+                      //             screenWidth / (width / 8)),
+                      //         child: Row(
+                      //           mainAxisSize: MainAxisSize.max,
+                      //           children: [
+                      //             Padding(
+                      //               padding: EdgeInsetsDirectional.fromSTEB(
+                      //                   screenWidth / (width / 12), 0, 0, 0),
+                      //               child: Text(
+                      //                 'Blackout Date',
+                      //                 style: FlutterFlowTheme.of(context)
+                      //                     .bodyText2
+                      //                     .override(
+                      //                       fontFamily: 'Outfit',
+                      //                       color: Color(0xFF57636C),
+                      //                       fontSize:
+                      //                           screenWidth / (width / 14),
+                      //                       fontWeight: FontWeight.normal,
+                      //                     ),
+                      //               ),
+                      //             ),
+                      //             Expanded(
+                      //               child: Align(
+                      //                 alignment: AlignmentDirectional(0.9, 0),
+                      //                 child: Icon(
+                      //                   Icons.arrow_forward_ios,
+                      //                   color: Color(0xFF57636C),
+                      //                   size: screenWidth / (width / 18),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0, screenWidth / (width / 12), 0, 0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, RouteName.editProfilePage);
+                          },
+                          child: Container(
+                            width: screenWidth / (width / 500),
+                            height: screenWidth / (width / 60),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: screenWidth / (width / 5),
+                                  color: Color(0x3416202A),
+                                  offset: Offset(0, 2),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth / (width / 12)),
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  screenWidth / (width / 8),
+                                  screenWidth / (width / 8),
+                                  screenWidth / (width / 8),
+                                  screenWidth / (width / 8)),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        screenWidth / (width / 12), 0, 0, 0),
+                                    child: Text(
+                                      'Special/Off Date',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF57636C),
+                                            fontSize:
+                                                screenWidth / (width / 14),
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Align(
+                                      alignment: AlignmentDirectional(0.9, 0),
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Color(0xFF57636C),
+                                        size: screenWidth / (width / 18),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      // Row(
-                      //   mainAxisSize: MainAxisSize.max,
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Padding(
-                      //       padding:
-                      //           EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                      //       child: InkWell(
-                      //         onTap: () {
-                      //           Navigator.pushNamed(
-                      //               context, RouteName.editProfilePage);
-                      //         },
-                      //         child: Container(
-                      //           width: screenWidth / (width / 500),
-                      //           height: screenWidth / (width / 60),
-                      //           decoration: BoxDecoration(
-                      //             color: Colors.white,
-                      //             boxShadow: [
-                      //               BoxShadow(
-                      //                 blurRadius: screenWidth / (width / 5),
-                      //                 color: Color(0x3416202A),
-                      //                 offset: Offset(0, 2),
-                      //               )
-                      //             ],
-                      //             borderRadius: BorderRadius.circular(
-                      //                 screenWidth / (width / 12)),
-                      //             shape: BoxShape.rectangle,
-                      //           ),
-                      //           child: Padding(
-                      //             padding: EdgeInsetsDirectional.fromSTEB(
-                      //                 screenWidth / (width / 8),
-                      //                 screenWidth / (width / 8),
-                      //                 screenWidth / (width / 8),
-                      //                 screenWidth / (width / 8)),
-                      //             child: Row(
-                      //               mainAxisSize: MainAxisSize.max,
-                      //               children: [
-                      //                 Padding(
-                      //                   padding: EdgeInsetsDirectional.fromSTEB(
-                      //                       screenWidth / (width / 12),
-                      //                       0,
-                      //                       0,
-                      //                       0),
-                      //                   child: Text(
-                      //                     'Blackout Date',
-                      //                     style: FlutterFlowTheme.of(context)
-                      //                         .bodyText2
-                      //                         .override(
-                      //                           fontFamily: 'Outfit',
-                      //                           color: Color(0xFF57636C),
-                      //                           fontSize:
-                      //                               screenWidth / (width / 14),
-                      //                           fontWeight: FontWeight.normal,
-                      //                         ),
-                      //                   ),
-                      //                 ),
-                      //                 Expanded(
-                      //                   child: Align(
-                      //                     alignment: AlignmentDirectional(
-                      //                         screenWidth / (width / 0.9), 0),
-                      //                     child: Icon(
-                      //                       Icons.arrow_forward_ios,
-                      //                       color: Color(0xFF57636C),
-                      //                       size: screenWidth / (width / 18),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.specialDatePage);
-                              },
-                              child: Container(
-                                width: screenWidth / (width / 500),
-                                height: screenWidth / (width / 60),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: screenWidth / (width / 5),
-                                      color: Color(0x3416202A),
-                                      offset: Offset(0, 2),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(
-                                      screenWidth / (width / 12)),
-                                  shape: BoxShape.rectangle,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      screenWidth / (width / 8),
-                                      screenWidth / (width / 8),
-                                      screenWidth / (width / 8),
-                                      screenWidth / (width / 8)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            screenWidth / (width / 12),
-                                            0,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          'Special/Off Date',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize:
-                                                    screenWidth / (width / 14),
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: AlignmentDirectional(
-                                              screenWidth / (width / 0.9), 0),
-                                          child: Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Color(0xFF57636C),
-                                            size: screenWidth / (width / 18),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                     ],
                   ),
