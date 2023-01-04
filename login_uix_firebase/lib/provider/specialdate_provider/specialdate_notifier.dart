@@ -13,8 +13,8 @@ class changeSpecialDate extends StateNotifier<IsLoading> {
 
   set isLoading(bool value) => state = value;
 
-  Future<bool> editStartTime({
-    required String schedule,
+  Future<bool> editstartDayoff({
+    required String dayoffs,
     required int index,
   }) async {
     try {
@@ -29,7 +29,7 @@ class changeSpecialDate extends StateNotifier<IsLoading> {
       if (userInfo.docs.isNotEmpty) {
         await userInfo.docs.first.reference.update(
           {
-            'schedules.$index.startTime': schedule,
+            'dayoff.$index.dateDayoff': dayoffs,
           },
         );
       }

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/provider/specialdate_provider/specialdate_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import '../../flutter_flow/flutter_flow.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../helper/responsive.dart';
+import '../../provider/specialdate_provider/specialdate_get_provider.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
 
@@ -128,8 +130,8 @@ class _specialDatePageState extends State<specialDatePage> {
                   ),
                   child: SingleChildScrollView(
                     child: Consumer(builder: (context, ref, child) {
-                      final specialDate = ref.watch(specialDateProvider);
-                      return specialDate.when(data: (data) {
+                      final dayoff = ref.watch(specialDateProvider);
+                      return dayoff.when(data: (data) {
                         if (data.isNotEmpty) {
                           final listDay = data.elementAt(0).dayoff;
                           return Column(
@@ -152,7 +154,7 @@ class _specialDatePageState extends State<specialDatePage> {
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
-                                itemCount: data.length,
+                                itemCount: listDay.length,
                                 itemBuilder: (context, index) {
                                   final value = listDay.values.elementAt(index);
                                   final key = listDay.keys.elementAt(index);
@@ -208,7 +210,7 @@ class _specialDatePageState extends State<specialDatePage> {
                                                   _onSelectionChanged,
                                               selectionMode:
                                                   DateRangePickerSelectionMode
-                                                      .single,
+                                                      .range,
                                               view: DateRangePickerView.month,
                                               monthViewSettings:
                                                   DateRangePickerMonthViewSettings(
@@ -349,13 +351,17 @@ class _specialDatePageState extends State<specialDatePage> {
                         //   style: FlutterFlowTheme.of(context).subtitle1,
                         // ),
                         Text(
-                          'From: ' +
-                              data["startDayoff"].toString() +
-                              ',' +
-                              'To: ' +
-                              data["endDayoff"],
+                          data["dateDayoff"],
                           style: FlutterFlowTheme.of(context).subtitle1,
                         ),
+                        // Text(
+                        //   'From: ' +
+                        //       data["dateDayoff"] +
+                        //       ',' +
+                        //       'To: ' +
+                        //       data["dateDayoff"],
+                        //   style: FlutterFlowTheme.of(context).subtitle1,
+                        // ),
                         // Padding(
                         //   padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         //   child: Text(
@@ -425,23 +431,30 @@ class _specialDatePageState extends State<specialDatePage> {
                             return AlertDialog(
                               backgroundColor: Colors.white,
                               actions: <Widget>[
-                                Container(
-                                  height: 30,
-                                  child: MaterialButton(
-                                    color: Colors.green,
-                                    child: Text(
-                                      'Set',
-                                      style: TextStyle(color: Colors.white),
+                                Consumer(builder: (context, ref, child) {
+                                  return Container(
+                                    height: 30,
+                                    child: MaterialButton(
+                                      color: Colors.green,
+                                      child: Text(
+                                        'Set',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () async {
+                                        await ref
+                                            .read(editSpecialDateProvider
+                                                .notifier)
+                                            .editstartDayoff(
+                                              dayoffs: DateFormat('dd/MM/yyyy')
+                                                  .toString(),
+                                              index: index + 1,
+                                            )
+                                            .then((value) => ref.refresh(
+                                                specialDateProvider.future));
+                                      },
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        // date_of_birth = date_controller.text;
-                                      });
-
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ),
+                                  );
+                                }),
                                 TextButton(
                                   child: Text('Cancel'),
                                   onPressed: () {
@@ -460,7 +473,7 @@ class _specialDatePageState extends State<specialDatePage> {
                                   // initialSelectedDate: DateTime.now(),
                                   onSelectionChanged: _onSelectionChanged,
                                   selectionMode:
-                                      DateRangePickerSelectionMode.single,
+                                      DateRangePickerSelectionMode.range,
                                   view: DateRangePickerView.month,
                                   monthViewSettings:
                                       DateRangePickerMonthViewSettings(

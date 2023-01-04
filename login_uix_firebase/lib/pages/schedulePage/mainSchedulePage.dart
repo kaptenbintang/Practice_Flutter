@@ -354,7 +354,7 @@ class mainSchedulePage extends ConsumerWidget {
                         child: InkWell(
                           onTap: () {
                             Navigator.pushNamed(
-                                context, RouteName.editProfilePage);
+                                context, RouteName.specialDatePage);
                           },
                           child: Container(
                             width: screenWidth / (width / 500),
