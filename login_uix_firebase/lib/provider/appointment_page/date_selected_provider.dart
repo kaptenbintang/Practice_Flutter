@@ -7,3 +7,11 @@ class DateNotifier extends StateNotifier<DateTime> {
     state = date;
   }
 }
+
+class DateRangeNotifier extends StateNotifier<String> {
+  DateRangeNotifier() : super(DateTime.now().toString());
+
+  void changeDateRange(String date) {
+    state = date;
+  }
+}
