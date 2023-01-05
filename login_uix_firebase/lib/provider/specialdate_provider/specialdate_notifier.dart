@@ -8,6 +8,8 @@ import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
 
 import 'package:login_uix_firebase/model/user_data.dart';
 
+import '../../model/practioner_models/practioner_key.dart';
+
 class changeSpecialDate extends StateNotifier<IsLoading> {
   changeSpecialDate() : super(false);
 
@@ -67,6 +69,43 @@ class changeDescriptionDayoff extends StateNotifier<IsLoading> {
             'dayoff.$index.description': descriptiong,
           },
         );
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+}
+
+class deleteSpecialDate extends StateNotifier<IsLoading> {
+  deleteSpecialDate() : super(false);
+
+  set isLoading(bool value) => state = value;
+  Future<bool> deleteDayoff({required Map selectedIndex}) async {
+    final removepls = selectedIndex;
+    try {
+      isLoading = true;
+      final userInfo = await FirebaseFirestore.instance
+          .collection(
+            FirebaseCollectionName.practioners,
+          )
+          .where(FirebaseFieldName.dayoff)
+          // .where(
+          //   PractionerKey.userId,
+          //   isEqualTo: userID,
+          // )
+          .limit(1)
+          .get();
+      /* Get list from firestore */
+
+      if (userInfo.docs.isNotEmpty) {
+        removepls.remove([selectedIndex]);
+        await userInfo.docs.first.reference.set({
+          'dayoff.$selectedIndex': removepls,
+        });
       }
 
       return true;

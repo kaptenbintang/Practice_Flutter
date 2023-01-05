@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/provider/specialdate_provider/specialdate_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -407,7 +409,7 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                                                 .notifier)
                                             .editstartDayoff(
                                               dayoffs: selectedDate,
-                                              index: index + 1,
+                                              index: index,
                                             )
                                             .then((value) => ref.refresh(
                                                 specialDateProvider.future));
@@ -496,7 +498,7 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                                                       descriptiong:
                                                           _descriptionController
                                                               .text,
-                                                      index: index + 1,
+                                                      index: index,
                                                     )
                                                     .then((value) =>
                                                         ref.refresh(
@@ -545,8 +547,17 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                         color: FlutterFlowTheme.of(context).primaryText,
                         size: 30,
                       ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
+                      onPressed: () async {
+                        await ref
+                            .read(deleteSpecialDateProvider.notifier)
+                            .deleteDayoff(
+                              //  userID: FirebaseAuth.instance.currentUser!.uid
+
+                              selectedIndex: index,
+                            )
+                            .then((value) =>
+                                ref.refresh(specialDateProvider.future));
+                        Navigator.of(context).pop();
                       },
                     ),
                     Text(

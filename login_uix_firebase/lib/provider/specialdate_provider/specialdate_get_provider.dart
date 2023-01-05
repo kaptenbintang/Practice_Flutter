@@ -13,3 +13,8 @@ final editDescriptionDayoffProvider =
     StateNotifierProvider<changeDescriptionDayoff, IsLoading>(
   (ref) => changeDescriptionDayoff(),
 );
+
+final deleteSpecialDateProvider =
+    StateNotifierProvider<deleteSpecialDate, IsLoading>(
+  (ref) => deleteSpecialDate(),
+);
