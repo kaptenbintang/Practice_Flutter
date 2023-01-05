@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/widgets/appointments/appointments_thumbnail_view.dart';
 
+import '../../helper/responsive.dart';
 import '../../model/appointment_data.dart';
 import '../../provider/main_page/cancel_provider.dart';
 
@@ -17,12 +18,20 @@ class AppointmentsGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return GridView.builder(
       padding: EdgeInsets.zero,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        mainAxisSpacing: 10.0,
-        crossAxisSpacing: 10.0,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: screenWidth / (width / 300),
+        crossAxisSpacing: screenWidth / (width / 300),
         childAspectRatio: 1.0,
       ),
       itemCount: appointments.length,
@@ -39,8 +48,9 @@ class AppointmentsGridView extends StatelessWidget {
                     backgroundColor: Colors.white,
                     actions: <Widget>[
                       Consumer(builder: (context, ref, child) {
-                        return Container(
-                          height: 30,
+                        return SizedBox(
+                          height: screenWidth / (width / 20),
+                          width: screenWidth / (width / 130),
                           child: MaterialButton(
                             color: Colors.red,
                             child: Text(
@@ -72,7 +82,10 @@ class AppointmentsGridView extends StatelessWidget {
                         },
                       ),
                     ],
-                    content: Container(child: Text("Edit Appointment")),
+                    content: SizedBox(
+                        width: screenWidth / (width / 250),
+                        height: screenWidth / (width / 40),
+                        child: Text("Edit Appointment")),
                   );
                 });
             // Navigator.push(
