@@ -28,6 +28,7 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
   TextEditingController? textController;
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -215,59 +216,6 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                                                   DateRangePickerSelectionMode
                                                       .range,
                                               view: DateRangePickerView.month,
-                                              monthViewSettings:
-                                                  DateRangePickerMonthViewSettings(
-                                                      blackoutDates: [
-                                                    DateTime(2022, 12, 14)
-                                                  ],
-                                                      weekendDays: [
-                                                    7,
-                                                    6
-                                                  ],
-                                                      specialDates: [
-                                                    DateTime(2022, 12, 26),
-                                                    DateTime(2022, 12, 27),
-                                                    DateTime(2022, 12, 28)
-                                                  ],
-                                                      showTrailingAndLeadingDates:
-                                                          true),
-                                              monthCellStyle:
-                                                  DateRangePickerMonthCellStyle(
-                                                blackoutDatesDecoration:
-                                                    BoxDecoration(
-                                                        color: Colors.red,
-                                                        border: Border.all(
-                                                            color: const Color(
-                                                                0xFFF44436),
-                                                            width: 1),
-                                                        shape: BoxShape.circle),
-                                                weekendDatesDecoration:
-                                                    BoxDecoration(
-                                                        color: const Color(
-                                                            0xFFDFDFDF),
-                                                        border: Border.all(
-                                                            color: const Color(
-                                                                0xFFB6B6B6),
-                                                            width: 1),
-                                                        shape: BoxShape.circle),
-                                                specialDatesDecoration:
-                                                    BoxDecoration(
-                                                        color: Colors.green,
-                                                        border: Border.all(
-                                                            color: const Color(
-                                                                0xFF2B732F),
-                                                            width: 1),
-                                                        shape: BoxShape.circle),
-                                                blackoutDateTextStyle:
-                                                    TextStyle(
-                                                        color: Colors.white,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .lineThrough),
-                                                specialDatesTextStyle:
-                                                    const TextStyle(
-                                                        color: Colors.white),
-                                              ),
                                             ),
                                           ),
                                         );
@@ -320,6 +268,14 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
   }
 
   Widget tableDepanSpecialPage(BuildContext context, data, key, index) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     // print(data);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
@@ -427,8 +383,8 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                       color: FlutterFlowTheme.of(context).primaryText,
                       size: 30,
                     ),
-                    onPressed: () {
-                      showDialog(
+                    onPressed: () async {
+                      await showDialog(
                           context: context,
                           builder: (context) {
                             return AlertDialog(
@@ -480,50 +436,85 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                                   selectionMode:
                                       DateRangePickerSelectionMode.range,
                                   view: DateRangePickerView.month,
-                                  monthViewSettings:
-                                      DateRangePickerMonthViewSettings(
-                                          blackoutDates: [
-                                        DateTime(2022, 12, 14)
-                                      ],
-                                          weekendDays: [
-                                        7,
-                                        6
-                                      ],
-                                          specialDates: [
-                                        DateTime(2022, 12, 26),
-                                        DateTime(2022, 12, 27),
-                                        DateTime(2022, 12, 28)
-                                      ],
-                                          showTrailingAndLeadingDates: true),
-                                  monthCellStyle: DateRangePickerMonthCellStyle(
-                                    blackoutDatesDecoration: BoxDecoration(
-                                        color: Colors.red,
-                                        border: Border.all(
-                                            color: const Color(0xFFF44436),
-                                            width: 1),
-                                        shape: BoxShape.circle),
-                                    weekendDatesDecoration: BoxDecoration(
-                                        color: const Color(0xFFDFDFDF),
-                                        border: Border.all(
-                                            color: const Color(0xFFB6B6B6),
-                                            width: 1),
-                                        shape: BoxShape.circle),
-                                    specialDatesDecoration: BoxDecoration(
-                                        color: Colors.green,
-                                        border: Border.all(
-                                            color: const Color(0xFF2B732F),
-                                            width: 1),
-                                        shape: BoxShape.circle),
-                                    blackoutDateTextStyle: TextStyle(
-                                        color: Colors.white,
-                                        decoration: TextDecoration.lineThrough),
-                                    specialDatesTextStyle:
-                                        const TextStyle(color: Colors.white),
-                                  ),
                                 ),
                               ),
                             );
                           });
+
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("input description"),
+                              content: Stack(
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                                  Positioned(
+                                    right: -(screenWidth / (width / 40)),
+                                    top: -(screenWidth / (width / 80)),
+                                    child: InkResponse(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: CircleAvatar(
+                                        child: Icon(Icons.close),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                  Form(
+                                    // key: _formKey,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.all(
+                                                screenWidth / (width / 8)),
+                                            child: TextFormField(
+                                              controller:
+                                                  _descriptionController,
+                                              decoration: InputDecoration(
+                                                labelText: "Description",
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: screenWidth / (width / 40),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(
+                                                screenWidth / (width / 8)),
+                                            child: ElevatedButton(
+                                              child: Text("Submit"),
+                                              onPressed: () async {
+                                                await ref
+                                                    .read(
+                                                        editDescriptionDayoffProvider
+                                                            .notifier)
+                                                    .editDescription(
+                                                      descriptiong:
+                                                          _descriptionController
+                                                              .text,
+                                                      index: index + 1,
+                                                    )
+                                                    .then((value) =>
+                                                        ref.refresh(
+                                                            specialDateProvider
+                                                                .future));
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+
                       print('IconButton pressed ...');
                     },
                   ),
