@@ -23,7 +23,7 @@ class changeSpecialDate extends StateNotifier<IsLoading> {
           .collection(
             FirebaseCollectionName.practioners,
           )
-          .where(FirebaseFieldName.schedules)
+          .where(FirebaseFieldName.dayoff)
           .limit(1)
           .get();
       if (userInfo.docs.isNotEmpty) {
