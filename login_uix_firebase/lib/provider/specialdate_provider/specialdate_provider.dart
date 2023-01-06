@@ -36,7 +36,7 @@ final specialDateProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
       (snapshot) {
         final practioner = snapshot.docs.map(
           (doc) => Practioner(
-            practionerId: doc.id,
+            userId: doc.id,
             json: doc.data(),
           ),
         );

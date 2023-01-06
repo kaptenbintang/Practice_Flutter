@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:login_uix_firebase/provider/appointment_page/date_selected.dart';
+import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DateTimeAppointmentDialog extends ConsumerStatefulWidget {
@@ -95,12 +96,15 @@ class _DateTimeAppointmentDialogState
             minDate: DateTime.now(),
             // toggleDaySelection: true,
             onSubmit: (_) {
+              ref.read(dateChangeProvider.notifier).state = true;
               Navigator.pop(
                 context,
-                DateFormat('yyyy-MM-dd').format(selectedDate),
+                DateFormat('EEE, yyyy-MM-dd').format(selectedDate),
               );
             },
             onCancel: () {
+              ref.read(dateChangeProvider.notifier).state = false;
+
               Navigator.pop(context);
             },
           ),

@@ -5,7 +5,6 @@ import 'package:login_uix_firebase/model/practioner_models/schedule.dart';
 
 @immutable
 class Practioner {
-  final String practionerId;
   final String userId;
   final String firstName;
   final String lastName;
@@ -22,10 +21,9 @@ class Practioner {
   // final String practionerSchedule;
 
   Practioner({
-    required this.practionerId,
+    required this.userId,
     required Map<String, dynamic> json,
-  })  : userId = json[PractionerKey.userId],
-        firstName = json[PractionerKey.firstName],
+  })  : firstName = json[PractionerKey.firstName],
         lastName = json[PractionerKey.lastName],
         myApproach = json[PractionerKey.myApproach],
         myBackground = json[PractionerKey.myBackground],
