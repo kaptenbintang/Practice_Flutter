@@ -11,13 +11,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../helper/database_service.dart';
 import '../../model/practioner_data.dart';
+import '../../provider/main_page/appointment_provider.dart';
 import '../../provider/main_page/practioner_provider.dart';
 import '../../route.dart';
 import '../../widgets/animations/empty_contents_with_text_animation_view.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
+import '../../widgets/appointments/appointments_grid_view.dart';
 import '../../widgets/practioners/practioners_grid_view.dart';
-import '../detail_practioner_page.dart';
+import '../detailPractionerPage/detail_practioner_page.dart';
 import 'main_page_desktop_riverpod.dart';
 
 class mainPageMobile extends ConsumerWidget {
@@ -250,64 +252,70 @@ class mainPageMobile extends ConsumerWidget {
                         final practioners = ref.watch(allPractionersProvider);
                         return practioners.when(
                           data: (data) {
-                            return Container(
-                                width: double.infinity,
-                                height: Dimensions.height100 * 6,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: Dimensions.font12,
-                                      color: Color(0x33000000),
-                                      offset: Offset(0, 2),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft:
-                                        Radius.circular(Dimensions.radius30),
-                                    bottomRight:
-                                        Radius.circular(Dimensions.radius30),
-                                    topLeft:
-                                        Radius.circular(Dimensions.radius30),
-                                    topRight:
-                                        Radius.circular(Dimensions.radius30),
-                                  ),
-                                  shape: BoxShape.rectangle,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(Dimensions.height20),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            Dimensions.height10,
-                                            0,
-                                            Dimensions.height10,
-                                            Dimensions.height10),
-                                        child: Text(
-                                          'Practioner',
-                                          textAlign: TextAlign.justify,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title1
-                                              .override(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize:
-                                                      Dimensions.font12 * 2),
-                                        ),
-                                      ),
-                                      data.isNotEmpty
-                                          ? PractionersGridView(
-                                              practioners: data)
-                                          : EmptyContentsWithTextAnimationView(
-                                              text: "no avaible practioners",
-                                            ),
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: Dimensions.height08),
+                              child: Container(
+                                  width: double.infinity,
+                                  height: Dimensions.height100 * 6,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: Dimensions.font12,
+                                        color: Color(0x33000000),
+                                        offset: Offset(0, 2),
+                                      )
                                     ],
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft:
+                                          Radius.circular(Dimensions.radius30),
+                                      bottomRight:
+                                          Radius.circular(Dimensions.radius30),
+                                      topLeft:
+                                          Radius.circular(Dimensions.radius30),
+                                      topRight:
+                                          Radius.circular(Dimensions.radius30),
+                                    ),
+                                    shape: BoxShape.rectangle,
                                   ),
-                                ));
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.all(Dimensions.height20),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  Dimensions.height10,
+                                                  0,
+                                                  Dimensions.height10,
+                                                  Dimensions.height10),
+                                          child: Text(
+                                            'Practioner',
+                                            textAlign: TextAlign.justify,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize:
+                                                        Dimensions.font12 * 2),
+                                          ),
+                                        ),
+                                        data.isNotEmpty
+                                            ? PractionersGridView(
+                                                practioners: data)
+                                            : EmptyContentsWithTextAnimationView(
+                                                text: "no avaible practioners",
+                                              ),
+                                      ],
+                                    ),
+                                  )),
+                            );
                           },
                           error: (error, stackTrace) {
                             return const ErrorAnimationView();
@@ -319,100 +327,92 @@ class mainPageMobile extends ConsumerWidget {
                       },
                     ),
                     //On going Appointment List
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: Dimensions.height08),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: Dimensions.font12,
-                              color: Color(0x33000000),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(Dimensions.radius30),
-                            bottomRight: Radius.circular(Dimensions.radius30),
-                            topLeft: Radius.circular(Dimensions.radius30),
-                            topRight: Radius.circular(Dimensions.radius30),
-                          ),
-                          shape: BoxShape.rectangle,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      26,
-                                      Dimensions.height20,
-                                      Dimensions.height20,
-                                      20),
-                                  child: Text(
-                                    'On going appointment',
-                                    style: FlutterFlowTheme.of(context).title1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  Dimensions.height20,
-                                  Dimensions.height20,
-                                  Dimensions.height20,
-                                  20),
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final appointments = ref.watch(userAppointmentProvider);
+                        return appointments.when(
+                          data: (data) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: Dimensions.height08),
                               child: Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.4,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.asset(
-                                        'lib/images/noappointment.png',
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.6,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.2,
-                                        fit: BoxFit.cover,
-                                      ),
+                                  width: double.infinity,
+                                  height: Dimensions.height100 * 6,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: Dimensions.font12,
+                                        color: Color(0x33000000),
+                                        offset: Offset(0, 2),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft:
+                                          Radius.circular(Dimensions.radius30),
+                                      bottomRight:
+                                          Radius.circular(Dimensions.radius30),
+                                      topLeft:
+                                          Radius.circular(Dimensions.radius30),
+                                      topRight:
+                                          Radius.circular(Dimensions.radius30),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, Dimensions.height20, 0, 0),
-                                      child: Text(
-                                        'No Appointment',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title1
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 16,
-                                            ),
-                                      ),
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.all(Dimensions.height20),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  Dimensions.height10,
+                                                  0,
+                                                  Dimensions.height10,
+                                                  Dimensions.height10),
+                                          child: Text(
+                                            'On Going Appointments',
+                                            textAlign: TextAlign.justify,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize:
+                                                        Dimensions.font12 * 2),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: double.maxFinite,
+                                          height: Dimensions.height100 * 5,
+                                          child: data.isNotEmpty
+                                              ? AppointmentsGridView(
+                                                  appointments: data)
+                                              : SingleChildScrollView(
+                                                  child:
+                                                      const EmptyContentsWithTextAnimationView(
+                                                    text:
+                                                        'You have no appointments',
+                                                  ),
+                                                ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                                  )),
+                            );
+                          },
+                          error: (error, stackTrace) {
+                            return const ErrorAnimationView();
+                          },
+                          loading: () {
+                            return const LoadingAnimationView();
+                          },
+                        );
+                      },
                     ),
                   ],
                 ),
