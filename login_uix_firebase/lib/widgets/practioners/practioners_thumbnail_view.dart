@@ -1,6 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
+
+import '../../helper/responsive.dart';
 
 class PractionersThumbnailView extends StatelessWidget {
   final Practioner practioner;
@@ -13,59 +17,75 @@ class PractionersThumbnailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return InkWell(
       onTap: onTapped,
       child: Container(
-        constraints: const BoxConstraints(maxHeight: 500),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).lineColor,
           boxShadow: [
             BoxShadow(
-              blurRadius: 12,
+              blurRadius: screenWidth / (width / 12),
               color: Color(0x33000000),
               offset: Offset(0, 2),
             )
           ],
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(screenWidth / (width / 20)),
           shape: BoxShape.rectangle,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
-              child: Text(
-                practioner.firstName.toString() +
-                    ' ' +
-                    practioner.lastName.toString(),
-                style: FlutterFlowTheme.of(context).title1,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: screenWidth / (width / 20),
+              vertical: screenWidth / (width / 8)),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(
+                    0, 0, 0, screenWidth / (width / 20)),
+                child: Text(
+                  practioner.firstName.toString() +
+                      ' ' +
+                      practioner.lastName.toString(),
+                  style: FlutterFlowTheme.of(context).title3.override(
+                      fontFamily: 'Poppins',
+                      fontSize: screenWidth / (width / 20)),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(screenWidth / (width / 20)),
                 child: Image.asset(
                   'lib/images/doctor.png',
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  height: MediaQuery.of(context).size.height * 0.2,
+                  width: screenWidth / (width / 150),
+                  height: screenWidth / (width / 150),
                   fit: BoxFit.scaleDown,
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-              child: Text(
-                "Speciality: " + practioner.mySpecialty.toString(),
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyText1.override(
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(
+                    0, screenWidth / (width / 8), 0, 0),
+                child: Text(
+                  "Speciality: " + practioner.mySpecialty.toString(),
+                  textAlign: TextAlign.center,
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
                       fontFamily: 'Poppins',
                       fontStyle: FontStyle.italic,
-                    ),
+                      fontSize: ResponsiveWidget.isLargeScreen(context)
+                          ? screenWidth / (width / 14)
+                          : screenWidth / (width / 12)),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

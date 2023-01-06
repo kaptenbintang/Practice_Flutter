@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/provider/specialdate_provider/specialdate_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import '../../flutter_flow/flutter_flow.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
@@ -9,20 +12,25 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../helper/responsive.dart';
+import '../../provider/appointment_page/date_selected.dart';
+import '../../provider/specialdate_provider/specialdate_get_provider.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
 
-class specialDatePage extends StatefulWidget {
+class specialDatePage extends ConsumerStatefulWidget {
   const specialDatePage({Key? key}) : super(key: key);
-
   @override
-  _specialDatePageState createState() => _specialDatePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _specialDatePageState();
+  // @override
+  // _specialDatePageState createState() => _specialDatePageState();
 }
 
-class _specialDatePageState extends State<specialDatePage> {
+class _specialDatePageState extends ConsumerState<specialDatePage> {
   TextEditingController? textController;
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -50,58 +58,44 @@ class _specialDatePageState extends State<specialDatePage> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenWidth / (width / 100)),
-        child: AppBar(
-          actions: const [],
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
+      appBar: AppBar(
+        actions: const [],
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: Padding(
+          padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
+          child: FlutterFlowIconButton(
             borderColor: Colors.transparent,
             borderRadius: screenWidth / (width / 30),
             borderWidth: 1,
-            buttonSize: screenWidth / (width / 50),
+            buttonSize: screenWidth / (width / 30),
             icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.black,
-              size: screenWidth / (width / 50),
+              size: screenWidth / (width / 20),
             ),
             onPressed: () {
               print('IconButton pressed ...');
               Navigator.pop(context);
             },
           ),
-          flexibleSpace: FlexibleSpaceBar(
-            title: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                  0, 0, 0, screenWidth / (width / 14)),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        screenWidth / (width / 24), 0, 0, 0),
-                    child: Text(
-                      'Off Day',
-                      style: FlutterFlowTheme.of(context).title2.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.black,
-                            fontSize: screenWidth / (width / 30),
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          // actions: [],
-          centerTitle: true,
-          elevation: 2,
         ),
+
+        title: Padding(
+          padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
+          child: Text(
+            'Off Day',
+            style: FlutterFlowTheme.of(context).title2.override(
+                  fontFamily: 'Poppins',
+                  color: Colors.black,
+                  fontSize: screenWidth / (width / 30),
+                ),
+          ),
+        ),
+
+        // actions: [],
+        centerTitle: true,
+        elevation: 2,
       ),
       body: SafeArea(
         child: GestureDetector(
@@ -128,8 +122,8 @@ class _specialDatePageState extends State<specialDatePage> {
                   ),
                   child: SingleChildScrollView(
                     child: Consumer(builder: (context, ref, child) {
-                      final specialDate = ref.watch(specialDateProvider);
-                      return specialDate.when(data: (data) {
+                      final dayoff = ref.watch(specialDateProvider);
+                      return dayoff.when(data: (data) {
                         if (data.isNotEmpty) {
                           final listDay = data.elementAt(0).dayoff;
                           return Column(
@@ -152,7 +146,7 @@ class _specialDatePageState extends State<specialDatePage> {
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
-                                itemCount: data.length,
+                                itemCount: listDay.length,
                                 itemBuilder: (context, index) {
                                   final value = listDay.values.elementAt(index);
                                   final key = listDay.keys.elementAt(index);
@@ -208,61 +202,8 @@ class _specialDatePageState extends State<specialDatePage> {
                                                   _onSelectionChanged,
                                               selectionMode:
                                                   DateRangePickerSelectionMode
-                                                      .single,
+                                                      .range,
                                               view: DateRangePickerView.month,
-                                              monthViewSettings:
-                                                  DateRangePickerMonthViewSettings(
-                                                      blackoutDates: [
-                                                    DateTime(2022, 12, 14)
-                                                  ],
-                                                      weekendDays: [
-                                                    7,
-                                                    6
-                                                  ],
-                                                      specialDates: [
-                                                    DateTime(2022, 12, 26),
-                                                    DateTime(2022, 12, 27),
-                                                    DateTime(2022, 12, 28)
-                                                  ],
-                                                      showTrailingAndLeadingDates:
-                                                          true),
-                                              monthCellStyle:
-                                                  DateRangePickerMonthCellStyle(
-                                                blackoutDatesDecoration:
-                                                    BoxDecoration(
-                                                        color: Colors.red,
-                                                        border: Border.all(
-                                                            color: const Color(
-                                                                0xFFF44436),
-                                                            width: 1),
-                                                        shape: BoxShape.circle),
-                                                weekendDatesDecoration:
-                                                    BoxDecoration(
-                                                        color: const Color(
-                                                            0xFFDFDFDF),
-                                                        border: Border.all(
-                                                            color: const Color(
-                                                                0xFFB6B6B6),
-                                                            width: 1),
-                                                        shape: BoxShape.circle),
-                                                specialDatesDecoration:
-                                                    BoxDecoration(
-                                                        color: Colors.green,
-                                                        border: Border.all(
-                                                            color: const Color(
-                                                                0xFF2B732F),
-                                                            width: 1),
-                                                        shape: BoxShape.circle),
-                                                blackoutDateTextStyle:
-                                                    TextStyle(
-                                                        color: Colors.white,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .lineThrough),
-                                                specialDatesTextStyle:
-                                                    const TextStyle(
-                                                        color: Colors.white),
-                                              ),
                                             ),
                                           ),
                                         );
@@ -315,6 +256,14 @@ class _specialDatePageState extends State<specialDatePage> {
   }
 
   Widget tableDepanSpecialPage(BuildContext context, data, key, index) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     // print(data);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
@@ -349,13 +298,17 @@ class _specialDatePageState extends State<specialDatePage> {
                         //   style: FlutterFlowTheme.of(context).subtitle1,
                         // ),
                         Text(
-                          'From: ' +
-                              data["startDayoff"].toString() +
-                              ',' +
-                              'To: ' +
-                              data["endDayoff"],
+                          data["dateDayoff"],
                           style: FlutterFlowTheme.of(context).subtitle1,
                         ),
+                        // Text(
+                        //   'From: ' +
+                        //       data["dateDayoff"] +
+                        //       ',' +
+                        //       'To: ' +
+                        //       data["dateDayoff"],
+                        //   style: FlutterFlowTheme.of(context).subtitle1,
+                        // ),
                         // Padding(
                         //   padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         //   child: Text(
@@ -418,30 +371,39 @@ class _specialDatePageState extends State<specialDatePage> {
                       color: FlutterFlowTheme.of(context).primaryText,
                       size: 30,
                     ),
-                    onPressed: () {
-                      showDialog(
+                    onPressed: () async {
+                      await showDialog(
                           context: context,
                           builder: (context) {
                             return AlertDialog(
                               backgroundColor: Colors.white,
                               actions: <Widget>[
-                                Container(
-                                  height: 30,
-                                  child: MaterialButton(
-                                    color: Colors.green,
-                                    child: Text(
-                                      'Set',
-                                      style: TextStyle(color: Colors.white),
+                                Consumer(builder: (context, ref, child) {
+                                  return Container(
+                                    height: 30,
+                                    child: MaterialButton(
+                                      color: Colors.green,
+                                      child: Text(
+                                        'Set',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () async {
+                                        final selectedDate =
+                                            ref.watch(dateRangeProvider);
+                                        await ref
+                                            .read(editSpecialDateProvider
+                                                .notifier)
+                                            .editstartDayoff(
+                                              dayoffs: selectedDate,
+                                              index: index,
+                                            )
+                                            .then((value) => ref.refresh(
+                                                specialDateProvider.future));
+                                        Navigator.of(context).pop();
+                                      },
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        // date_of_birth = date_controller.text;
-                                      });
-
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ),
+                                  );
+                                }),
                                 TextButton(
                                   child: Text('Cancel'),
                                   onPressed: () {
@@ -460,52 +422,87 @@ class _specialDatePageState extends State<specialDatePage> {
                                   // initialSelectedDate: DateTime.now(),
                                   onSelectionChanged: _onSelectionChanged,
                                   selectionMode:
-                                      DateRangePickerSelectionMode.single,
+                                      DateRangePickerSelectionMode.range,
                                   view: DateRangePickerView.month,
-                                  monthViewSettings:
-                                      DateRangePickerMonthViewSettings(
-                                          blackoutDates: [
-                                        DateTime(2022, 12, 14)
-                                      ],
-                                          weekendDays: [
-                                        7,
-                                        6
-                                      ],
-                                          specialDates: [
-                                        DateTime(2022, 12, 26),
-                                        DateTime(2022, 12, 27),
-                                        DateTime(2022, 12, 28)
-                                      ],
-                                          showTrailingAndLeadingDates: true),
-                                  monthCellStyle: DateRangePickerMonthCellStyle(
-                                    blackoutDatesDecoration: BoxDecoration(
-                                        color: Colors.red,
-                                        border: Border.all(
-                                            color: const Color(0xFFF44436),
-                                            width: 1),
-                                        shape: BoxShape.circle),
-                                    weekendDatesDecoration: BoxDecoration(
-                                        color: const Color(0xFFDFDFDF),
-                                        border: Border.all(
-                                            color: const Color(0xFFB6B6B6),
-                                            width: 1),
-                                        shape: BoxShape.circle),
-                                    specialDatesDecoration: BoxDecoration(
-                                        color: Colors.green,
-                                        border: Border.all(
-                                            color: const Color(0xFF2B732F),
-                                            width: 1),
-                                        shape: BoxShape.circle),
-                                    blackoutDateTextStyle: TextStyle(
-                                        color: Colors.white,
-                                        decoration: TextDecoration.lineThrough),
-                                    specialDatesTextStyle:
-                                        const TextStyle(color: Colors.white),
-                                  ),
                                 ),
                               ),
                             );
                           });
+
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("input description"),
+                              content: Stack(
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                                  Positioned(
+                                    right: -(screenWidth / (width / 40)),
+                                    top: -(screenWidth / (width / 80)),
+                                    child: InkResponse(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: CircleAvatar(
+                                        child: Icon(Icons.close),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                  Form(
+                                    // key: _formKey,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.all(
+                                                screenWidth / (width / 8)),
+                                            child: TextFormField(
+                                              controller:
+                                                  _descriptionController,
+                                              decoration: InputDecoration(
+                                                labelText: "Description",
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: screenWidth / (width / 40),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(
+                                                screenWidth / (width / 8)),
+                                            child: ElevatedButton(
+                                              child: Text("Submit"),
+                                              onPressed: () async {
+                                                await ref
+                                                    .read(
+                                                        editDescriptionDayoffProvider
+                                                            .notifier)
+                                                    .editDescription(
+                                                      descriptiong:
+                                                          _descriptionController
+                                                              .text,
+                                                      index: index,
+                                                    )
+                                                    .then((value) =>
+                                                        ref.refresh(
+                                                            specialDateProvider
+                                                                .future));
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+
                       print('IconButton pressed ...');
                     },
                   ),
@@ -536,8 +533,17 @@ class _specialDatePageState extends State<specialDatePage> {
                         color: FlutterFlowTheme.of(context).primaryText,
                         size: 30,
                       ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
+                      onPressed: () async {
+                        await ref
+                            .read(deleteSpecialDateProvider.notifier)
+                            .deleteDayoff(
+                              //  userID: FirebaseAuth.instance.currentUser!.uid
+
+                              selectedIndex: index,
+                            )
+                            .then((value) =>
+                                ref.refresh(specialDateProvider.future));
+                        Navigator.of(context).pop();
                       },
                     ),
                     Text(
@@ -556,14 +562,13 @@ class _specialDatePageState extends State<specialDatePage> {
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     if (args.value is PickerDateRange) {
-      final DateTime rangeStartDate = args.value.startDate;
-      final DateTime rangeEndDate = args.value.endDate;
-    } else if (args.value is DateTime) {
-      final DateTime selectedDate = args.value;
-    } else if (args.value is List<DateTime>) {
-      final List<DateTime> selectedDates = args.value;
-    } else {
-      final List<PickerDateRange> selectedRanges = args.value;
+      // final DateTime rangeStartDate = args.value.startDate;
+      // final DateTime rangeEndDate = args.value.endDate;
+      final _range =
+          '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+          // ignore: lines_longer_than_80_chars
+          ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate)}';
+      ref.read(dateRangeProvider.notifier).changeDateRange(_range);
     }
   }
   //   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {

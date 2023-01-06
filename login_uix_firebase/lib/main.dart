@@ -20,10 +20,10 @@ import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
 
 import 'package:login_uix_firebase/pages/delete_account_page.dart';
-import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
+import 'package:login_uix_firebase/pages/detailPractionerPage/detail_practioner_page.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_page.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
-import 'package:login_uix_firebase/pages/historybookingpage/historybooking.dart';
+
 import 'package:login_uix_firebase/pages/historybookingpage/historybooking_riverpod.dart';
 import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/pages/login/login_page.dart';
@@ -37,6 +37,7 @@ import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_p
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
+import 'package:login_uix_firebase/pages/schedulePage/blackoutDatePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/mainSchedulePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/specialDatePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/timeSchedulePage.dart';
@@ -176,6 +177,7 @@ class MyApp extends ConsumerWidget {
           RouteName.mainSchedulePage: (context) => mainSchedulePage(),
           RouteName.timeSchedulePage: (context) => timeSchedulePage(),
           RouteName.specialDatePage: (context) => specialDatePage(),
+          RouteName.blackOutPage: (context) => blackOutPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }

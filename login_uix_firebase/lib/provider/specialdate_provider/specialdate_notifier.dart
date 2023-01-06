@@ -8,13 +8,15 @@ import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
 
 import 'package:login_uix_firebase/model/user_data.dart';
 
+import '../../model/practioner_models/practioner_key.dart';
+
 class changeSpecialDate extends StateNotifier<IsLoading> {
   changeSpecialDate() : super(false);
 
   set isLoading(bool value) => state = value;
 
-  Future<bool> editStartTime({
-    required String schedule,
+  Future<bool> editstartDayoff({
+    required String dayoffs,
     required int index,
   }) async {
     try {
@@ -23,15 +25,87 @@ class changeSpecialDate extends StateNotifier<IsLoading> {
           .collection(
             FirebaseCollectionName.practioners,
           )
-          .where(FirebaseFieldName.schedules)
+          .where(FirebaseFieldName.dayoff)
           .limit(1)
           .get();
       if (userInfo.docs.isNotEmpty) {
         await userInfo.docs.first.reference.update(
           {
-            'schedules.$index.startTime': schedule,
+            'dayoff.$index.dateDayoff': dayoffs,
           },
         );
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+}
+
+class changeDescriptionDayoff extends StateNotifier<IsLoading> {
+  changeDescriptionDayoff() : super(false);
+
+  set isLoading(bool value) => state = value;
+
+  Future<bool> editDescription({
+    required String descriptiong,
+    required int index,
+  }) async {
+    try {
+      isLoading = true;
+      final userInfo = await FirebaseFirestore.instance
+          .collection(
+            FirebaseCollectionName.practioners,
+          )
+          .where(FirebaseFieldName.dayoff)
+          .limit(1)
+          .get();
+      if (userInfo.docs.isNotEmpty) {
+        await userInfo.docs.first.reference.update(
+          {
+            'dayoff.$index.description': descriptiong,
+          },
+        );
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+}
+
+class deleteSpecialDate extends StateNotifier<IsLoading> {
+  deleteSpecialDate() : super(false);
+
+  set isLoading(bool value) => state = value;
+  Future<bool> deleteDayoff({required Map selectedIndex}) async {
+    final removepls = selectedIndex;
+    try {
+      isLoading = true;
+      final userInfo = await FirebaseFirestore.instance
+          .collection(
+            FirebaseCollectionName.practioners,
+          )
+          .where(FirebaseFieldName.dayoff)
+          // .where(
+          //   PractionerKey.userId,
+          //   isEqualTo: userID,
+          // )
+          .limit(1)
+          .get();
+      /* Get list from firestore */
+
+      if (userInfo.docs.isNotEmpty) {
+        removepls.remove([selectedIndex]);
+        await userInfo.docs.first.reference.set({
+          'dayoff.$selectedIndex': removepls,
+        });
       }
 
       return true;

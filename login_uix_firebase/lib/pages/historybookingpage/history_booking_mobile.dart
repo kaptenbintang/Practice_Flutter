@@ -1,34 +1,24 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
-import 'package:login_uix_firebase/helper/dimensions.dart';
-
-import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../../helper/database_service.dart';
-import '../../model/practioner_data.dart';
-import '../../provider/main_page/appointment_provider.dart';
-import '../../provider/main_page/practioner_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
+import '../../helper/dimensions.dart';
+import '../../model/appointment/appointment.dart';
+import '../../model/practioner_models/practioner.dart';
+import '../../provider/main_page/appointment2_provider.dart';
 import '../../route.dart';
-import '../../widgets/animations/empty_contents_with_text_animation_view.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
-import '../../widgets/appointments/appointments_grid_view.dart';
-import '../../widgets/practioners/practioners_grid_view.dart';
-import '../detailPractionerPage/detail_practioner_page.dart';
-import 'main_page_desktop_riverpod.dart';
+import '../appointment_page_riverpod_ver2.dart';
 
-class mainPageMobile extends ConsumerWidget {
-  const mainPageMobile({Key? key}) : super(key: key);
+class historyBookingMobile extends ConsumerWidget {
+  const historyBookingMobile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
-    TextEditingController? textController;
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
@@ -64,7 +54,7 @@ class mainPageMobile extends ConsumerWidget {
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(
-                                context, MainPageDesktopRiverpod.routeName);
+                                context, RouteName.MainPagesPage);
                           },
                           child: Text(
                             'Home',
@@ -120,306 +110,107 @@ class mainPageMobile extends ConsumerWidget {
                 ),
               ),
               //Content
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.width08),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: Dimensions.radius12,
+                      color: Color(0x33000000),
+                      offset: Offset(0, 2),
+                    )
+                  ],
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(Dimensions.radius30),
+                    bottomRight: Radius.circular(Dimensions.radius30),
+                    topLeft: Radius.circular(Dimensions.radius30),
+                    topRight: Radius.circular(Dimensions.radius30),
+                  ),
+                  shape: BoxShape.rectangle,
+                ),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //Search Text field
                     Padding(
-                      padding: EdgeInsets.only(left: Dimensions.width10),
-                      child: SizedBox(
-                        height: Dimensions.height30,
-                        width: Dimensions.width100 * 2,
-                        child: TextFormField(
-                          controller: textController,
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: 'Search Something here..',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            contentPadding:
-                                EdgeInsets.all(Dimensions.font16 / 2),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                width: 1,
-                              ),
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.height20),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                width: 1,
-                              ),
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.height20),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.height20),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.height20),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.search,
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                  fontFamily: 'Poppins',
-                                  fontSize: Dimensions.font14),
-                        ),
-                      ),
-                    ),
-
-                    //Title
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: Dimensions.width10,
-                          top: Dimensions.height10,
-                          bottom: Dimensions.height10),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          Dimensions.height10,
+                          Dimensions.height10,
+                          Dimensions.height10,
+                          Dimensions.height10),
                       child: Text(
-                        'Begin your 1st Session!',
-                        style: FlutterFlowTheme.of(context).title1,
+                        'My Booking History',
+                        style: FlutterFlowTheme.of(context).title1.override(
+                            fontFamily: 'Poppins', fontSize: Dimensions.font20),
                       ),
                     ),
-                    //Text
-                    Padding(
-                      padding: EdgeInsets.all(
-                        Dimensions.width10,
-                      ),
-                      child: Text(
-                        'We believe anyone can attain true happiness, whether adults, children, youth, male and female.',
-                        textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).subtitle1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ),
-                    //Icon Row
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset(
-                            'lib/images/Adjustment-Icon-7.png',
-                            width: MediaQuery.of(context).size.width * 0.12,
-                            height: MediaQuery.of(context).size.height * 0.06,
-                            fit: BoxFit.cover,
-                          ),
-                          Image.asset(
-                            'lib/images/7.png',
-                            width: MediaQuery.of(context).size.width * 0.12,
-                            height: MediaQuery.of(context).size.height * 0.06,
-                            fit: BoxFit.cover,
-                          ),
-                          Image.asset(
-                            'lib/images/9.png',
-                            width: MediaQuery.of(context).size.width * 0.12,
-                            height: MediaQuery.of(context).size.height * 0.06,
-                            fit: BoxFit.cover,
-                          ),
-                          Image.asset(
-                            'lib/images/10.png',
-                            width: MediaQuery.of(context).size.width * 0.12,
-                            height: MediaQuery.of(context).size.height * 0.06,
-                            fit: BoxFit.cover,
-                          ),
-                        ],
-                      ),
-                    ),
-                    //Practioner List
                     Consumer(
                       builder: (context, ref, child) {
-                        final practioners = ref.watch(allPractionersProvider);
-                        return practioners.when(
-                          data: (data) {
+                        final appointments =
+                            ref.watch(userAppointmentProvider2);
+                        return appointments.when(data: (data) {
+                          if (data.isNotEmpty) {
+                            return ListView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  final appointmentData = data.elementAt(index);
+                                  return tableDepanAppointment(
+                                      context, appointmentData);
+                                });
+                          } else {
                             return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: Dimensions.height08),
-                              child: Container(
-                                  width: double.infinity,
-                                  height: Dimensions.height100 * 6,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: Dimensions.font12,
-                                        color: Color(0x33000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft:
-                                          Radius.circular(Dimensions.radius30),
-                                      bottomRight:
-                                          Radius.circular(Dimensions.radius30),
-                                      topLeft:
-                                          Radius.circular(Dimensions.radius30),
-                                      topRight:
-                                          Radius.circular(Dimensions.radius30),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  Dimensions.height10,
+                                  Dimensions.height10,
+                                  Dimensions.height10,
+                                  Dimensions.height10),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.asset(
+                                      'lib/images/noappointment.png',
+                                      width: Dimensions.width100 * 1.5,
+                                      height: Dimensions.height100 * 1.5,
+                                      fit: BoxFit.cover,
                                     ),
-                                    shape: BoxShape.rectangle,
                                   ),
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.all(Dimensions.height20),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  Dimensions.height10,
-                                                  0,
-                                                  Dimensions.height10,
-                                                  Dimensions.height10),
-                                          child: Text(
-                                            'Practioner',
-                                            textAlign: TextAlign.justify,
-                                            style: FlutterFlowTheme.of(context)
-                                                .title1
-                                                .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize:
-                                                        Dimensions.font12 * 2),
-                                          ),
-                                        ),
-                                        data.isNotEmpty
-                                            ? PractionersGridView(
-                                                practioners: data)
-                                            : EmptyContentsWithTextAnimationView(
-                                                text: "no avaible practioners",
-                                              ),
-                                      ],
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        Dimensions.height10,
+                                        Dimensions.height10,
+                                        Dimensions.height10,
+                                        Dimensions.height10),
+                                    child: Text(
+                                      'You haven\'t an appointment yet',
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle2,
                                     ),
-                                  )),
+                                  )
+                                ],
+                              ),
                             );
-                          },
-                          error: (error, stackTrace) {
-                            return const ErrorAnimationView();
-                          },
-                          loading: () {
-                            return const LoadingAnimationView();
-                          },
-                        );
-                      },
-                    ),
-                    //On going Appointment List
-                    Consumer(
-                      builder: (context, ref, child) {
-                        final appointments = ref.watch(userAppointmentProvider);
-                        return appointments.when(
-                          data: (data) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: Dimensions.height08),
-                              child: Container(
-                                  width: double.infinity,
-                                  height: Dimensions.height100 * 6,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: Dimensions.font12,
-                                        color: Color(0x33000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft:
-                                          Radius.circular(Dimensions.radius30),
-                                      bottomRight:
-                                          Radius.circular(Dimensions.radius30),
-                                      topLeft:
-                                          Radius.circular(Dimensions.radius30),
-                                      topRight:
-                                          Radius.circular(Dimensions.radius30),
-                                    ),
-                                    shape: BoxShape.rectangle,
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.all(Dimensions.height20),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  Dimensions.height10,
-                                                  0,
-                                                  Dimensions.height10,
-                                                  Dimensions.height10),
-                                          child: Text(
-                                            'On Going Appointments',
-                                            textAlign: TextAlign.justify,
-                                            style: FlutterFlowTheme.of(context)
-                                                .title1
-                                                .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize:
-                                                        Dimensions.font12 * 2),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: double.maxFinite,
-                                          height: Dimensions.height100 * 5,
-                                          child: data.isNotEmpty
-                                              ? AppointmentsGridView(
-                                                  appointments: data)
-                                              : SingleChildScrollView(
-                                                  child:
-                                                      const EmptyContentsWithTextAnimationView(
-                                                    text:
-                                                        'You have no appointments',
-                                                  ),
-                                                ),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                            );
-                          },
-                          error: (error, stackTrace) {
-                            return const ErrorAnimationView();
-                          },
-                          loading: () {
-                            return const LoadingAnimationView();
-                          },
-                        );
+                          }
+                        }, error: (error, stackTrace) {
+                          print(error);
+                          return const ErrorAnimationView();
+                        }, loading: () {
+                          return const LoadingAnimationView();
+                        });
                       },
                     ),
                   ],
                 ),
               ),
+
               //Footer
               Padding(
-                padding: EdgeInsets.only(top: Dimensions.height08),
+                padding: EdgeInsets.only(top: Dimensions.height20),
                 child: Container(
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
@@ -687,6 +478,243 @@ class mainPageMobile extends ConsumerWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget tableDepanAppointment(BuildContext context, Appointment data) {
+    String isComplete = data.statusAppointment;
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(Dimensions.height10,
+          Dimensions.height10, Dimensions.height10, Dimensions.height10),
+      child: Container(
+        height: Dimensions.height100 * 2.5,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).lineColor,
+          borderRadius: BorderRadius.circular(Dimensions.height10),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            //Created at
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height05),
+                    child: Text(
+                      'Created At',
+                      style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.height10),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10, 0, Dimensions.height10, 0),
+                    child: Text(
+                      data.createdAt.toString(),
+                      style: FlutterFlowTheme.of(context).subtitle1.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.font14),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            //Date time booking
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height05),
+                    child: Text(
+                      'Date/Time Booking',
+                      style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.height10),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10, 0, Dimensions.height10, 0),
+                    child: Text(
+                      data.date,
+                      style: FlutterFlowTheme.of(context).subtitle1.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.font14),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            //Services
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height05),
+                    child: Text(
+                      'Services',
+                      style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.height10),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10, 0, Dimensions.height10, 0),
+                    child: Text(
+                      data.services.toString(),
+                      style: FlutterFlowTheme.of(context).subtitle1.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.font14),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            //Practioner
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height05),
+                    child: Text(
+                      'Practioner Name',
+                      style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.height10),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10, 0, Dimensions.height10, 0),
+                    child: Text(
+                      data.practionerName,
+                      style: FlutterFlowTheme.of(context).subtitle1.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.font14),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            //Location
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height05),
+                    child: Text(
+                      'Location',
+                      style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.height10),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10, 0, Dimensions.height10, 0),
+                    child: Text(
+                      data.location.toString(),
+                      style: FlutterFlowTheme.of(context).subtitle1.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.font14),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            //Status
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height10,
+                        Dimensions.height05),
+                    child: Text(
+                      'Status',
+                      style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Poppins', fontSize: Dimensions.height10),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Dimensions.height10, 0, Dimensions.height10, 0),
+                    child: isComplete == "Complete"
+                        ? Text(
+                            data.statusAppointment.toString(),
+                            style:
+                                FlutterFlowTheme.of(context).subtitle1.override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryColor,
+                                      fontSize: Dimensions.font14,
+                                    ),
+                          )
+                        : Text(
+                            data.statusAppointment.toString(),
+                            style: FlutterFlowTheme.of(context)
+                                .subtitle1
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: Dimensions.font14,
+                                ),
+                          ),
+
+                    // Text(
+                    //   data.statusAppointment.toString(),
+                    //   style: FlutterFlowTheme.of(context).subtitle1.override(
+                    //         fontFamily: 'Poppins',
+                    //         color: FlutterFlowTheme.of(context).secondaryColor,
+                    //       ),
+                    // ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

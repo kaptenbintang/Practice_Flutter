@@ -1,34 +1,21 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:hive/hive.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
-import 'package:login_uix_firebase/pages/appointment_page.dart';
-
-import 'package:login_uix_firebase/pages/appointment_page_riverpod.dart';
-import 'package:login_uix_firebase/pages/appointment_page_riverpod_ver2.dart';
-
-import '../flutter_flow/flutter_flow_theme.dart';
-
-import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../helper/responsive.dart';
-import '../route.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
+import '../../helper/responsive.dart';
+import '../../model/practioner_models/practioner.dart';
+import '../../route.dart';
+import '../appointment_page_riverpod_ver2.dart';
 
-class DetailPagePractioner extends ConsumerStatefulWidget {
-  static const routeName = '/detailPage';
+class detailPractionerDesktop extends ConsumerWidget {
   final Practioner practioner;
-  const DetailPagePractioner({super.key, required this.practioner});
+  const detailPractionerDesktop(this.practioner, {super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _DetailPagePractionerState();
-}
-
-class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textController = TextEditingController();
     final scaffoldKey = GlobalKey<ScaffoldState>();
     double screenWidth = MediaQuery.of(context).size.width;
@@ -39,7 +26,6 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
             : ResponsiveWidget.isLargeScreen(context)
                 ? 1920
                 : 1280;
-
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
@@ -261,7 +247,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    widget.practioner.firstName.toString(),
+                                    practioner.firstName.toString(),
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .title1
@@ -272,7 +258,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                   ),
                                   Text(
                                     '(Speaks ' +
-                                        widget.practioner.languages.toString() +
+                                        practioner.languages.toString() +
                                         ')',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
@@ -283,7 +269,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                                 screenWidth / (width / 24)),
                                   ),
                                   Text(
-                                    widget.practioner.titleMain.toString(),
+                                    practioner.titleMain.toString(),
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -370,11 +356,9 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                           screenWidth / (width / 10)),
                                       child: Text(
                                         'Name: ' +
-                                            widget.practioner.firstName
-                                                .toString() +
+                                            practioner.firstName.toString() +
                                             ' ' +
-                                            widget.practioner.lastName
-                                                .toString(),
+                                            practioner.lastName.toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -392,8 +376,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                           screenWidth / (width / 10)),
                                       child: Text(
                                         'My Approach: ' +
-                                            widget.practioner.myApproach
-                                                .toString(),
+                                            practioner.myApproach.toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -411,8 +394,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                           screenWidth / (width / 10)),
                                       child: Text(
                                         'My Backgrounds: ' +
-                                            widget.practioner.myBackground
-                                                .toString(),
+                                            practioner.myBackground.toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -430,7 +412,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                           screenWidth / (width / 10)),
                                       child: Text(
                                         'My Qualifications: ' +
-                                            widget.practioner.myQualifications
+                                            practioner.myQualifications
                                                 .toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
@@ -449,8 +431,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                           screenWidth / (width / 10)),
                                       child: Text(
                                         'My Specialty: ' +
-                                            widget.practioner.mySpecialty
-                                                .toString(),
+                                            practioner.mySpecialty.toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -468,8 +449,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                           screenWidth / (width / 10)),
                                       child: Text(
                                         'My Roles: ' +
-                                            widget.practioner.myRoles
-                                                .toString(),
+                                            practioner.myRoles.toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -492,7 +472,7 @@ class _DetailPagePractionerState extends ConsumerState<DetailPagePractioner> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   AppointmentPageRiverpodVersion2(
-                                                practioner: widget.practioner,
+                                                practioner: practioner,
                                               ),
                                             ),
                                           );

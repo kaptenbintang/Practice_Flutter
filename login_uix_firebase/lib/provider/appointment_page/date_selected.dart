@@ -4,3 +4,8 @@ import 'package:login_uix_firebase/provider/appointment_page/date_selected_provi
 final dateProvider = StateNotifierProvider<DateNotifier, DateTime>((ref) {
   return DateNotifier();
 });
+
+final dateRangeProvider =
+    StateNotifierProvider<DateRangeNotifier, String>((ref) {
+  return DateRangeNotifier();
+});

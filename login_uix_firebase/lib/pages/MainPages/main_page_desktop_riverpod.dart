@@ -33,448 +33,305 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
     final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                width: double.infinity,
-                constraints: BoxConstraints(
-                  maxHeight: double.infinity,
-                ),
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryColor,
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
+              //Header /NavigationBar
+              Padding(
+                padding: EdgeInsets.only(
+                    left: screenWidth / (width / 100),
+                    top: screenWidth / (width / 40),
+                    right: screenWidth / (width / 100),
+                    bottom: screenWidth / (width / 40)),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(
-                                screenWidth / (width / -0.95), 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  screenWidth / (width / 100),
-                                  screenWidth / (width / 40),
-                                  0,
-                                  screenWidth / (width / 100)),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.3,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
-                                decoration: BoxDecoration(),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    //Home navigation
-                                    Align(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            screenWidth / (width / 20),
-                                            screenWidth / (width / 20),
-                                            screenWidth / (width / 20),
-                                            screenWidth / (width / 20)),
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.pushNamed(
-                                                context,
-                                                MainPageDesktopRiverpod
-                                                    .routeName);
-                                          },
-                                          child: Text(
-                                            'Home',
-                                            textAlign: TextAlign.justify,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: screenWidth /
-                                                        (width / 14)),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    //Profile navigation
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          screenWidth / (width / 20),
-                                          screenWidth / (width / 20),
-                                          screenWidth / (width / 20),
-                                          screenWidth / (width / 20)),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              RouteName.viewProfilePage);
-                                        },
-                                        child: Text(
-                                          'Profile',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: screenWidth /
-                                                      (width / 14)),
-                                        ),
-                                      ),
-                                    ),
-                                    //Booking History
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          screenWidth / (width / 20),
-                                          screenWidth / (width / 20),
-                                          screenWidth / (width / 20),
-                                          screenWidth / (width / 20)),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              RouteName.historyBookingRiverpod);
-                                        },
-                                        child: Text(
-                                          'Booking History',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: screenWidth /
-                                                      (width / 14)),
-                                        ),
-                                      ),
-                                    ),
-                                    //Search Text field
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller: textController,
-                                        autofocus: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          hintText: 'Search Something here..',
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyText2,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                screenWidth / (width / 20)),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                screenWidth / (width / 20)),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                screenWidth / (width / 20)),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                screenWidth / (width / 20)),
-                                          ),
-                                          prefixIcon: Icon(
-                                            Icons.search,
-                                          ),
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize:
-                                                    screenWidth / (width / 14)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          //Home navigation
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0,
-                                screenWidth / (width / 100),
-                                screenWidth / (width / 100),
-                                screenWidth / (width / 100)),
-                            child: Image.asset(
-                              'lib/images/Logo-Slogan-BL-H400-W1080.png',
-                              width: MediaQuery.of(context).size.width * 0.12,
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              fit: BoxFit.fitHeight,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, screenWidth / (width / 40)),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20)),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RouteName.MainPagesPage);
+                              },
                               child: Text(
-                                'Begin your 1st Session!',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: screenWidth / (width / 40),
-                                    ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20)),
-                              child: Text(
-                                'We believe anyone can attain true happiness, whether adults, children, youth, male and female.',
+                                'Home',
                                 textAlign: TextAlign.justify,
                                 style: FlutterFlowTheme.of(context)
-                                    .subtitle1
+                                    .bodyText1
                                     .override(
                                         fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: screenWidth / (width / 18)),
+                                        fontSize: screenWidth / (width / 14)),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20)),
-                              child: Image.asset(
-                                'lib/images/Adjustment-Icon-7.png',
-                                width: screenWidth / (width / 100),
-                                height: screenWidth / (width / 100),
-                                fit: BoxFit.cover,
+                          ),
+                          //Profile navigation
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20)),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RouteName.viewProfilePage);
+                              },
+                              child: Text(
+                                'Profile',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: screenWidth / (width / 14)),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20)),
-                              child: Image.asset(
-                                'lib/images/7.png',
-                                width: screenWidth / (width / 100),
-                                height: screenWidth / (width / 100),
-                                fit: BoxFit.cover,
+                          ),
+                          //Booking History
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20)),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RouteName.historyBookingRiverpod);
+                              },
+                              child: Text(
+                                'Booking History',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: screenWidth / (width / 14)),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20)),
-                              child: Image.asset(
-                                'lib/images/9.png',
-                                width: screenWidth / (width / 100),
-                                height: screenWidth / (width / 100),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20),
-                                  screenWidth / (width / 20)),
-                              child: Image.asset(
-                                'lib/images/10.png',
-                                width: screenWidth / (width / 100),
-                                height: screenWidth / (width / 100),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Consumer(
-                        builder: (context, ref, child) {
-                          final practioners = ref.watch(allPractionersProvider);
-                          return practioners.when(
-                            data: (data) {
-                              if (data.isEmpty) {
-                                return const EmptyContentsWithTextAnimationView(
-                                  text: "no avaible practioners",
-                                );
-                              } else {
-                                return SizedBox(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.8,
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius:
-                                                  screenWidth / (width / 12),
-                                              color: Color(0x33000000),
-                                              offset: Offset(0, 2),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(0),
-                                            bottomRight: Radius.circular(0),
-                                            topLeft: Radius.circular(
-                                                screenWidth / (width / 60)),
-                                            topRight: Radius.circular(
-                                                screenWidth / (width / 60)),
-                                          ),
-                                          shape: BoxShape.rectangle,
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  screenWidth / (width / 60),
-                                                  screenWidth / (width / 60),
-                                                  screenWidth / (width / 60),
-                                                  screenWidth / (width / 60)),
-                                          child: PractionersGridView(
-                                              practioners: data),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, -1),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  screenWidth / (width / 20),
-                                                  screenWidth / (width / 20),
-                                                  screenWidth / (width / 20),
-                                                  screenWidth / (width / 20)),
-                                          child: Text(
-                                            'Practioner',
-                                            textAlign: TextAlign.justify,
-                                            style: FlutterFlowTheme.of(context)
-                                                .title1
-                                                .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: screenWidth /
-                                                        (width / 24)),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                          ),
+                          //Search Text field
+                          SizedBox(
+                            height: screenWidth / (width / 50),
+                            width: screenWidth / (width / 300),
+                            child: TextFormField(
+                              controller: textController,
+                              autofocus: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Search Something here..',
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).bodyText2,
+                                contentPadding:
+                                    EdgeInsets.all(screenWidth / (width / 8)),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    width: 1,
                                   ),
-                                );
-                              }
-                            },
-                            error: (error, stackTrace) {
-                              return const ErrorAnimationView();
-                            },
-                            loading: () {
-                              return const LoadingAnimationView();
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              //hereeee
-              Consumer(
-                builder: (context, ref, child) {
-                  final appointments = ref.watch(userAppointmentProvider);
-                  return appointments.when(
-                    data: (data) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          screenWidth / (width / 26),
-                                          screenWidth / (width / 20),
-                                          screenWidth / (width / 20),
-                                          screenWidth / (width / 20)),
-                                      child: Text(
-                                        'On going appointment',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title1
-                                            .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize:
-                                                    screenWidth / (width / 24)),
-                                      ),
-                                    ),
-                                  ],
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 20)),
                                 ),
-                                Expanded(
-                                    child: data.isNotEmpty
-                                        ? AppointmentsGridView(
-                                            appointments: data)
-                                        : SingleChildScrollView(
-                                            child:
-                                                const EmptyContentsWithTextAnimationView(
-                                              text: 'You have no appointments',
-                                            ),
-                                          )),
-                              ],
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 20)),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 20)),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth / (width / 20)),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                ),
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 14)),
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                    Image.asset(
+                      'lib/images/Logo-Slogan-BL-H400-W1080.png',
+                      width: screenWidth / (width / 300),
+                      height: screenWidth / (width / 60),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ],
+                ),
+              ),
+              //Title
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(
+                    0, 0, 0, screenWidth / (width / 40)),
+                child: Text(
+                  'Begin your 1st Session!',
+                  style: FlutterFlowTheme.of(context).title1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth / (width / 40),
+                      ),
+                ),
+              ),
+              //Text
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(
+                    screenWidth / (width / 20),
+                    screenWidth / (width / 20),
+                    screenWidth / (width / 20),
+                    screenWidth / (width / 20)),
+                child: Text(
+                  'We believe anyone can attain true happiness, whether adults, children, youth, male and female.',
+                  textAlign: TextAlign.justify,
+                  style: FlutterFlowTheme.of(context).subtitle1.override(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                      fontSize: screenWidth / (width / 18)),
+                ),
+              ),
+              //Icon Row
+              Padding(
+                padding: EdgeInsets.all(screenWidth / (width / 20)),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth / (width / 8)),
+                      child: Image.asset(
+                        'lib/images/Adjustment-Icon-7.png',
+                        width: screenWidth / (width / 100),
+                        height: screenWidth / (width / 100),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth / (width / 8)),
+                      child: Image.asset(
+                        'lib/images/7.png',
+                        width: screenWidth / (width / 100),
+                        height: screenWidth / (width / 100),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth / (width / 8)),
+                      child: Image.asset(
+                        'lib/images/9.png',
+                        width: screenWidth / (width / 100),
+                        height: screenWidth / (width / 100),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth / (width / 8)),
+                      child: Image.asset(
+                        'lib/images/10.png',
+                        width: screenWidth / (width / 100),
+                        height: screenWidth / (width / 100),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              //Practioner List
+              Consumer(
+                builder: (context, ref, child) {
+                  final practioners = ref.watch(allPractionersProvider);
+                  return practioners.when(
+                    data: (data) {
+                      return Container(
+                        width: double.infinity,
+                        height: screenWidth / (width / 600),
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: screenWidth / (width / 12),
+                              color: Color(0x33000000),
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(0),
+                            topLeft:
+                                Radius.circular(screenWidth / (width / 60)),
+                            topRight:
+                                Radius.circular(screenWidth / (width / 60)),
+                          ),
+                          shape: BoxShape.rectangle,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 50)),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 20),
+                                    0,
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20)),
+                                child: Text(
+                                  'Practioner',
+                                  textAlign: TextAlign.justify,
+                                  style: FlutterFlowTheme.of(context)
+                                      .title1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: screenWidth / (width / 24)),
+                                ),
+                              ),
+                              data.isNotEmpty
+                                  ? PractionersGridView(practioners: data)
+                                  : EmptyContentsWithTextAnimationView(
+                                      text: "no avaible practioners",
+                                    ),
+                            ],
+                          ),
+                        ),
                       );
                     },
                     error: (error, stackTrace) {
@@ -486,6 +343,64 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                   );
                 },
               ),
+              //On Going Appointment List
+              Consumer(
+                builder: (context, ref, child) {
+                  final appointments = ref.watch(userAppointmentProvider);
+                  return appointments.when(
+                    data: (data) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 50)),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 20),
+                                    0,
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20)),
+                                child: Text(
+                                  'On going appointment',
+                                  style: FlutterFlowTheme.of(context)
+                                      .title1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: screenWidth / (width / 24)),
+                                ),
+                              ),
+                              Expanded(
+                                  child: data.isNotEmpty
+                                      ? AppointmentsGridView(appointments: data)
+                                      : Center(
+                                          child:
+                                              const EmptyContentsWithTextAnimationView(
+                                            text: 'You have no appointments',
+                                          ),
+                                        )),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      return const ErrorAnimationView();
+                    },
+                    loading: () {
+                      return const LoadingAnimationView();
+                    },
+                  );
+                },
+              ),
+              //Footer
               Stack(
                 children: [
                   Container(

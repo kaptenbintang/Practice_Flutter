@@ -18,7 +18,9 @@ import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.
 import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
 
+import '../../constant/controllers.dart';
 import '../../helper/responsive.dart';
+import '../../routing/routes.dart';
 
 class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
   static const routeName = '/profileViewPageRiverpod';
@@ -706,6 +708,62 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                                     ),
                                   ),
                                 ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0,
+                            screenWidth / (width / 20),
+                            0,
+                            screenWidth / (width / 20)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FFButtonWidget(
+                              onPressed: () async {
+                                await ref
+                                    .read(authStateProvider.notifier)
+                                    .logOut()
+                                    .then((_) {
+                                  Navigator.popUntil(
+                                      context, ModalRoute.withName('/'));
+                                  LandingLayout();
+                                  menuController
+                                      .changeActiveitemTo(sideMenuItems[0]);
+                                });
+
+                                //     .then((_) {
+                                //   // Navigator.pushReplacement(
+                                //   //   context,
+                                //   //   MaterialPageRoute(
+                                //   //     builder: (context) => LandingLayout(),
+                                //   //   ),
+                                //   // );
+                                //   Navigator.of(context).pop();
+                                //   LandingLayout();
+                                // });
+                              },
+                              text: 'Log Out',
+                              options: FFButtonOptions(
+                                height: screenWidth / (width / 40),
+                                color: Colors.white,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText2
+                                    .override(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF101213),
+                                      fontSize: screenWidth / (width / 14),
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                elevation: 1,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
