@@ -224,7 +224,7 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
                                   onPressed: () async {
                                     final practionerdata = PractionerData(
                                       id: userUid.toString(),
-                                      blackouts: selectedDay as Map,
+                                      blackouts: selectedDay.toString(),
                                     );
                                     final isUploaded = await ref
                                         .read(blackoutUploaderProvider.notifier)
