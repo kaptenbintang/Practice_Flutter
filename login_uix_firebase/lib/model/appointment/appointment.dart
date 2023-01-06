@@ -6,6 +6,7 @@ import 'package:login_uix_firebase/model/practioner_models/practioner_key.dart';
 @immutable
 class Appointment {
   final String appointmentId;
+  final String practionerId;
   final String clientId;
   final String clientComment;
   final String clientEmail;
@@ -23,6 +24,7 @@ class Appointment {
     required this.appointmentId,
     required Map<String, dynamic> json,
   })  : clientId = json[AppointmentKey.clientId],
+        practionerId = json[AppointmentKey.practionerId],
         clientComment = json[AppointmentKey.clientComment],
         clientEmail = json[AppointmentKey.clientEmail],
         clientNameorCode = json[AppointmentKey.clientNameorCode],
