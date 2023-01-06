@@ -41,48 +41,44 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenWidth / (width / 70)),
-        child: AppBar(
-          actions: const [],
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          leading: Padding(
-            padding: EdgeInsets.only(top: screenWidth / (width / 10)),
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: screenWidth / (width / 30),
-              borderWidth: 1,
-              buttonSize: screenWidth / (width / 50),
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.black,
-                size: screenWidth / (width / 30),
-              ),
-              onPressed: () {
-                print('IconButton pressed ...');
-                Navigator.pop(context);
-              },
+      appBar: AppBar(
+        actions: const [],
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: Padding(
+          padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
+          child: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: screenWidth / (width / 30),
+            borderWidth: 1,
+            buttonSize: screenWidth / (width / 30),
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.black,
+              size: screenWidth / (width / 20),
             ),
+            onPressed: () {
+              print('IconButton pressed ...');
+              Navigator.pop(context);
+            },
           ),
-
-          title: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(
-                0, screenWidth / (width / 10), 0, 0),
-            child: Text(
-              'Edit Profile',
-              style: FlutterFlowTheme.of(context).title2.override(
-                    fontFamily: 'Poppins',
-                    color: Colors.black,
-                    fontSize: screenWidth / (width / 30),
-                  ),
-            ),
-          ),
-
-          // actions: [],
-          centerTitle: true,
-          elevation: 2,
         ),
+
+        title: Padding(
+          padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
+          child: Text(
+            'Edit Profile',
+            style: FlutterFlowTheme.of(context).title2.override(
+                  fontFamily: 'Poppins',
+                  color: Colors.black,
+                  fontSize: screenWidth / (width / 30),
+                ),
+          ),
+        ),
+
+        // actions: [],
+        centerTitle: true,
+        elevation: 2,
       ),
       body: SafeArea(
         child: Consumer(

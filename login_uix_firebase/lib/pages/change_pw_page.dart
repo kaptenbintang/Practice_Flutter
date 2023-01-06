@@ -98,16 +98,16 @@ class _changePWPageState extends State<changePWPage> {
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           leading: Padding(
-            padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 8)),
+            padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
             child: FlutterFlowIconButton(
               borderColor: Colors.transparent,
               borderRadius: screenWidth / (width / 30),
               borderWidth: 1,
-              buttonSize: screenWidth / (width / 50),
+              buttonSize: screenWidth / (width / 30),
               icon: Icon(
                 Icons.arrow_back_rounded,
                 color: Colors.black,
-                size: screenWidth / (width / 30),
+                size: screenWidth / (width / 20),
               ),
               onPressed: () {
                 print('IconButton pressed ...');
@@ -117,7 +117,7 @@ class _changePWPageState extends State<changePWPage> {
           ),
 
           title: Padding(
-            padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 8)),
+            padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
             child: Text(
               'Change Password',
               style: FlutterFlowTheme.of(context).title2.override(
