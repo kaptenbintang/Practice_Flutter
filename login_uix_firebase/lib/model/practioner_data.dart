@@ -13,7 +13,7 @@ class PractionerData {
   final String? mySpecialty;
   final String? languages;
   final String? titleMain;
-  final Map? blackouts;
+  final String? blackouts;
 
   PractionerData({
     this.id,
