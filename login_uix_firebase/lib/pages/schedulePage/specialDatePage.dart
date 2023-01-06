@@ -58,58 +58,44 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenWidth / (width / 100)),
-        child: AppBar(
-          actions: const [],
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
+      appBar: AppBar(
+        actions: const [],
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: Padding(
+          padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
+          child: FlutterFlowIconButton(
             borderColor: Colors.transparent,
             borderRadius: screenWidth / (width / 30),
             borderWidth: 1,
-            buttonSize: screenWidth / (width / 50),
+            buttonSize: screenWidth / (width / 30),
             icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.black,
-              size: screenWidth / (width / 50),
+              size: screenWidth / (width / 20),
             ),
             onPressed: () {
               print('IconButton pressed ...');
               Navigator.pop(context);
             },
           ),
-          flexibleSpace: FlexibleSpaceBar(
-            title: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                  0, 0, 0, screenWidth / (width / 14)),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        screenWidth / (width / 24), 0, 0, 0),
-                    child: Text(
-                      'Off Day',
-                      style: FlutterFlowTheme.of(context).title2.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.black,
-                            fontSize: screenWidth / (width / 30),
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          // actions: [],
-          centerTitle: true,
-          elevation: 2,
         ),
+
+        title: Padding(
+          padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
+          child: Text(
+            'Off Day',
+            style: FlutterFlowTheme.of(context).title2.override(
+                  fontFamily: 'Poppins',
+                  color: Colors.black,
+                  fontSize: screenWidth / (width / 30),
+                ),
+          ),
+        ),
+
+        // actions: [],
+        centerTitle: true,
+        elevation: 2,
       ),
       body: SafeArea(
         child: GestureDetector(

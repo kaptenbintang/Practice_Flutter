@@ -37,6 +37,7 @@ import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_p
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
+import 'package:login_uix_firebase/pages/schedulePage/blackoutDatePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/mainSchedulePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/specialDatePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/timeSchedulePage.dart';
@@ -176,6 +177,7 @@ class MyApp extends ConsumerWidget {
           RouteName.mainSchedulePage: (context) => mainSchedulePage(),
           RouteName.timeSchedulePage: (context) => timeSchedulePage(),
           RouteName.specialDatePage: (context) => specialDatePage(),
+          RouteName.blackOutPage: (context) => blackOutPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }
