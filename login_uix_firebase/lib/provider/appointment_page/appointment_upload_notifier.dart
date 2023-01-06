@@ -1,4 +1,5 @@
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
+import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_payload.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
