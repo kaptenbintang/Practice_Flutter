@@ -28,13 +28,6 @@ class PractionersThumbnailView extends StatelessWidget {
     return InkWell(
       onTap: onTapped,
       child: Container(
-        constraints: BoxConstraints(
-            maxHeight: ResponsiveWidget.isLargeScreen(context)
-                ? screenWidth / (width / 300)
-                : screenWidth / (width / 150),
-            maxWidth: ResponsiveWidget.isLargeScreen(context)
-                ? screenWidth / (width / 300)
-                : screenWidth / (width / 150)),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).lineColor,
           boxShadow: [
@@ -48,9 +41,11 @@ class PractionersThumbnailView extends StatelessWidget {
           shape: BoxShape.rectangle,
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth / (width / 20)),
+          padding: EdgeInsets.symmetric(
+              horizontal: screenWidth / (width / 20),
+              vertical: screenWidth / (width / 8)),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
@@ -84,7 +79,9 @@ class PractionersThumbnailView extends StatelessWidget {
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                       fontFamily: 'Poppins',
                       fontStyle: FontStyle.italic,
-                      fontSize: screenWidth / (width / 14)),
+                      fontSize: ResponsiveWidget.isLargeScreen(context)
+                          ? screenWidth / (width / 14)
+                          : screenWidth / (width / 12)),
                 ),
               ),
             ],

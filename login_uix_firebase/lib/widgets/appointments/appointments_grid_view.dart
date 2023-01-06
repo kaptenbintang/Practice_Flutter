@@ -27,11 +27,16 @@ class AppointmentsGridView extends StatelessWidget {
                 ? 1920
                 : 1280;
     return GridView.builder(
+      physics: NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: screenWidth / (width / 300),
-        crossAxisSpacing: screenWidth / (width / 300),
+        crossAxisCount: ResponsiveWidget.isLargeScreen(context) ? 3 : 1,
+        mainAxisSpacing: ResponsiveWidget.isLargeScreen(context)
+            ? screenWidth / (width / 300)
+            : screenWidth / (width / 600),
+        crossAxisSpacing: ResponsiveWidget.isLargeScreen(context)
+            ? screenWidth / (width / 300)
+            : screenWidth / (width / 600),
         childAspectRatio: 1.0,
       ),
       itemCount: appointments.length,
