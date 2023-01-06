@@ -6,3 +6,8 @@ final appointmentUploaderProvider =
     StateNotifierProvider<AppointmentUploadNotifier, IsLoading>(
   (ref) => AppointmentUploadNotifier(),
 );
+
+final blackoutUploaderProvider =
+    StateNotifierProvider<blackoutUploadNotifier, IsLoading>(
+  (ref) => blackoutUploadNotifier(),
+);
