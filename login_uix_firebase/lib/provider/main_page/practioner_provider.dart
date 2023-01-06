@@ -23,7 +23,7 @@ final allPractionersProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
       (snapshots) {
         final practioner = snapshots.docs.map(
           (doc) => Practioner(
-            practionerId: doc.id,
+            userId: doc.id,
             json: doc.data(),
           ),
         );
