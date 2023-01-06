@@ -154,7 +154,7 @@ class _blackOutPageState extends State<blackOutPage> {
                             children: [
                               Text(
                                 'Select day:',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style: FlutterFlowTheme.of(context).subtitle1,
                               ),
                               Padding(
                                 padding:
@@ -257,7 +257,7 @@ class _blackOutPageState extends State<blackOutPage> {
                                   onPressed: () {
                                     print('Button pressed ...');
                                   },
-                                  text: 'Submit',
+                                  text: 'Deactivated',
                                   options: FFButtonOptions(
                                     width: 130,
                                     height: 35,
