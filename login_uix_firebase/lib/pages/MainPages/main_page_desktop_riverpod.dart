@@ -67,7 +67,7 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                             child: InkWell(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, MainPageDesktopRiverpod.routeName);
+                                    context, RouteName.MainPagesPage);
                               },
                               child: Text(
                                 'Home',
@@ -380,7 +380,7 @@ class MainPageDesktopRiverpod extends ConsumerWidget {
                               Expanded(
                                   child: data.isNotEmpty
                                       ? AppointmentsGridView(appointments: data)
-                                      : SingleChildScrollView(
+                                      : Center(
                                           child:
                                               const EmptyContentsWithTextAnimationView(
                                             text: 'You have no appointments',
