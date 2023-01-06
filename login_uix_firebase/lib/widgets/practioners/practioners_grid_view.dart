@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
-import 'package:login_uix_firebase/pages/detail_practioner_page.dart';
+import 'package:login_uix_firebase/pages/detailPractionerPage/detail_practioner_page.dart';
 import 'package:login_uix_firebase/widgets/practioners/practioners_thumbnail_view.dart';
 
 import '../../helper/responsive.dart';
@@ -29,6 +29,7 @@ class PractionersGridView extends StatelessWidget {
           : screenWidth / (width / 380),
       width: double.maxFinite,
       child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: ResponsiveWidget.isLargeScreen(context) ? 3 : 1,
