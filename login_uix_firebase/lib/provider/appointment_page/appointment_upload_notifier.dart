@@ -1,6 +1,7 @@
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_payload.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
+import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -38,6 +39,35 @@ class AppointmentUploadNotifier extends StateNotifier<IsLoading> {
           .collection(FirebaseCollectionName.appointment)
           .add(
             appointmentPayload,
+          );
+      return true;
+    } catch (_) {
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+}
+
+class blackoutUploadNotifier extends StateNotifier<IsLoading> {
+  blackoutUploadNotifier() : super(false);
+
+  set isLoading(bool value) => state = value;
+
+  Future<bool> upload({
+    required PractionerData practionerData,
+  }) async {
+    isLoading = true;
+
+    try {
+      final blackoutdPayload = blackoutPayload(
+        userId: practionerData.id.toString(),
+        blackout: practionerData.blackouts.toString(),
+      );
+      await FirebaseFirestore.instance
+          .collection(FirebaseCollectionName.practioners)
+          .add(
+            blackoutdPayload,
           );
       return true;
     } catch (_) {

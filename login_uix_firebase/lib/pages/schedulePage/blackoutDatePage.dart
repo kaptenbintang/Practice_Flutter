@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/model/practioner_data.dart';
 
+import '../../auth/provider/user_id_provider.dart';
 import '../../flutter_flow/flutter_flow_drop_down.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -11,15 +14,20 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/responsive.dart';
+import '../../provider/appointment_page/appointment_upload_provider.dart';
+import '../../provider/blackout_provider/blackout_provider.dart';
+import '../../widgets/animations/small_error_animation_view.dart';
+import '../../widgets/animations/small_loading_animation_view.dart';
 
-class blackOutPage extends StatefulWidget {
+class blackOutPage extends ConsumerStatefulWidget {
   const blackOutPage({Key? key}) : super(key: key);
-
   @override
-  _blackOutPageState createState() => _blackOutPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _blackOutPageState();
+  // @override
+  // _blackOutPageState createState() => _blackOutPageState();
 }
 
-class _blackOutPageState extends State<blackOutPage> {
+class _blackOutPageState extends ConsumerState<blackOutPage> {
   String? dropDownValue;
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,6 +41,7 @@ class _blackOutPageState extends State<blackOutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final userUid = ref.watch(userIdProvider);
     double screenWidth = MediaQuery.of(context).size.width;
     double width = ResponsiveWidget.isphoneScreen(context)
         ? 414
@@ -159,102 +168,72 @@ class _blackOutPageState extends State<blackOutPage> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                child: DropdownButton2(
-                                  value: selectedDay,
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: '1',
-                                      child: Text('Monday'),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: '2',
-                                      child: Text('Tuesday'),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: '3',
-                                      child: Text('Wednesday'),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: '4',
-                                      child: Text('Thursday'),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: '5',
-                                      child: Text('Friday'),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: '6',
-                                      child: Text('Saturday'),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: '7',
-                                      child: Text('Sunday'),
-                                    ),
-                                  ],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      value = selectedDay;
-                                    });
-                                  },
-                                  hint: Text("Please select"),
-                                  icon: const Icon(
-                                    Icons.format_list_numbered,
-                                  ),
-                                  iconSize: 14,
-                                ),
+                                child: Consumer(builder: (context, ref, child) {
+                                  final blackoutDay =
+                                      ref.watch(blackoutProvider);
+                                  return blackoutDay.when(
+                                    data: (data) {
+                                      return DropdownButton2(
+                                        value: selectedDay,
+                                        items: List.generate(
+                                          data.length,
+                                          (index) => DropdownMenuItem(
+                                            value:
+                                                data.elementAt(index).valueId,
+                                            child: Text(
+                                              data
+                                                  .elementAt(index)
+                                                  .valueName
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        onChanged: (value) {
+                                          // selectedLocation = value;
+                                          ref
+                                              .read(selectedBlackoutProvider
+                                                  .notifier)
+                                              .changeBlackout(value.toString());
+
+                                          selectedDay = value;
+                                          //Do something when changing the item if you want.
+                                        },
+                                        hint: Text("Please select..."),
+                                        icon: const Icon(
+                                          Icons.format_list_numbered,
+                                        ),
+                                        iconSize: 14,
+                                      );
+                                    },
+                                    error: (error, stackTrace) {
+                                      return const SmallErrorAnimationView();
+                                    },
+                                    loading: () {
+                                      return const SmallLoadingAnimationView();
+                                    },
+                                  );
+                                }),
                               ),
-                              // DropdownButtonFormField2(
-                              //   // icon: const Icon(
-                              //   //   Icons.arrow_drop_down,
-                              //   //   color: Colors.black45,
-                              //   // ),
-                              //   // iconSize: 30,
-                              //   // buttonHeight: 60,
-                              //   // buttonPadding: const EdgeInsets.only(
-                              //   //     left: 20, right: 10),
-                              //   dropdownDecoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.circular(15),
-                              //   ),
-                              //   decoration: InputDecoration(
-                              //     isDense: true,
-                              //     contentPadding: EdgeInsets.zero,
-                              //     border: OutlineInputBorder(
-                              //       borderRadius: BorderRadius.circular(8),
-                              //       borderSide: BorderSide(
-                              //         color: FlutterFlowTheme.of(context)
-                              //             .primaryText,
-                              //         width: 1,
-                              //       ),
-                              //     ),
-                              //   ),
-                              //   hint: Text(
-                              //     'Please select',
-                              //     style: FlutterFlowTheme.of(context).subtitle1,
-                              //   ),
-                              //   style: FlutterFlowTheme.of(context).subtitle1,
-                              //   items: [
-                              //     DropdownMenuItem(
-                              //       value: '1',
-                              //       child: Text('Monday'),
-                              //     ),
-                              //     DropdownMenuItem(
-                              //       value: '2',
-                              //       child: Text('Tuesday'),
-                              //     ),
-                              //   ],
-                              //   onChanged: (value) {
-                              //     // selectedCodeorName = value;
-                              //     //Do something when changing the item if you want.
-                              //   },
-                              //   onSaved: (value) {
-                              //     // selectedValue = value.toString();
-                              //   },
-                              // ),
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                                 child: FFButtonWidget(
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    final practionerdata = PractionerData(
+                                      id: userUid.toString(),
+                                      blackouts: selectedDay as Map,
+                                    );
+                                    final isUploaded = await ref
+                                        .read(blackoutUploaderProvider.notifier)
+                                        .upload(
+                                          practionerData: practionerdata,
+                                        );
+                                    if (isUploaded && mounted) {
+                                      Navigator.of(context).pop();
+                                    }
                                     print('Button pressed ...');
                                   },
                                   text: 'Deactivated',
