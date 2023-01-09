@@ -271,192 +271,167 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             //Search delete row
                             Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //Search
-                                Expanded(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      //searchbox
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0,
-                                            Dimensions.height05,
-                                            0,
-                                            Dimensions.height05),
-                                        child: Container(
-                                          width: Dimensions.width100 +
-                                              Dimensions.width10 * 5,
-                                          child: TextFormField(
-                                            controller: controllerSearch,
-                                            autofocus: true,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              hintText: 'Search...',
-                                              hintStyle:
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    //searchbox
+                                    SizedBox(
+                                      width: Dimensions.width100 * 1.3,
+                                      height: Dimensions.height10 * 5,
+                                      child: TextFormField(
+                                        controller: controllerSearch,
+                                        autofocus: true,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          hintText: 'Search...',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText2,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2,
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
                                                       .primaryText,
-                                                  width: 1.5,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Dimensions.radius15 /
-                                                            3),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  width: 1.5,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Dimensions.radius15 /
-                                                            3),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.5,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Dimensions.radius15 /
-                                                            3),
-                                              ),
-                                              focusedErrorBorder:
-                                                  OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.5,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Dimensions.radius15 /
-                                                            3),
-                                              ),
+                                              width: 1.5,
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Poppins',
-                                                  lineHeight: 1.01,
-                                                ),
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.radius15 / 3),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              width: 1.5,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.radius15 / 3),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.5,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.radius15 / 3),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.5,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.radius15 / 3),
                                           ),
                                         ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                            ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                      //searchicon
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            Dimensions.width30 / 10, 0, 0, 0),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: Dimensions.radius30,
-                                          borderWidth: 1,
-                                          buttonSize: Dimensions.font10 * 3,
-                                          icon: Icon(
-                                            Icons.search,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: Dimensions.font18,
-                                          ),
-                                          onPressed: () {
-                                            controllerSearch.text.isNotEmpty
-                                                ? search()
-                                                : _pullRefresh();
-                                          },
+                                    ),
+                                    //searchicon
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          Dimensions.width30 / 10, 0, 0, 0),
+                                      child: FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: Dimensions.radius30,
+                                        borderWidth: 1,
+                                        buttonSize: Dimensions.font10 * 3,
+                                        icon: Icon(
+                                          Icons.search,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: Dimensions.font18,
                                         ),
+                                        onPressed: () {
+                                          controllerSearch.text.isNotEmpty
+                                              ? search()
+                                              : _pullRefresh();
+                                        },
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                                 //Delete
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(top: Dimensions.height10),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Visibility(
-                                          visible: selectedUser.isNotEmpty
-                                              ? true
-                                              : false,
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 5.0),
-                                            child: Text(
-                                              'Selected ${selectedUser.length} Users out of ${retrievedUserList?.length}',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize:
-                                                            Dimensions.font15 /
-                                                                2,
-                                                      ),
-                                            ),
-                                          )),
-                                      SizedBox(
-                                        width: Dimensions.width10 / 2,
-                                      ),
-                                      //Deleteiconbutton
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: Dimensions.width10 / 2,
-                                        ),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: Dimensions.radius30,
-                                          borderWidth: 1,
-                                          buttonSize: Dimensions.font10 * 3,
-                                          icon: Icon(
-                                            Icons.delete_sweep,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: Dimensions.font18,
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Visibility(
+                                        visible: selectedUser.isNotEmpty
+                                            ? true
+                                            : false,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(bottom: 5.0),
+                                          child: Text(
+                                            'Selected ${selectedUser.length} Users out of ${retrievedUserList?.length}',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize:
+                                                      Dimensions.font15 / 2,
+                                                ),
                                           ),
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (contextm) {
-                                                return AlertDialogConfirm(
-                                                    type: 'Remove',
-                                                    ids: selectedUser
-                                                        .map((e) => e.id!)
-                                                        .toList(),
-                                                    contexts: context,
-                                                    textDesc: 'Are you sure?');
-                                              },
-                                            ).whenComplete(
-                                              () => Future.delayed(
-                                                Duration(seconds: 2),
-                                                () {
-                                                  controllerSearch
-                                                          .text.isNotEmpty
-                                                      ? search()
-                                                      : _pullRefresh();
-                                                  setState(() {
-                                                    selectedUser = [];
-                                                  });
-                                                },
-                                              ),
-                                            );
-                                          },
-                                        ),
+                                        )),
+                                    SizedBox(
+                                      width: Dimensions.width10 / 2,
+                                    ),
+                                    //Deleteiconbutton
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: Dimensions.width10 / 2,
                                       ),
-                                    ],
-                                  ),
+                                      child: FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: Dimensions.radius30,
+                                        borderWidth: 1,
+                                        buttonSize: Dimensions.font10 * 3,
+                                        icon: Icon(
+                                          Icons.delete_sweep,
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          size: Dimensions.font18,
+                                        ),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (contextm) {
+                                              return AlertDialogConfirm(
+                                                  type: 'Remove',
+                                                  ids: selectedUser
+                                                      .map((e) => e.id!)
+                                                      .toList(),
+                                                  contexts: context,
+                                                  textDesc: 'Are you sure?');
+                                            },
+                                          ).whenComplete(
+                                            () => Future.delayed(
+                                              Duration(seconds: 2),
+                                              () {
+                                                controllerSearch.text.isNotEmpty
+                                                    ? search()
+                                                    : _pullRefresh();
+                                                setState(() {
+                                                  selectedUser = [];
+                                                });
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -594,7 +569,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
 
   _buildTableUser(BuildContext context, UserData snapshot, int indexs) {
     // int idx = int.parse(dropDownItemValue2[indexs]);
-    if (rolesType! != "superadmin") {
+    if (rolesType != "superadmin") {
       return InkWell(
         onTap: () {
           if (!selectedUser.contains(indexs)) {
@@ -632,28 +607,23 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 4,
                     //box,name
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0, 0, Dimensions.width20 / 2, 0),
-                          child: Checkbox(
-                            value: selectedUser.contains(snapshot),
-                            onChanged: (isSelected) {
-                              setState(() {
-                                final isAdding =
-                                    isSelected != null && isSelected;
+                        Checkbox(
+                          value: selectedUser.contains(snapshot),
+                          onChanged: (isSelected) {
+                            setState(() {
+                              final isAdding = isSelected != null && isSelected;
 
-                                isAdding
-                                    ? selectedUser.add(snapshot)
-                                    : selectedUser.remove(snapshot);
-                              });
-                            },
-                            splashRadius: Dimensions.radius30,
-                          ),
+                              isAdding
+                                  ? selectedUser.add(snapshot)
+                                  : selectedUser.remove(snapshot);
+                            });
+                          },
+                          splashRadius: Dimensions.radius30,
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
@@ -810,7 +780,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 4,
                     //box,name
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -860,133 +830,127 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                   ),
                   //dropdown
                   Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        DropdownButton<String>(
-                          focusNode: dropDownFocus,
-                          isExpanded: true,
-                          elevation: 8,
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.radius30),
-                          iconSize: Dimensions.font20 * 2,
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: Dimensions.font20,
-                          ),
-                          onChanged: (value) {
-                            print(value);
-                            // if value doesnt contain just close the dropDown
-                            if (value == null) {
-                              dropDownFocus.unfocus();
-                            } else {
-                              switch (value) {
-                                case "Remove":
-                                  showDialog(
-                                    context: context,
-                                    builder: (contextm) {
-                                      return AlertDialogConfirm(
-                                          type: value,
-                                          id: snapshot.id as String,
-                                          contexts: context,
-                                          textDesc: 'Are you sure?');
-                                    },
-                                  ).whenComplete(
-                                    () => Future.delayed(
-                                      Duration(seconds: 2),
-                                      () {
-                                        controllerSearch.text.isNotEmpty
-                                            ? search()
-                                            : _pullRefresh();
-                                      },
-                                    ),
-                                  );
-
-                                  // _dialogBuilder(_scaffoldKey!.currentState!.context,
-                                  //     snapshot.id.toString());
-                                  break;
-                                case "Edit":
-                                  dialogEdit(context);
-                                  setState(() {
-                                    _emailController.text = snapshot.emailUser!;
-                                    _clientTypeController.text =
-                                        snapshot.clientType as String;
-                                    _rolesController.text =
-                                        snapshot.roles as String;
-                                    _firstNameController.text =
-                                        snapshot.firstName;
-                                    _lastNameController.text =
-                                        snapshot.lastName;
-                                    _ageController.text = snapshot.doBirth;
-                                    _clientCodeController.text =
-                                        snapshot.clientCode as String;
-                                    _phoneController.text =
-                                        snapshot.phoneNumber;
-                                    userId = snapshot.id;
-
-                                    selectedValue = snapshot.clientType;
-                                    selectedValueRoles = snapshot.roles;
-                                    createAt = snapshot.createdAt;
-                                    marDeleted = snapshot.markDeleted;
-                                  });
-                                  break;
-                                case "ResetPassword":
-                                  dialogResetPassword(context);
-                                  setState(() {
-                                    _emailController.text = snapshot.emailUser!;
-                                  });
-                                  break;
-                                case "Restore":
-                                  service
-                                      .markdeleteRestoreUser(
-                                          context, snapshot.id as String)
-                                      .whenComplete(
-                                        () => Future.delayed(
-                                          Duration(seconds: 2),
-                                          () {
-                                            controllerSearch.text.isNotEmpty
-                                                ? search()
-                                                : _pullRefresh();
-                                          },
-                                        ),
-                                      );
-
-                                  break;
-                                default:
-                              }
-                            }
-                          },
-                          // items: List.generate(
-                          //     dropDownItemValue2.length,
-                          //     (index) => DropdownMenuItem(
-                          //           value: dropDownItemValue2[index],
-                          //           child: Text(dropDownItemValue2[index]),
-                          //         )),
-                          items: [
-                            DropdownMenuItem(
-                              child: Text('Action'),
-                              value: "Action",
-                            ),
-                            if (authoRoles['canWrite'] != false)
-                              DropdownMenuItem(
-                                child: Text('Edit'),
-                                value: "Edit",
-                              ),
-                            // if (currentUser.uid.toString != snapshot.id.toString &&
-                            //     authoRoles!['canDelete'] != false)
-                            //   DropdownMenuItem(
-                            //     child: Text('Remove'),
-                            //     value: "Remove",
-                            //   ),
-                            DropdownMenuItem(
-                              child: Text('Change Password'),
-                              value: "ResetPassword",
-                            ),
-                          ],
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        focusNode: dropDownFocus,
+                        isExpanded: true,
+                        elevation: 8,
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        iconSize: Dimensions.font20 * 2,
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: Dimensions.font20,
                         ),
-                      ],
+                        onChanged: (value) {
+                          print(value);
+                          // if value doesnt contain just close the dropDown
+                          if (value == null) {
+                            dropDownFocus.unfocus();
+                          } else {
+                            switch (value) {
+                              case "Remove":
+                                showDialog(
+                                  context: context,
+                                  builder: (contextm) {
+                                    return AlertDialogConfirm(
+                                        type: value,
+                                        id: snapshot.id as String,
+                                        contexts: context,
+                                        textDesc: 'Are you sure?');
+                                  },
+                                ).whenComplete(
+                                  () => Future.delayed(
+                                    Duration(seconds: 2),
+                                    () {
+                                      controllerSearch.text.isNotEmpty
+                                          ? search()
+                                          : _pullRefresh();
+                                    },
+                                  ),
+                                );
+
+                                // _dialogBuilder(_scaffoldKey!.currentState!.context,
+                                //     snapshot.id.toString());
+                                break;
+                              case "Edit":
+                                dialogEdit(context);
+                                setState(() {
+                                  _emailController.text = snapshot.emailUser!;
+                                  _clientTypeController.text =
+                                      snapshot.clientType as String;
+                                  _rolesController.text =
+                                      snapshot.roles as String;
+                                  _firstNameController.text =
+                                      snapshot.firstName;
+                                  _lastNameController.text = snapshot.lastName;
+                                  _ageController.text = snapshot.doBirth;
+                                  _clientCodeController.text =
+                                      snapshot.clientCode as String;
+                                  _phoneController.text = snapshot.phoneNumber;
+                                  userId = snapshot.id;
+
+                                  selectedValue = snapshot.clientType;
+                                  selectedValueRoles = snapshot.roles;
+                                  createAt = snapshot.createdAt;
+                                  marDeleted = snapshot.markDeleted;
+                                });
+                                break;
+                              case "ResetPassword":
+                                dialogResetPassword(context);
+                                setState(() {
+                                  _emailController.text = snapshot.emailUser!;
+                                });
+                                break;
+                              case "Restore":
+                                service
+                                    .markdeleteRestoreUser(
+                                        context, snapshot.id as String)
+                                    .whenComplete(
+                                      () => Future.delayed(
+                                        Duration(seconds: 2),
+                                        () {
+                                          controllerSearch.text.isNotEmpty
+                                              ? search()
+                                              : _pullRefresh();
+                                        },
+                                      ),
+                                    );
+
+                                break;
+                              default:
+                            }
+                          }
+                        },
+                        // items: List.generate(
+                        //     dropDownItemValue2.length,
+                        //     (index) => DropdownMenuItem(
+                        //           value: dropDownItemValue2[index],
+                        //           child: Text(dropDownItemValue2[index]),
+                        //         )),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Action'),
+                            value: "Action",
+                          ),
+                          if (authoRoles['canWrite'] != false)
+                            DropdownMenuItem(
+                              child: Text('Edit'),
+                              value: "Edit",
+                            ),
+                          // if (currentUser.uid.toString != snapshot.id.toString &&
+                          //     authoRoles!['canDelete'] != false)
+                          //   DropdownMenuItem(
+                          //     child: Text('Remove'),
+                          //     value: "Remove",
+                          //   ),
+                          DropdownMenuItem(
+                            child: Text('Change Password'),
+                            value: "ResetPassword",
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
