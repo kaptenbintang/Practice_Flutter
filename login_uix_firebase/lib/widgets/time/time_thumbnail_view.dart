@@ -16,7 +16,8 @@ class TimesThumbnailView extends StatelessWidget {
     return InkWell(
       onTap: onTapped,
       child: Container(
-        constraints: const BoxConstraints(maxHeight: 50),
+        // constraints: const BoxConstraints(maxHeight: 50),
+
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).lineColor,
           boxShadow: [

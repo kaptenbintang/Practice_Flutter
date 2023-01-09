@@ -20,19 +20,17 @@ class TimesGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final timeLoop = ref.watch(timeLoopProvider(Parameters(
-            schedules: schedule,
-            serviceTipe: serviceTime,
-            dateSelected: selectedTime)));
+        final timeLoop = ref.watch(timeLoopProvider(schedule));
         return timeLoop.when(
           data: (data) {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
-                mainAxisSpacing: 500,
-                crossAxisSpacing: 100,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
                 childAspectRatio: 1,
               ),
+              shrinkWrap: true,
               itemCount: data.length,
               itemBuilder: (context, index) {
                 final oneItem = data.elementAt(index);
@@ -52,23 +50,6 @@ class TimesGridView extends StatelessWidget {
             return SmallLoadingAnimationView();
           },
         );
-        // return GridView.builder(
-        //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //     crossAxisCount: 4,
-        //     mainAxisSpacing: 2.0,
-        //     crossAxisSpacing: 5.0,
-        //     childAspectRatio: 1,
-        //   ),
-        //   itemCount: timeLoop.length,
-        //   itemBuilder: (context, index) {
-        //     final oneItem = timeLoop.elementAt(index);
-        //     return TimesThumbnailView(
-        //       serviceTime: oneItem,
-        //       onTapped: () {},
-        //     );
-        //     // return TimesThumbnailView(practioner: practioner, onTapped: onTapped);
-        //   },
-        // );
       },
     );
   }

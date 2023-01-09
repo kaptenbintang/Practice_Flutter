@@ -2,7 +2,6 @@ import 'package:booking_calendar/booking_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:login_uix_firebase/provider/appointment_page/date_selected.dart';
 import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -53,6 +52,7 @@ class _DateTimeAppointmentDialogState
   @override
   Widget build(BuildContext context) {
     final selectedDate = ref.watch(dateProvider);
+    print(selectedDate);
     return AlertDialog(
       title: Text('Please choose date'),
       content: Center(
