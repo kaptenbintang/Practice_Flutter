@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unnecessary_new
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 
@@ -264,7 +265,9 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
                                     DayName dayNameData = DayName(
                                       id: selectedDayName.id,
                                       name: selectedDayName.name.toString(),
-                                      practionerId: practionerId.toString(),
+                                      practionerId: FirebaseAuth
+                                          .instance.currentUser?.uid
+                                          .toString(),
                                     );
                                     await service.addBlackout(dayNameData);
 
