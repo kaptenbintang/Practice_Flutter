@@ -36,6 +36,11 @@ final servicesProvider = StreamProvider.autoDispose<Iterable<Services>>(
   },
 );
 
-final selectedServiceProvider = ChangeNotifierProvider<ServicesNotifier>((ref) {
+// final selectedServiceProvider = ChangeNotifierProvider<ServicesNotifier>((ref) {
+//   return ServicesNotifier();
+// });
+
+final selectedServiceProvider =
+    StateNotifierProvider<ServicesNotifier, String>((ref) {
   return ServicesNotifier();
 });
