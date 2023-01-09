@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unnecessary_new
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +13,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../flutter_flow/flutter_flow_widgets.dart';
+import '../../helper/database_service.dart';
 import '../../helper/responsive.dart';
+import '../../model/blackout_models/blackout.dart';
 import '../../provider/appointment_page/appointment_upload_provider.dart';
 import '../../provider/blackout_provider/blackout_provider.dart';
 import '../../widgets/animations/small_error_animation_view.dart';
@@ -29,14 +31,32 @@ class blackOutPage extends ConsumerStatefulWidget {
 
 class _blackOutPageState extends ConsumerState<blackOutPage> {
   String? dropDownValue;
+  DataService service = DataService();
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  late DayName selectedDayName;
+  List<DayName> dayname = <DayName>[
+    DayName(id: 1, name: "Monday"),
+    DayName(id: 2, name: "Tuesday"),
+    DayName(id: 3, name: "Wednesday"),
+    DayName(id: 4, name: "Thursday"),
+    DayName(id: 5, name: "Friday"),
+    DayName(id: 6, name: "Saturday"),
+    DayName(id: 7, name: "Sunday"),
+  ];
   String? selectedDay;
+  int? idDay;
+  String? nameday;
+  String? practionerId;
   @override
   void dispose() {
     _unfocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    selectedDayName = dayname[0];
   }
 
   @override
@@ -168,72 +188,86 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                child: Consumer(builder: (context, ref, child) {
-                                  final blackoutDay =
-                                      ref.watch(blackoutProvider);
-                                  return blackoutDay.when(
-                                    data: (data) {
-                                      return DropdownButton2(
-                                        value: selectedDay,
-                                        items: List.generate(
-                                          data.length,
-                                          (index) => DropdownMenuItem(
-                                            value:
-                                                data.elementAt(index).valueId,
-                                            child: Text(
-                                              data
-                                                  .elementAt(index)
-                                                  .valueName
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        onChanged: (value) {
-                                          // selectedLocation = value;
-                                          ref
-                                              .read(selectedBlackoutProvider
-                                                  .notifier)
-                                              .changeBlackout(value.toString());
+                                child: DropdownButton<DayName>(
+                                  value: selectedDayName,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      selectedDayName = newValue!;
+                                    });
+                                  },
+                                  items: dayname.map((DayName dayName) {
+                                    return new DropdownMenuItem<DayName>(
+                                      value: dayName,
+                                      child: new Text(
+                                        dayName.name.toString(),
+                                        style:
+                                            new TextStyle(color: Colors.black),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
 
-                                          selectedDay = value;
-                                          //Do something when changing the item if you want.
-                                        },
-                                        hint: Text("Please select..."),
-                                        icon: const Icon(
-                                          Icons.format_list_numbered,
-                                        ),
-                                        iconSize: 14,
-                                      );
-                                    },
-                                    error: (error, stackTrace) {
-                                      return const SmallErrorAnimationView();
-                                    },
-                                    loading: () {
-                                      return const SmallLoadingAnimationView();
-                                    },
-                                  );
-                                }),
+                                // Consumer(builder: (context, ref, child) {
+                                //   final blackoutDay =
+                                //       ref.watch(blackoutProvider);
+                                //   return blackoutDay.when(
+                                //     data: (data) {
+                                //       return DropdownButton2(
+                                //         value: selectedDay,
+                                //         items: List.generate(
+                                //           data.length,
+                                //           (index) => DropdownMenuItem(
+                                //             value:
+                                //                 data.elementAt(index).valueId,
+                                //             child: Text(
+                                //               data
+                                //                   .elementAt(index)
+                                //                   .valueName
+                                //                   .toString(),
+                                //               style: const TextStyle(
+                                //                 fontSize: 14,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //         onChanged: (value) {
+                                //           // selectedLocation = value;
+                                //           ref
+                                //               .read(selectedBlackoutProvider
+                                //                   .notifier)
+                                //               .changeBlackout(value.toString());
+
+                                //           selectedDay = value;
+                                //           //Do something when changing the item if you want.
+                                //         },
+                                //         hint: Text("Please select..."),
+                                //         icon: const Icon(
+                                //           Icons.format_list_numbered,
+                                //         ),
+                                //         iconSize: 14,
+                                //       );
+                                //     },
+                                //     error: (error, stackTrace) {
+                                //       return const SmallErrorAnimationView();
+                                //     },
+                                //     loading: () {
+                                //       return const SmallLoadingAnimationView();
+                                //     },
+                                //   );
+                                // }),
                               ),
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    final practionerdata = PractionerData(
-                                      id: userUid.toString(),
-                                      blackouts: selectedDay.toString(),
+                                    DayName dayNameData = DayName(
+                                      id: selectedDayName.id,
+                                      name: selectedDayName.name.toString(),
+                                      practionerId: practionerId.toString(),
                                     );
-                                    final isUploaded = await ref
-                                        .read(blackoutUploaderProvider.notifier)
-                                        .upload(
-                                          practionerData: practionerdata,
-                                        );
-                                    if (isUploaded && mounted) {
-                                      Navigator.of(context).pop();
-                                    }
+                                    await service.addBlackout(dayNameData);
+
                                     print('Button pressed ...');
                                   },
                                   text: 'Deactivated',
