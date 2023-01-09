@@ -1,124 +1,57 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:equatable/equatable.dart';
+import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
+import 'package:login_uix_firebase/provider/appointment_page/date_selected.dart';
+import 'package:login_uix_firebase/provider/appointment_page/services_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_provider.dart';
 
-class Parameters extends Equatable {
-  const Parameters({
-    required this.schedules,
-    required this.serviceTipe,
-    required this.dateSelected,
-  });
+// class Parameters extends Equatable {
+//   const Parameters({
+//     required this.schedules,
+//     required this.serviceTipe,
+//     required this.dateSelected,
+//   });
 
-  final Map<dynamic, dynamic> schedules;
-  final String serviceTipe;
-  final String dateSelected;
+//   final Map<dynamic, dynamic> schedules;
+//   final String serviceTipe;
+//   final String dateSelected;
 
-  @override
-  List<Object> get props => [schedules, serviceTipe, dateSelected];
-}
+//   @override
+//   List<Object> get props => [schedules, serviceTipe, dateSelected];
+// }
 
 final timeLoopProvider =
-    FutureProvider.autoDispose.family<List, Parameters>((ref, parameter) async {
-  final intValue =
-      int.parse(parameter.serviceTipe.replaceAll(RegExp('[^0-9]'), ''));
-  final dayName = parameter.dateSelected.split(",").elementAt(0);
-  final time = parameter.schedules;
+    FutureProvider.autoDispose.family<List, Map>((ref, schedules) async {
+  String initService = ref.watch(selectedServiceProvider);
+  final selectedDate = ref.watch(dateProvider);
 
-  // String startTime, endTime;
-  // time.forEach((key, value) {
-  //   if (value['dayName'].toString().contains(dayName)) {
-  //     startTime = value['startTime'];
-  //     endTime = value['endTime'];
-  //   }
-  // });
+  final dateSelecteds = DateFormat('EEE, yyyy-MM-dd').format(selectedDate);
+  final intValue = int.parse(initService.replaceAll(RegExp('[^0-9]'), ''));
+  final dayName = dateSelecteds.split(",").elementAt(0);
+  final time = schedules;
+
   List loopTime = [];
+  String startTime, endTime;
 
-  switch (dayName) {
-    case 'Mon':
-      String startTime, endTime;
+  time.forEach((key, value) {
+    if (value['dayName'].toString().contains(dayName)) {
+      startTime = value['startTime'];
+      endTime = value['endTime'];
+      DateTime dateTimeStart = DateTime.parse('0000-00-00 $startTime:00');
+      final dateTimeEnd = DateTime.parse('0000-00-00 $endTime:00');
+      final diff = dateTimeEnd.difference(dateTimeStart);
 
-      // final diff = dateTimeEnd.difference(dateTimeStart);
-      time.forEach((key, value) {
-        if (value['dayName'].toString().contains('Mon')) {
-          startTime = value['startTime'];
-          endTime = value['endTime'];
-          DateTime dateTimeStart = DateTime.parse('0000-00-00 $startTime:00');
-          final dateTimeEnd = DateTime.parse('0000-00-00 $endTime:00');
+      for (int i = 0; i <= diff.inMinutes / intValue; i++) {
+        print(loopTime);
+        String formattedTime = DateFormat.Hm().format(dateTimeStart);
+        // loopTime.add('${dateTimeStart.hour}:${dateTimeStart.minute}');
+        loopTime.add(formattedTime);
+        dateTimeStart = dateTimeStart.add(Duration(minutes: intValue));
+      }
+    }
+  });
 
-          // DateTime dateTimeStart = DateTime.parse('0000-00-00 $startTime:00');
-          // final dateTimeEnd = DateTime.parse('0000-00-00 $endTime:00');
-          final diff = dateTimeEnd.difference(dateTimeStart);
-
-          for (int i = 0; i <= diff.inMinutes / intValue; i++) {
-            print(loopTime);
-            loopTime.add(dateTimeStart.toString());
-            dateTimeStart = dateTimeStart.add(const Duration(minutes: 30));
-          }
-        }
-      });
-
-      return loopTime;
-
-    case 'Tue':
-      String startTime, endTime;
-
-      time.forEach((key, value) {
-        if (value['dayName'].toString().contains('Tue')) {
-          startTime = value['startTime'];
-          endTime = value['endTime'];
-        }
-      });
-
-      return [];
-
-    case 'Wen':
-      String startTime, endTime;
-
-      time.forEach((key, value) {
-        if (value['dayName'].toString().contains('Wen')) {
-          startTime = value['startTime'];
-          endTime = value['endTime'];
-        }
-      });
-      return [];
-
-    case 'Thu':
-      String startTime, endTime;
-
-      time.forEach((key, value) {
-        if (value['dayName'].toString().contains('Thu')) {
-          startTime = value['startTime'];
-          endTime = value['endTime'];
-        }
-      });
-      return [];
-
-    case 'Fri':
-      String startTime, endTime;
-
-      time.forEach((key, value) {
-        if (value['dayName'].toString().contains('Fri')) {
-          startTime = value['startTime'];
-          endTime = value['endTime'];
-        }
-      });
-      return [];
-
-    case 'Sat':
-      String startTime, endTime;
-
-      time.forEach((key, value) {
-        if (value['dayName'].toString().contains('Sat')) {
-          startTime = value['startTime'];
-          endTime = value['endTime'];
-        }
-      });
-      return [];
-    default:
-      return [];
-  }
-
-  // return loopTime;
+  return loopTime;
 });
 
 // void main() {
