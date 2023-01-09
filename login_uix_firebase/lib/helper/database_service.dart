@@ -12,6 +12,7 @@ import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/serviceCategory_data.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
 
+import '../model/blackout_models/blackout.dart';
 import '../model/clientType_data.dart';
 import '../model/user_data.dart';
 
@@ -44,6 +45,10 @@ class DataService {
 
   addServicesCategory(serviceCategoryClass servicesDataCategory) async {
     await _db.collection("servicesCategory").add(servicesDataCategory.toMap());
+  }
+
+  addBlackout(DayName dayName) async {
+    await _db.collection("blackout").add(dayName.toMap());
   }
 
   static Future<void> updateUserI(UserData employeeData) async =>
