@@ -6,8 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
-import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
-import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/provider/appointment_page/appointment_upload_provider.dart';
@@ -15,7 +13,6 @@ import 'package:login_uix_firebase/provider/appointment_page/location_provider.d
 import 'package:login_uix_firebase/provider/appointment_page/services_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_provider.dart';
 
-import 'package:login_uix_firebase/provider/appointment_page/time_loop_provider.dart';
 import 'package:login_uix_firebase/route.dart';
 import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
 import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
@@ -63,41 +60,34 @@ class _AppointmentPageRiverpodVersion2State
         selectedLocation,
         selectedCodeorName;
 
-    final isAppointmentButtonEnable = useState(false);
+    // final isAppointmentButtonEnable = useState(false);
     // final isServiceandDateContainValue = useState(false);
 
-    // final List<String> genderItems = [
-    //   'Male',
-    //   'Female',
-    // ];
+    // useEffect(
+    //   () {
+    //     void listener() {
+    //       isAppointmentButtonEnable.value =
+    //           dateandtimeController.text.isNotEmpty;
+    //       // isServiceandDateContainValue.value =
+    //       //     selectedService!.isNotEmpty && selectedDate!.isNotEmpty;
+    //     }
 
-    // String? selectedLocation;
+    //     dateandtimeController.addListener(listener);
 
-    useEffect(
-      () {
-        void listener() {
-          isAppointmentButtonEnable.value =
-              dateandtimeController.text.isNotEmpty;
-          // isServiceandDateContainValue.value =
-          //     selectedService!.isNotEmpty && selectedDate!.isNotEmpty;
-        }
+    //     // commentController.addListener(listener);
 
-        dateandtimeController.addListener(listener);
+    //     return () {
+    //       dateandtimeController.removeListener(listener);
 
-        // commentController.addListener(listener);
+    //       // commentController.removeListener(listener);
+    //     };
+    //   },
+    //   [
+    //     dateandtimeController,
 
-        return () {
-          dateandtimeController.removeListener(listener);
-
-          // commentController.removeListener(listener);
-        };
-      },
-      [
-        dateandtimeController,
-
-        // commentController,
-      ],
-    );
+    //     // commentController,
+    //   ],
+    // );
 
     return Scaffold(
       key: scaffoldKey,
@@ -359,8 +349,7 @@ class _AppointmentPageRiverpodVersion2State
                                           final services =
                                               ref.watch(servicesProvider);
                                           String initService = ref
-                                              .watch(selectedServiceProvider)
-                                              .service;
+                                              .watch(selectedServiceProvider);
 
                                           // print(initService);
 
@@ -377,9 +366,8 @@ class _AppointmentPageRiverpodVersion2State
                                                       .read(
                                                           selectedServiceProvider
                                                               .notifier)
-                                                      .changeServices(
-                                                        val.toString(),
-                                                      );
+                                                      .selectedService(
+                                                          val.toString());
 
                                                   selectedService = val;
 
@@ -387,7 +375,7 @@ class _AppointmentPageRiverpodVersion2State
                                                       .read(
                                                           servicesChangeProvider
                                                               .notifier)
-                                                      .state = true;
+                                                      .state = val!.isNotEmpty;
                                                 },
                                                 initialOption: initService,
                                                 width: MediaQuery.of(context)
@@ -457,12 +445,9 @@ class _AppointmentPageRiverpodVersion2State
                                           dateandtimeController.text =
                                               result.toString();
 
-                                          selectedDate = result.toString();
+                                          print(dateandtimeController.text);
 
-                                          final dayName = selectedDate!
-                                              .split(",")
-                                              .elementAt(0);
-                                          print(dayName);
+                                          selectedDate = result.toString();
                                         },
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle1,
@@ -518,84 +503,6 @@ class _AppointmentPageRiverpodVersion2State
                                     ),
                                   ),
                                   const SizedBox(width: 10),
-                                  // Text(
-                                  //   'Time: ',
-                                  //   style: FlutterFlowTheme.of(context).title1,
-                                  // ),
-                                  // Expanded(
-                                  //   flex: 2,
-                                  //   child: Padding(
-                                  //     padding: const EdgeInsets.all(8.0),
-                                  //     child: Consumer(
-                                  //       builder: (context, ref, child) {
-                                  //         return Container();
-                                  //         // return DropdownButtonFormField2(
-                                  //         //   style: FlutterFlowTheme.of(context)
-                                  //         //       .subtitle1,
-                                  //         //   decoration: InputDecoration(
-                                  //         //     isDense: true,
-                                  //         //     contentPadding: EdgeInsets.zero,
-                                  //         //     border: OutlineInputBorder(
-                                  //         //       borderRadius:
-                                  //         //           BorderRadius.circular(8),
-                                  //         //       borderSide: BorderSide(
-                                  //         //         color: FlutterFlowTheme.of(
-                                  //         //                 context)
-                                  //         //             .primaryText,
-                                  //         //         width: 1,
-                                  //         //       ),
-                                  //         //     ),
-                                  //         //   ),
-                                  //         //   isExpanded: true,
-                                  //         //   hint: Text(
-                                  //         //     'Select Time',
-                                  //         //     style:
-                                  //         //         FlutterFlowTheme.of(context)
-                                  //         //             .subtitle1,
-                                  //         //   ),
-                                  //         //   icon: const Icon(
-                                  //         //     Icons.arrow_drop_down,
-                                  //         //     color: Colors.black45,
-                                  //         //   ),
-                                  //         //   iconSize: 30,
-                                  //         //   buttonHeight: 60,
-                                  //         //   buttonPadding:
-                                  //         //       const EdgeInsets.only(
-                                  //         //           left: 20, right: 10),
-                                  //         //   dropdownDecoration: BoxDecoration(
-                                  //         //     borderRadius:
-                                  //         //         BorderRadius.circular(15),
-                                  //         //   ),
-                                  //         //   items: genderItems
-                                  //         //       .map((item) =>
-                                  //         //           DropdownMenuItem<String>(
-                                  //         //             value: item,
-                                  //         //             child: Text(
-                                  //         //               item,
-                                  //         //               style: const TextStyle(
-                                  //         //                 fontSize: 14,
-                                  //         //               ),
-                                  //         //             ),
-                                  //         //           ))
-                                  //         //       .toList(),
-                                  //         //   validator: (value) {
-                                  //         //     if (value == null) {
-                                  //         //       return 'Please select gender.';
-                                  //         //     }
-                                  //         //   },
-                                  //         //   onChanged: (value) {
-                                  //         //     selectedTime = value;
-
-                                  //         //     //Do something when changing the item if you want.
-                                  //         //   },
-                                  //         //   onSaved: (value) {
-                                  //         //     // selectedValue = value.toString();
-                                  //         //   },
-                                  //         // );
-                                  //       },
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ),
@@ -632,93 +539,11 @@ class _AppointmentPageRiverpodVersion2State
                                                     dateandtimeController.text,
                                               ),
                                             );
-
-                                            // return Container(
-                                            //   child: Text('adaa'),
-                                            // );
                                           } else {
                                             return Container(
                                               child: Text('Empty'),
                                             );
-                                            // return TimesGridView(
-                                            //   serviceTime:
-                                            //       selectedService.toString(),
-                                            //   schedule:
-                                            //       widget.practioner.schedules,
-                                            //   selectedTime:
-                                            //       selectedTime.toString(),
-                                            // );
-                                            // print(widget.practioner.schedules);
-                                            // print(
-                                            //     widget.practioner.schedules[0]);
-                                            // return Container(
-                                            //   child: Text('earea'),
-                                            // );
-
                                           }
-                                          // return DropdownButtonFormField2(
-                                          //   style: FlutterFlowTheme.of(context)
-                                          //       .subtitle1,
-                                          //   decoration: InputDecoration(
-                                          //     isDense: true,
-                                          //     contentPadding: EdgeInsets.zero,
-                                          //     border: OutlineInputBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8),
-                                          //       borderSide: BorderSide(
-                                          //         color: FlutterFlowTheme.of(
-                                          //                 context)
-                                          //             .primaryText,
-                                          //         width: 1,
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          //   isExpanded: true,
-                                          //   hint: Text(
-                                          //     'Select Time',
-                                          //     style:
-                                          //         FlutterFlowTheme.of(context)
-                                          //             .subtitle1,
-                                          //   ),
-                                          //   icon: const Icon(
-                                          //     Icons.arrow_drop_down,
-                                          //     color: Colors.black45,
-                                          //   ),
-                                          //   iconSize: 30,
-                                          //   buttonHeight: 60,
-                                          //   buttonPadding:
-                                          //       const EdgeInsets.only(
-                                          //           left: 20, right: 10),
-                                          //   dropdownDecoration: BoxDecoration(
-                                          //     borderRadius:
-                                          //         BorderRadius.circular(15),
-                                          //   ),
-                                          //   items: genderItems
-                                          //       .map((item) =>
-                                          //           DropdownMenuItem<String>(
-                                          //             value: item,
-                                          //             child: Text(
-                                          //               item,
-                                          //               style: const TextStyle(
-                                          //                 fontSize: 14,
-                                          //               ),
-                                          //             ),
-                                          //           ))
-                                          //       .toList(),
-                                          //   validator: (value) {
-                                          //     if (value == null) {
-                                          //       return 'Please select gender.';
-                                          //     }
-                                          //   },
-                                          //   onChanged: (value) {
-                                          //     selectedTime = value;
-
-                                          //     //Do something when changing the item if you want.
-                                          //   },
-                                          //   onSaved: (value) {
-                                          //     // selectedValue = value.toString();
-                                          //   },
-                                          // );
                                         },
                                       ),
                                     ),
@@ -1222,7 +1047,7 @@ class _AppointmentPageRiverpodVersion2State
                                           color: Colors.transparent),
                                     ),
                                   ),
-                                  onPressed: isAppointmentButtonEnable.value
+                                  onPressed: true
                                       ? () async {
                                           final appointmentData =
                                               AppointmentData(
