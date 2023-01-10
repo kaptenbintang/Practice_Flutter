@@ -29,13 +29,12 @@ class PractionersGridView extends StatelessWidget {
           : screenWidth / (width / 380),
       width: double.maxFinite,
       child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: ResponsiveWidget.isLargeScreen(context) ? 3 : 1,
           mainAxisSpacing: ResponsiveWidget.isLargeScreen(context)
               ? screenWidth / (width / 300)
-              : screenWidth / (width / 600),
+              : screenWidth / (width / 50),
           crossAxisSpacing: ResponsiveWidget.isLargeScreen(context)
               ? screenWidth / (width / 300)
               : screenWidth / (width / 600),

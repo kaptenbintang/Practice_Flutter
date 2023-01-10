@@ -100,78 +100,82 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 12,
-                        color: Color(0x33000000),
-                        offset: Offset(0, 2),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: SingleChildScrollView(
-                    //klobanyak scroll wae
-                    child: Consumer(builder: (context, ref, child) {
-                      final schedule = ref.watch(timeScheduleProvider);
-                      return schedule.when(data: (data) {
-                        if (data.isNotEmpty) {
-                          final listDay = data.elementAt(0).schedules;
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 20, 20, 20),
-                                child: Text(
-                                  'Edit your time schedule?',
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 24,
-                                      ),
-                                ),
+          child: Center(
+            child: Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: screenWidth / (width / 8)),
+              child: Container(
+                width: ResponsiveWidget.isLargeScreen(context)
+                    ? MediaQuery.of(context).size.width * 0.4
+                    : double.maxFinite,
+                height: MediaQuery.of(context).size.height * 0.8,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: screenWidth / (width / 12),
+                      color: Color(0x33000000),
+                      offset: Offset(0, 2),
+                    )
+                  ],
+                  borderRadius:
+                      BorderRadius.circular(screenWidth / (width / 20)),
+                ),
+                child: SingleChildScrollView(
+                  //klobanyak scroll wae
+                  child: Consumer(builder: (context, ref, child) {
+                    final schedule = ref.watch(timeScheduleProvider);
+                    return schedule.when(data: (data) {
+                      if (data.isNotEmpty) {
+                        final listDay = data.elementAt(0).schedules;
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20),
+                                  screenWidth / (width / 20)),
+                              child: Text(
+                                'Edit your time schedule?',
+                                style: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 24),
+                                    ),
                               ),
-                              ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: listDay.length,
-                                itemBuilder: (context, index) {
-                                  final value = listDay.values.elementAt(index);
-                                  final key = listDay.keys.elementAt(index);
+                            ),
+                            ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: listDay.length,
+                              itemBuilder: (context, index) {
+                                final value = listDay.values.elementAt(index);
+                                final key = listDay.keys.elementAt(index);
 
-                                  return tableDepanTimeSchedule(
-                                      context, value, key, index);
-                                },
-                              ),
-                            ],
-                          );
-                        } else {
-                          return const LoadingAnimationView();
-                        }
-                      }, error: (error, stackTrace) {
-                        print(error);
-                        return const ErrorAnimationView();
-                      }, loading: () {
+                                return tableDepanTimeSchedule(
+                                    context, value, key, index);
+                              },
+                            ),
+                          ],
+                        );
+                      } else {
                         return const LoadingAnimationView();
-                      });
-                    }),
-                  ),
+                      }
+                    }, error: (error, stackTrace) {
+                      print(error);
+                      return const ErrorAnimationView();
+                    }, loading: () {
+                      return const LoadingAnimationView();
+                    });
+                  }),
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -179,61 +183,425 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
   }
 
   Widget tableDepanTimeSchedule(BuildContext context, data, key, index) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     // print(data);
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+      padding: EdgeInsetsDirectional.fromSTEB(
+          screenWidth / (width / 20),
+          screenWidth / (width / 20),
+          screenWidth / (width / 20),
+          screenWidth / (width / 20)),
       child: Container(
-        width: 100,
-        height: 120,
+        width: screenWidth / (width / 100),
+        height: ResponsiveWidget.isLargeScreen(context)
+            ? screenWidth / (width / 120)
+            : screenWidth / (width / 180),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryColor,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(screenWidth / (width / 20)),
           shape: BoxShape.rectangle,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.15,
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
+        child: ResponsiveWidget.isLargeScreen(context)
+            ? Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenWidth / (width / 4)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 8),
+                                    0,
+                                    screenWidth / (width / 8),
+                                    0),
+                                child: Icon(
+                                  Icons.date_range_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: screenWidth / (width / 24),
+                                ),
+                              ),
+                              Text(
+                                data["dayName"].toString(),
+                                style: FlutterFlowTheme.of(context)
+                                    .title1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 26),
+                                    ),
+                              ),
+                              // InkWell(
+                              //   onTap: () {},
+                              //   child: Padding(
+                              //     padding:
+                              //         EdgeInsetsDirectional.fromSTEB(screenWidth / (width / 10), 0, 0, 0),
+                              //     child: Text(
+                              //       'Disable this day',
+                              //       style: FlutterFlowTheme.of(context)
+                              //           .subtitle2
+                              //           .override(
+                              //             fontFamily: 'Poppins',
+                              //             fontSize: screenWidth / (width / 10),
+                              //             fontStyle: FontStyle.italic,
+                              //             decoration: TextDecoration.underline,
+                              //           ),
+                              //     ),
+                              //   ),
+                              // )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenWidth / (width / 4)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              SizedBox(
+                                width: screenWidth / (width / 160),
+                                height: screenWidth / (width / 20),
+                                child: TextFormField(
+                                  controller: textController1,
+                                  autofocus: true,
+                                  readOnly: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText: 'From: ' +
+                                        data["startTime"].toString() +
+                                        ",",
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                        topRight: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                        topRight: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                        topRight: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                      ),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                        topRight: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                      ),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.more_time_rounded,
+                                      size: screenWidth / (width / 24),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .title2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: screenWidth / (width / 16),
+                                      ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              SizedBox(
+                                width: screenWidth / (width / 160),
+                                height: screenWidth / (width / 20),
+                                child: TextFormField(
+                                  controller: textController2,
+                                  autofocus: true,
+                                  readOnly: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        'To: ' + data["endTime"].toString(),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                        topRight: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                        topRight: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                        topRight: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                      ),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                        topRight: Radius.circular(
+                                            screenWidth / (width / 4)),
+                                      ),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.timer_off_outlined,
+                                      size: screenWidth / (width / 24),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .title2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: screenWidth / (width / 16),
+                                      ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth / (width / 8)),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Consumer(builder: (context, ref, child) {
+                                return FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  borderRadius: screenWidth / (width / 30),
+                                  borderWidth: 2,
+                                  buttonSize: screenWidth / (width / 60),
+                                  icon: Icon(
+                                    Icons.more_time_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: screenWidth / (width / 30),
+                                  ),
+                                  onPressed: () async {
+                                    var time = await showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay.now());
+
+                                    if (time != null) {
+                                      await ref
+                                          .read(
+                                              editStartTimePractioner.notifier)
+                                          .editStartTime(
+                                            schedule:
+                                                "${time.hour}:${time.minute}",
+                                            index: index + 1,
+                                          )
+                                          .then((value) => ref.refresh(
+                                              timeScheduleProvider.future));
+                                      // setState(() {
+                                      //   textController1?.text =
+                                      //       "${time.hour}:${time.minute}";
+                                      // });
+                                    } else {
+                                      print("not selected");
+                                    }
+                                  },
+                                );
+                              }),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: screenWidth / (width / 4)),
+                                child: Text(
+                                  'Start Time',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: screenWidth / (width / 10),
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth / (width / 8)),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Consumer(builder: (context, ref, child) {
+                                return FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  borderRadius: screenWidth / (width / 30),
+                                  borderWidth: 2,
+                                  buttonSize: screenWidth / (width / 60),
+                                  icon: Icon(
+                                    Icons.timer_off_outlined,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: screenWidth / (width / 30),
+                                  ),
+                                  onPressed: () async {
+                                    var time = await showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay.now());
+
+                                    if (time != null) {
+                                      await ref
+                                          .read(editEndTimePractioner.notifier)
+                                          .editEndTime(
+                                            schedule:
+                                                "${time.hour}:${time.minute}",
+                                            index: index + 1,
+                                          )
+                                          .then((value) => ref.refresh(
+                                              timeScheduleProvider.future));
+                                      // setState(() {
+                                      //   textController1?.text =
+                                      //       "${time.hour}:${time.minute}";
+                                      // });
+                                    } else {
+                                      print("not selected");
+                                    }
+                                  },
+                                );
+                              }),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: screenWidth / (width / 4)),
+                                child: Text(
+                                  'End Time',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: screenWidth / (width / 10),
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: screenWidth / (width / 4)),
+                    child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 8),
+                              0,
+                              screenWidth / (width / 8),
+                              0),
                           child: Icon(
                             Icons.date_range_rounded,
                             color: FlutterFlowTheme.of(context).primaryText,
-                            size: 24,
+                            size: screenWidth / (width / 24),
                           ),
                         ),
                         Text(
                           data["dayName"].toString(),
                           style: FlutterFlowTheme.of(context).title1.override(
                                 fontFamily: 'Poppins',
-                                fontSize: 26,
+                                fontSize: screenWidth / (width / 26),
                               ),
                         ),
                         // InkWell(
                         //   onTap: () {},
                         //   child: Padding(
                         //     padding:
-                        //         EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        //         EdgeInsetsDirectional.fromSTEB(screenWidth / (width / 10), 0, 0, 0),
                         //     child: Text(
                         //       'Disable this day',
                         //       style: FlutterFlowTheme.of(context)
                         //           .subtitle2
                         //           .override(
                         //             fontFamily: 'Poppins',
-                        //             fontSize: 10,
+                        //             fontSize: screenWidth / (width / 10),
                         //             fontStyle: FontStyle.italic,
                         //             decoration: TextDecoration.underline,
                         //           ),
@@ -242,262 +610,287 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                         // )
                       ],
                     ),
-                    Expanded(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: textController1,
-                              autofocus: true,
-                              readOnly: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'From: ' +
-                                    data["startTime"].toString() +
-                                    ",",
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.more_time_rounded,
-                                ),
-                              ),
-                              style:
-                                  FlutterFlowTheme.of(context).title2.override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 16,
-                                      ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              controller: textController2,
-                              autofocus: true,
-                              readOnly: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'To: ' + data["endTime"].toString(),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.timer_off_outlined,
-                                ),
-                              ),
-                              style:
-                                  FlutterFlowTheme.of(context).title2.override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 16,
-                                      ),
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.1,
-                decoration: BoxDecoration(),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: screenWidth / (width / 4)),
+                    child: Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Consumer(builder: (context, ref, child) {
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
-                            child: FlutterFlowIconButton(
-                              borderColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              borderRadius: 30,
-                              borderWidth: 2,
-                              buttonSize: 60,
-                              icon: Icon(
+                        SizedBox(
+                          width: screenWidth / (width / 160),
+                          height: screenWidth / (width / 20),
+                          child: TextFormField(
+                            controller: textController1,
+                            autofocus: true,
+                            readOnly: true,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              hintText:
+                                  'From: ' + data["startTime"].toString() + ",",
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                  topRight: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                  topRight: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                ),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                  topRight: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                ),
+                              ),
+                              focusedErrorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                  topRight: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                ),
+                              ),
+                              prefixIcon: Icon(
                                 Icons.more_time_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 30,
+                                size: screenWidth / (width / 24),
                               ),
-                              onPressed: () async {
-                                var time = await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now());
-
-                                if (time != null) {
-                                  await ref
-                                      .read(editStartTimePractioner.notifier)
-                                      .editStartTime(
-                                        schedule: "${time.hour}:${time.minute}",
-                                        index: index + 1,
-                                      )
-                                      .then((value) => ref.refresh(
-                                          timeScheduleProvider.future));
-                                  // setState(() {
-                                  //   textController1?.text =
-                                  //       "${time.hour}:${time.minute}";
-                                  // });
-                                } else {
-                                  print("not selected");
-                                }
-                              },
                             ),
-                          );
-                        }),
-                        Text(
-                          'Start Time',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 10,
-                                  ),
+                            style: FlutterFlowTheme.of(context).title2.override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: screenWidth / (width / 16),
+                                ),
+                            textAlign: TextAlign.left,
+                          ),
                         ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Consumer(builder: (context, ref, child) {
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
-                            child: FlutterFlowIconButton(
-                              borderColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              borderRadius: 30,
-                              borderWidth: 2,
-                              buttonSize: 60,
-                              icon: Icon(
+                        SizedBox(
+                          width: screenWidth / (width / 160),
+                          height: screenWidth / (width / 20),
+                          child: TextFormField(
+                            controller: textController2,
+                            autofocus: true,
+                            readOnly: true,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              hintText: 'To: ' + data["endTime"].toString(),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                  topRight: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                  topRight: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                ),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                  topRight: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                ),
+                              ),
+                              focusedErrorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                  topRight: Radius.circular(
+                                      screenWidth / (width / 4)),
+                                ),
+                              ),
+                              prefixIcon: Icon(
                                 Icons.timer_off_outlined,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 30,
+                                size: screenWidth / (width / 24),
                               ),
-                              onPressed: () async {
-                                var time = await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now());
-
-                                if (time != null) {
-                                  await ref
-                                      .read(editEndTimePractioner.notifier)
-                                      .editEndTime(
-                                        schedule: "${time.hour}:${time.minute}",
-                                        index: index + 1,
-                                      )
-                                      .then((value) => ref.refresh(
-                                          timeScheduleProvider.future));
-                                  // setState(() {
-                                  //   textController1?.text =
-                                  //       "${time.hour}:${time.minute}";
-                                  // });
-                                } else {
-                                  print("not selected");
-                                }
-                              },
                             ),
-                          );
-                        }),
-                        Text(
-                          'End Time',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 10,
-                                  ),
+                            style: FlutterFlowTheme.of(context).title2.override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: screenWidth / (width / 16),
+                                ),
+                            textAlign: TextAlign.left,
+                          ),
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth / (width / 8)),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Consumer(builder: (context, ref, child) {
+                              return FlutterFlowIconButton(
+                                borderColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                borderRadius: screenWidth / (width / 30),
+                                borderWidth: 2,
+                                buttonSize: screenWidth / (width / 60),
+                                icon: Icon(
+                                  Icons.more_time_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: screenWidth / (width / 30),
+                                ),
+                                onPressed: () async {
+                                  var time = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now());
+
+                                  if (time != null) {
+                                    await ref
+                                        .read(editStartTimePractioner.notifier)
+                                        .editStartTime(
+                                          schedule:
+                                              "${time.hour}:${time.minute}",
+                                          index: index + 1,
+                                        )
+                                        .then((value) => ref.refresh(
+                                            timeScheduleProvider.future));
+                                    // setState(() {
+                                    //   textController1?.text =
+                                    //       "${time.hour}:${time.minute}";
+                                    // });
+                                  } else {
+                                    print("not selected");
+                                  }
+                                },
+                              );
+                            }),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenWidth / (width / 4)),
+                              child: Text(
+                                'Start Time',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 10),
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth / (width / 8)),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Consumer(builder: (context, ref, child) {
+                              return FlutterFlowIconButton(
+                                borderColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                borderRadius: screenWidth / (width / 30),
+                                borderWidth: 2,
+                                buttonSize: screenWidth / (width / 60),
+                                icon: Icon(
+                                  Icons.timer_off_outlined,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: screenWidth / (width / 30),
+                                ),
+                                onPressed: () async {
+                                  var time = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now());
+
+                                  if (time != null) {
+                                    await ref
+                                        .read(editEndTimePractioner.notifier)
+                                        .editEndTime(
+                                          schedule:
+                                              "${time.hour}:${time.minute}",
+                                          index: index + 1,
+                                        )
+                                        .then((value) => ref.refresh(
+                                            timeScheduleProvider.future));
+                                    // setState(() {
+                                    //   textController1?.text =
+                                    //       "${time.hour}:${time.minute}";
+                                    // });
+                                  } else {
+                                    print("not selected");
+                                  }
+                                },
+                              );
+                            }),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenWidth / (width / 4)),
+                              child: Text(
+                                'End Time',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 10),
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

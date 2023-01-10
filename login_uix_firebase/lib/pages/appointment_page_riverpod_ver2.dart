@@ -1,11 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
-import 'package:login_uix_firebase/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
+import 'package:login_uix_firebase/model/appointment/appointment_payload.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/provider/appointment_page/appointment_upload_provider.dart';
@@ -21,6 +22,9 @@ import 'package:login_uix_firebase/widgets/animations/small_error_animation_view
 import 'package:login_uix_firebase/widgets/animations/small_loading_animation_view.dart';
 import 'package:login_uix_firebase/widgets/dialogs/date_time_dialog_appointment.dart';
 import 'package:login_uix_firebase/widgets/time/time_grid_view.dart';
+
+import '../helper/dimensions.dart';
+import '../helper/responsive.dart';
 
 class AppointmentPageRiverpodVersion2 extends StatefulHookConsumerWidget {
   static const routeName = '/appointmentPageRiverpod2';
@@ -41,6 +45,14 @@ class _AppointmentPageRiverpodVersion2State
     extends ConsumerState<AppointmentPageRiverpodVersion2> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     final formKey = GlobalKey<FormState>();
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -52,6 +64,7 @@ class _AppointmentPageRiverpodVersion2State
     final emailController = useTextEditingController();
     final phNumbController = useTextEditingController();
     final commentController = useTextEditingController();
+    TextEditingController? searchController;
     String? selectedService,
         selectedDate,
         selectedTime,
@@ -98,1013 +111,1634 @@ class _AppointmentPageRiverpodVersion2State
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: AlignmentDirectional(-0.95, 0),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(100, 40, 0, 100),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      decoration: BoxDecoration(),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, RouteName.MainPagesPage);
-                                },
-                                child: Text(
-                                  'Home',
-                                  textAlign: TextAlign.justify,
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+            //Header /NavigationBar
+            ResponsiveWidget.isLargeScreen(context)
+                ? Padding(
+                    padding: EdgeInsets.only(
+                        left: screenWidth / (width / 100),
+                        top: screenWidth / (width / 40),
+                        right: screenWidth / (width / 100),
+                        bottom: screenWidth / (width / 40)),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          height: MediaQuery.of(context).size.height * 0.07,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              //Home navigation
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20)),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, RouteName.MainPagesPage);
+                                  },
+                                  child: Text(
+                                    'Home',
+                                    textAlign: TextAlign.justify,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize:
+                                                screenWidth / (width / 14)),
+                                  ),
                                 ),
                               ),
-                            ),
+                              //Profile navigation
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20)),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, RouteName.viewProfilePage);
+                                  },
+                                  child: Text(
+                                    'Profile',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize:
+                                                screenWidth / (width / 14)),
+                                  ),
+                                ),
+                              ),
+                              //Booking History
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20),
+                                    screenWidth / (width / 20)),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        RouteName.historyBookingRiverpod);
+                                  },
+                                  child: Text(
+                                    'Booking History',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize:
+                                                screenWidth / (width / 14)),
+                                  ),
+                                ),
+                              ),
+                              //Search Text field
+                              SizedBox(
+                                height: screenWidth / (width / 50),
+                                width: screenWidth / (width / 300),
+                                child: TextFormField(
+                                  controller: searchController,
+                                  autofocus: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText: 'Search Something here..',
+                                    hintStyle:
+                                        FlutterFlowTheme.of(context).bodyText2,
+                                    contentPadding: EdgeInsets.all(
+                                        screenWidth / (width / 8)),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth / (width / 20)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth / (width / 20)),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth / (width / 20)),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth / (width / 20)),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: screenWidth / (width / 14)),
+                                ),
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                            child: InkWell(
+                        ),
+                        Image.asset(
+                          'lib/images/Logo-Slogan-BL-H400-W1080.png',
+                          width: screenWidth / (width / 300),
+                          height: screenWidth / (width / 60),
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ],
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(
+                        left: Dimensions.height10,
+                        right: Dimensions.height10,
+                        bottom: Dimensions.height20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(Dimensions.radius15),
+                          bottomRight: Radius.circular(Dimensions.radius15),
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.width08),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //Home navigation
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RouteName.MainPagesPage);
+                              },
+                              child: Text(
+                                'Home',
+                                textAlign: TextAlign.justify,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: Dimensions.font12),
+                              ),
+                            ),
+                            //Profile navigation
+                            InkWell(
                               onTap: () {
                                 Navigator.pushNamed(
                                     context, RouteName.viewProfilePage);
                               },
                               child: Text(
                                 'Profile',
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: Dimensions.font12),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                            child: InkWell(
+                            //Booking History
+                            InkWell(
                               onTap: () {
                                 Navigator.pushNamed(
                                     context, RouteName.historyBookingRiverpod);
                               },
                               child: Text(
                                 'Booking History',
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: Dimensions.font12),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Search Something here..',
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                ),
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
+
+                            //Logo Image
+                            Image.asset(
+                              'lib/images/Logo-Slogan-BL-H400-W1080.png',
+                              width: Dimensions.width100,
+                              height: Dimensions.height20 * 2,
+                              fit: BoxFit.fitHeight,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
+
+            //Appointment Form Container
+            Padding(
+              padding: EdgeInsets.only(
+                  right: ResponsiveWidget.isLargeScreen(context)
+                      ? screenWidth / (width / 400)
+                      : screenWidth / (width / 10),
+                  left: ResponsiveWidget.isLargeScreen(context)
+                      ? screenWidth / (width / 400)
+                      : screenWidth / (width / 10),
+                  bottom: ResponsiveWidget.isLargeScreen(context)
+                      ? screenWidth / (width / 24)
+                      : screenWidth / (width / 20)),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).lineColor,
+                  borderRadius:
+                      BorderRadius.circular(screenWidth / (width / 20)),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 40, 100, 100),
-                  child: Image.network(
-                    'lib/images/Logo-Slogan-BL-H400-W1080.png',
-                    width: MediaQuery.of(context).size.width * 0.12,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height * 1.5,
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: ListView(
-                  // mainAxisSize: MainAxisSize.max,
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).lineColor,
-                        borderRadius: BorderRadius.circular(20),
+                child: Form(
+                  key: formKey,
+                  autovalidateMode: AutovalidateMode.disabled,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      //Appointment Details
+
+                      //Title
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0, screenWidth / (width / 20), 0, 0),
+                        child: Text(
+                          'Make an appointment!',
+                          style: FlutterFlowTheme.of(context).title1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: ResponsiveWidget.isLargeScreen(context)
+                                  ? screenWidth / (width / 24)
+                                  : screenWidth / (width / 20)),
+                        ),
                       ),
-                      child: Form(
-                        key: formKey,
-                        autovalidateMode: AutovalidateMode.disabled,
-                        child: Column(
+                      //Practioner Name Row
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20)),
+                        child: Row(
                           mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Align(
-                              alignment: AlignmentDirectional(0, 0),
+                            Expanded(
+                              child: Text(
+                                'Practioner Name: ',
+                                style: FlutterFlowTheme.of(context)
+                                    .title1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize:
+                                            ResponsiveWidget.isLargeScreen(
+                                                    context)
+                                                ? screenWidth / (width / 18)
+                                                : screenWidth / (width / 16)),
+                              ),
+                            ),
+                            Expanded(
+                              flex: ResponsiveWidget.isLargeScreen(context)
+                                  ? 4
+                                  : 2,
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth / (width / 8)),
                                 child: Text(
-                                  'Make an appointment!',
-                                  style: FlutterFlowTheme.of(context).title1,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'Practioner Name: ',
-                                    style: FlutterFlowTheme.of(context).title1,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 10, 10, 10),
-                                      child: TextFormField(
-                                        controller: pNameController,
-                                        autofocus: true,
-                                        obscureText: false,
-                                        readOnly: true,
-                                        decoration: InputDecoration(
-                                          hintText:
-                                              widget.practioner.firstName +
-                                                  ' ' +
-                                                  widget.practioner.lastName,
-                                          enabled: false,
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .subtitle2,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle1,
-                                        keyboardType: TextInputType.name,
+                                  widget.practioner.firstName +
+                                      ' ' +
+                                      widget.practioner.lastName,
+                                  style: FlutterFlowTheme.of(context)
+                                      .title3
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize:
+                                            ResponsiveWidget.isLargeScreen(
+                                                    context)
+                                                ? screenWidth / (width / 18)
+                                                : screenWidth / (width / 14),
+                                        fontStyle: FontStyle.italic,
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'Services: ',
-                                    style: FlutterFlowTheme.of(context).title1,
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 0, 8, 0),
-                                      child: Consumer(
-                                        builder: (BuildContext context,
-                                            WidgetRef ref, Widget? child) {
-                                          final services =
-                                              ref.watch(servicesProvider);
-                                          String initService = ref
-                                              .watch(selectedServiceProvider);
-
-                                          // print(initService);
-
-                                          return services.when(
-                                            data: (data) {
-                                              return FlutterFlowDropDown(
-                                                options: List.generate(
-                                                    data.length,
-                                                    (index) => data
-                                                        .elementAt(index)
-                                                        .servicesName),
-                                                onChanged: (val) {
-                                                  ref
-                                                      .read(
-                                                          selectedServiceProvider
-                                                              .notifier)
-                                                      .selectedService(
-                                                          val.toString());
-
-                                                  selectedService = val;
-
-                                                  ref
-                                                      .read(
-                                                          servicesChangeProvider
-                                                              .notifier)
-                                                      .state = val!.isNotEmpty;
-                                                },
-                                                initialOption: initService,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.06,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
-                                                hintText: 'Please select..',
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .lineColor,
-                                                elevation: 0,
-                                                borderColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                borderWidth: 1,
-                                                borderRadius: 8,
-                                                margin: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 4, 12, 4),
-                                                hidesUnderline: true,
-                                              );
-                                            },
-                                            error: (error, stackTrace) {
-                                              return const SmallErrorAnimationView();
-                                            },
-                                            loading: () {
-                                              return const SmallLoadingAnimationView();
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    'Date: ',
-                                    style: FlutterFlowTheme.of(context).title1,
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: dateandtimeController,
-                                        autofocus: true,
-                                        obscureText: false,
-                                        readOnly: true,
-                                        onTap: () async {
-                                          final result = await showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return DateTimeAppointmentDialog(
-                                                    practioner: widget
-                                                        .practioner.firstName,
-                                                    context: context,
-                                                  );
-                                                },
-                                              ) ??
-                                              '';
-                                          // setState(() {
-                                          dateandtimeController.text =
-                                              result.toString();
-
-                                          print(dateandtimeController.text);
-
-                                          selectedDate = result.toString();
-                                        },
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle1,
-                                        keyboardType: TextInputType.datetime,
-                                        decoration: InputDecoration(
-                                          labelText: "Select date",
-                                          prefixIcon: Icon(
-                                            Icons.calendar_today,
-                                            color: Colors.blue,
-                                          ),
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .title1,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'Time: ',
-                                    style: FlutterFlowTheme.of(context).title1,
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Consumer(
-                                        builder: (context, ref, child) {
-                                          final valuesService =
-                                              ref.watch(servicesChangeProvider);
-
-                                          final valueDate =
-                                              ref.watch(dateChangeProvider);
-                                          if (valuesService! && valueDate!) {
-                                            return SizedBox(
-                                              height: 100,
-                                              child: TimesGridView(
-                                                serviceTime:
-                                                    selectedService.toString(),
-                                                schedule:
-                                                    widget.practioner.schedules,
-                                                selectedTime:
-                                                    dateandtimeController.text,
-                                              ),
-                                            );
-                                          } else {
-                                            return Container(
-                                              child: Text('Empty'),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'Location: ',
-                                    style: FlutterFlowTheme.of(context).title1,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Consumer(
-                                          builder: (context, ref, child) {
-                                            final locations =
-                                                ref.watch(locationProvider);
-                                            // final locationSelected = ref.watch(
-                                            //     locationSelectedProvider);
-
-                                            return locations.when(
-                                              data: (data) {
-                                                // print(selectedLocation);
-                                                return DropdownButtonFormField2(
-                                                  // value: locationSelected,
-                                                  icon: const Icon(
-                                                    Icons.arrow_drop_down,
-                                                    color: Colors.black45,
-                                                  ),
-                                                  iconSize: 30,
-                                                  buttonHeight: 60,
-                                                  buttonPadding:
-                                                      const EdgeInsets.only(
-                                                          left: 20, right: 10),
-                                                  dropdownDecoration:
-                                                      BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    isDense: true,
-                                                    contentPadding:
-                                                        EdgeInsets.zero,
-                                                    border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        width: 1,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  hint: Text(
-                                                    'Select Location',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .subtitle1,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .subtitle1,
-                                                  items: List.generate(
-                                                    data.length,
-                                                    (index) => DropdownMenuItem(
-                                                      value: data
-                                                          .elementAt(index)
-                                                          .type,
-                                                      child: Text(
-                                                        data
-                                                            .elementAt(index)
-                                                            .type,
-                                                        style: const TextStyle(
-                                                          fontSize: 14,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  onChanged: (value) {
-                                                    // selectedLocation = value;
-                                                    ref
-                                                        .read(
-                                                            locationSelectedProvider
-                                                                .notifier)
-                                                        .changeLocation(
-                                                            value.toString());
-
-                                                    selectedLocation = value;
-                                                    //Do something when changing the item if you want.
-                                                  },
-                                                  onSaved: (value) {
-                                                    // selectedValue =
-                                                    //     value.toString();
-                                                  },
-                                                );
-                                              },
-                                              error: (error, stackTrace) {
-                                                return const SmallErrorAnimationView();
-                                              },
-                                              loading: () {
-                                                return const SmallLoadingAnimationView();
-                                              },
-                                            );
-                                          },
-                                        )),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(0, 0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 20, 20, 20),
-                                child: Text(
-                                  'Your Details',
-                                  style: FlutterFlowTheme.of(context).title1,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
-                              child: userInfo.when(
-                                data: (data) {
-                                  emailController.text = data.email.toString();
-                                  phNumbController.text =
-                                      data.phoneNumber.toString();
-
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            'Code/Name: ',
-                                            style: FlutterFlowTheme.of(context)
-                                                .title1,
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(10, 10, 10, 10),
-                                              child: DropdownButtonFormField2(
-                                                icon: const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: Colors.black45,
-                                                ),
-                                                iconSize: 30,
-                                                buttonHeight: 60,
-                                                buttonPadding:
-                                                    const EdgeInsets.only(
-                                                        left: 20, right: 10),
-                                                dropdownDecoration:
-                                                    BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                decoration: InputDecoration(
-                                                  isDense: true,
-                                                  contentPadding:
-                                                      EdgeInsets.zero,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      width: 1,
-                                                    ),
-                                                  ),
-                                                ),
-                                                hint: Text(
-                                                  'Select Name/Code',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .subtitle1,
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
-                                                items: [
-                                                  DropdownMenuItem(
-                                                    value:
-                                                        '${data.firstName} ${data.lastName}',
-                                                    child: Text(
-                                                        '${data.firstName} ${data.lastName}'),
-                                                  ),
-                                                  DropdownMenuItem(
-                                                    value: data.clientcode,
-                                                    child:
-                                                        Text(data.clientcode),
-                                                  ),
-                                                ],
-                                                onChanged: (value) {
-                                                  selectedCodeorName = value;
-                                                  //Do something when changing the item if you want.
-                                                },
-                                                onSaved: (value) {
-                                                  // selectedValue = value.toString();
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            'Email: ',
-                                            style: FlutterFlowTheme.of(context)
-                                                .title1,
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(10, 10, 10, 10),
-                                              child: TextFormField(
-                                                // initialValue: data.email,
-
-                                                controller: emailController,
-                                                // onChanged: (value) {
-                                                //   selectedEmail = emailController.text;
-                                                // },
-                                                autofocus: true,
-                                                obscureText: false,
-                                                readOnly: true,
-                                                decoration: InputDecoration(
-                                                  hintText: data.email,
-                                                  // enabled: false,
-                                                  hintStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .subtitle2,
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
-                                                keyboardType:
-                                                    TextInputType.name,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            'Phone Number: ',
-                                            style: FlutterFlowTheme.of(context)
-                                                .title1,
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(10, 10, 10, 10),
-                                              child: TextFormField(
-                                                // initialValue: data.phoneNumber,
-                                                controller: phNumbController,
-                                                // onChanged: (value) {
-                                                //   selectedPhone = value;
-                                                // },
-                                                autofocus: true,
-                                                obscureText: false,
-                                                readOnly: true,
-                                                decoration: InputDecoration(
-                                                  hintText: data.phoneNumber,
-                                                  // enabled: false,
-                                                  hintStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .subtitle2,
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
-                                                keyboardType:
-                                                    TextInputType.name,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              'Comment: ',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .title1,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 20, 20, 20),
-                                              child: TextFormField(
-                                                controller: commentController,
-                                                autofocus: true,
-                                                obscureText: false,
-                                                // readOnly: true,
-                                                decoration: InputDecoration(
-                                                  hintText:
-                                                      "What would you like to gain from this session?",
-                                                  // enabled: false,
-                                                  hintStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .subtitle2,
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
-                                                keyboardType:
-                                                    TextInputType.multiline,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  );
-                                },
-                                error: (error, stackTrace) {
-                                  return const ErrorAnimationView();
-                                },
-                                loading: () {
-                                  return const LoadingAnimationView();
-                                },
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(0, 0),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    side: MaterialStateProperty.all(
-                                      BorderSide(
-                                          width: 1.0,
-                                          color: Colors.transparent),
-                                    ),
-                                  ),
-                                  onPressed: true
-                                      ? () async {
-                                          final appointmentData =
-                                              AppointmentData(
-                                            clientId: userUid.toString(),
-                                            practionerId: widget
-                                                .practioner.userId
-                                                .toString(),
-                                            practionerName:
-                                                '${widget.practioner.firstName} ${widget.practioner.lastName}',
-                                            services:
-                                                selectedService.toString(),
-                                            date: dateandtimeController.text
-                                                .toString(),
-                                            time: selectedTime,
-                                            location:
-                                                selectedLocation.toString(),
-                                            clientNameorCode:
-                                                selectedCodeorName.toString(),
-                                            clientEmail: emailController.text,
-                                            clientphNumber:
-                                                phNumbController.text,
-                                            clientComment: commentController
-                                                .text
-                                                .toString(),
-                                          );
-                                          // final appointmentData2 = Appointment(
-                                          //     appointmentId: appointmentId,
-                                          //     json: json);
-                                          final isUploaded = await ref
-                                              .read(appointmentUploaderProvider
-                                                  .notifier)
-                                              .upload(
-                                                appointmentData:
-                                                    appointmentData,
-                                              );
-                                          if (isUploaded && mounted) {
-                                            Navigator.of(context).pop();
-                                          }
-                                        }
-                                      : null,
-                                  child: Text(
-                                    'Submit',
-                                    style: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          color: Colors.white,
-                                        ),
-                                  ),
+                                  textAlign: TextAlign.start,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                      //Services Row
+                      if (ResponsiveWidget.isLargeScreen(context))
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 20)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Services: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .title1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize:
+                                              ResponsiveWidget.isLargeScreen(
+                                                      context)
+                                                  ? screenWidth / (width / 18)
+                                                  : screenWidth / (width / 16)),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      top: screenWidth / (width / 8),
+                                      left: screenWidth / (width / 12),
+                                      right: screenWidth / (width / 8),
+                                      bottom: screenWidth / (width / 8)),
+                                  child: Consumer(
+                                    builder: (BuildContext context,
+                                        WidgetRef ref, Widget? child) {
+                                      final services =
+                                          ref.watch(servicesProvider);
+                                      String initService =
+                                          ref.watch(selectedServiceProvider);
+
+                                      // print(initService);
+
+                                      return services.when(
+                                        data: (data) {
+                                          return DropdownButtonFormField2(
+                                            items: List.generate(
+                                              data.length,
+                                              (index) => DropdownMenuItem(
+                                                value: data
+                                                    .elementAt(index)
+                                                    .servicesName,
+                                                child: Text(
+                                                  data
+                                                      .elementAt(index)
+                                                      .servicesName,
+                                                  style: TextStyle(
+                                                    fontSize: ResponsiveWidget
+                                                            .isLargeScreen(
+                                                                context)
+                                                        ? screenWidth /
+                                                            (width / 14)
+                                                        : screenWidth /
+                                                            (width / 12),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            onChanged: (val) {
+                                              ref
+                                                  .read(selectedServiceProvider
+                                                      .notifier)
+                                                  .selectedService(
+                                                      val.toString());
+
+                                              selectedService = val;
+
+                                              ref
+                                                  .read(servicesChangeProvider
+                                                      .notifier)
+                                                  .state = val!.isNotEmpty;
+                                            },
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Colors.black45,
+                                            ),
+                                            iconSize:
+                                                ResponsiveWidget.isLargeScreen(
+                                                        context)
+                                                    ? screenWidth / (width / 30)
+                                                    : 0,
+                                            buttonHeight:
+                                                screenWidth / (width / 60),
+                                            buttonPadding: EdgeInsets.only(
+                                                left: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 20)
+                                                    : 0,
+                                                right: 10),
+                                            dropdownDecoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 15)),
+                                            ),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              contentPadding: EdgeInsets.zero,
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                            ),
+                                            hint: Text(
+                                              'Select Services',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 18)),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: screenWidth /
+                                                        (width / 18)),
+                                          );
+                                        },
+                                        error: (error, stackTrace) {
+                                          return const SmallErrorAnimationView();
+                                        },
+                                        loading: () {
+                                          return const SmallLoadingAnimationView();
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                'Date: ',
+                                style: FlutterFlowTheme.of(context)
+                                    .title1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize:
+                                            ResponsiveWidget.isLargeScreen(
+                                                    context)
+                                                ? screenWidth / (width / 24)
+                                                : screenWidth / (width / 20)),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.all(screenWidth / (width / 8)),
+                                  child: TextFormField(
+                                    controller: dateandtimeController,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    readOnly: true,
+                                    onTap: () async {
+                                      final result = await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return DateTimeAppointmentDialog(
+                                                context: context,
+                                                dayoff:
+                                                    widget.practioner.dayoff,
+                                              );
+                                            },
+                                          ) ??
+                                          '';
+                                      // setState(() {
+                                      dateandtimeController.text =
+                                          result.toString();
+
+                                      print(dateandtimeController.text);
+
+                                      selectedDate = result.toString();
+                                    },
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize:
+                                                screenWidth / (width / 18)),
+                                    keyboardType: TextInputType.datetime,
+                                    decoration: InputDecoration(
+                                      labelText: "Select date",
+                                      prefixIcon: Icon(
+                                        Icons.calendar_today,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .title2
+                                          .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize: ResponsiveWidget
+                                                      .isLargeScreen(context)
+                                                  ? screenWidth / (width / 24)
+                                                  : screenWidth / (width / 20)),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 8)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 8)),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 8)),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 8)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      else
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20)),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Services: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .title1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize:
+                                              ResponsiveWidget.isLargeScreen(
+                                                      context)
+                                                  ? screenWidth / (width / 24)
+                                                  : screenWidth / (width / 16)),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.all(screenWidth / (width / 8)),
+                                  child: Consumer(
+                                    builder: (BuildContext context,
+                                        WidgetRef ref, Widget? child) {
+                                      final services =
+                                          ref.watch(servicesProvider);
+                                      String initService =
+                                          ref.watch(selectedServiceProvider);
+
+                                      // print(initService);
+
+                                      return services.when(
+                                        data: (data) {
+                                          return DropdownButtonFormField2(
+                                            // value: locationSelected,
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Colors.black45,
+                                            ),
+                                            iconSize:
+                                                screenWidth / (width / 30),
+                                            buttonHeight:
+                                                screenWidth / (width / 60),
+                                            buttonPadding: EdgeInsets.only(
+                                                left:
+                                                    screenWidth / (width / 20),
+                                                right: 10),
+                                            dropdownDecoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 15)),
+                                            ),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              contentPadding: EdgeInsets.zero,
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                            ),
+                                            hint: Text(
+                                              'Select Services',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .subtitle2
+                                                  .override(
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: ResponsiveWidget
+                                                              .isLargeScreen(
+                                                                  context)
+                                                          ? screenWidth /
+                                                              (width / 18)
+                                                          : screenWidth /
+                                                              (width / 14)),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: ResponsiveWidget
+                                                            .isLargeScreen(
+                                                                context)
+                                                        ? screenWidth /
+                                                            (width / 18)
+                                                        : screenWidth /
+                                                            (width / 14)),
+                                            items: List.generate(
+                                              data.length,
+                                              (index) => DropdownMenuItem(
+                                                value: data
+                                                    .elementAt(index)
+                                                    .servicesName,
+                                                child: Text(
+                                                  data
+                                                      .elementAt(index)
+                                                      .servicesName,
+                                                  style: TextStyle(
+                                                    fontSize: screenWidth /
+                                                        (width / 10),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            onChanged: (val) {
+                                              ref
+                                                  .read(selectedServiceProvider
+                                                      .notifier)
+                                                  .selectedService(
+                                                      val.toString());
+
+                                              selectedService = val;
+
+                                              ref
+                                                  .read(servicesChangeProvider
+                                                      .notifier)
+                                                  .state = val!.isNotEmpty;
+                                            },
+                                            onSaved: (value) {
+                                              // selectedValue =
+                                              //     value.toString();
+                                            },
+                                          );
+                                        },
+                                        error: (error, stackTrace) {
+                                          return const SmallErrorAnimationView();
+                                        },
+                                        loading: () {
+                                          return const SmallLoadingAnimationView();
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (!ResponsiveWidget.isLargeScreen(context))
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20)),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Date: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .title1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: screenWidth / (width / 16)),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.all(screenWidth / (width / 8)),
+                                  child: TextFormField(
+                                    controller: dateandtimeController,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    readOnly: true,
+                                    onTap: () async {
+                                      final result = await showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return DateTimeAppointmentDialog(
+                                                context: context,
+                                                dayoff:
+                                                    widget.practioner.dayoff,
+                                              );
+                                            },
+                                          ) ??
+                                          '';
+                                      // setState(() {
+                                      dateandtimeController.text =
+                                          result.toString();
+
+                                      print(dateandtimeController.text);
+
+                                      selectedDate = result.toString();
+                                    },
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: ResponsiveWidget
+                                                    .isLargeScreen(context)
+                                                ? screenWidth / (width / 18)
+                                                : screenWidth / (width / 14)),
+                                    keyboardType: TextInputType.datetime,
+                                    decoration: InputDecoration(
+                                      labelText: "Select date",
+                                      prefixIcon: Icon(
+                                        Icons.calendar_today,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .title2
+                                          .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize: ResponsiveWidget
+                                                      .isLargeScreen(context)
+                                                  ? screenWidth / (width / 24)
+                                                  : screenWidth / (width / 20)),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 8)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 8)),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 8)),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 8)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                      //Time Row
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Time: ',
+                                style: FlutterFlowTheme.of(context)
+                                    .title1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize:
+                                            ResponsiveWidget.isLargeScreen(
+                                                    context)
+                                                ? screenWidth / (width / 18)
+                                                : screenWidth / (width / 16)),
+                              ),
+                            ),
+                            Expanded(
+                              flex: ResponsiveWidget.isLargeScreen(context)
+                                  ? 4
+                                  : 2,
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 8)),
+                                child: Consumer(
+                                  builder: (context, ref, child) {
+                                    final valuesService =
+                                        ref.watch(servicesChangeProvider);
+
+                                    final valueDate =
+                                        ref.watch(dateChangeProvider);
+                                    if (valuesService! && valueDate!) {
+                                      return SizedBox(
+                                        height: screenWidth / (width / 210),
+                                        child: TimesGridView(
+                                          serviceTime:
+                                              selectedService.toString(),
+                                          schedule: widget.practioner.schedules,
+                                          selectedTime:
+                                              dateandtimeController.text,
+                                        ),
+                                      );
+                                    } else {
+                                      return Text(
+                                        'Please select service and date',
+                                        style: FlutterFlowTheme.of(context)
+                                            .title2
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 18)
+                                                    : screenWidth /
+                                                        (width / 14)),
+                                        textAlign: TextAlign.start,
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //Location Row
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Location: ',
+                                style: FlutterFlowTheme.of(context)
+                                    .title1
+                                    .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize:
+                                            ResponsiveWidget.isLargeScreen(
+                                                    context)
+                                                ? screenWidth / (width / 18)
+                                                : screenWidth / (width / 16)),
+                              ),
+                            ),
+                            Expanded(
+                              flex: ResponsiveWidget.isLargeScreen(context)
+                                  ? 4
+                                  : 2,
+                              child: Padding(
+                                  padding:
+                                      EdgeInsets.all(screenWidth / (width / 8)),
+                                  child: Consumer(
+                                    builder: (context, ref, child) {
+                                      final locations =
+                                          ref.watch(locationProvider);
+                                      // final locationSelected = ref.watch(
+                                      //     locationSelectedProvider);
+
+                                      return locations.when(
+                                        data: (data) {
+                                          // print(selectedLocation);
+                                          return DropdownButtonFormField2(
+                                            // value: locationSelected,
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Colors.black45,
+                                            ),
+                                            iconSize:
+                                                screenWidth / (width / 30),
+                                            buttonHeight:
+                                                screenWidth / (width / 60),
+                                            buttonPadding: EdgeInsets.only(
+                                                left:
+                                                    screenWidth / (width / 20),
+                                                right: 10),
+                                            dropdownDecoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 15)),
+                                            ),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              contentPadding: EdgeInsets.zero,
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                            ),
+                                            hint: Text(
+                                              'Select Location',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .subtitle2
+                                                  .override(
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: ResponsiveWidget
+                                                              .isLargeScreen(
+                                                                  context)
+                                                          ? screenWidth /
+                                                              (width / 18)
+                                                          : screenWidth /
+                                                              (width / 14)),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: ResponsiveWidget
+                                                            .isLargeScreen(
+                                                                context)
+                                                        ? screenWidth /
+                                                            (width / 18)
+                                                        : screenWidth /
+                                                            (width / 14)),
+                                            items: List.generate(
+                                              data.length,
+                                              (index) => DropdownMenuItem(
+                                                value:
+                                                    data.elementAt(index).type,
+                                                child: Text(
+                                                  data.elementAt(index).type,
+                                                  style: TextStyle(
+                                                    fontSize: screenWidth /
+                                                        (width / 14),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            onChanged: (value) {
+                                              // selectedLocation = value;
+                                              ref
+                                                  .read(locationSelectedProvider
+                                                      .notifier)
+                                                  .changeLocation(
+                                                      value.toString());
+
+                                              selectedLocation = value;
+                                              //Do something when changing the item if you want.
+                                            },
+                                            onSaved: (value) {
+                                              // selectedValue =
+                                              //     value.toString();
+                                            },
+                                          );
+                                        },
+                                        error: (error, stackTrace) {
+                                          return const SmallErrorAnimationView();
+                                        },
+                                        loading: () {
+                                          return const SmallLoadingAnimationView();
+                                        },
+                                      );
+                                    },
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      //Client Details
+
+                      //Title
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20),
+                            screenWidth / (width / 20)),
+                        child: Text(
+                          'Your Details',
+                          style: FlutterFlowTheme.of(context).title1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: ResponsiveWidget.isLargeScreen(context)
+                                  ? screenWidth / (width / 24)
+                                  : screenWidth / (width / 20)),
+                        ),
+                      ),
+                      //Client Details Column
+                      userInfo.when(
+                        data: (data) {
+                          emailController.text = data.email.toString();
+                          phNumbController.text = data.phoneNumber.toString();
+
+                          return Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 20)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Code/Name: ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 18)
+                                                    : screenWidth /
+                                                        (width / 16)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: ResponsiveWidget.isLargeScreen(
+                                              context)
+                                          ? 4
+                                          : 2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10)),
+                                        child: DropdownButtonFormField2(
+                                          icon: const Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Colors.black45,
+                                          ),
+                                          iconSize: screenWidth / (width / 30),
+                                          buttonHeight:
+                                              screenWidth / (width / 60),
+                                          buttonPadding: EdgeInsets.only(
+                                              left: screenWidth / (width / 20),
+                                              right: 10),
+                                          dropdownDecoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                screenWidth / (width / 15)),
+                                          ),
+                                          decoration: InputDecoration(
+                                            isDense: true,
+                                            contentPadding: EdgeInsets.zero,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 8)),
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 8)),
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 8)),
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                width: 1,
+                                              ),
+                                            ),
+                                          ),
+                                          hint: Text(
+                                            'Select Name/Code',
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: ResponsiveWidget
+                                                            .isLargeScreen(
+                                                                context)
+                                                        ? screenWidth /
+                                                            (width / 18)
+                                                        : screenWidth /
+                                                            (width / 12)),
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle1
+                                              .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: ResponsiveWidget
+                                                          .isLargeScreen(
+                                                              context)
+                                                      ? screenWidth /
+                                                          (width / 18)
+                                                      : screenWidth /
+                                                          (width / 12)),
+                                          items: [
+                                            DropdownMenuItem(
+                                              value:
+                                                  '${data.firstName} ${data.lastName}',
+                                              child: Text(
+                                                '${data.firstName} ${data.lastName}',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .subtitle1
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: ResponsiveWidget
+                                                                .isLargeScreen(
+                                                                    context)
+                                                            ? screenWidth /
+                                                                (width / 18)
+                                                            : screenWidth /
+                                                                (width / 8)),
+                                              ),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: data.clientcode,
+                                              child: Text(
+                                                data.clientcode,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .subtitle1
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: ResponsiveWidget
+                                                                .isLargeScreen(
+                                                                    context)
+                                                            ? screenWidth /
+                                                                (width / 18)
+                                                            : screenWidth /
+                                                                (width / 8)),
+                                              ),
+                                            ),
+                                          ],
+                                          onChanged: (value) {
+                                            selectedCodeorName = value;
+                                            //Do something when changing the item if you want.
+                                          },
+                                          onSaved: (value) {
+                                            // selectedValue = value.toString();
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 20)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Email: ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 18)
+                                                    : screenWidth /
+                                                        (width / 16)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: ResponsiveWidget.isLargeScreen(
+                                              context)
+                                          ? 4
+                                          : 2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10)),
+                                        child: Text(
+                                          data.email!,
+                                          style: FlutterFlowTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 18)
+                                                    : screenWidth /
+                                                        (width / 14),
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 20)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Phone Number: ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 18)
+                                                    : screenWidth /
+                                                        (width / 16)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: ResponsiveWidget.isLargeScreen(
+                                              context)
+                                          ? 4
+                                          : 2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10)),
+                                        child: Text(
+                                          data.phoneNumber!,
+                                          style: FlutterFlowTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 18)
+                                                    : screenWidth /
+                                                        (width / 14),
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.all(screenWidth / (width / 20)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Comment: ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 18)
+                                                    : screenWidth /
+                                                        (width / 16)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: ResponsiveWidget.isLargeScreen(
+                                              context)
+                                          ? 4
+                                          : 2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10),
+                                            screenWidth / (width / 10)),
+                                        child: TextFormField(
+                                          controller: commentController,
+                                          autofocus: true,
+                                          obscureText: false,
+                                          // readOnly: true,
+                                          decoration: InputDecoration(
+                                            hintText:
+                                                "What would you like to gain from this session?",
+                                            // enabled: false,
+                                            hintStyle: FlutterFlowTheme.of(
+                                                    context)
+                                                .subtitle2
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: ResponsiveWidget
+                                                            .isLargeScreen(
+                                                                context)
+                                                        ? screenWidth /
+                                                            (width / 18)
+                                                        : screenWidth /
+                                                            (width / 16)),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 8)),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 8)),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 8)),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth /
+                                                          (width / 8)),
+                                            ),
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle1
+                                              .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: screenWidth /
+                                                      (width / 18)),
+                                          keyboardType: TextInputType.multiline,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        error: (error, stackTrace) {
+                          return const ErrorAnimationView();
+                        },
+                        loading: () {
+                          return const LoadingAnimationView();
+                        },
+                      ),
+
+                      //Submit button
+                      Padding(
+                        padding: EdgeInsets.all(screenWidth / (width / 8)),
+                        child: SizedBox(
+                          width: screenWidth / (width / 150),
+                          height: screenWidth / (width / 30),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateColor.resolveWith(
+                                  (states) => FlutterFlowTheme.of(context)
+                                      .primaryColor),
+                              side: MaterialStateProperty.all(
+                                BorderSide(
+                                    width: 1.0, color: Colors.transparent),
+                              ),
+                            ),
+                            onPressed: true
+                                ? () async {
+                                    final appointmentData = AppointmentPayload(
+                                      clientId: userUid.toString(),
+                                      practionerId:
+                                          widget.practioner.userId.toString(),
+                                      practionerName:
+                                          '${widget.practioner.firstName} ${widget.practioner.lastName}',
+                                      services: selectedService.toString(),
+                                      date:
+                                          dateandtimeController.text.toString(),
+                                      time: selectedTime.toString(),
+                                      location: selectedLocation.toString(),
+                                      clientNameorCode:
+                                          selectedCodeorName.toString(),
+                                      clientEmail: emailController.text,
+                                      clientphNumber: phNumbController.text,
+                                      clientComment:
+                                          commentController.text.toString(),
+                                      statusAppointment: 'ongoing',
+                                      createdAt: DateTime.now().toString(),
+                                    );
+                                    // final appointmentData2 = Appointment(
+                                    //     appointmentId: appointmentId,
+                                    //     json: json);
+                                    final isUploaded = await ref
+                                        .read(appointmentUploaderProvider
+                                            .notifier)
+                                        .upload(
+                                          appointmentData: appointmentData,
+                                        );
+                                    if (isUploaded && mounted) {
+                                      Navigator.of(context).pop();
+                                    }
+                                  }
+                                : null,
+                            child: Text(
+                              'Submit',
+                              style: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: screenWidth / (width / 16),
+                                    color: Colors.white,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

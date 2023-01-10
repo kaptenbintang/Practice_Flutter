@@ -11,32 +11,15 @@ class AppointmentUploadNotifier extends StateNotifier<IsLoading> {
   set isLoading(bool value) => state = value;
 
   Future<bool> upload({
-    required AppointmentData appointmentData,
+    required AppointmentPayload appointmentData,
   }) async {
     isLoading = true;
 
-    final nowTime = DateTime.now();
-
     try {
-      final appointmentPayload = AppointmentPayload(
-        userId: appointmentData.clientId.toString(),
-        practionerId: appointmentData.practionerId.toString(),
-        practionerName: appointmentData.practionerName.toString(),
-        services: appointmentData.services.toString(),
-        date: appointmentData.date.toString(),
-        time: appointmentData.time.toString(),
-        location: appointmentData.location.toString(),
-        clientNameorCode: appointmentData.clientNameorCode.toString(),
-        clientEmail: appointmentData.clientEmail.toString(),
-        clientphNumber: appointmentData.clientphNumber.toString(),
-        clientComment: appointmentData.clientComment ?? '',
-        statusAppointment: appointmentData.statusAppointment ?? 'ongoing',
-        createdAt: nowTime.toString(),
-      );
       await FirebaseFirestore.instance
           .collection(FirebaseCollectionName.appointment)
           .add(
-            appointmentPayload,
+            appointmentData,
           );
       return true;
     } catch (_) {
