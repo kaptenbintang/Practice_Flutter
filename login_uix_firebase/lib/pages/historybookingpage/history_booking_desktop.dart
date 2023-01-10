@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:login_uix_firebase/model/appointment/appointment.dart';
+import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
+// import 'package:login_uix_firebase/model/appointment/appointment.dart';
+
 import 'package:login_uix_firebase/provider/main_page/appointment2_provider.dart';
 
 import '../../flutter_flow/flutter_flow_theme.dart';
