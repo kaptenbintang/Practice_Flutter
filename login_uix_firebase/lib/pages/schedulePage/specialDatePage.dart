@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/provider/specialdate_provider/specialdate_provider.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../helper/responsive.dart';
+import '../../model/practioner_data.dart';
 import '../../provider/appointment_page/date_selected.dart';
 import '../../provider/specialdate_provider/specialdate_get_provider.dart';
 import '../../widgets/animations/error_animation_view.dart';
@@ -152,7 +154,7 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                                   final key = listDay.keys.elementAt(index);
 
                                   return tableDepanSpecialPage(
-                                      context, value, key, index);
+                                      listDay, context, value, key, index);
                                 },
                               ),
                               FFButtonWidget(
@@ -255,7 +257,7 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
     );
   }
 
-  Widget tableDepanSpecialPage(BuildContext context, data, key, index) {
+  Widget tableDepanSpecialPage(datas, BuildContext context, data, key, index) {
     double screenWidth = MediaQuery.of(context).size.width;
     double width = ResponsiveWidget.isphoneScreen(context)
         ? 414
@@ -388,15 +390,20 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onPressed: () async {
+                                        PractionerData practionerData =
+                                            PractionerData(
+                                          id: FirebaseAuth
+                                              .instance.currentUser!.uid,
+                                        );
                                         final selectedDate =
                                             ref.watch(dateRangeProvider);
                                         await ref
                                             .read(editSpecialDateProvider
                                                 .notifier)
                                             .editstartDayoff(
-                                              dayoffs: selectedDate,
-                                              index: index,
-                                            )
+                                                dayoffs: selectedDate,
+                                                index: index,
+                                                practionerData: practionerData)
                                             .then((value) => ref.refresh(
                                                 specialDateProvider.future));
                                         Navigator.of(context).pop();
@@ -477,16 +484,22 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                                             child: ElevatedButton(
                                               child: Text("Submit"),
                                               onPressed: () async {
+                                                PractionerData practionerData =
+                                                    PractionerData(
+                                                  id: FirebaseAuth.instance
+                                                      .currentUser!.uid,
+                                                );
                                                 await ref
                                                     .read(
                                                         editDescriptionDayoffProvider
                                                             .notifier)
                                                     .editDescription(
-                                                      descriptiong:
-                                                          _descriptionController
-                                                              .text,
-                                                      index: index,
-                                                    )
+                                                        descriptiong:
+                                                            _descriptionController
+                                                                .text,
+                                                        index: index,
+                                                        practionerData:
+                                                            practionerData)
                                                     .then((value) =>
                                                         ref.refresh(
                                                             specialDateProvider
@@ -535,11 +548,12 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                         size: 30,
                       ),
                       onPressed: () async {
+                        print(datas);
                         await ref
                             .read(deleteSpecialDateProvider.notifier)
                             .deleteDayoff(
-                              //  userID: FirebaseAuth.instance.currentUser!.uid
-
+                              listDay: datas,
+                              userID: FirebaseAuth.instance.currentUser!.uid,
                               selectedIndex: index,
                             )
                             .then((value) =>
