@@ -17,8 +17,7 @@ class Practioner {
   final String titleMain;
   final Map schedules;
   final Map dayoff;
-
-  // final String practionerSchedule;
+  // final Map blackout;
 
   Practioner({
     required this.userId,
@@ -34,14 +33,4 @@ class Practioner {
         titleMain = json[PractionerKey.titleMain],
         schedules = json[PractionerKey.schedules],
         dayoff = json[PractionerKey.dayoff];
-  // schedules = {
-  //   for(final entry in json[PractionerKey.schedules].entries)
-  //   Schedule.values.firstWhere((element) => element.dayName == entry.key,
-
-  //   ): entry.value,};
-
-  // practionerSchedule = json[PractionerKey.practionerSchedule];
-
-  // bool get allowsLikes => postSettings[PostSetting.allowLikes] ?? false;
-  // bool get allowsComments => postSettings[PostSetting.allowComments] ?? false;
 }
