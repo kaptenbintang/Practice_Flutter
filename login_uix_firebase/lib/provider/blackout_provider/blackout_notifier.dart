@@ -28,10 +28,10 @@ class changeStatusDayNameNotifier extends StateNotifier<IsLoading> {
           .collection(
             FirebaseCollectionName.practioners,
           )
-          // .where(
-          //   FirebaseFieldName.blackout,
-          //   isEqualTo: "0",
-          // )
+          .where(
+            FirebaseFieldName.userId,
+            isEqualTo: practionerData.id,
+          )
           .limit(1)
           .get();
       if (userInfo.docs.isNotEmpty) {
