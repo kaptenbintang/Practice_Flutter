@@ -17,6 +17,7 @@ import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
 import '../../helper/responsive.dart';
 import '../../model/blackout_models/blackout.dart';
+import '../../model/practioner_models/practioner.dart';
 import '../../provider/appointment_page/appointment_upload_provider.dart';
 import '../../provider/blackout_provider/blackout_provider.dart';
 import '../../widgets/animations/small_error_animation_view.dart';
@@ -271,9 +272,17 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
                                     //       .instance.currentUser?.uid
                                     //       .toString(),
                                     // );
-                                    await service.addBlackout(
-                                        selectedDayName.toString(),
-                                        FirebaseAuth.instance.currentUser!.uid);
+                                    PractionerData practionerData =
+                                        PractionerData(
+                                      id: FirebaseAuth
+                                          .instance.currentUser!.uid,
+                                      blackout: selectedDayName.toString(),
+                                    );
+                                    await ref
+                                        .read(editStatusDayName.notifier)
+                                        .editDayName(
+                                            index: selectedDayName.toString(),
+                                            practionerData: practionerData);
 
                                     print('Button pressed ...');
                                   },
