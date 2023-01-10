@@ -25,6 +25,7 @@ import 'package:login_uix_firebase/widgets/time/time_grid_view.dart';
 
 import '../helper/dimensions.dart';
 import '../helper/responsive.dart';
+import '../provider/main_page/appointment_provider.dart';
 
 class AppointmentPageRiverpodVersion2 extends StatefulHookConsumerWidget {
   static const routeName = '/appointmentPageRiverpod2';
@@ -1720,7 +1721,10 @@ class _AppointmentPageRiverpodVersion2State
                                           appointmentData: appointmentData,
                                         );
                                     if (isUploaded && mounted) {
-                                      Navigator.of(context).pop();
+                                      Navigator.pushNamed(
+                                              context, RouteName.MainPagesPage)
+                                          .then((_) => ref.refresh(
+                                              userAppointmentProvider.future));
                                     }
                                   }
                                 : null,
