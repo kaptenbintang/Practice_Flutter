@@ -424,6 +424,7 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                                   selectionMode:
                                       DateRangePickerSelectionMode.range,
                                   view: DateRangePickerView.month,
+                                  // monthViewSettings: DateRangePickerMonthViewSettings(specialDates: ),
                                 ),
                               ),
                             );

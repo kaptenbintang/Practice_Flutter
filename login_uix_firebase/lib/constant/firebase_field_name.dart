@@ -17,5 +17,6 @@ class FirebaseFieldName {
   static const statusAppointment = 'statusAppointment';
   static const schedules = 'schedules';
   static const dayoff = 'dayoff';
+  static const blackout = 'blackout';
   const FirebaseFieldName._();
 }
