@@ -47,8 +47,9 @@ class DataService {
     await _db.collection("servicesCategory").add(servicesDataCategory.toMap());
   }
 
-  addBlackout(DayName dayName) async {
-    await _db.collection("blackout").add(dayName.toMap());
+  addBlackout(String dayName, String uid) async {
+    await _db.collection("practioners").where("uid", isEqualTo: uid).get();
+    // .({'test': dayName});
   }
 
   static Future<void> updateUserI(UserData employeeData) async =>

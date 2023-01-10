@@ -35,15 +35,15 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
   DataService service = DataService();
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late DayName selectedDayName;
-  List<DayName> dayname = <DayName>[
-    DayName(id: 1, name: "Monday"),
-    DayName(id: 2, name: "Tuesday"),
-    DayName(id: 3, name: "Wednesday"),
-    DayName(id: 4, name: "Thursday"),
-    DayName(id: 5, name: "Friday"),
-    DayName(id: 6, name: "Saturday"),
-    DayName(id: 7, name: "Sunday"),
+  String? selectedDayName;
+  List<String> dayname = [
+    ("Monday"),
+    ("Tuesday"),
+    ("Wednesday"),
+    ("Thursday"),
+    ("Friday"),
+    ("Saturday"),
+    ("Sunday"),
   ];
   String? selectedDay;
   int? idDay;
@@ -55,10 +55,10 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    selectedDayName = dayname[0];
-  }
+  // @override
+  // void initState() {
+  //   selectedDayName = dayname[0];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -189,18 +189,19 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                child: DropdownButton<DayName>(
+                                child: DropdownButton(
                                   value: selectedDayName,
                                   onChanged: (newValue) {
                                     setState(() {
-                                      selectedDayName = newValue!;
+                                      selectedDayName = newValue.toString();
                                     });
                                   },
-                                  items: dayname.map((DayName dayName) {
-                                    return new DropdownMenuItem<DayName>(
-                                      value: dayName,
+                                  items: dayname.map((dayNames) {
+                                    int index = dayname.indexOf(dayNames) + 1;
+                                    return new DropdownMenuItem(
+                                      value: index.toString(),
                                       child: new Text(
-                                        dayName.name.toString(),
+                                        dayNames.toString(),
                                         style:
                                             new TextStyle(color: Colors.black),
                                       ),
@@ -262,14 +263,17 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
                                     EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    DayName dayNameData = DayName(
-                                      id: selectedDayName.id,
-                                      name: selectedDayName.name.toString(),
-                                      practionerId: FirebaseAuth
-                                          .instance.currentUser?.uid
-                                          .toString(),
-                                    );
-                                    await service.addBlackout(dayNameData);
+                                    print(selectedDayName);
+                                    // DayName dayNameData = DayName(
+                                    //   id: selectedDayName.id,
+                                    //   name: selectedDayName.name.toString(),
+                                    //   practionerId: FirebaseAuth
+                                    //       .instance.currentUser?.uid
+                                    //       .toString(),
+                                    // );
+                                    await service.addBlackout(
+                                        selectedDayName.toString(),
+                                        FirebaseAuth.instance.currentUser!.uid);
 
                                     print('Button pressed ...');
                                   },
