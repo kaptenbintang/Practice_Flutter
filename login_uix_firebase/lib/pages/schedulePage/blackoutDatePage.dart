@@ -283,7 +283,8 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
                                         .editDayName(
                                             index: selectedDayName.toString(),
                                             practionerData: practionerData);
-
+                                    print(
+                                        FirebaseAuth.instance.currentUser!.uid);
                                     print('Button pressed ...');
                                   },
                                   text: 'Deactivated',
