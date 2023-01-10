@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/provider/appointment_page/time_loop_provider.dart';
 import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/small_loading_animation_view.dart';
@@ -18,16 +19,24 @@ class TimesGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double width = ResponsiveWidget.isphoneScreen(context)
+        ? 414
+        : ResponsiveWidget.isSmallScreen(context)
+            ? 912
+            : ResponsiveWidget.isLargeScreen(context)
+                ? 1920
+                : 1280;
     return Consumer(
       builder: (context, ref, child) {
         final timeLoop = ref.watch(timeLoopProvider(schedule));
         return timeLoop.when(
           data: (data) {
             return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: ResponsiveWidget.isLargeScreen(context) ? 8 : 3,
+                mainAxisSpacing: screenWidth / (width / 10),
+                crossAxisSpacing: screenWidth / (width / 10),
                 childAspectRatio: 1,
               ),
               shrinkWrap: true,
