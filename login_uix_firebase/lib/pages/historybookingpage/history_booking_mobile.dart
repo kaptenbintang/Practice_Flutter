@@ -6,7 +6,6 @@ import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/dimensions.dart';
-// import '../../model/appointment/appointment.dart';
 import '../../model/practioner_models/practioner.dart';
 import '../../provider/main_page/appointment2_provider.dart';
 import '../../route.dart';
