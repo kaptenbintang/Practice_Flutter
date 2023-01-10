@@ -471,7 +471,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                 InkWell(
                                   onTap: () {
                                     Navigator.pushNamed(
-                                        context, RouteName.changePWPage);
+                                        context, RouteName.mainSchedulePage);
                                   },
                                   child: Container(
                                     width: screenWidth / (width / 500),

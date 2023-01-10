@@ -1,11 +1,8 @@
 import 'dart:collection' show MapView;
 
-import 'package:cloud_firestore/cloud_firestore.dart' show FieldValue;
 import 'package:flutter/foundation.dart' show immutable;
-import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_key.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
-import 'package:login_uix_firebase/model/blackout_models/blackout_key.dart';
 
 @immutable
 class AppointmentPayload extends MapView<String, dynamic> {
@@ -38,18 +35,6 @@ class AppointmentPayload extends MapView<String, dynamic> {
             AppointmentKey.clientComment: clientComment,
             AppointmentKey.statusAppointment: statusAppointment,
             AppointmentKey.createdAt: createdAt,
-          },
-        );
-}
-
-class blackoutPayload extends MapView<String, dynamic> {
-  blackoutPayload({
-    required UserId userId,
-    required String blackout,
-  }) : super(
-          {
-            BlackoutKey.valueName: userId,
-            BlackoutKey.valueId: blackout,
           },
         );
 }
