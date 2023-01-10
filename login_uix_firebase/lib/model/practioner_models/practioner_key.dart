@@ -14,7 +14,7 @@ class PractionerKey {
   static const titleMain = 'titleMain';
   static const schedules = 'schedules';
   static const dayoff = 'dayoff';
-  // static const practionerSchedule = 'practionerSchedule';
+  static const blackout = 'blackout';
 
   const PractionerKey._();
 }
