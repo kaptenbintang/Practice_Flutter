@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
+import 'package:login_uix_firebase/model/appointment/appointment_payload.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/provider/appointment_page/appointment_upload_provider.dart';
@@ -431,12 +432,13 @@ class _AppointmentPageRiverpodVersion2State
                                         readOnly: true,
                                         onTap: () async {
                                           final result = await showDialog(
+                                                barrierDismissible: false,
                                                 context: context,
                                                 builder: (context) {
                                                   return DateTimeAppointmentDialog(
-                                                    practioner: widget
-                                                        .practioner.firstName,
                                                     context: context,
+                                                    dayoff: widget
+                                                        .practioner.dayoff,
                                                   );
                                                 },
                                               ) ??
@@ -1050,7 +1052,7 @@ class _AppointmentPageRiverpodVersion2State
                                   onPressed: true
                                       ? () async {
                                           final appointmentData =
-                                              AppointmentData(
+                                              AppointmentPayload(
                                             clientId: userUid.toString(),
                                             practionerId: widget
                                                 .practioner.userId
@@ -1061,7 +1063,7 @@ class _AppointmentPageRiverpodVersion2State
                                                 selectedService.toString(),
                                             date: dateandtimeController.text
                                                 .toString(),
-                                            time: selectedTime,
+                                            time: selectedTime.toString(),
                                             location:
                                                 selectedLocation.toString(),
                                             clientNameorCode:
@@ -1072,10 +1074,11 @@ class _AppointmentPageRiverpodVersion2State
                                             clientComment: commentController
                                                 .text
                                                 .toString(),
+                                            statusAppointment: 'ongoing',
+                                            createdAt:
+                                                DateTime.now().toString(),
                                           );
-                                          // final appointmentData2 = Appointment(
-                                          //     appointmentId: appointmentId,
-                                          //     json: json);
+
                                           final isUploaded = await ref
                                               .read(appointmentUploaderProvider
                                                   .notifier)
