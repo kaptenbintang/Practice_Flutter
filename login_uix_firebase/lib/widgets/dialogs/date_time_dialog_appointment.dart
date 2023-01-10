@@ -7,19 +7,15 @@ import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_pr
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DateTimeAppointmentDialog extends ConsumerStatefulWidget {
-  final String practioner;
+  final Map dayoff;
   final BuildContext context;
   const DateTimeAppointmentDialog(
-      {Key? key, required this.practioner, required this.context})
+      {Key? key, required this.dayoff, required this.context})
       : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _DateTimeAppointmentDialogState();
-
-  // @override
-  // State<DateTimeAppointmentDialog> createState() =>
-  //     _DateTimeAppointmentDialogState();
 }
 
 class _DateTimeAppointmentDialogState
@@ -27,23 +23,12 @@ class _DateTimeAppointmentDialogState
   final now = DateTime.now();
   late BookingService mockBookingService;
   final dateandtimeController = TextEditingController();
-  // final DateRangePickerController _datePickerController =
-  //     DateRangePickerController();
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     if (args.value is PickerDateRange) {
-      // final DateTime rangeStartDate = args.value.startDate;
-      // final DateTime rangeEndDate = args.value.endDate;
     } else if (args.value is DateTime) {
       final DateTime selectedDate = args.value;
       ref.read(dateProvider.notifier).changeDate(selectedDate);
-
-      // final dataFormated = DateFormat('yyyy-MM-dd').format(selectedDate);
-      // setState(() {
-      //   _datePickerController.selectedDate = selectedDate;
-      // });
-    } else if (args.value is List<DateTime>) {
-      final List<DateTime> selectedDates = args.value;
     } else {
       final List<PickerDateRange> selectedRanges = args.value;
     }
@@ -52,7 +37,11 @@ class _DateTimeAppointmentDialogState
   @override
   Widget build(BuildContext context) {
     final selectedDate = ref.watch(dateProvider);
-    print(selectedDate);
+
+    final dasd = dadsa(widget.dayoff);
+
+    final deleteList = dasd.toSet().toList();
+
     return AlertDialog(
       title: Text('Please choose date'),
       content: Center(
@@ -60,31 +49,38 @@ class _DateTimeAppointmentDialogState
           width: 500,
           height: 700,
           child: SfDateRangePicker(
-            // rangeTextStyle: TextStyle(
-            //     fontStyle: FontStyle.italic,
-            //     fontWeight: FontWeight.w500,
-            //     fontSize: 50,
-            //     color: Colors.black),
-
             showNavigationArrow: true,
             onSelectionChanged: _onSelectionChanged,
             view: DateRangePickerView.month,
+
             monthViewSettings: DateRangePickerMonthViewSettings(
               dayFormat: 'EEE',
               firstDayOfWeek: 1,
               numberOfWeeksInView: 3,
-              blackoutDates: <DateTime>[
-                DateTime.now().add(Duration(days: 2)),
-                DateTime.now().add(Duration(days: 3)),
-                DateTime.now().add(Duration(days: 6)),
-                DateTime.now().add(Duration(days: 7)),
-              ],
+              blackoutDates: deleteList,
               weekendDays: [7, 6],
               specialDates: [
                 DateTime(2023, 1, 5),
-                DateTime(2022, 12, 27),
-                DateTime(2022, 12, 28)
+                DateTime(2023, 1, 15),
+                DateTime(2023, 1, 14),
               ],
+            ),
+            monthCellStyle: DateRangePickerMonthCellStyle(
+              blackoutDatesDecoration: BoxDecoration(
+                  color: Colors.red,
+                  border: Border.all(color: const Color(0xFFF44436), width: 1),
+                  shape: BoxShape.circle),
+              weekendDatesDecoration: BoxDecoration(
+                  color: const Color(0xFFDFDFDF),
+                  border: Border.all(color: const Color(0xFFB6B6B6), width: 1),
+                  shape: BoxShape.circle),
+              specialDatesDecoration: BoxDecoration(
+                  color: Colors.green,
+                  border: Border.all(color: const Color(0xFF2B732F), width: 1),
+                  shape: BoxShape.circle),
+              blackoutDateTextStyle: TextStyle(
+                  color: Colors.white, decoration: TextDecoration.lineThrough),
+              specialDatesTextStyle: const TextStyle(color: Colors.white),
             ),
             selectionMode: DateRangePickerSelectionMode.single,
             // controller: _datePickerController,
@@ -103,7 +99,9 @@ class _DateTimeAppointmentDialogState
               );
             },
             onCancel: () {
-              ref.read(dateChangeProvider.notifier).state = false;
+              selectedDate == null || selectedDate == DateTime.now()
+                  ? Navigator.pop(context)
+                  : ref.read(dateChangeProvider.notifier).state = false;
 
               Navigator.pop(context);
             },
@@ -112,4 +110,26 @@ class _DateTimeAppointmentDialogState
       ),
     );
   }
+}
+
+List<DateTime> dadsa(Map dayoff) {
+  List<DateTime> dayOffList = [];
+
+  for (var i = 0; i <= dayoff.length - 1; i++) {
+    final offValues = dayoff.values.elementAt(i);
+    // print('e $e');
+
+    print(offValues);
+    final startDayoff = DateFormat('dd/MM/yyyy').parse(offValues['dateDayoff']);
+    final endDayoff =
+        DateFormat('dd/MM/yyyy').parse(offValues['dateDayoffEnd']);
+    final ddd = endDayoff.difference(startDayoff);
+    print(ddd.inDays);
+
+    for (var y = 0; y <= ddd.inDays; y++) {
+      dayOffList.add(startDayoff.add(Duration(days: y)));
+    }
+    print(dayOffList);
+  }
+  return dayOffList;
 }

@@ -7,6 +7,7 @@ class FirebaseFieldName {
   static const firstName = 'firstName';
   static const lastName = 'lastName';
   static const email = 'email';
+  static const clientEmail = 'clientEmail';
   static const dateofbirth = 'dateofbirth';
   static const clientcode = 'clientcode';
   static const clientType = 'clientType';

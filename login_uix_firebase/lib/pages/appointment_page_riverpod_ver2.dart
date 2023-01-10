@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
+import 'package:login_uix_firebase/model/appointment/appointment_payload.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/provider/appointment_page/appointment_upload_provider.dart';
@@ -643,9 +644,9 @@ class _AppointmentPageRiverpodVersion2State
                                             context: context,
                                             builder: (context) {
                                               return DateTimeAppointmentDialog(
-                                                practioner:
-                                                    widget.practioner.firstName,
                                                 context: context,
+                                                dayoff:
+                                                    widget.practioner.dayoff,
                                               );
                                             },
                                           ) ??
@@ -929,12 +930,13 @@ class _AppointmentPageRiverpodVersion2State
                                     readOnly: true,
                                     onTap: () async {
                                       final result = await showDialog(
+                                            barrierDismissible: false,
                                             context: context,
                                             builder: (context) {
                                               return DateTimeAppointmentDialog(
-                                                practioner:
-                                                    widget.practioner.firstName,
                                                 context: context,
+                                                dayoff:
+                                                    widget.practioner.dayoff,
                                               );
                                             },
                                           ) ??
@@ -1688,7 +1690,7 @@ class _AppointmentPageRiverpodVersion2State
                             ),
                             onPressed: true
                                 ? () async {
-                                    final appointmentData = AppointmentData(
+                                    final appointmentData = AppointmentPayload(
                                       clientId: userUid.toString(),
                                       practionerId:
                                           widget.practioner.userId.toString(),
@@ -1697,7 +1699,7 @@ class _AppointmentPageRiverpodVersion2State
                                       services: selectedService.toString(),
                                       date:
                                           dateandtimeController.text.toString(),
-                                      time: selectedTime,
+                                      time: selectedTime.toString(),
                                       location: selectedLocation.toString(),
                                       clientNameorCode:
                                           selectedCodeorName.toString(),
@@ -1705,6 +1707,8 @@ class _AppointmentPageRiverpodVersion2State
                                       clientphNumber: phNumbController.text,
                                       clientComment:
                                           commentController.text.toString(),
+                                      statusAppointment: 'ongoing',
+                                      createdAt: DateTime.now().toString(),
                                     );
                                     // final appointmentData2 = Appointment(
                                     //     appointmentId: appointmentId,

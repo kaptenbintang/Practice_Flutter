@@ -36,7 +36,4 @@ class Appointment {
         practionerName = json[AppointmentKey.practionerName],
         services = json[AppointmentKey.services],
         statusAppointment = json[AppointmentKey.statusAppointment];
-
-  // bool get allowsLikes => postSettings[PostSetting.allowLikes] ?? false;
-  // bool get allowsComments => postSettings[PostSetting.allowComments] ?? false;
 }

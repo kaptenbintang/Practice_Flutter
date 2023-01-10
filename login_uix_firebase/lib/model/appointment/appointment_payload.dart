@@ -7,7 +7,7 @@ import 'package:login_uix_firebase/model/auth/user_id.dart';
 @immutable
 class AppointmentPayload extends MapView<String, dynamic> {
   AppointmentPayload({
-    required UserId userId,
+    required UserId clientId,
     required String practionerId,
     required String practionerName,
     required String services,
@@ -22,7 +22,7 @@ class AppointmentPayload extends MapView<String, dynamic> {
     required String createdAt,
   }) : super(
           {
-            AppointmentKey.clientId: userId,
+            AppointmentKey.clientId: clientId,
             AppointmentKey.practionerId: practionerId,
             AppointmentKey.practionerName: practionerName,
             AppointmentKey.services: services,
