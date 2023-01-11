@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/auth/provider/auth_state_provider.dart';
 import 'package:login_uix_firebase/constant/controllers.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
@@ -27,14 +28,50 @@ final rememberProvider = StateNotifierProvider<RememberNotifier, bool?>((ref) {
   return RememberNotifier();
 });
 
-class LoginMobileRiverpod extends ConsumerWidget {
-  const LoginMobileRiverpod({super.key});
+class LoginMobileRiverpod extends ConsumerStatefulWidget {
+  const LoginMobileRiverpod({Key? key}) : super(key: key);
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      LoginMobileRiverpodstate();
+  // @override
+  // _blackOutPageState createState() => _blackOutPageState();
+}
+
+class LoginMobileRiverpodstate extends ConsumerState {
+  // const LoginMobileRiverpod({super.key});
+  bool isChecked = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  late Box box1;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    createOpenBox();
+  }
+
+  void createOpenBox() async {
+    box1 = await Hive.openBox('logindata');
+    getdataEmailPassChecked();
+  }
+
+  void getdataEmailPassChecked() async {
+    if (box1.get('email') != null) {
+      emailController.text = box1.get('email');
+      isChecked = true;
+      setState(() {});
+    }
+    if (box1.get('pass') != null) {
+      passwordController.text = box1.get('pass');
+      isChecked = true;
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     //text controllers
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+    // final emailController = TextEditingController();
+    // final passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
     bool isEmail(String input) => EmailValidator.validate(input);
 
@@ -172,18 +209,15 @@ class LoginMobileRiverpod extends ConsumerWidget {
                             children: [
                               Consumer(
                                 builder: (context, ref, child) {
-                                  final remember = ref.watch(rememberProvider)!;
+                                  // final remember = ref.watch(rememberProvider)!;
                                   return SizedBox(
                                     height: Dimensions.height24,
                                     width: Dimensions.width24,
                                     child: Checkbox(
-                                      value: remember,
-                                      onChanged: (_) {
-                                        // ref
-                                        //         .read(
-                                        //             rememberProvider.notifier)
-                                        //         .state ==
-                                        //     _;
+                                      value: isChecked,
+                                      onChanged: (value) {
+                                        isChecked = !isChecked;
+                                        setState(() {});
                                       },
                                     ),
                                   );
@@ -232,7 +266,13 @@ class LoginMobileRiverpod extends ConsumerWidget {
                                 .loginWithEmailPassword(emailController.text,
                                     passwordController.text, context);
                           }
-                          return;
+                          if (isChecked == true) {
+                            loginRememberMe();
+                          } else {
+                            Hive.box('logindata').clear();
+                            print("clearing data");
+                          }
+                          // return;
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.green,
@@ -283,5 +323,12 @@ class LoginMobileRiverpod extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  void loginRememberMe() {
+    if (isChecked) {
+      box1.put('email', emailController.value.text);
+      box1.put('pass', passwordController.value.text);
+    }
   }
 }
