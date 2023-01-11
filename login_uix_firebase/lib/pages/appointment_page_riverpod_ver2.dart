@@ -13,6 +13,7 @@ import 'package:login_uix_firebase/provider/appointment_page/appointment_upload_
 import 'package:login_uix_firebase/provider/appointment_page/location_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/services_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_provider.dart';
+import 'package:login_uix_firebase/provider/appointment_page/time_selected_provider.dart';
 
 import 'package:login_uix_firebase/route.dart';
 import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
@@ -642,6 +643,7 @@ class _AppointmentPageRiverpodVersion2State
                                     readOnly: true,
                                     onTap: () async {
                                       final result = await showDialog(
+                                            barrierDismissible: false,
                                             context: context,
                                             builder: (context) {
                                               return DateTimeAppointmentDialog(
@@ -759,12 +761,13 @@ class _AppointmentPageRiverpodVersion2State
                                       String initService =
                                           ref.watch(selectedServiceProvider);
 
-                                      // print(initService);
-
                                       return services.when(
                                         data: (data) {
                                           return DropdownButtonFormField2(
-                                            // value: locationSelected,
+                                            value: initService == null ||
+                                                    initService.isEmpty
+                                                ? ''
+                                                : initService,
                                             icon: const Icon(
                                               Icons.arrow_drop_down,
                                               color: Colors.black45,
@@ -1700,7 +1703,10 @@ class _AppointmentPageRiverpodVersion2State
                                       services: selectedService.toString(),
                                       date:
                                           dateandtimeController.text.toString(),
-                                      time: selectedTime.toString(),
+                                      // time: selectedTime.toString(),
+                                      time:
+                                          await ref.watch(timeSelectedProvider),
+
                                       location: selectedLocation.toString(),
                                       clientNameorCode:
                                           selectedCodeorName.toString(),
@@ -1711,9 +1717,6 @@ class _AppointmentPageRiverpodVersion2State
                                       statusAppointment: 'ongoing',
                                       createdAt: DateTime.now().toString(),
                                     );
-                                    // final appointmentData2 = Appointment(
-                                    //     appointmentId: appointmentId,
-                                    //     json: json);
                                     final isUploaded = await ref
                                         .read(appointmentUploaderProvider
                                             .notifier)
