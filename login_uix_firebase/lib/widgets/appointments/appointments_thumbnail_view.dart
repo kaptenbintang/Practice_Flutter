@@ -72,6 +72,13 @@ class AppointmentsThumbnailView extends StatelessWidget {
                     ),
               ),
               Text(
+                "Booking Time: " + appointment.time.toString(),
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: 'Poppins',
+                      fontSize: screenWidth / (width / 14),
+                    ),
+              ),
+              Text(
                 "Booking Date: " + appointment.date.toString(),
                 style: FlutterFlowTheme.of(context).bodyText1.override(
                       fontFamily: 'Poppins',
