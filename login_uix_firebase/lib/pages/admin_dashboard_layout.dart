@@ -33,7 +33,7 @@ class AdminDashboardLayout extends StatelessWidget {
       // appBar: ResponsiveWidget.isSmallScreen(context)
       //     ? topNavigationBar(context, _scaffoldKey)
       //     : null,
-      appBar: (ResponsiveWidget.isSmallScreen(context))
+      appBar: (!ResponsiveWidget.isLargeScreen(context))
           ? topNavigationBar(context, _scaffoldKey)
           : null,
       drawer: Container(
