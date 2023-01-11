@@ -1,16 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:login_uix_firebase/auth/backend/authenticator.dart';
-import 'package:login_uix_firebase/auth/models/auth_result.dart';
-import 'package:login_uix_firebase/auth/models/auth_state.dart';
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
-import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
-
-import 'package:login_uix_firebase/model/user_data.dart';
 
 class changeStatusAppointmentNotifier extends StateNotifier<IsLoading> {
   changeStatusAppointmentNotifier() : super(false);

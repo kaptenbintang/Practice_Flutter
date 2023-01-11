@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:login_uix_firebase/model/appointment/appointment_payload.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
 // import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/widgets/appointments/appointments_thumbnail_view.dart';
 
 import '../../helper/responsive.dart';
-import '../../model/appointment_data.dart';
 import '../../provider/main_page/cancel_provider.dart';
 
 class AppointmentsGridView extends StatelessWidget {

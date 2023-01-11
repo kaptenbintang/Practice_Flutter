@@ -1,16 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../../helper/database_service.dart';
-import '../../model/practioner_data.dart';
 import '../../provider/main_page/appointment_provider.dart';
 import '../../provider/main_page/practioner_provider.dart';
 import '../../route.dart';
@@ -19,7 +14,6 @@ import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
 import '../../widgets/appointments/appointments_grid_view.dart';
 import '../../widgets/practioners/practioners_grid_view.dart';
-import '../detailPractionerPage/detail_practioner_page.dart';
 import 'main_page_desktop_riverpod.dart';
 
 class mainPageMobile extends ConsumerWidget {
