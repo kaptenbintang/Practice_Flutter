@@ -133,7 +133,7 @@ class MyApp extends ConsumerWidget {
           DeleteAccount.routeName: (context) => const DeleteAccount(),
           CheckEmailView.routeName: (context) => const CheckEmailView(),
           // changePasswordPage.routeName: (context) => const changePasswordPage(),
-          ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
+          // ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
           ProfilePage.routeName: (context) => const ProfilePage(),
           ProfileRiverpodPage.routeName: (context) =>
               const ProfileRiverpodPage(),
@@ -178,6 +178,7 @@ class MyApp extends ConsumerWidget {
           RouteName.timeSchedulePage: (context) => timeSchedulePage(),
           RouteName.specialDatePage: (context) => specialDatePage(),
           RouteName.blackOutPage: (context) => blackOutPage(),
+          RouteName.ForgotPasswordPage: (context) => ForgotPasswordPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }

@@ -8,6 +8,7 @@ import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/pages/Events/events_page.dart';
 import 'package:login_uix_firebase/pages/LandingPage/landing_page.dart';
 import 'package:login_uix_firebase/pages/StartNow/start_now_page.dart';
+import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
 
 import 'package:login_uix_firebase/pages/login/login_page.dart';
 import 'package:login_uix_firebase/pages/manageClient/manage_client_page.dart';
@@ -39,6 +40,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(LoginPage());
     case RegisterRoute:
       return _getPageRoute(RegisterPage());
+    case ForgotPassworRoute:
+      return _getPageRoute(ForgotPasswordPage());
     default:
       return _getPageRoute(LandingPage());
   }
