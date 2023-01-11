@@ -389,7 +389,7 @@ class historyBookingDesktop extends ConsumerWidget {
                       screenWidth / (width / 20),
                       0),
                   child: Text(
-                    data.date,
+                    data.date + ",Time: " + data.time,
                     style: FlutterFlowTheme.of(context).subtitle1.override(
                         fontFamily: 'Poppins',
                         fontSize: screenWidth / (width / 18)),
