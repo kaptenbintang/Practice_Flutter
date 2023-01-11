@@ -59,8 +59,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Hive.initFlutter();
-
-  var box = await Hive.openBox('myBox');
   initializeDateFormatting().then((_) => runApp(ProviderScope(child: MyApp())));
 }
 
