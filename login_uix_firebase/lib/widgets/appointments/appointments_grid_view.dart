@@ -65,7 +65,6 @@ class AppointmentsGridView extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () async {
-                              Navigator.of(context).pop();
                               Appointment appointmentData = Appointment({
                                 'clientId':
                                     FirebaseAuth.instance.currentUser!.uid,
@@ -76,6 +75,7 @@ class AppointmentsGridView extends StatelessWidget {
                                   .read(editStatusAppointment.notifier)
                                   .editAppointmentCancel(
                                       appointmentData: appointmentData);
+                              Navigator.of(context).pop();
                               // .then((value) => ref
                               //     .refresh(cancelAppointmentStatus.future)); ini klo mau di refresh lg tampilan statusnya tp gadipake karena udh ada yang ngecheck perubahan status ongoing appointment
                             },
