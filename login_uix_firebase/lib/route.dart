@@ -2,7 +2,6 @@ import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 
 import 'package:login_uix_firebase/pages/historybookingpage/historybooking_riverpod.dart';
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
 
 class RouteName {
   static const dashboard = '/dashboard';
@@ -31,4 +30,5 @@ class RouteName {
   static const timeSchedulePage = '/timeSchedulePage';
   static const specialDatePage = '/specialDatePage';
   static const blackOutPage = '/blackOutPage';
+  static const ForgotPasswordPage = '/ForgotPasswordPage';
 }

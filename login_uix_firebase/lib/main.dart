@@ -12,9 +12,9 @@ import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
 import 'package:login_uix_firebase/pages/admin_dashboard_layout.dart';
-import 'package:login_uix_firebase/pages/appointment_page.dart';
+
 import 'package:login_uix_firebase/pages/add_user_page.dart';
-import 'package:login_uix_firebase/pages/appointment_page_riverpod.dart';
+
 import 'package:login_uix_firebase/pages/appointment_page_riverpod_ver2.dart';
 import 'package:login_uix_firebase/pages/change_pw_page.dart';
 import 'package:login_uix_firebase/pages/check_email_page.dart';
@@ -29,11 +29,7 @@ import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/pages/login/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_client_type_page.dart';
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_practioner_page.dart';
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_servicesCategory_page.dart';
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_services_page.dart';
+
 import 'package:login_uix_firebase/pages/profile_page.dart';
 import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
@@ -63,8 +59,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Hive.initFlutter();
-
-  var box = await Hive.openBox('myBox');
   initializeDateFormatting().then((_) => runApp(ProviderScope(child: MyApp())));
 }
 
@@ -133,34 +127,25 @@ class MyApp extends ConsumerWidget {
           DeleteAccount.routeName: (context) => const DeleteAccount(),
           CheckEmailView.routeName: (context) => const CheckEmailView(),
           // changePasswordPage.routeName: (context) => const changePasswordPage(),
-          ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
+          // ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
           ProfilePage.routeName: (context) => const ProfilePage(),
           ProfileRiverpodPage.routeName: (context) =>
               const ProfileRiverpodPage(),
           ProfileRiverpodPage2.routeName: (context) =>
               const ProfileRiverpodPage2(),
           UserTablePage.routeName: (context) => const UserTablePage(),
-          ManageRoles.routeName: (context) => const ManageRoles(),
-          ManageClients.routeName: (context) => const ManageClients(),
-          ManageServices.routeName: (context) => const ManageServices(),
-          ManageServiceCategory.routeName: (context) =>
-              const ManageServiceCategory(),
+
           DetailPagePractioner.routeName: (context) => DetailPagePractioner(
                 practioner:
                     ModalRoute.of(context)?.settings.arguments as Practioner,
               ),
-          // appointmentPage.routeName: (context) => const appointmentPage(),
-          AppointmentPageRiverpod.routeName: (context) =>
-              AppointmentPageRiverpod(
-                practioner:
-                    ModalRoute.of(context)?.settings.arguments as Practioner,
-              ),
+
           AppointmentPageRiverpodVersion2.routeName: (context) =>
               AppointmentPageRiverpodVersion2(
                 practioner:
                     ModalRoute.of(context)?.settings.arguments as Practioner,
               ),
-          ManagePractioners.routeName: (context) => const ManagePractioners(),
+
           // ControllerPage.routeName: (context) => ControllerPage(),
           RouteName.changePWPage: (context) => const changePWPage(),
           RouteName.checkEmailPage: (context) => const CheckEmailView(),
@@ -178,6 +163,7 @@ class MyApp extends ConsumerWidget {
           RouteName.timeSchedulePage: (context) => timeSchedulePage(),
           RouteName.specialDatePage: (context) => specialDatePage(),
           RouteName.blackOutPage: (context) => blackOutPage(),
+          RouteName.ForgotPasswordPage: (context) => ForgotPasswordPage(),
           AddUserPage.routeName: (context) => const AddUserPage(),
         });
   }

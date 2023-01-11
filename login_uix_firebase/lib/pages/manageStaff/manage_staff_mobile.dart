@@ -772,7 +772,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
             ),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(
-                  Dimensions.width24 / 2,
+                  0,
                   Dimensions.height24 / 2,
                   Dimensions.width24 / 2,
                   Dimensions.height24 / 2),
@@ -787,7 +787,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0, 0, Dimensions.width24 / 2, 0),
+                              0, 0, Dimensions.width08, 0),
                           child: Checkbox(
                             value: selectedUser.contains(snapshot),
                             onChanged: (isSelected) {

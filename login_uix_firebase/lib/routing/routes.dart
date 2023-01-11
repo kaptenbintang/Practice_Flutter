@@ -14,6 +14,7 @@ const ManageServicesCategoryRoute = "Services Category";
 const ManagePractionersRoute = "Manage Practioners";
 const AppointmentRoute = "Manage Appointment";
 const LogOutRoute = "Log Out";
+const ForgotPassworRoute = "Forgot Password";
 
 List sideBarAdminItems = [
   ManageStaffRoute,
@@ -35,5 +36,5 @@ List sideMenuItems = [
   StartNowRoute,
   EventsRoute,
   LoginRoute,
-  RegisterRoute
+  RegisterRoute,
 ];

@@ -3,9 +3,7 @@
 import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
-import 'package:login_uix_firebase/pages/appointment_page.dart';
 
-import 'package:login_uix_firebase/pages/appointment_page_riverpod.dart';
 import 'package:login_uix_firebase/pages/appointment_page_riverpod_ver2.dart';
 import 'package:login_uix_firebase/pages/detailPractionerPage/detail_practioner_desktop.dart';
 import 'package:login_uix_firebase/pages/detailPractionerPage/detail_practioner_mobile.dart';

@@ -8,6 +8,7 @@ import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/pages/Events/events_page.dart';
 import 'package:login_uix_firebase/pages/LandingPage/landing_page.dart';
 import 'package:login_uix_firebase/pages/StartNow/start_now_page.dart';
+import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
 
 import 'package:login_uix_firebase/pages/login/login_page.dart';
 import 'package:login_uix_firebase/pages/manageClient/manage_client_page.dart';
@@ -17,7 +18,7 @@ import 'package:login_uix_firebase/pages/manageRoles/manage_roles_page.dart';
 import 'package:login_uix_firebase/pages/manageServices/manage_services_page.dart';
 import 'package:login_uix_firebase/pages/manageServicesCategory/manage_service_category_page.dart';
 import 'package:login_uix_firebase/pages/manageStaff/manage_staff_page.dart';
-import 'package:login_uix_firebase/pages/manage_tabledashboard/manage_roles_page.dart';
+
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/routing/logOutRoute.dart';
 
@@ -39,6 +40,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(LoginPage());
     case RegisterRoute:
       return _getPageRoute(RegisterPage());
+    case ForgotPassworRoute:
+      return _getPageRoute(ForgotPasswordPage());
     default:
       return _getPageRoute(LandingPage());
   }
