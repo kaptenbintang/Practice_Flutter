@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/constant/style.dart';
+import 'package:login_uix_firebase/controllers/navigation_controller.dart';
 import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
 import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
@@ -22,18 +23,22 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
               ? 1920
               : 1280;
   return AppBar(
-    leading: !ResponsiveWidget.isSmallScreen(context)
-        ? Icon(
-            Icons.menu,
-            size: _width / (_maxWidth / 25),
-            color: Colors.black,
-          )
-        : IconButton(
+    leading: !ResponsiveWidget.isLargeScreen(context)
+        ? IconButton(
             onPressed: () {
               key.currentState!.openDrawer();
             },
             icon: Icon(
               Icons.menu,
+              size: _width / (_maxWidth / 20),
+            ),
+            color: Colors.black)
+        : IconButton(
+            onPressed: () {
+              NavigationController.instance.goBack();
+            },
+            icon: Icon(
+              Icons.arrow_back_outlined,
               size: _width / (_maxWidth / 20),
             ),
             color: Colors.black),
