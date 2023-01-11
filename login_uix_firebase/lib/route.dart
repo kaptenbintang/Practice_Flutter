@@ -30,4 +30,5 @@ class RouteName {
   static const timeSchedulePage = '/timeSchedulePage';
   static const specialDatePage = '/specialDatePage';
   static const blackOutPage = '/blackOutPage';
+  static const ForgotPasswordPage = '/ForgotPasswordPage';
 }
