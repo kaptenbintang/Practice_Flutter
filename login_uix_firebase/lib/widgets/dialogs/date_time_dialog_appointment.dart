@@ -52,7 +52,6 @@ class _DateTimeAppointmentDialogState
             showNavigationArrow: true,
             onSelectionChanged: _onSelectionChanged,
             view: DateRangePickerView.month,
-
             monthViewSettings: DateRangePickerMonthViewSettings(
               dayFormat: 'EEE',
               firstDayOfWeek: 1,
@@ -83,14 +82,9 @@ class _DateTimeAppointmentDialogState
               specialDatesTextStyle: const TextStyle(color: Colors.white),
             ),
             selectionMode: DateRangePickerSelectionMode.single,
-            // controller: _datePickerController,
             selectionRadius: 25,
-            // selectionShape: DateRangePickerSelectionShape.rectangle,
-            // initialSelectedRange: PickerDateRange(
-            //     DateTime.now(), DateTime.now().add(Duration(days: 3))),
             showActionButtons: true,
             minDate: DateTime.now(),
-            // toggleDaySelection: true,
             onSubmit: (_) {
               ref.read(dateChangeProvider.notifier).state = true;
               Navigator.pop(
@@ -117,19 +111,15 @@ List<DateTime> dadsa(Map dayoff) {
 
   for (var i = 0; i <= dayoff.length - 1; i++) {
     final offValues = dayoff.values.elementAt(i);
-    // print('e $e');
 
-    print(offValues);
     final startDayoff = DateFormat('dd/MM/yyyy').parse(offValues['dateDayoff']);
     final endDayoff =
         DateFormat('dd/MM/yyyy').parse(offValues['dateDayoffEnd']);
     final ddd = endDayoff.difference(startDayoff);
-    print(ddd.inDays);
 
     for (var y = 0; y <= ddd.inDays; y++) {
       dayOffList.add(startDayoff.add(Duration(days: y)));
     }
-    print(dayOffList);
   }
   return dayOffList;
 }
