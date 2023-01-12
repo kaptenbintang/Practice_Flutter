@@ -8,6 +8,7 @@ import 'package:login_uix_firebase/auth/controller_page.dart';
 import 'package:login_uix_firebase/pages/Events/events_page.dart';
 import 'package:login_uix_firebase/pages/LandingPage/landing_page.dart';
 import 'package:login_uix_firebase/pages/StartNow/start_now_page.dart';
+import 'package:login_uix_firebase/pages/add_user_page.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
 
 import 'package:login_uix_firebase/pages/login/login_page.dart';
@@ -65,6 +66,8 @@ Route<dynamic> generateRouteAdmin(RouteSettings settings) {
       return _getPageRoute(ManagePractionerPage());
     case AppointmentRoute:
       return _getPageRoute(ManageAppointmentPage());
+    case AddNewUserRoute:
+      return _getPageRoute(AddUserPage());
     default:
       return _getPageRoute(ManageStaffPage());
   }

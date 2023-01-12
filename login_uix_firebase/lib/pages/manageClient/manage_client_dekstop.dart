@@ -9,6 +9,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_uix_firebase/controllers/navigation_controller.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -17,6 +18,7 @@ import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
 import '../../helper/responsive.dart';
 import '../../model/user_data.dart';
+import '../../routing/routes.dart';
 
 class ManageClientDesktop extends StatefulWidget {
   const ManageClientDesktop({super.key});
@@ -237,21 +239,60 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            screenWidth / (width / 16),
-                                            0,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          'Client',
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3
-                                              .override(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: screenWidth /
-                                                      (width / 20)),
-                                        ),
+                                      //Add button with container Title
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    screenWidth / (width / 5),
+                                                    0,
+                                                    0,
+                                                    0),
+                                            child: FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius:
+                                                  screenWidth / (width / 30),
+                                              borderWidth: 1,
+                                              buttonSize:
+                                                  screenWidth / (width / 50),
+                                              icon: Icon(
+                                                Icons.playlist_add_rounded,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                                size:
+                                                    screenWidth / (width / 25),
+                                              ),
+                                              onPressed: () {
+                                                NavigationController.instance
+                                                    .navigateTo(
+                                                        AddNewUserRoute);
+                                                print('IconButton pressed ...');
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    screenWidth / (width / 16),
+                                                    0,
+                                                    0,
+                                                    0),
+                                            child: Text(
+                                              'Client',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .title3
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 20),
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
