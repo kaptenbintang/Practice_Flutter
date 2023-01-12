@@ -24,21 +24,17 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
               : 1280;
   return AppBar(
     leading: !ResponsiveWidget.isLargeScreen(context)
-        ? IconButton(
+        ? Icon(
+            Icons.menu,
+            size: _width / (_maxWidth / 25),
+            color: Colors.black,
+          )
+        : IconButton(
             onPressed: () {
               key.currentState!.openDrawer();
             },
             icon: Icon(
               Icons.menu,
-              size: _width / (_maxWidth / 20),
-            ),
-            color: Colors.black)
-        : IconButton(
-            onPressed: () {
-              NavigationController.instance.goBack();
-            },
-            icon: Icon(
-              Icons.arrow_back_outlined,
               size: _width / (_maxWidth / 20),
             ),
             color: Colors.black),
