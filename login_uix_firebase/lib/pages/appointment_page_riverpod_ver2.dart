@@ -493,9 +493,6 @@ class _AppointmentPageRiverpodVersion2State
                                             items: List.generate(
                                               data.length,
                                               (index) => DropdownMenuItem(
-                                                value: data
-                                                    .elementAt(index)
-                                                    .servicesName,
                                                 child: Text(
                                                   data
                                                       .elementAt(index)
