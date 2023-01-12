@@ -215,6 +215,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                                     screenWidth / (width / 25),
                                               ),
                                               onPressed: () {
+                                                dialogAddNewClientType(context);
                                                 print('IconButton pressed ...');
                                               },
                                             ),
