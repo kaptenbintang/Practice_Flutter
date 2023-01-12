@@ -15,6 +15,7 @@ const ManagePractionersRoute = "Manage Practioners";
 const AppointmentRoute = "Manage Appointment";
 const LogOutRoute = "Log Out";
 const ForgotPassworRoute = "Forgot Password";
+const AddNewUserRoute = "Add user";
 
 List sideBarAdminItems = [
   ManageStaffRoute,
