@@ -24,12 +24,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
               : 1280;
   return AppBar(
     leading: !ResponsiveWidget.isLargeScreen(context)
-        ? Icon(
-            Icons.menu,
-            size: _width / (_maxWidth / 25),
-            color: Colors.black,
-          )
-        : IconButton(
+        ? IconButton(
             onPressed: () {
               key.currentState!.openDrawer();
             },
@@ -37,7 +32,19 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
               Icons.menu,
               size: _width / (_maxWidth / 20),
             ),
-            color: Colors.black),
+            color: Colors.black)
+        : null
+    // IconButton(
+    //     onPressed: () {
+    //       NavigationController.instance.goBack();
+    //     },
+    //     icon: Icon(
+    //       Icons.arrow_back_outlined,
+    //       size: _width / (_maxWidth / 20),
+    //     ),
+    //     color: Colors.black)
+
+    ,
     backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
     automaticallyImplyLeading: true,
     title: Consumer(builder: (context, ref, child) {
