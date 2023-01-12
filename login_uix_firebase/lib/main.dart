@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
+// ignore_for_file: depend_on_referenced_packages, preferructors, prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 
@@ -71,7 +71,7 @@ class Util {
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -120,51 +120,35 @@ class MyApp extends ConsumerWidget {
           },
         ),
         routes: {
-          // MainPage.routeName: (context) => const MainPage(),
-
-          // LoginPage.routeName: (context) => LoginPage(),
-          // RegisterPage.routeName: (context) => RegisterPage(),
-          DeleteAccount.routeName: (context) => const DeleteAccount(),
-          CheckEmailView.routeName: (context) => const CheckEmailView(),
-          // changePasswordPage.routeName: (context) => const changePasswordPage(),
-          // ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
-          ProfilePage.routeName: (context) => const ProfilePage(),
-          ProfileRiverpodPage.routeName: (context) =>
-              const ProfileRiverpodPage(),
-          ProfileRiverpodPage2.routeName: (context) =>
-              const ProfileRiverpodPage2(),
-          UserTablePage.routeName: (context) => const UserTablePage(),
-
+          DeleteAccount.routeName: (context) => DeleteAccount(),
+          CheckEmailView.routeName: (context) => CheckEmailView(),
+          ProfilePage.routeName: (context) => ProfilePage(),
+          ProfileRiverpodPage.routeName: (context) => ProfileRiverpodPage(),
+          ProfileRiverpodPage2.routeName: (context) => ProfileRiverpodPage2(),
+          UserTablePage.routeName: (context) => UserTablePage(),
           DetailPagePractioner.routeName: (context) => DetailPagePractioner(
-                practioner:
-                    ModalRoute.of(context)?.settings.arguments as Practioner,
-              ),
-
+              practioner:
+                  ModalRoute.of(context)?.settings.arguments as Practioner),
           AppointmentPageRiverpodVersion2.routeName: (context) =>
               AppointmentPageRiverpodVersion2(
-                practioner:
-                    ModalRoute.of(context)?.settings.arguments as Practioner,
-              ),
-
-          // ControllerPage.routeName: (context) => ControllerPage(),
-          RouteName.changePWPage: (context) => const changePWPage(),
-          RouteName.checkEmailPage: (context) => const CheckEmailView(),
-
-          RouteName.loginPage: (context) => const LoginPage(),
-          RouteName.registerPage: (context) => const RegisterPage(),
-          RouteName.landingPage: (context) => const LandingPage(),
-          RouteName.editProfilePage: (context) => const EditProfilePage(),
-          RouteName.viewProfilePage: (context) => const ViewProfilePage(),
+                  practioner:
+                      ModalRoute.of(context)?.settings.arguments as Practioner),
+          RouteName.changePWPage: (context) => changePWPage(),
+          RouteName.checkEmailPage: (context) => CheckEmailView(),
+          RouteName.loginPage: (context) => LoginPage(),
+          RouteName.registerPage: (context) => RegisterPage(),
+          RouteName.landingPage: (context) => LandingPage(),
+          RouteName.editProfilePage: (context) => EditProfilePage(),
+          RouteName.viewProfilePage: (context) => ViewProfilePage(),
           RouteName.historyBookingRiverpod: (context) =>
-              const historyBookingRiverpod(),
-          // RouteName.controllerPage: (context) => ControllerPage(),
+              historyBookingRiverpod(),
           RouteName.MainPagesPage: (context) => MainPagesPage(),
           RouteName.mainSchedulePage: (context) => mainSchedulePage(),
           RouteName.timeSchedulePage: (context) => timeSchedulePage(),
           RouteName.specialDatePage: (context) => specialDatePage(),
           RouteName.blackOutPage: (context) => blackOutPage(),
           RouteName.ForgotPasswordPage: (context) => ForgotPasswordPage(),
-          AddUserPage.routeName: (context) => const AddUserPage(),
+          AddUserPage.routeName: (context) => AddUserPage(),
         });
   }
 }
