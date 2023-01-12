@@ -998,53 +998,56 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                 borderRadius: screenWidth / (width / 8)),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              screenWidth / (width / 5), 0, 0, 0),
-                          child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                              showDialog(
-                                context: context,
-                                builder: (contextm) {
-                                  return AlertDialogConfirm(
-                                      type: "Delete",
-                                      id: snapshot.id as String,
-                                      contexts: context,
-                                      textDesc: 'Are you sure?');
-                                },
-                              ).whenComplete(
-                                () => Future.delayed(
-                                  Duration(seconds: 2),
-                                  () {
-                                    controllerSearch.text.isNotEmpty
-                                        ? search()
-                                        : _pullRefresh();
+                        if (currentUser.uid.toString != snapshot.id.toString &&
+                            snapshot.markDeleted == false)
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 5), 0, 0, 0),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                                showDialog(
+                                  context: context,
+                                  builder: (contextm) {
+                                    return AlertDialogConfirm(
+                                        type: "Remove",
+                                        id: snapshot.id as String,
+                                        contexts: context,
+                                        textDesc: 'Are you sure?');
                                   },
-                                ),
-                              );
-                            },
-                            text: 'Delete',
-                            options: FFButtonOptions(
-                                width: screenWidth / (width / 75),
-                                height: screenWidth / (width / 35),
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      fontSize: screenWidth / (width / 15),
-                                    ),
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.5,
-                                ),
-                                borderRadius: screenWidth / (width / 8)),
+                                ).whenComplete(
+                                  () => Future.delayed(
+                                    Duration(seconds: 2),
+                                    () {
+                                      controllerSearch.text.isNotEmpty
+                                          ? search()
+                                          : _pullRefresh();
+                                    },
+                                  ),
+                                );
+                              },
+                              text: 'Delete',
+                              options: FFButtonOptions(
+                                  width: screenWidth / (width / 75),
+                                  height: screenWidth / (width / 35),
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        fontSize: screenWidth / (width / 15),
+                                      ),
+                                  borderSide: BorderSide(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    width: 2.5,
+                                  ),
+                                  borderRadius: screenWidth / (width / 8)),
+                            ),
                           ),
-                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               screenWidth / (width / 5), 0, 0, 0),
@@ -1077,47 +1080,50 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                 borderRadius: screenWidth / (width / 8)),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              screenWidth / (width / 5), 0, 0, 0),
-                          child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                              service
-                                  .markdeleteRestoreUser(
-                                      context, snapshot.id as String)
-                                  .whenComplete(
-                                    () => Future.delayed(
-                                      Duration(seconds: 2),
-                                      () {
-                                        controllerSearch.text.isNotEmpty
-                                            ? search()
-                                            : _pullRefresh();
-                                      },
-                                    ),
-                                  );
-                            },
-                            text: 'Restore',
-                            options: FFButtonOptions(
-                                width: screenWidth / (width / 75),
-                                height: screenWidth / (width / 35),
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      fontSize: screenWidth / (width / 15),
-                                    ),
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.5,
-                                ),
-                                borderRadius: screenWidth / (width / 8)),
+                        if (currentUser.uid.toString != snapshot.id.toString &&
+                            snapshot.markDeleted == true)
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 5), 0, 0, 0),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                                service
+                                    .markdeleteRestoreUser(
+                                        context, snapshot.id as String)
+                                    .whenComplete(
+                                      () => Future.delayed(
+                                        Duration(seconds: 2),
+                                        () {
+                                          controllerSearch.text.isNotEmpty
+                                              ? search()
+                                              : _pullRefresh();
+                                        },
+                                      ),
+                                    );
+                              },
+                              text: 'Restore',
+                              options: FFButtonOptions(
+                                  width: screenWidth / (width / 75),
+                                  height: screenWidth / (width / 35),
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        fontSize: screenWidth / (width / 15),
+                                      ),
+                                  borderSide: BorderSide(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    width: 2.5,
+                                  ),
+                                  borderRadius: screenWidth / (width / 8)),
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
