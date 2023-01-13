@@ -6,8 +6,10 @@ import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
 import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
 
-class changeStatusAppointmentNotifier extends StateNotifier<IsLoading> {
-  changeStatusAppointmentNotifier() : super(false);
+//update status appointment in firestore
+
+class ChangeStatusAppointmentNotifier extends StateNotifier<IsLoading> {
+  ChangeStatusAppointmentNotifier() : super(false);
 
   set isLoading(bool value) => state = value;
 

@@ -5,9 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
-// import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_key.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
+
+//provide user appointment data from firestore
 
 final userAppointmentProvider =
     StreamProvider.autoDispose<Iterable<Appointment>>(

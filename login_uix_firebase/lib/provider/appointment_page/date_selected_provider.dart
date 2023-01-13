@@ -1,17 +1,15 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_uix_firebase/provider/appointment_page/date_selected_notifier.dart';
 
-class DateNotifier extends StateNotifier<DateTime> {
-  DateNotifier() : super(DateTime.now());
+//provide datetime value
 
-  void changeDate(DateTime date) {
-    state = date;
-  }
-}
+final dateProvider = StateNotifierProvider<DateNotifier, DateTime>((ref) {
+  return DateNotifier();
+});
 
-class DateRangeNotifier extends StateNotifier<String> {
-  DateRangeNotifier() : super(DateTime.now().toString());
+//provide string value
 
-  void changeDateRange(String date) {
-    state = date;
-  }
-}
+final dateRangeProvider =
+    StateNotifierProvider<DateRangeNotifier, String>((ref) {
+  return DateRangeNotifier();
+});

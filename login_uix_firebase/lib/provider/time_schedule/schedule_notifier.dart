@@ -1,20 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:login_uix_firebase/auth/backend/authenticator.dart';
-import 'package:login_uix_firebase/auth/models/auth_result.dart';
-import 'package:login_uix_firebase/auth/models/auth_state.dart';
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
-import 'package:login_uix_firebase/model/appointment_data.dart';
-import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
 
-import 'package:login_uix_firebase/model/user_data.dart';
+//update status start time practioners in firestore
 
-class changeStatusStartTime extends StateNotifier<IsLoading> {
-  changeStatusStartTime() : super(false);
+class ChangeStatusStartTime extends StateNotifier<IsLoading> {
+  ChangeStatusStartTime() : super(false);
 
   set isLoading(bool value) => state = value;
 
@@ -48,8 +41,10 @@ class changeStatusStartTime extends StateNotifier<IsLoading> {
   }
 }
 
-class changeStatusEndTime extends StateNotifier<IsLoading> {
-  changeStatusEndTime() : super(false);
+//update status end time practioners in firestore
+
+class ChangeStatusEndTime extends StateNotifier<IsLoading> {
+  ChangeStatusEndTime() : super(false);
 
   set isLoading(bool value) => state = value;
 

@@ -6,6 +6,8 @@ import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 
+//provide all practioners data from firestore
+
 final allPractionersProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
   (ref) {
     final controller = StreamController<Iterable<Practioner>>();

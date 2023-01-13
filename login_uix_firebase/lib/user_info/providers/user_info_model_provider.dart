@@ -7,6 +7,8 @@ import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
 import 'package:login_uix_firebase/user_info/models/user_info_model.dart';
 
+//provide current user data from firestore
+
 final userInfoModelProvider =
     StreamProvider.family.autoDispose<UserInfoModel, UserId>(
   (ref, UserId userId) {

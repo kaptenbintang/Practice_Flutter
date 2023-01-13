@@ -278,6 +278,7 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
                                           .instance.currentUser!.uid,
                                       blackout: selectedDayName.toString(),
                                     );
+
                                     await ref
                                         .read(editStatusDayName.notifier)
                                         .editDayName(

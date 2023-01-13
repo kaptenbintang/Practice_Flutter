@@ -8,6 +8,8 @@ import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import '../../model/practioner_models/practioner.dart';
 import '../../model/practioner_models/practioner_key.dart';
 
+//provide time schedule practioners from firestore
+
 final timeScheduleProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
   (ref) {
     final userId = ref.watch(userIdProvider);

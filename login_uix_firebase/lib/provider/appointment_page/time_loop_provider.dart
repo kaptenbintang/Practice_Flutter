@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:equatable/equatable.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:login_uix_firebase/model/time_models/time.dart';
-import 'package:login_uix_firebase/provider/appointment_page/date_selected.dart';
+import 'package:login_uix_firebase/provider/appointment_page/date_selected_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/services_provider.dart';
-import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_provider.dart';
+
+//provide list of time
 
 final timeLoopProvider =
     FutureProvider.autoDispose.family<List, Map>((ref, schedules) async {

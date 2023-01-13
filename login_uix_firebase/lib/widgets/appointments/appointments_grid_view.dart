@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
-// import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/widgets/appointments/appointments_thumbnail_view.dart';
 
 import '../../helper/responsive.dart';
@@ -45,7 +44,6 @@ class AppointmentsGridView extends StatelessWidget {
         return AppointmentsThumbnailView(
           appointment: appointment,
           onTapped: () {
-            print(appointment.statusAppointment);
             showDialog(
                 context: context,
                 builder: (context) {
@@ -74,8 +72,6 @@ class AppointmentsGridView extends StatelessWidget {
                                   .editAppointmentCancel(
                                       appointmentData: appointmentData);
                               Navigator.of(context).pop();
-                              // .then((value) => ref
-                              //     .refresh(cancelAppointmentStatus.future)); ini klo mau di refresh lg tampilan statusnya tp gadipake karena udh ada yang ngecheck perubahan status ongoing appointment
                             },
                           ),
                         );
@@ -93,14 +89,6 @@ class AppointmentsGridView extends StatelessWidget {
                         child: Text("Edit Appointment")),
                   );
                 });
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => DetailPagePractioner(
-            //       practioner: appointment,
-            //     ),
-            //   ),
-            // );
           },
         );
       },

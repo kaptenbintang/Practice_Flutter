@@ -1,8 +1,3 @@
-import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
-import 'package:login_uix_firebase/pages/change_pw_page.dart';
-
-import 'package:login_uix_firebase/pages/historybookingpage/historybooking_riverpod.dart';
-
 class RouteName {
   static const dashboard = '/dashboard';
   static const mainPage = '/main';

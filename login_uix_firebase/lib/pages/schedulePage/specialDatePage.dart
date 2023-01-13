@@ -14,7 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../helper/responsive.dart';
 import '../../model/practioner_data.dart';
-import '../../provider/appointment_page/date_selected.dart';
+import '../../provider/appointment_page/date_selected_provider.dart';
 import '../../provider/specialdate_provider/specialdate_get_provider.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';

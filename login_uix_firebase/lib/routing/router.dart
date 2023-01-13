@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:login_uix_firebase/pages/Events/events_page.dart';
@@ -19,13 +18,10 @@ import 'package:login_uix_firebase/pages/manageServicesCategory/manage_service_c
 import 'package:login_uix_firebase/pages/manageStaff/manage_staff_page.dart';
 
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
-import 'package:login_uix_firebase/routing/logOutRoute.dart';
 
 import 'package:login_uix_firebase/routing/routes.dart';
 
-import '../main.dart';
 import '../pages/manageAppointment/manage_appointment_page.dart';
-import '../route.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {

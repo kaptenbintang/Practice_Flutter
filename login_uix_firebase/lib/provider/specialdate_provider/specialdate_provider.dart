@@ -8,6 +8,8 @@ import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import '../../model/practioner_models/practioner.dart';
 import '../../model/practioner_models/practioner_key.dart';
 
+//provide special date practioner value from firestore
+
 final specialDateProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
   (ref) {
     final userId = ref.watch(userIdProvider);
@@ -22,10 +24,6 @@ final specialDateProvider = StreamProvider.autoDispose<Iterable<Practioner>>(
         .collection(
           FirebaseCollectionName.practioners,
         )
-        // .orderBy(
-        //   'schedules.1',
-        //   descending: false,
-        // )
         .where(
           PractionerKey.userId,
           isEqualTo: userId,

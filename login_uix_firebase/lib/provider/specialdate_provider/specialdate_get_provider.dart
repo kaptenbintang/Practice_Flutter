@@ -1,20 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
-
-import 'package:login_uix_firebase/provider/profile_notifier/edit_user_state_notifier.dart';
 import 'package:login_uix_firebase/provider/specialdate_provider/specialdate_notifier.dart';
 
+//callback  changeSpecialDate class
+
 final editSpecialDateProvider =
-    StateNotifierProvider<changeSpecialDate, IsLoading>(
-  (ref) => changeSpecialDate(),
+    StateNotifierProvider<ChangeSpecialDate, IsLoading>(
+  (ref) => ChangeSpecialDate(),
 );
+
+//callback  changeDescriptionDayoff class
 
 final editDescriptionDayoffProvider =
-    StateNotifierProvider<changeDescriptionDayoff, IsLoading>(
-  (ref) => changeDescriptionDayoff(),
+    StateNotifierProvider<ChangeDescriptionDayoff, IsLoading>(
+  (ref) => ChangeDescriptionDayoff(),
 );
 
+//callback  deleteSpecialDate class
+
 final deleteSpecialDateProvider =
-    StateNotifierProvider<deleteSpecialDate, IsLoading>(
-  (ref) => deleteSpecialDate(),
+    StateNotifierProvider<DeleteSpecialDate, IsLoading>(
+  (ref) => DeleteSpecialDate(),
 );

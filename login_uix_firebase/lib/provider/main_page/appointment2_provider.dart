@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
-import 'package:login_uix_firebase/constant/firebase_field_name.dart';
-// import 'package:login_uix_firebase/model/appointment/appointment.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_key.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
+
+//provide user appointment data from firestore
 
 final userAppointmentProvider2 =
     StreamProvider.autoDispose<Iterable<Appointment>>(
@@ -24,10 +24,6 @@ final userAppointmentProvider2 =
         .collection(
           FirebaseCollectionName.appointment,
         )
-        // .orderBy(
-        //   FirebaseFieldName.createdAt,
-        //   descending: false,
-        // )
         .where(
           AppointmentKey.clientId,
           isEqualTo: userId,
@@ -42,12 +38,7 @@ final userAppointmentProvider2 =
               (doc) => !doc.metadata.hasPendingWrites,
             )
             .map(
-              (doc) =>
-                  // Appointment(
-                  //   appointmentId: doc.id,
-                  //   json: doc.data(),
-                  // ),
-                  Appointment(doc.data(), appointmentId: doc.id),
+              (doc) => Appointment(doc.data(), appointmentId: doc.id),
             );
         controller.sink.add(appointments);
       },

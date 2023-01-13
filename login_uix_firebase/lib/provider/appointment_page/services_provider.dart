@@ -6,6 +6,8 @@ import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/model/services/services.dart';
 import 'package:login_uix_firebase/provider/appointment_page/service_selected_notifier.dart';
 
+//provide services data from firestore
+
 final servicesProvider = StreamProvider.autoDispose<Iterable<Services>>(
   (ref) {
     final controller = StreamController<Iterable<Services>>();
@@ -36,10 +38,7 @@ final servicesProvider = StreamProvider.autoDispose<Iterable<Services>>(
   },
 );
 
-// final selectedServiceProvider = ChangeNotifierProvider<ServicesNotifier>((ref) {
-//   return ServicesNotifier();
-// });
-
+//provide selected service value
 final selectedServiceProvider =
     StateNotifierProvider<ServicesNotifier, String>((ref) {
   return ServicesNotifier();

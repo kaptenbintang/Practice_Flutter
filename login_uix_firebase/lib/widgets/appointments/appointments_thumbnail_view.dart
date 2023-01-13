@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
-// import 'package:login_uix_firebase/model/appointment/appointment.dart';
-import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 
 import '../../helper/responsive.dart';
 
