@@ -569,7 +569,7 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                         vertical: screenWidth / (width / 4)),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -616,146 +616,158 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                         vertical: screenWidth / (width / 4)),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: screenWidth / (width / 160),
-                          height: screenWidth / (width / 20),
-                          child: TextFormField(
-                            controller: textController1,
-                            autofocus: true,
-                            readOnly: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText:
-                                  'From: ' + data["startTime"].toString() + ",",
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenWidth / (width / 4)),
+                          child: SizedBox(
+                            width: screenWidth / (width / 150),
+                            height: screenWidth / (width / 20),
+                            child: TextFormField(
+                              controller: textController1,
+                              autofocus: true,
+                              readOnly: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'From: ' +
+                                    data["startTime"].toString() +
+                                    ",",
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                    topRight: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                  topRight: Radius.circular(
-                                      screenWidth / (width / 4)),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                    topRight: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                  ),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                    topRight: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                  ),
+                                ),
+                                focusedErrorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                    topRight: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                  ),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.more_time_rounded,
+                                  size: screenWidth / (width / 24),
                                 ),
                               ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                  topRight: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                ),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                  topRight: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                ),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                  topRight: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                ),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.more_time_rounded,
-                                size: screenWidth / (width / 24),
-                              ),
+                              style:
+                                  FlutterFlowTheme.of(context).title2.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: screenWidth / (width / 16),
+                                      ),
+                              textAlign: TextAlign.left,
                             ),
-                            style: FlutterFlowTheme.of(context).title2.override(
-                                  fontFamily: 'Poppins',
-                                  fontSize: screenWidth / (width / 16),
-                                ),
-                            textAlign: TextAlign.left,
                           ),
                         ),
-                        SizedBox(
-                          width: screenWidth / (width / 160),
-                          height: screenWidth / (width / 20),
-                          child: TextFormField(
-                            controller: textController2,
-                            autofocus: true,
-                            readOnly: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: 'To: ' + data["endTime"].toString(),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenWidth / (width / 4)),
+                          child: SizedBox(
+                            width: screenWidth / (width / 150),
+                            height: screenWidth / (width / 20),
+                            child: TextFormField(
+                              controller: textController2,
+                              autofocus: true,
+                              readOnly: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'To: ' + data["endTime"].toString(),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                    topRight: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                  topRight: Radius.circular(
-                                      screenWidth / (width / 4)),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                    topRight: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                  ),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                    topRight: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                  ),
+                                ),
+                                focusedErrorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                    topRight: Radius.circular(
+                                        screenWidth / (width / 4)),
+                                  ),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.timer_off_outlined,
+                                  size: screenWidth / (width / 24),
                                 ),
                               ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                  topRight: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                ),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                  topRight: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                ),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                  topRight: Radius.circular(
-                                      screenWidth / (width / 4)),
-                                ),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.timer_off_outlined,
-                                size: screenWidth / (width / 24),
-                              ),
+                              style:
+                                  FlutterFlowTheme.of(context).title2.override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: screenWidth / (width / 16),
+                                      ),
+                              textAlign: TextAlign.left,
                             ),
-                            style: FlutterFlowTheme.of(context).title2.override(
-                                  fontFamily: 'Poppins',
-                                  fontSize: screenWidth / (width / 16),
-                                ),
-                            textAlign: TextAlign.left,
                           ),
                         ),
                       ],

@@ -101,7 +101,7 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
         title: Padding(
           padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
           child: Text(
-            'Blackout',
+            'BlackOut Date',
             style: FlutterFlowTheme.of(context).title2.override(
                   fontFamily: 'Poppins',
                   color: Colors.black,
@@ -115,252 +115,326 @@ class _blackOutPageState extends ConsumerState<blackOutPage> {
         elevation: 2,
       ),
       body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 12,
-                        color: Color(0x33000000),
-                        offset: Offset(0, 2),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                          child: Text(
-                            'Disable your available date',
-                            style: FlutterFlowTheme.of(context).title3.override(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(screenWidth / (width / 8)),
+            child: Container(
+              width: ResponsiveWidget.isphoneScreen(context)
+                  ? screenWidth
+                  : screenWidth / (width / 500),
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: screenWidth / (width / 12),
+                    color: Color(0x33000000),
+                    offset: Offset(0, 2),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(screenWidth / (width / 20)),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //title
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 20)),
+                      child: Text(
+                        'Disable your available date',
+                        style: FlutterFlowTheme.of(context).title3.override(
+                              fontFamily: 'Poppins',
+                              fontSize: screenWidth / (width / 24),
+                            ),
+                      ),
+                    ),
+                    //List Day
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 20),
+                          0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Note: Each day selected will be deactivated',
+                            style: FlutterFlowTheme.of(context).title1.override(
                                   fontFamily: 'Poppins',
-                                  fontSize: 30,
+                                  fontSize: screenWidth / (width / 20),
                                 ),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Note: Each day selected will be deactivated',
-                                    style: FlutterFlowTheme.of(context).title1,
-                                  ),
-                                  Text(
-                                    '1 : Monday\n2: Tuesday\n3: Wednesday\n4: Thursday\n5: Friday\n6: Saturday\n7: Sunday',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                  ),
-                                ],
-                              ),
-                            ],
+                          Text(
+                            '1 : Monday\n2: Tuesday\n3: Wednesday\n4: Thursday\n5: Friday\n6: Saturday\n7: Sunday',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: screenWidth / (width / 16)),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Select day:',
-                                style: FlutterFlowTheme.of(context).subtitle1,
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                child: DropdownButton(
-                                  value: selectedDayName,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      selectedDayName = newValue.toString();
-                                    });
-                                  },
-                                  items: dayname.map((dayNames) {
-                                    int index = dayname.indexOf(dayNames) + 1;
-                                    return new DropdownMenuItem(
-                                      value: index.toString(),
-                                      child: new Text(
-                                        dayNames.toString(),
-                                        style:
-                                            new TextStyle(color: Colors.black),
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-
-                                // Consumer(builder: (context, ref, child) {
-                                //   final blackoutDay =
-                                //       ref.watch(blackoutProvider);
-                                //   return blackoutDay.when(
-                                //     data: (data) {
-                                //       return DropdownButton2(
-                                //         value: selectedDay,
-                                //         items: List.generate(
-                                //           data.length,
-                                //           (index) => DropdownMenuItem(
-                                //             value:
-                                //                 data.elementAt(index).valueId,
-                                //             child: Text(
-                                //               data
-                                //                   .elementAt(index)
-                                //                   .valueName
-                                //                   .toString(),
-                                //               style: const TextStyle(
-                                //                 fontSize: 14,
-                                //               ),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //         onChanged: (value) {
-                                //           // selectedLocation = value;
-                                //           ref
-                                //               .read(selectedBlackoutProvider
-                                //                   .notifier)
-                                //               .changeBlackout(value.toString());
-
-                                //           selectedDay = value;
-                                //           //Do something when changing the item if you want.
-                                //         },
-                                //         hint: Text("Please select..."),
-                                //         icon: const Icon(
-                                //           Icons.format_list_numbered,
-                                //         ),
-                                //         iconSize: 14,
-                                //       );
-                                //     },
-                                //     error: (error, stackTrace) {
-                                //       return const SmallErrorAnimationView();
-                                //     },
-                                //     loading: () {
-                                //       return const SmallLoadingAnimationView();
-                                //     },
-                                //   );
-                                // }),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    print(selectedDayName);
-                                    // DayName dayNameData = DayName(
-                                    //   id: selectedDayName.id,
-                                    //   name: selectedDayName.name.toString(),
-                                    //   practionerId: FirebaseAuth
-                                    //       .instance.currentUser?.uid
-                                    //       .toString(),
-                                    // );
-                                    PractionerData practionerData =
-                                        PractionerData(
-                                      id: FirebaseAuth
-                                          .instance.currentUser!.uid,
-                                      blackout: selectedDayName.toString(),
-                                    );
-
-                                    await ref
-                                        .read(editStatusDayName.notifier)
-                                        .editDayName(
-                                            index: selectedDayName.toString(),
-                                            practionerData: practionerData);
-                                    print(
-                                        FirebaseAuth.instance.currentUser!.uid);
-                                    print('Button pressed ...');
-                                  },
-                                  text: 'Deactivated',
-                                  options: FFButtonOptions(
-                                    width: 130,
-                                    height: 35,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
+                        ],
+                      ),
+                    ),
+                    //Select Day and button deactivated
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 20),
+                          screenWidth / (width / 20)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          //label
+                          Text(
+                            'Select day:',
+                            style:
+                                FlutterFlowTheme.of(context).subtitle1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 18),
+                                    ),
+                          ),
+                          //dropdown select day
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                hint: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: screenWidth / (width / 8)),
+                                  child: Text(
+                                    'Days',
+                                    style: FlutterFlowTheme.of(context)
                                         .subtitle2
                                         .override(
                                           fontFamily: 'Poppins',
-                                          color: Colors.white,
+                                          fontSize: screenWidth / (width / 16),
                                         ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: 8,
                                   ),
+                                ),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(screenWidth / (width / 8))),
+                                value: selectedDayName,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selectedDayName = newValue.toString();
+                                  });
+                                },
+                                items: dayname.map((dayNames) {
+                                  int index = dayname.indexOf(dayNames) + 1;
+                                  return new DropdownMenuItem(
+                                    value: index.toString(),
+                                    child: new Text(
+                                      dayNames.toString(),
+                                      style: new TextStyle(color: Colors.black),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+
+                            // Consumer(builder: (context, ref, child) {
+                            //   final blackoutDay =
+                            //       ref.watch(blackoutProvider);
+                            //   return blackoutDay.when(
+                            //     data: (data) {
+                            //       return DropdownButton2(
+                            //         value: selectedDay,
+                            //         items: List.generate(
+                            //           data.length,
+                            //           (index) => DropdownMenuItem(
+                            //             value:
+                            //                 data.elementAt(index).valueId,
+                            //             child: Text(
+                            //               data
+                            //                   .elementAt(index)
+                            //                   .valueName
+                            //                   .toString(),
+                            //               style: const TextStyle(
+                            //                 fontSize: 14,
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         onChanged: (value) {
+                            //           // selectedLocation = value;
+                            //           ref
+                            //               .read(selectedBlackoutProvider
+                            //                   .notifier)
+                            //               .changeBlackout(value.toString());
+
+                            //           selectedDay = value;
+                            //           //Do something when changing the item if you want.
+                            //         },
+                            //         hint: Text("Please select..."),
+                            //         icon: const Icon(
+                            //           Icons.format_list_numbered,
+                            //         ),
+                            //         iconSize: 14,
+                            //       );
+                            //     },
+                            //     error: (error, stackTrace) {
+                            //       return const SmallErrorAnimationView();
+                            //     },
+                            //     loading: () {
+                            //       return const SmallLoadingAnimationView();
+                            //     },
+                            //   );
+                            // }),
+                          ),
+                          if (ResponsiveWidget.isLargeScreen(context))
+                            //button deactivated
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  screenWidth / (width / 20), 0, 0, 0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  print(selectedDayName);
+                                  // DayName dayNameData = DayName(
+                                  //   id: selectedDayName.id,
+                                  //   name: selectedDayName.name.toString(),
+                                  //   practionerId: FirebaseAuth
+                                  //       .instance.currentUser?.uid
+                                  //       .toString(),
+                                  // );
+                                  PractionerData practionerData =
+                                      PractionerData(
+                                    id: FirebaseAuth.instance.currentUser!.uid,
+                                    blackout: selectedDayName.toString(),
+                                  );
+                                  await ref
+                                      .read(editStatusDayName.notifier)
+                                      .editDayName(
+                                          index: selectedDayName.toString(),
+                                          practionerData: practionerData);
+                                  print(FirebaseAuth.instance.currentUser!.uid);
+                                  print('Button pressed ...');
+                                },
+                                text: 'Deactivated',
+                                options: FFButtonOptions(
+                                  width: screenWidth / (width / 130),
+                                  height: screenWidth / (width / 35),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.white,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: screenWidth / (width / 8),
                                 ),
                               ),
-                            ],
+                            ),
+                        ],
+                      ),
+                    ),
+                    //button deactivated
+                    if (!ResponsiveWidget.isLargeScreen(context))
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            screenWidth / (width / 20), 0, 0, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            print(selectedDayName);
+                            // DayName dayNameData = DayName(
+                            //   id: selectedDayName.id,
+                            //   name: selectedDayName.name.toString(),
+                            //   practionerId: FirebaseAuth
+                            //       .instance.currentUser?.uid
+                            //       .toString(),
+                            // );
+                            PractionerData practionerData = PractionerData(
+                              id: FirebaseAuth.instance.currentUser!.uid,
+                              blackout: selectedDayName.toString(),
+                            );
+                            await ref
+                                .read(editStatusDayName.notifier)
+                                .editDayName(
+                                    index: selectedDayName.toString(),
+                                    practionerData: practionerData);
+                            print(FirebaseAuth.instance.currentUser!.uid);
+                            print('Button pressed ...');
+                          },
+                          text: 'Deactivated',
+                          options: FFButtonOptions(
+                            width: screenWidth / (width / 130),
+                            height: screenWidth / (width / 35),
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 16),
+                                      color: Colors.white,
+                                    ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: screenWidth / (width / 8),
                           ),
                         ),
-                        ListView(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      20, 0, 0, 0),
-                                  child: Text(
-                                    'Selected day:',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      20, 0, 0, 0),
-                                  child: Text(
-                                    'Monday',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
-                                  ),
-                                ),
-                                FlutterFlowIconButton(
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 60,
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.windowClose,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    print('IconButton pressed ...');
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
+                      ),
+
+                    //list of selected day
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 20), 0, 0, 0),
+                          child: Text(
+                            'Selected day:',
+                            style:
+                                FlutterFlowTheme.of(context).subtitle1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 18),
+                                    ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 20), 0, 0, 0),
+                          child: Text(
+                            'Monday',
+                            style:
+                                FlutterFlowTheme.of(context).subtitle1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 16),
+                                    ),
+                          ),
+                        ),
+                        FlutterFlowIconButton(
+                          borderRadius: screenWidth / (width / 30),
+                          borderWidth: 1,
+                          buttonSize: screenWidth / (width / 50),
+                          icon: FaIcon(
+                            FontAwesomeIcons.rectangleXmark,
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            size: screenWidth / (width / 24),
+                          ),
+                          onPressed: () {
+                            print('IconButton pressed ...');
+                          },
                         ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
