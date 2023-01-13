@@ -26,6 +26,10 @@ class ChangeStatusAppointmentNotifier extends StateNotifier<IsLoading> {
             FirebaseFieldName.statusAppointment,
             isEqualTo: "ongoing",
           )
+          .where(
+            FirebaseFieldName.userId,
+            isEqualTo: appointmentData.clientId,
+          )
           .limit(1)
           .get();
       if (userInfo.docs.isNotEmpty) {
