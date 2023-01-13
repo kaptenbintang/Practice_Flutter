@@ -748,7 +748,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Add new services"),
+            title: const Text("Add new Practioner"),
             content: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
@@ -767,187 +767,189 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                 ),
                 Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _firstNamePractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter First Name",
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _firstNamePractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter First Name",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter correct name";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter correct name";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _lastNamePractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter last name",
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _lastNamePractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter last name",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter correct name";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter correct name";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _myApproachPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my approach",
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _myApproachPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my approach",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter approach";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter approach";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _myBackgroundPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my background",
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _myBackgroundPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my background",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter background";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter background";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _myQualificationsPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my qualifications",
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _myQualificationsPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my qualifications",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter qualifications";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter qualifications";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _mySpecialtyPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my specialty",
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _mySpecialtyPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my specialty",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter specialty";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter specialty";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _myRolesPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my roles",
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _myRolesPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my roles",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter roles";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter roles";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _languagesPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter my languges",
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _languagesPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter my languges",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter languages";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter languages";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: TextFormField(
-                          controller: _titleMainPractioner,
-                          decoration: InputDecoration(
-                            labelText: "Enter title main",
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: TextFormField(
+                            controller: _titleMainPractioner,
+                            decoration: InputDecoration(
+                              labelText: "Enter title main",
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter title main";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter title main";
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.height20 * 2,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.height08),
-                        child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              PractionerData practionerData = PractionerData(
-                                id: userId,
-                                firstName: _firstNamePractioner.text,
-                                lastName: _lastNamePractioner.text,
-                                myApproach: _myApproachPractioner.text,
-                                myBackground: _myBackgroundPractioner.text,
-                                myQualifications:
-                                    _myQualificationsPractioner.text,
-                                mySpecialty: _mySpecialtyPractioner.text,
-                                myRoles: _myRolesPractioner.text,
-                                languages: _languagesPractioner.text,
-                                titleMain: _titleMainPractioner.text,
-                              );
-                              await service.addPractioners(practionerData);
-                              Navigator.pop(context);
-                              _pullRefresh();
-                            }
+                        SizedBox(
+                          height: Dimensions.height20 * 2,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.height08),
+                          child: ElevatedButton(
+                            child: Text("Submit"),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                PractionerData practionerData = PractionerData(
+                                  id: userId,
+                                  firstName: _firstNamePractioner.text,
+                                  lastName: _lastNamePractioner.text,
+                                  myApproach: _myApproachPractioner.text,
+                                  myBackground: _myBackgroundPractioner.text,
+                                  myQualifications:
+                                      _myQualificationsPractioner.text,
+                                  mySpecialty: _mySpecialtyPractioner.text,
+                                  myRoles: _myRolesPractioner.text,
+                                  languages: _languagesPractioner.text,
+                                  titleMain: _titleMainPractioner.text,
+                                );
+                                await service.addPractioners(practionerData);
+                                Navigator.pop(context);
+                                _pullRefresh();
+                              }
 
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
-                          },
-                        ),
-                      )
-                    ],
+                              // if (_formKey.currentState!.validate()) {
+                              //   _formKey.currentState!.save();
+                              // }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
