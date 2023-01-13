@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -100,157 +102,157 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
         elevation: 2,
       ),
       body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 12,
-                        color: Color(0x33000000),
-                        offset: Offset(0, 2),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Consumer(builder: (context, ref, child) {
-                      final dayoff = ref.watch(specialDateProvider);
-                      return dayoff.when(data: (data) {
-                        if (data.isNotEmpty) {
-                          final listDay = data.elementAt(0).dayoff;
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 20, 20, 20),
-                                child: Text(
-                                  'Plan your off day?',
-                                  style: FlutterFlowTheme.of(context)
-                                      .title2
-                                      .override(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(screenWidth / (width / 8)),
+            child: Container(
+              height: screenWidth / (width / 800),
+              width: ResponsiveWidget.isphoneScreen(context)
+                  ? screenWidth
+                  : screenWidth / (width / 500),
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: screenWidth / (width / 12),
+                    color: Color(0x33000000),
+                    offset: Offset(0, 2),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(screenWidth / (width / 20)),
+              ),
+              child: SingleChildScrollView(
+                child: Consumer(builder: (context, ref, child) {
+                  final dayoff = ref.watch(specialDateProvider);
+                  return dayoff.when(data: (data) {
+                    if (data.isNotEmpty) {
+                      final listDay = data.elementAt(0).dayoff;
+                      return Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20)),
+                            child: Text(
+                              'Plan your off day?',
+                              style:
+                                  FlutterFlowTheme.of(context).title2.override(
                                         fontFamily: 'Poppins',
-                                        fontSize: screenWidth / (width / 30),
+                                        fontSize: screenWidth / (width / 24),
                                       ),
-                                ),
-                              ),
-                              ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: listDay.length,
-                                itemBuilder: (context, index) {
-                                  final value = listDay.values.elementAt(index);
-                                  final key = listDay.keys.elementAt(index);
+                            ),
+                          ),
+                          ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: listDay.length,
+                            itemBuilder: (context, index) {
+                              final value = listDay.values.elementAt(index);
+                              final key = listDay.keys.elementAt(index);
 
-                                  return tableDepanSpecialPage(
-                                      listDay, context, value, key, index);
-                                },
-                              ),
-                              FFButtonWidget(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          backgroundColor: Colors.white,
-                                          actions: <Widget>[
-                                            Container(
-                                              height: 30,
-                                              child: MaterialButton(
-                                                color: Colors.green,
-                                                child: Text(
-                                                  'Set',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    // date_of_birth = date_controller.text;
-                                                  });
-
-                                                  Navigator.of(context).pop();
-                                                },
+                              return tableDepanSpecialPage(
+                                  listDay, context, value, key, index);
+                            },
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(screenWidth / (width / 8)),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        backgroundColor: Colors.white,
+                                        actions: <Widget>[
+                                          Container(
+                                            height: 30,
+                                            child: MaterialButton(
+                                              color: Colors.green,
+                                              child: Text(
+                                                'Set',
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                            ),
-                                            TextButton(
-                                              child: Text('Cancel'),
                                               onPressed: () {
                                                 setState(() {
-                                                  // date_controller.text = date_of_birth;
+                                                  // date_of_birth = date_controller.text;
                                                 });
 
                                                 Navigator.of(context).pop();
                                               },
                                             ),
-                                          ],
-                                          content: Container(
-                                            height: 300,
-                                            width: 300,
-                                            child: SfDateRangePicker(
-                                              // initialSelectedDate:
-                                              //     DateTime.now(),
-                                              onSelectionChanged:
-                                                  _onSelectionChanged,
-                                              selectionMode:
-                                                  DateRangePickerSelectionMode
-                                                      .range,
-                                              view: DateRangePickerView.month,
-                                            ),
                                           ),
-                                        );
-                                      });
-                                  print('Button pressed ...');
-                                },
-                                text: 'Add',
-                                icon: Icon(
-                                  Icons.add,
-                                  size: 15,
-                                ),
-                                options: FFButtonOptions(
-                                  width: 130,
-                                  height: 40,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.white,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: 8,
-                                ),
+                                          TextButton(
+                                            child: Text('Cancel'),
+                                            onPressed: () {
+                                              setState(() {
+                                                // date_controller.text = date_of_birth;
+                                              });
+
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                        content: Container(
+                                          height: 300,
+                                          width: 300,
+                                          child: SfDateRangePicker(
+                                            // initialSelectedDate:
+                                            //     DateTime.now(),
+                                            onSelectionChanged:
+                                                _onSelectionChanged,
+                                            selectionMode:
+                                                DateRangePickerSelectionMode
+                                                    .range,
+                                            view: DateRangePickerView.month,
+                                          ),
+                                        ),
+                                      );
+                                    });
+                                print('Button pressed ...');
+                              },
+                              text: 'Add',
+                              icon: Icon(
+                                Icons.add,
+                                size: 15,
                               ),
-                            ],
-                          );
-                        } else {
-                          return const LoadingAnimationView();
-                        }
-                      }, error: (error, stackTrace) {
-                        print(error);
-                        return const ErrorAnimationView();
-                      }, loading: () {
-                        return const LoadingAnimationView();
-                      });
-                    }),
-                  ),
-                ),
+                              options: FFButtonOptions(
+                                width: 130,
+                                height: 40,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                    ),
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: 8,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const LoadingAnimationView();
+                    }
+                  }, error: (error, stackTrace) {
+                    print(error);
+                    return const ErrorAnimationView();
+                  }, loading: () {
+                    return const LoadingAnimationView();
+                  });
+                }),
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -268,306 +270,263 @@ class _specialDatePageState extends ConsumerState<specialDatePage> {
                 : 1280;
     // print(data);
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+      padding: EdgeInsetsDirectional.fromSTEB(
+          screenWidth / (width / 20),
+          screenWidth / (width / 20),
+          screenWidth / (width / 20),
+          screenWidth / (width / 20)),
       child: Container(
-        width: 100,
-        height: 120,
+        height: screenWidth / (width / 120),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).lineColor,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(screenWidth / (width / 20)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.30,
-                height: double.infinity,
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        // Text(
-                        //   'You\'ll off',
-                        //   style: FlutterFlowTheme.of(context).subtitle1,
-                        // ),
-                        Text(
-                          data["dateDayoff"],
-                          style: FlutterFlowTheme.of(context).subtitle1,
-                        ),
-                        // Text(
-                        //   'From: ' +
-                        //       data["dateDayoff"] +
-                        //       ',' +
-                        //       'To: ' +
-                        //       data["dateDayoff"],
-                        //   style: FlutterFlowTheme.of(context).subtitle1,
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        //   child: Text(
-                        //     'From: ' +
-                        //         data["startDayoff"].toString() +
-                        //         ',' +
-                        //         'To: ' +
-                        //         data["endDayoff"],
-                        //     style: FlutterFlowTheme.of(context).subtitle1,
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsetsDirectional
-                        //       .fromSTEB(5, 0, 0, 0),
-                        //   child: Text(
-                        //     'duration: 1d',
-                        //     style: FlutterFlowTheme.of(
-                        //             context)
-                        //         .subtitle1,
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Description:\n' + data["description"].toString(),
-                            textAlign: TextAlign.justify,
-                            style:
-                                FlutterFlowTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12,
-                                    ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  screenWidth / (width / 10),
+                  screenWidth / (width / 10),
+                  screenWidth / (width / 10),
+                  screenWidth / (width / 10)),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  FlutterFlowIconButton(
-                    borderColor: FlutterFlowTheme.of(context).primaryText,
-                    borderRadius: 30,
-                    borderWidth: 2,
-                    buttonSize: 60,
-                    icon: Icon(
-                      Icons.edit_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 30,
-                    ),
-                    onPressed: () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              backgroundColor: Colors.white,
-                              actions: <Widget>[
-                                Consumer(builder: (context, ref, child) {
-                                  return Container(
-                                    height: 30,
-                                    child: MaterialButton(
-                                      color: Colors.green,
-                                      child: Text(
-                                        'Set',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onPressed: () async {
-                                        PractionerData practionerData =
-                                            PractionerData(
-                                          id: FirebaseAuth
-                                              .instance.currentUser!.uid,
-                                        );
-                                        final selectedDate =
-                                            ref.watch(dateRangeProvider);
-                                        await ref
-                                            .read(editSpecialDateProvider
-                                                .notifier)
-                                            .editstartDayoff(
-                                                dayoffs: selectedDate,
-                                                index: index,
-                                                practionerData: practionerData)
-                                            .then((value) => ref.refresh(
-                                                specialDateProvider.future));
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  );
-                                }),
-                                TextButton(
-                                  child: Text('Cancel'),
-                                  onPressed: () {
-                                    setState(() {
-                                      // date_controller.text = date_of_birth;
-                                    });
-
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                              content: Container(
-                                height: 300,
-                                width: 300,
-                                child: SfDateRangePicker(
-                                  // initialSelectedDate: DateTime.now(),
-                                  onSelectionChanged: _onSelectionChanged,
-                                  selectionMode:
-                                      DateRangePickerSelectionMode.range,
-                                  view: DateRangePickerView.month,
-                                  // monthViewSettings: DateRangePickerMonthViewSettings(specialDates: ),
-                                ),
-                              ),
-                            );
-                          });
-
-                      await showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("input description"),
-                              content: Stack(
-                                clipBehavior: Clip.none,
-                                children: <Widget>[
-                                  Positioned(
-                                    right: -(screenWidth / (width / 40)),
-                                    top: -(screenWidth / (width / 80)),
-                                    child: InkResponse(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: CircleAvatar(
-                                        child: Icon(Icons.close),
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    ),
-                                  ),
-                                  Form(
-                                    // key: _formKey,
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                screenWidth / (width / 8)),
-                                            child: TextFormField(
-                                              controller:
-                                                  _descriptionController,
-                                              decoration: InputDecoration(
-                                                labelText: "Description",
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: screenWidth / (width / 40),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                screenWidth / (width / 8)),
-                                            child: ElevatedButton(
-                                              child: Text("Submit"),
-                                              onPressed: () async {
-                                                PractionerData practionerData =
-                                                    PractionerData(
-                                                  id: FirebaseAuth.instance
-                                                      .currentUser!.uid,
-                                                );
-                                                await ref
-                                                    .read(
-                                                        editDescriptionDayoffProvider
-                                                            .notifier)
-                                                    .editDescription(
-                                                        descriptiong:
-                                                            _descriptionController
-                                                                .text,
-                                                        index: index,
-                                                        practionerData:
-                                                            practionerData)
-                                                    .then((value) =>
-                                                        ref.refresh(
-                                                            specialDateProvider
-                                                                .future));
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-
-                      print('IconButton pressed ...');
-                    },
+                  Text(
+                    data["dateDayoff"],
+                    style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                   Text(
-                    'Edit',
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    'Description:\n' + data["description"].toString(),
+                    textAlign: TextAlign.justify,
+                    style: FlutterFlowTheme.of(context).subtitle2.override(
+                          fontFamily: 'Poppins',
+                          fontSize: screenWidth / (width / 12),
+                        ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    FlutterFlowIconButton(
-                      borderColor: FlutterFlowTheme.of(context).primaryText,
-                      borderRadius: 30,
-                      borderWidth: 2,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.delete,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 30,
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth / (width / 8)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FlutterFlowIconButton(
+                        borderColor: FlutterFlowTheme.of(context).primaryText,
+                        borderRadius: 30,
+                        borderWidth: 2,
+                        buttonSize: 60,
+                        icon: Icon(
+                          Icons.edit_rounded,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 30,
+                        ),
+                        onPressed: () async {
+                          await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  actions: <Widget>[
+                                    Consumer(builder: (context, ref, child) {
+                                      return Container(
+                                        height: 30,
+                                        child: MaterialButton(
+                                          color: Colors.green,
+                                          child: Text(
+                                            'Set',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          onPressed: () async {
+                                            PractionerData practionerData =
+                                                PractionerData(
+                                              id: FirebaseAuth
+                                                  .instance.currentUser!.uid,
+                                            );
+                                            final selectedDate =
+                                                ref.watch(dateRangeProvider);
+                                            await ref
+                                                .read(editSpecialDateProvider
+                                                    .notifier)
+                                                .editstartDayoff(
+                                                    dayoffs: selectedDate,
+                                                    index: index,
+                                                    practionerData:
+                                                        practionerData)
+                                                .then((value) => ref.refresh(
+                                                    specialDateProvider
+                                                        .future));
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      );
+                                    }),
+                                    TextButton(
+                                      child: Text('Cancel'),
+                                      onPressed: () {
+                                        setState(() {
+                                          // date_controller.text = date_of_birth;
+                                        });
+
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                  content: Container(
+                                    height: 300,
+                                    width: 300,
+                                    child: SfDateRangePicker(
+                                      // initialSelectedDate: DateTime.now(),
+                                      onSelectionChanged: _onSelectionChanged,
+                                      selectionMode:
+                                          DateRangePickerSelectionMode.range,
+                                      view: DateRangePickerView.month,
+                                      // monthViewSettings: DateRangePickerMonthViewSettings(specialDates: ),
+                                    ),
+                                  ),
+                                );
+                              });
+
+                          await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("input description"),
+                                  content: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: <Widget>[
+                                      Positioned(
+                                        right: -(screenWidth / (width / 40)),
+                                        top: -(screenWidth / (width / 80)),
+                                        child: InkResponse(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: CircleAvatar(
+                                            child: Icon(Icons.close),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                      Form(
+                                        // key: _formKey,
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: EdgeInsets.all(
+                                                    screenWidth / (width / 8)),
+                                                child: TextFormField(
+                                                  controller:
+                                                      _descriptionController,
+                                                  decoration: InputDecoration(
+                                                    labelText: "Description",
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height:
+                                                    screenWidth / (width / 40),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.all(
+                                                    screenWidth / (width / 8)),
+                                                child: ElevatedButton(
+                                                  child: Text("Submit"),
+                                                  onPressed: () async {
+                                                    PractionerData
+                                                        practionerData =
+                                                        PractionerData(
+                                                      id: FirebaseAuth.instance
+                                                          .currentUser!.uid,
+                                                    );
+                                                    await ref
+                                                        .read(
+                                                            editDescriptionDayoffProvider
+                                                                .notifier)
+                                                        .editDescription(
+                                                            descriptiong:
+                                                                _descriptionController
+                                                                    .text,
+                                                            index: index,
+                                                            practionerData:
+                                                                practionerData)
+                                                        .then((value) =>
+                                                            ref.refresh(
+                                                                specialDateProvider
+                                                                    .future));
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              });
+
+                          print('IconButton pressed ...');
+                        },
                       ),
-                      onPressed: () async {
-                        print(datas);
-                        await ref
-                            .read(deleteSpecialDateProvider.notifier)
-                            .deleteDayoff(
-                              listDay: datas,
-                              userID: FirebaseAuth.instance.currentUser!.uid,
-                              selectedIndex: index,
-                            )
-                            .then((value) =>
-                                ref.refresh(specialDateProvider.future));
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    Text(
-                      'Delete',
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                    ),
-                  ],
+                      Text(
+                        'Edit',
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.all(screenWidth / (width / 8)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FlutterFlowIconButton(
+                        borderColor: FlutterFlowTheme.of(context).primaryText,
+                        borderRadius: 30,
+                        borderWidth: 2,
+                        buttonSize: 60,
+                        icon: Icon(
+                          Icons.delete,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 30,
+                        ),
+                        onPressed: () async {
+                          print(datas);
+                          await ref
+                              .read(deleteSpecialDateProvider.notifier)
+                              .deleteDayoff(
+                                listDay: datas,
+                                userID: FirebaseAuth.instance.currentUser!.uid,
+                                selectedIndex: index,
+                              )
+                              .then((value) =>
+                                  ref.refresh(specialDateProvider.future));
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      Text(
+                        'Delete',
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
