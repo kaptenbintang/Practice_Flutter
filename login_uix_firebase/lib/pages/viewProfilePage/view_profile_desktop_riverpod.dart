@@ -63,7 +63,6 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                     size: screenWidth / (width / 20),
                   ),
                   onPressed: () {
-                    print('IconButton pressed ...');
                     Navigator.pop(context);
                   },
                 ),
@@ -132,13 +131,6 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                                 borderRadius: BorderRadius.circular(
                                     screenWidth / (width / 12)),
                                 child: Icon(Icons.person),
-                                // CachedNetworkImage(
-                                //   imageUrl:
-                                //       'https://images.unsplash.com/photo-1592520113018-180c8bc831c9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI3fHxwcm9maWxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                                //   width: 100,
-                                //   height: 100,
-                                //   fit: BoxFit.cover,
-                                // ),
                               ),
                             ),
                           ),
@@ -708,17 +700,6 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                               menuController
                                   .changeActiveitemTo(sideMenuItems[0]);
                             });
-
-                            //     .then((_) {
-                            //   // Navigator.pushReplacement(
-                            //   //   context,
-                            //   //   MaterialPageRoute(
-                            //   //     builder: (context) => LandingLayout(),
-                            //   //   ),
-                            //   // );
-                            //   Navigator.of(context).pop();
-                            //   LandingLayout();
-                            // });
                           },
                           text: 'Log Out',
                           options: FFButtonOptions(

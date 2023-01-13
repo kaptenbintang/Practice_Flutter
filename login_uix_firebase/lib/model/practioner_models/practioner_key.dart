@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart' show immutable;
 
+// field name at Practioner table firestore
+
 @immutable
 class PractionerKey {
   static const userId = 'uid';

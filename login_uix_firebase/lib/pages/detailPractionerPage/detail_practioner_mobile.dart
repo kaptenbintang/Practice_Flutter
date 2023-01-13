@@ -8,9 +8,9 @@ import '../../model/practioner_models/practioner.dart';
 import '../../route.dart';
 import '../appointment_page_riverpod_ver2.dart';
 
-class detailPractionerMobile extends ConsumerWidget {
+class DetailPractionerMobile extends ConsumerWidget {
   final Practioner practioner;
-  const detailPractionerMobile(this.practioner, {super.key});
+  const DetailPractionerMobile(this.practioner, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

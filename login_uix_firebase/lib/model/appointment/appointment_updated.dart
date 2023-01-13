@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_key.dart';
 
+// object model for storaging appointment data from firestore
 @immutable
 class Appointment extends Equatable {
   Appointment(Map<String, dynamic> json, {required this.appointmentId})

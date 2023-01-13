@@ -1,15 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
-import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:recase/recase.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
@@ -68,11 +64,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
   int? _currentSortColumn;
   bool _isAscending = false;
 
-  // bool _sortAscending = true;
-  // int? _sortColumnIndex;
-
   List<String> listOfValueRoles = [];
-  // ['Developer', 'user', 'admin', 'superadmin'];
 
   List<String> listOfValue = [
     'satu',
@@ -99,8 +91,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
 
   @override
   void initState() {
-    // selectedValue2 = dropDownItemValue2[0];
-
     _scaffoldKey = GlobalKey();
 
     _initRetrieval();
@@ -153,7 +143,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
         return Future.delayed(
           Duration(seconds: 1),
           () {
-            // html.window.location.reload;
             _pullRefresh();
             _scaffoldKey!.currentState!.showBottomSheet(
               (context) {
@@ -568,7 +557,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
   }
 
   _buildTableUser(BuildContext context, UserData snapshot, int indexs) {
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     if (rolesType != "superadmin") {
       return InkWell(
         onTap: () {
@@ -668,7 +656,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                           size: Dimensions.font20,
                         ),
                         onChanged: (value) {
-                          print(value);
                           if (value == null) {
                             dropDownFocus.unfocus();
                           } else {
@@ -706,12 +693,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
                             child: Text(
@@ -728,12 +709,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               ),
                               value: "Edit",
                             ),
-                          // if (currentUser.uid.toString != snapshot.id.toString &&
-                          //     authoRoles!['canDelete'] != false)
-                          //   DropdownMenuItem(
-                          //     child: Text('Remove'),
-                          //     value: "Remove",
-                          //   ),
                           DropdownMenuItem(
                             child: Text(
                               'Change Password',
@@ -853,7 +828,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                           size: Dimensions.font20,
                         ),
                         onChanged: (value) {
-                          print(value);
                           // if value doesnt contain just close the dropDown
                           if (value == null) {
                             dropDownFocus.unfocus();
@@ -880,8 +854,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                   ),
                                 );
 
-                                // _dialogBuilder(_scaffoldKey!.currentState!.context,
-                                //     snapshot.id.toString());
                                 break;
                               case "Edit":
                                 dialogEdit(context);
@@ -932,12 +904,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
                             child: Text(
@@ -954,12 +920,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               ),
                               value: "Edit",
                             ),
-                          // if (currentUser.uid.toString != snapshot.id.toString &&
-                          //     authoRoles!['canDelete'] != false)
-                          //   DropdownMenuItem(
-                          //     child: Text('Remove'),
-                          //     value: "Remove",
-                          //   ),
                           DropdownMenuItem(
                             child: Text(
                               'Change Password',
@@ -1165,7 +1125,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 //Add isDense true and zero Padding.
                                 //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
                                 isDense: true,
-                                // labelText: 'Client Type',
+
                                 label: const Text("Client Type"),
 
                                 contentPadding: EdgeInsets.zero,
@@ -1269,12 +1229,10 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
                               dropdownMaxHeight: Dimensions.height500 / 2,
-                              value:
-                                  // rolesType == "Developer"
-                                  selectedValueRoles!.isNotEmpty
-                                      ? selectedValueRoles
-                                      : selectedValueRoles = "",
-                              // : null,
+                              value: selectedValueRoles!.isNotEmpty
+                                  ? selectedValueRoles
+                                  : selectedValueRoles = "",
+
                               buttonDecoration: BoxDecoration(
                                 color: rolesType == "superadmin"
                                     ? Colors.grey[200]
@@ -1410,8 +1368,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                 child: ElevatedButton(
                                   onPressed: (() async {
                                     if (_formKey.currentState!.validate()) {
-                                      // _formKey.currentState!.save();
-
                                       UserData userData = UserData(
                                         id: userId,
                                         firstName: _firstNameController.text,
@@ -1419,7 +1375,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                         emailUser: _emailController.text,
                                         clientCode: _clientCodeController.text,
                                         roles: selectedValueRoles as String,
-                                        // imgUrl: '',
                                         createdAt: createAt,
                                         markDeleted: marDeleted,
                                         doBirth: _ageController.text,
@@ -1458,7 +1413,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                 child: ListBody(
               children: [
                 SizedBox(
-                  // height: 500,
                   width: Dimensions.width100 * 4,
                   child: Form(
                     key: _formKey,
@@ -1469,8 +1423,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                           padding: EdgeInsets.all(Dimensions.font16 / 2),
                           child: TextFormField(
                             controller: _emailController,
-                            // maxLines: 1,
-                            // maxLength: 6,
                             decoration: InputDecoration(
                               hintText: "Enter your email address",
                               hintStyle: TextStyle(color: Color(0xFF6f6f6f)),
@@ -1537,7 +1489,7 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
       Navigator.pop(context);
-      // Util.routeToWidget(context, CheckEmailView());
+
       showDialog(
           context: context,
           builder: (context) {
@@ -1546,7 +1498,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
             );
           });
     } on FirebaseAuthException catch (e) {
-      print(e);
       showDialog(
           context: context,
           builder: (context) {

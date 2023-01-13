@@ -1,10 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/helper/responsive.dart';
-import 'package:login_uix_firebase/pages/manageClient/manage_client_dekstop.dart';
-import 'package:login_uix_firebase/pages/manageClient/manage_client_mobile.dart';
 
 import 'manage_appointment_desktop.dart';
 import 'manage_appointment_mobile.dart';

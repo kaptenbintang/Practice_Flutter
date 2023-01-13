@@ -3,8 +3,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
@@ -23,7 +21,7 @@ class ManagePractionerMobile extends StatefulWidget {
 class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
   TextEditingController? textController;
   DataService service = DataService();
-  Future<List<PractionerData>>? PractionerList;
+  Future<List<PractionerData>>? practionerList;
   Map<String, dynamic>? currentPractionerData;
   List<PractionerData>? retrievedPractionerList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -63,15 +61,13 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
-    PractionerList = service.retrievePractionerAll();
+    practionerList = service.retrievePractionerAll();
     retrievedPractionerList = await service.retrievePractionerAll();
     selected = List<bool>.generate(
         retrievedPractionerList!.length, (int index) => false);
@@ -81,7 +77,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
     retrievedPractionerList = await service.retrievePractionerAll();
 
     setState(() {
-      PractionerList = service.retrievePractionerAll();
+      practionerList = service.retrievePractionerAll();
     });
   }
 
@@ -327,7 +323,7 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0, Dimensions.height08 * 2, 0, 0),
                             child: FutureBuilder(
-                                future: PractionerList,
+                                future: practionerList,
                                 builder: (context,
                                     AsyncSnapshot<List<PractionerData>>
                                         snapshot) {
@@ -385,8 +381,6 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
 
   _buildTableUser(BuildContext context, PractionerData snapshot,
       List<PractionerData>? user, int indexs) {
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height08 / 4),
       child: Container(
@@ -491,12 +485,6 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
                             child: Text('Action'),
@@ -661,23 +649,11 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                   context: context,
                                   initialTime: TimeOfDay.now());
 
-                              // DateTimeRange? pickedRange =
-                              //     await showDateRangePicker(
-                              //   context: context,
-                              //   firstDate: DateTime.now(),
-                              //   lastDate: DateTime(2023),
-                              //   // initialDateRange: dateRange.value
-                              // );
-
-                              if (pickedDate != null &&
-                                  // pickedRange != null &&
-                                  time != null) {
-                                print(
-                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                              if (pickedDate != null && time != null) {
+                                //pickedDate output format => 2021-03-10 00:00:00.000
                                 String formattedDate =
                                     DateFormat('yyyy-MM-dd').format(pickedDate);
-                                print(
-                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //formatted date output using intl package =>  2021-03-16
                                 //you can implement different kind of Date Format here according to your requirement
                                 setState(() {
                                   _schedulePractioner.text = formattedDate +
@@ -723,10 +699,6 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                 Navigator.pop(context);
                                 _pullRefresh();
                               }
-
-                              // if (_formKey.currentState!.validate()) {
-                              //   _formKey.currentState!.save();
-                              // }
                             },
                           ),
                         )
@@ -941,10 +913,6 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                                 Navigator.pop(context);
                                 _pullRefresh();
                               }
-
-                              // if (_formKey.currentState!.validate()) {
-                              //   _formKey.currentState!.save();
-                              // }
                             },
                           ),
                         )

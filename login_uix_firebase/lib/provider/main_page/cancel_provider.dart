@@ -3,7 +3,9 @@ import 'package:login_uix_firebase/model/typedefs/is_loading.dart';
 
 import 'cancel_notifier.dart';
 
+//provide bool edit status appointment value
+
 final editStatusAppointment =
-    StateNotifierProvider<changeStatusAppointmentNotifier, IsLoading>(
-  (ref) => changeStatusAppointmentNotifier(),
+    StateNotifierProvider<ChangeStatusAppointmentNotifier, IsLoading>(
+  (ref) => ChangeStatusAppointmentNotifier(),
 );

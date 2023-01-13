@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/model/time_models/time.dart';
-import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/time_loop_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/time_selected_provider.dart';
 import 'package:login_uix_firebase/widgets/animations/small_error_animation_view.dart';
@@ -59,7 +58,6 @@ class TimesGridView extends StatelessWidget {
             );
           },
           error: (error, stackTrace) {
-            print(error);
             return SmallErrorAnimationView();
           },
           loading: () {

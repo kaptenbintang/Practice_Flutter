@@ -5,6 +5,8 @@ import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
 import 'package:login_uix_firebase/user_info/models/user_info_payload.dart';
 
+// Class for uploading new user to firestore
+
 @immutable
 class UserInfoStorage {
   const UserInfoStorage();

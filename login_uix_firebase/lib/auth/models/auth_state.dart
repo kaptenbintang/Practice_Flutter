@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show immutable;
 import 'package:login_uix_firebase/auth/models/auth_result.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
 
+// Object model to store state status
 @immutable
 class AuthState {
   final AuthResult? result;
@@ -19,6 +20,7 @@ class AuthState {
         isLoading = false,
         userId = null;
 
+// change isLoading value
   AuthState copiedWithIsLoading(bool isLoading) => AuthState(
         result: result,
         isLoading: isLoading,

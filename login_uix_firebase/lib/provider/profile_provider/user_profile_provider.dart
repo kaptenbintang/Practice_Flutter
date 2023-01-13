@@ -5,16 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
-import 'package:login_uix_firebase/model/auth/user_id.dart';
-import 'package:login_uix_firebase/model/user_data.dart';
+
+//provide current user data from firebase
 
 class GetDataFromFirestore {
   const GetDataFromFirestore();
 
   Future<Map<String, dynamic>?> currentUsers(uid) async {
     try {
-      // DocumentSnapshot<Map<String, dynamic>>
-      // QuerySnapshot<Map<String, dynamic>>
       final snapshot = await FirebaseFirestore.instance
           .collection("users")
           .where('uid', isEqualTo: uid.toString())
@@ -36,57 +34,15 @@ const unknownWeatherEmoji = '??';
 
 final userDetailProvider = FutureProvider.autoDispose<Map?>(
   (ref) {
-    // final userProvider = ref.watch(currentCityProvider);
-
-    // final auth = FirebaseAuth.instance;
-
     final userId = ref.watch(userIdProvider);
 
-    // final userId = FirebaseAuth.instance.currentUser!.uid;
     return ref.watch(apiProvider).currentUsers(userId);
-
-    // final controller = StreamController<Map>();
-
-    // final sub = FirebaseFirestore.instance
-    //     .collection(
-    //       'users',
-    //     )
-    //     .doc(userId)
-    //     .get();
-
-    // if (userProvider == null) {
-    //   return currentUsers(userId);
-    // } else {
-    //   return null;
-    // }
-
-    // final result = sub.map((event) => UserData.fromDocumentSnapshot(event));
-    // final result1 = sub.map((event) => controller.sink.add(event.data()!));
-
-    //     .listen(
-    //   (event) {
-    //     final data = UserData.fromDocumentSnapshot(event);
-    //     controller.sink.add(data);
-    //   },
-    // );
-    // final result = await sub;
-
-    // ref.onDispose(() {
-    //   // sub.cancel();
-    //   // sub.drain();
-    //   // controller.close();
-    // });
-
-    // return result.data()!;
   },
 );
 
 final userDetailProvider1 = StreamProvider.autoDispose<Map>(
   (ref) {
-    // final userProvider = ref.watch(currentCityProvider);
     final userId = FirebaseAuth.instance.currentUser!.uid;
-
-    // final auth = FirebaseAuth.instance;
 
     final controller = StreamController<Map>();
 
@@ -100,9 +56,7 @@ final userDetailProvider1 = StreamProvider.autoDispose<Map>(
         .listen(
       (snapshots) {
         final data = snapshots.docs;
-        // controller.stream.asyncMap(
-        //   (event) => event = posts as Iterable<Map>,
-        // );
+
         controller.sink.add(data as Map);
       },
     );
@@ -112,8 +66,5 @@ final userDetailProvider1 = StreamProvider.autoDispose<Map>(
     });
 
     return controller.stream;
-
-    // final userId = FirebaseAuth.instance.currentUser!.uid;
-    // return ref.watch(apiProvider).currentUsers(userId);
   },
 );

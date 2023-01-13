@@ -16,8 +16,8 @@ import '../../widgets/appointments/appointments_grid_view.dart';
 import '../../widgets/practioners/practioners_grid_view.dart';
 import 'main_page_desktop_riverpod.dart';
 
-class mainPageMobile extends ConsumerWidget {
-  const mainPageMobile({Key? key}) : super(key: key);
+class MainPageMobile extends ConsumerWidget {
+  const MainPageMobile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

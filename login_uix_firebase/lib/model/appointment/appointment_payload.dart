@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart' show immutable;
 import 'package:login_uix_firebase/model/appointment/appointment_key.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
 
+//object model for uploading data to firestore
+
 @immutable
 class AppointmentPayload extends MapView<String, dynamic> {
   AppointmentPayload({

@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/helper/database_service.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
-import 'package:login_uix_firebase/model/user_data.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
 class AddUserPage extends StatefulWidget {
@@ -60,7 +59,6 @@ class _AddUserPageState extends State<AddUserPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _initRetrieval();
     super.initState();
   }
@@ -85,7 +83,6 @@ class _AddUserPageState extends State<AddUserPage> {
             return Center(child: CircularProgressIndicator());
           });
 
-      // DataService.register();
       try {
         //create user
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -110,7 +107,6 @@ class _AddUserPageState extends State<AddUserPage> {
           }
         });
       } on FirebaseAuthException catch (e) {
-        print(e);
         await showDialog(
             context: context,
             builder: (context) {
@@ -224,13 +220,6 @@ class _AddUserPageState extends State<AddUserPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const Text(
-                //   'Wisata Bandung',
-                //   style: TextStyle(
-                //     fontFamily: 'Staatliches',
-                //     fontSize: 32,
-                //   ),
-                // ),
                 const SizedBox(
                   height: 32,
                 ),
@@ -241,39 +230,11 @@ class _AddUserPageState extends State<AddUserPage> {
                       child: Column(
                         children: [
                           const Icon(Icons.person, size: 300.0),
-                          // ClipRRect(
-                          //   child: Image.asset(widget.place.imageAsset),
-                          //   borderRadius: BorderRadius.circular(10),
-                          // ),
                           const SizedBox(
                             height: 16.0,
                           ),
                           ElevatedButton(
                               onPressed: () {}, child: Text("Change Photo")),
-                          // Container(
-                          //   height: 150,
-                          //   padding: const EdgeInsets.only(bottom: 16.0),
-                          //   child: Scrollbar(
-                          //     controller: _scrollController,
-                          //     child: Container(
-                          //       height: 150,
-                          //       padding: const EdgeInsets.only(bottom: 16.0),
-                          //       child: ListView(
-                          //         controller: _scrollController,
-                          //         scrollDirection: Axis.horizontal,
-                          //         children: widget.place.imageUrls.map((url) {
-                          //           return Padding(
-                          //             padding: const EdgeInsets.all(4.0),
-                          //             child: ClipRRect(
-                          //               borderRadius: BorderRadius.circular(10),
-                          //               child: Image.network(url),
-                          //             ),
-                          //           );
-                          //         }).toList(),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
@@ -373,17 +334,10 @@ class _AddUserPageState extends State<AddUserPage> {
                                         scrollbarAlwaysShow: true,
                                         offset: const Offset(0, 0),
                                         dropdownMaxHeight: 250,
-                                        value:
-                                            // selectedValue!.isNotEmpty
-                                            // ?
-                                            selectedValue,
-                                        // : selectedValue = "",
+                                        value: selectedValue,
+
                                         buttonDecoration: BoxDecoration(
-                                          color:
-                                              // authoRoles['canWriteAll'] != false
-                                              // ?
-                                              Colors.grey[200],
-                                          // : Colors.grey[400],
+                                          color: Colors.grey[200],
                                           borderRadius:
                                               BorderRadius.circular(14),
                                         ),
@@ -391,7 +345,7 @@ class _AddUserPageState extends State<AddUserPage> {
                                           //Add isDense true and zero Padding.
                                           //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
                                           isDense: true,
-                                          // labelText: 'Client Type',
+
                                           label: const Text("Client Type"),
 
                                           contentPadding: EdgeInsets.zero,
@@ -501,19 +455,10 @@ class _AddUserPageState extends State<AddUserPage> {
                                         scrollbarAlwaysShow: true,
                                         offset: const Offset(0, 0),
                                         dropdownMaxHeight: 250,
-                                        value:
-                                            // rolesType == "Developer"
-                                            // selectedValueRoles!.isNotEmpty
-                                            // ?
-                                            selectedValueRoles,
-                                        // : selectedValueRoles = "",
-                                        // : null,
+                                        value: selectedValueRoles,
+
                                         buttonDecoration: BoxDecoration(
-                                          color:
-                                              // rolesType == "superadmin"
-                                              // ?
-                                              Colors.grey[200],
-                                          // : Colors.grey[400],
+                                          color: Colors.grey[200],
                                           borderRadius:
                                               BorderRadius.circular(14),
                                         ),
@@ -521,7 +466,7 @@ class _AddUserPageState extends State<AddUserPage> {
                                           //Add isDense true and zero Padding.
                                           //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
                                           isDense: true,
-                                          // labelText: 'Client Type',
+
                                           label: const Text("Roles Type"),
 
                                           contentPadding: EdgeInsets.zero,
@@ -566,16 +511,12 @@ class _AddUserPageState extends State<AddUserPage> {
                                             return 'Please Client Type.';
                                           }
                                         },
-                                        onChanged:
-                                            // authoRoles['canWriteAll'] != false
-                                            // ?
-                                            (value) {
+                                        onChanged: (value) {
                                           setState(() {
                                             selectedValueRoles =
                                                 value.toString();
                                           });
                                         },
-                                        // : null,
 
                                         onSaved: (value) {
                                           selectedValueRoles = value.toString();
@@ -622,68 +563,11 @@ class _AddUserPageState extends State<AddUserPage> {
                                     ),
                                   ),
                                 ),
-                                // Container(
-                                //   child: Text(
-                                //     'eeeeeee',
-                                //     textAlign: TextAlign.center,
-                                //     style: const TextStyle(
-                                //       fontSize: 30.0,
-                                //       // fontFamily: 'Staatliches',
-                                //     ),
-                                //   ),
-                                // ),
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Row(
-                                //       children: [
-                                //         const Icon(Icons.calendar_today),
-                                //         const SizedBox(
-                                //           width: 8.0,
-                                //         ),
-                                //         Text(
-                                //           'aaaaaaaaaaaa',
-                                //           // style: informationTextStyle,
-                                //         ),
-                                //       ],
-                                //     ),
-                                //     // const FavoriteButton(),
-                                //   ],
-                                // ),
-                                // Row(
-                                //   children: [
-                                //     const Icon(Icons.access_time),
-                                //     const SizedBox(
-                                //       width: 8.0,
-                                //     ),
-                                //     Text(
-                                //       'bbbbbbbbbbbb',
-                                //       // style: informationTextStyle,
-                                //     ),
-                                //   ],
-                                // ),
-                                // const SizedBox(
-                                //   height: 8.0,
-                                // ),
-                                // Row(
-                                //   children: [
-                                //     const Icon(Icons.monetization_on),
-                                //     const SizedBox(
-                                //       width: 8.0,
-                                //     ),
-                                //     Text(
-                                //       'ccccccccccccccc',
-                                //       // style: informationTextStyle,
-                                //     ),
-                                //   ],
-                                // ),
                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Container(
                                     constraints: BoxConstraints(
                                         maxHeight: 55, maxWidth: 400),
-                                    // height: 50,
                                     child: ProfileTextInput(
                                         hintTextString: 'Password',
                                         labelText: 'Password',
@@ -699,7 +583,6 @@ class _AddUserPageState extends State<AddUserPage> {
                                   child: Container(
                                     constraints: BoxConstraints(
                                         maxHeight: 55, maxWidth: 400),
-                                    // height: 50,
                                     child: ProfileTextInput(
                                         hintTextString: 'Confirm Password',
                                         labelText: 'Confirm Password',
@@ -713,25 +596,12 @@ class _AddUserPageState extends State<AddUserPage> {
                                 ElevatedButton(
                                   onPressed: (() async {
                                     if (_formKey.currentState!.validate()) {
-                                      // _formKey.currentState!.save();
                                       signUp();
                                     }
                                   }),
-                                  child: Text('Add'),
                                   style: ElevatedButton.styleFrom(),
+                                  child: Text('Add'),
                                 ),
-                                // Container(
-                                //   padding:
-                                //       const EdgeInsets.symmetric(vertical: 16.0),
-                                //   child: Text(
-                                //     'iiiiiiiiiiiiiiii',
-                                //     textAlign: TextAlign.justify,
-                                //     style: const TextStyle(
-                                //       fontSize: 16.0,
-                                //       // fontFamily: 'Oxygen',
-                                //     ),
-                                //   ),
-                                // ),
                               ],
                             ),
                           ),

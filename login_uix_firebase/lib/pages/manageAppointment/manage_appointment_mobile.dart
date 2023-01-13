@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -11,7 +10,6 @@ import 'package:login_uix_firebase/helper/dimensions.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
 import '../../model/appointment_data.dart';
 import '../../model/practioner_data.dart';
@@ -67,7 +65,6 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
@@ -452,7 +449,6 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                           size: Dimensions.height20,
                         ),
                         onChanged: (value) {
-                          print(value);
                           // if value doesnt contain just close the dropDown
                           if (value == null) {
                             dropDownFocus.unfocus();
@@ -467,7 +463,6 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                                 };
                                 break;
                               case "Edit":
-                                print('Button pressed ...');
                                 dialogEditPractioner(context);
                                 setState(() {
                                   userId = snapshot.clientId;
@@ -494,12 +489,6 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
                             child: Text('Action',
@@ -546,8 +535,8 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),

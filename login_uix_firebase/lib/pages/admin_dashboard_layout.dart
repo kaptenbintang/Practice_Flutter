@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/helper/responsive.dart';
 import 'package:login_uix_firebase/widgets/large_adminDashboard.dart';
 import 'package:login_uix_firebase/widgets/medium_adminDashboard.dart';
@@ -30,9 +28,6 @@ class AdminDashboardLayout extends StatelessWidget {
       key: _scaffoldKey,
       extendBodyBehindAppBar: true,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-      // appBar: ResponsiveWidget.isSmallScreen(context)
-      //     ? topNavigationBar(context, _scaffoldKey)
-      //     : null,
       appBar: (!ResponsiveWidget.isLargeScreen(context))
           ? topNavigationBar(context, _scaffoldKey)
           : null,

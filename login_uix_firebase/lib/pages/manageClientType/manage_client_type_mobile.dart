@@ -2,13 +2,10 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
 import '../../helper/database_service.dart';
 import '../../model/clientType_data.dart';
 
@@ -22,7 +19,7 @@ class ManageClientTypeMobile extends StatefulWidget {
 class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
   TextEditingController? textController;
   DataService service = DataService();
-  Future<List<ClientData>>? ClientList;
+  Future<List<ClientData>>? clientList;
   Map<String, dynamic>? currentClientData;
   List<ClientData>? retrievedClientList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -45,7 +42,6 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
@@ -53,7 +49,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
 
   Future<void> _initRetrieval() async {
     // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
-    ClientList = service.retrieveClientType();
+    clientList = service.retrieveClientType();
     retrievedClientList = await service.retrieveClientType();
     selected =
         List<bool>.generate(retrievedClientList!.length, (int index) => false);
@@ -63,7 +59,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
     retrievedClientList = await service.retrieveClientType();
 
     setState(() {
-      ClientList = service.retrieveClientType();
+      clientList = service.retrieveClientType();
     });
   }
 
@@ -319,7 +315,7 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                               scrollDirection: Axis.vertical,
                               children: [
                                 FutureBuilder(
-                                    future: ClientList,
+                                    future: clientList,
                                     builder: (context,
                                         AsyncSnapshot<List<ClientData>>
                                             snapshot) {
@@ -379,8 +375,6 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
 
   _buildTableUser(BuildContext context, ClientData snapshot,
       List<ClientData>? user, int indexs) {
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height10 / 5),
       child: Container(
@@ -451,12 +445,6 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
                             child: Text('Action'),
@@ -484,7 +472,6 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
   }
 
   Future<dynamic> dialogEditClientType(BuildContext context) {
-    List<bool> listOfValue = [true, false];
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -537,10 +524,6 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
@@ -612,10 +595,6 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )

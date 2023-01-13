@@ -1,21 +1,15 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
-import 'package:login_uix_firebase/auth/backend/authenticator.dart';
 import 'package:login_uix_firebase/auth/provider/auth_state_provider.dart';
-import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
 import 'package:login_uix_firebase/routing/routes.dart';
 
-import '../../auth/controller_page.dart';
 import '../../constant/controllers.dart';
 
 import 'dart:developer' as devtools show log;
 
 import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../route.dart';
 
 extension Log on Object {
   void log() => devtools.log(toString());
@@ -305,7 +299,6 @@ class LoginDesktop2state extends ConsumerState {
                             loginRememberMe();
                           } else {
                             Hive.box('logindata').clear();
-                            print("clearing data");
                           }
                         }),
                         style: TextButton.styleFrom(

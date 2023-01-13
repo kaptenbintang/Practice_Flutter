@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/auth_state_provider.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
@@ -39,9 +38,6 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                 ? 1920
                 : 1280;
     return Consumer(builder: (context, ref, child) {
-      final userData = ref.watch(
-        userDetailProvider,
-      );
       final userUid = ref.watch(userIdProvider)!;
       final userInfoModel = ref.watch(
         userInfoModelProvider(userUid),
@@ -66,7 +62,6 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                   size: 20,
                 ),
                 onPressed: () {
-                  print('IconButton pressed ...');
                   Navigator.pop(context);
                 },
               ),
@@ -117,12 +112,7 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Icon(Icons.person),
-                              // CachedNetworkImage(
-                              //   imageUrl:
-                              //       'https://images.unsplash.com/photo-1592520113018-180c8bc831c9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI3fHxwcm9maWxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                              //   width: 100,
-                              //   height: 100,
-                              //   fit: BoxFit.cover,
+
                               // ),
                             ),
                           ),
@@ -730,17 +720,6 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                                   menuController
                                       .changeActiveitemTo(sideMenuItems[0]);
                                 });
-
-                                //     .then((_) {
-                                //   // Navigator.pushReplacement(
-                                //   //   context,
-                                //   //   MaterialPageRoute(
-                                //   //     builder: (context) => LandingLayout(),
-                                //   //   ),
-                                //   // );
-                                //   Navigator.of(context).pop();
-                                //   LandingLayout();
-                                // });
                               },
                               text: 'Log Out',
                               options: FFButtonOptions(

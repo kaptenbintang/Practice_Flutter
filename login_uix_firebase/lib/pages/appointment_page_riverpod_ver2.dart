@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/auth/provider/user_id_provider.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_payload.dart';
-import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/provider/appointment_page/appointment_upload_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/location_provider.dart';
@@ -61,7 +60,6 @@ class _AppointmentPageRiverpodVersion2State
     final userUid = ref.watch(userIdProvider);
     final userInfo = ref.watch(userInfoModelProvider(userUid.toString()));
 
-    final pNameController = useTextEditingController();
     final dateandtimeController = useTextEditingController();
     final emailController = useTextEditingController();
     final phNumbController = useTextEditingController();
@@ -70,39 +68,8 @@ class _AppointmentPageRiverpodVersion2State
     String? selectedService,
         selectedDate,
         selectedTime,
-        // selectedEmail,
-        // selectedPhone,
         selectedLocation,
         selectedCodeorName;
-
-    // final isAppointmentButtonEnable = useState(false);
-    // final isServiceandDateContainValue = useState(false);
-
-    // useEffect(
-    //   () {
-    //     void listener() {
-    //       isAppointmentButtonEnable.value =
-    //           dateandtimeController.text.isNotEmpty;
-    //       // isServiceandDateContainValue.value =
-    //       //     selectedService!.isNotEmpty && selectedDate!.isNotEmpty;
-    //     }
-
-    //     dateandtimeController.addListener(listener);
-
-    //     // commentController.addListener(listener);
-
-    //     return () {
-    //       dateandtimeController.removeListener(listener);
-
-    //       // commentController.removeListener(listener);
-    //     };
-    //   },
-    //   [
-    //     dateandtimeController,
-
-    //     // commentController,
-    //   ],
-    // );
 
     return Scaffold(
       key: scaffoldKey,
@@ -482,10 +449,6 @@ class _AppointmentPageRiverpodVersion2State
                                         WidgetRef ref, Widget? child) {
                                       final services =
                                           ref.watch(servicesProvider);
-                                      String initService =
-                                          ref.watch(selectedServiceProvider);
-
-                                      // print(initService);
 
                                       return services.when(
                                         data: (data) {
@@ -654,11 +617,9 @@ class _AppointmentPageRiverpodVersion2State
                                             },
                                           ) ??
                                           '';
-                                      // setState(() {
+
                                       dateandtimeController.text =
                                           result.toString();
-
-                                      print(dateandtimeController.text);
 
                                       selectedDate = result.toString();
                                     },
@@ -758,16 +719,10 @@ class _AppointmentPageRiverpodVersion2State
                                         WidgetRef ref, Widget? child) {
                                       final services =
                                           ref.watch(servicesProvider);
-                                      String initService =
-                                          ref.watch(selectedServiceProvider);
 
                                       return services.when(
                                         data: (data) {
                                           return DropdownButtonFormField2(
-                                            value: initService == null ||
-                                                    initService.isEmpty
-                                                ? ''
-                                                : initService,
                                             icon: const Icon(
                                               Icons.arrow_drop_down,
                                               color: Colors.black45,
@@ -883,10 +838,7 @@ class _AppointmentPageRiverpodVersion2State
                                                       .notifier)
                                                   .state = val!.isNotEmpty;
                                             },
-                                            onSaved: (value) {
-                                              // selectedValue =
-                                              //     value.toString();
-                                            },
+                                            onSaved: (value) {},
                                           );
                                         },
                                         error: (error, stackTrace) {
@@ -945,11 +897,9 @@ class _AppointmentPageRiverpodVersion2State
                                             },
                                           ) ??
                                           '';
-                                      // setState(() {
+
                                       dateandtimeController.text =
                                           result.toString();
-
-                                      print(dateandtimeController.text);
 
                                       selectedDate = result.toString();
                                     },
@@ -1126,14 +1076,10 @@ class _AppointmentPageRiverpodVersion2State
                                     builder: (context, ref, child) {
                                       final locations =
                                           ref.watch(locationProvider);
-                                      // final locationSelected = ref.watch(
-                                      //     locationSelectedProvider);
 
                                       return locations.when(
                                         data: (data) {
-                                          // print(selectedLocation);
                                           return DropdownButtonFormField2(
-                                            // value: locationSelected,
                                             icon: const Icon(
                                               Icons.arrow_drop_down,
                                               color: Colors.black45,
@@ -1233,7 +1179,6 @@ class _AppointmentPageRiverpodVersion2State
                                               ),
                                             ),
                                             onChanged: (value) {
-                                              // selectedLocation = value;
                                               ref
                                                   .read(locationSelectedProvider
                                                       .notifier)
@@ -1241,12 +1186,8 @@ class _AppointmentPageRiverpodVersion2State
                                                       value.toString());
 
                                               selectedLocation = value;
-                                              //Do something when changing the item if you want.
                                             },
-                                            onSaved: (value) {
-                                              // selectedValue =
-                                              //     value.toString();
-                                            },
+                                            onSaved: (value) {},
                                           );
                                         },
                                         error: (error, stackTrace) {
@@ -1441,11 +1382,8 @@ class _AppointmentPageRiverpodVersion2State
                                           ],
                                           onChanged: (value) {
                                             selectedCodeorName = value;
-                                            //Do something when changing the item if you want.
                                           },
-                                          onSaved: (value) {
-                                            // selectedValue = value.toString();
-                                          },
+                                          onSaved: (value) {},
                                         ),
                                       ),
                                     ),
@@ -1589,11 +1527,9 @@ class _AppointmentPageRiverpodVersion2State
                                           controller: commentController,
                                           autofocus: true,
                                           obscureText: false,
-                                          // readOnly: true,
                                           decoration: InputDecoration(
                                             hintText:
                                                 "What would you like to gain from this session?",
-                                            // enabled: false,
                                             hintStyle: FlutterFlowTheme.of(
                                                     context)
                                                 .subtitle2
@@ -1703,10 +1639,8 @@ class _AppointmentPageRiverpodVersion2State
                                       services: selectedService.toString(),
                                       date:
                                           dateandtimeController.text.toString(),
-                                      // time: selectedTime.toString(),
                                       time:
                                           await ref.watch(timeSelectedProvider),
-
                                       location: selectedLocation.toString(),
                                       clientNameorCode:
                                           selectedCodeorName.toString(),

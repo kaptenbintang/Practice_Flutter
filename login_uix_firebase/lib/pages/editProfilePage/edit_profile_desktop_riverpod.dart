@@ -58,7 +58,6 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
               size: screenWidth / (width / 20),
             ),
             onPressed: () {
-              print('IconButton pressed ...');
               Navigator.pop(context);
             },
           ),
@@ -158,9 +157,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
+                            onPressed: () {},
                             text: 'Change Photo',
                             options: FFButtonOptions(
                               width: screenWidth / (width / 130),
@@ -531,12 +528,10 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                                 lastDate: DateTime.now());
 
                             if (pickedDate != null) {
-                              print(
-                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                              //pickedDate output format => 2021-03-10 00:00:00.000
                               String formattedDate =
                                   DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                              //formatted date output using intl package =>  2021-03-16
                               //you can implement different kind of Date Format here according to your requirement
 
                               dateofbirthController.text =

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_desktop.dart';
-import 'package:login_uix_firebase/pages/registerPage/register_mobile.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_mobile_riverpod.dart';
 
 class RegisterPage extends StatefulWidget {

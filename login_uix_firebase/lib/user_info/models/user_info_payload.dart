@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart' show immutable;
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
 
+// Object model to store userinfo that later uploaded to firestore
+
 @immutable
 class UserInfoPayload extends MapView<String, dynamic> {
   UserInfoPayload({

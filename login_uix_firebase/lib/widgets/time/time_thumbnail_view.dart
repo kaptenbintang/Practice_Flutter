@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow_theme.dart';
-import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/model/time_models/time.dart';
-import 'package:login_uix_firebase/provider/appointment_page/time_auto_change_provider.dart';
 
 import '../../helper/responsive.dart';
 
@@ -28,8 +26,6 @@ class TimesThumbnailView extends StatelessWidget {
                 : 1280;
     return Consumer(
       builder: (context, ref, child) {
-        // final selected = ref.watch(timeChangeProvider)!;
-        // serviceTime[1] = selected;
         return InkWell(
           onTap: onTapped,
           child: Padding(
@@ -40,7 +36,6 @@ class TimesThumbnailView extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     blurRadius: screenWidth / (width / 12),
-                    // color: Color(0x33000000),
                     color: serviceTime.isSelected
                         ? Colors.yellow
                         : Color(0x33000000),

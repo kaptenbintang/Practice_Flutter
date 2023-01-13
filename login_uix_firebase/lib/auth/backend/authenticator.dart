@@ -1,27 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/auth/models/auth_result.dart';
 import 'package:login_uix_firebase/model/auth/user_id.dart';
-import 'package:login_uix_firebase/pages/landing_layout.dart';
 
 class Authenticator {
   const Authenticator();
 
   // getters
 
+  // Get bool value if user have a value or null
   bool get isAlreadyLoggedIn => userId != null;
+  // Get current user Id from FirebaseAuth
   UserId? get userId => FirebaseAuth.instance.currentUser?.uid;
+  // Get current user name from FirebaseAuth
   String get displayName =>
       FirebaseAuth.instance.currentUser?.displayName ?? '';
+  // Get current user email from FirebaseAuth
   String? get email => FirebaseAuth.instance.currentUser?.email;
 
+// Function for logout current user
   Future<void> logOut() async {
     await FirebaseAuth.instance.signOut();
-    // await GoogleSignIn().signOut();
-    // await FacebookAuth.instance.logOut();
   }
 
+// Function for login with email and password inputed from login page UI on FirebaseAuth
   Future<AuthResult> loginWithEmailPassword(
       String email, String password, BuildContext context) async {
     try {
@@ -35,21 +37,21 @@ class Authenticator {
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
+              return const AlertDialog(
                 content: Text("No user found for that email."),
               );
             });
-        print('No user found for that email.');
+
         return AuthResult.failure;
       } else if (e.code == 'wrong-password') {
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
+              return const AlertDialog(
                 content: Text("Wrong password provided for that user."),
               );
             });
-        print('Wrong password provided for that user.');
+
         return AuthResult.failure;
       } else {
         showDialog(
@@ -64,6 +66,8 @@ class Authenticator {
     }
   }
 
+  // Function for create new account on FirebaseAuth using email and password inputed from user in register page UI
+
   Future<AuthResult> createWithEmailandPassword(
       String email, String password, String name) async {
     try {
@@ -74,19 +78,14 @@ class Authenticator {
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
       return AuthResult.success;
     } on FirebaseAuthException catch (e) {
-      final email = e.email;
-
       switch (e.code) {
         case 'email-already-in-use':
-          print('$email invalid email');
           return AuthResult.failure;
 
         case 'invalid-email':
-          print('$email this email not exist');
           return AuthResult.failure;
 
         case 'weak-password':
-          print('Password is wrong for this $email');
           return AuthResult.failure;
       }
       return AuthResult.failure;

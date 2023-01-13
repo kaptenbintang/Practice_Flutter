@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show immutable;
 
+// field name at Appoitment table firestore
 @immutable
 class AppointmentKey {
   static const clientId = 'clientId';

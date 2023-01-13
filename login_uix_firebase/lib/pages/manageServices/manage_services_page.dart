@@ -1,7 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/manageServices/manage_services_desktop.dart';
 import 'package:login_uix_firebase/pages/manageServices/manage_services_mobile.dart';
 import '../../helper/responsive.dart';

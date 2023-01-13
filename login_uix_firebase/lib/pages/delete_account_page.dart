@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:login_uix_firebase/auth/controller_page.dart';
+
 import 'package:login_uix_firebase/main.dart';
 import 'package:login_uix_firebase/widgets/profile_text_input.dart';
 
@@ -27,7 +25,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
   @override
   void initState() {
     emailController.text = user!.email.toString();
-    // buttonOpen = false;
+
     super.initState();
   }
 
@@ -48,7 +46,6 @@ class _DeleteAccountState extends State<DeleteAccount> {
       await user?.delete();
       auth.signOut();
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
       await showDialog(
           context: context,
           builder: (context) {
@@ -78,7 +75,6 @@ class _DeleteAccountState extends State<DeleteAccount> {
 
       return;
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
       showDialog(
           context: context,
           builder: (context) {
@@ -115,10 +111,6 @@ class _DeleteAccountState extends State<DeleteAccount> {
             obscure: true,
             readonly: false,
           ),
-          // ElevatedButton(
-          //   onPressed: authChenk,
-          //   child: const Text("Re Login"),
-          // ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: authChenk,
@@ -133,7 +125,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    // TODO: implement dispose
+
     super.dispose();
   }
 }

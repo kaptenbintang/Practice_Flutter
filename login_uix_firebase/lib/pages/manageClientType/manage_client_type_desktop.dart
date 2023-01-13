@@ -2,9 +2,6 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
@@ -23,7 +20,7 @@ class ManageClientTypeDesktop extends StatefulWidget {
 class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
   TextEditingController? textController;
   DataService service = DataService();
-  Future<List<ClientData>>? ClientList;
+  Future<List<ClientData>>? clientList;
   Map<String, dynamic>? currentClientData;
   List<ClientData>? retrievedClientList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -38,23 +35,19 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
 
   String? selectedValueClient;
   String? selectedValue;
-  int _currentSortColumn = 0;
-  bool _isAscending = true;
 
   List<bool>? selected;
 
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
-    ClientList = service.retrieveClientType();
+    clientList = service.retrieveClientType();
     retrievedClientList = await service.retrieveClientType();
     selected =
         List<bool>.generate(retrievedClientList!.length, (int index) => false);
@@ -64,7 +57,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
     retrievedClientList = await service.retrieveClientType();
 
     setState(() {
-      ClientList = service.retrieveClientType();
+      clientList = service.retrieveClientType();
     });
   }
 
@@ -216,7 +209,6 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                               ),
                                               onPressed: () {
                                                 dialogAddNewClientType(context);
-                                                print('IconButton pressed ...');
                                               },
                                             ),
                                           ),
@@ -348,9 +340,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                                       .primaryText,
                                               size: screenWidth / (width / 25),
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -425,7 +415,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                                       scrollDirection: Axis.vertical,
                                       children: [
                                         FutureBuilder(
-                                            future: ClientList,
+                                            future: clientList,
                                             builder: (context,
                                                 AsyncSnapshot<List<ClientData>>
                                                     snapshot) {
@@ -555,7 +545,6 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                           0, 0, screenWidth / (width / 5), 0),
                       child: FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
                           dialogEditClientType(context);
                           setState(() {
                             userId = snapshot.id;
@@ -588,7 +577,6 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                           screenWidth / (width / 5), 0, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
                           service.deleteClientType(
                               context, snapshot.id.toString());
                           _pullRefresh();
@@ -632,7 +620,7 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
             : ResponsiveWidget.isLargeScreen(context)
                 ? 1920
                 : 1280;
-    List<bool> listOfValue = [true, false];
+
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -649,8 +637,8 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -685,10 +673,6 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
@@ -726,8 +710,8 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -768,10 +752,6 @@ class _ManageClientTypeDesktopState extends State<ManageClientTypeDesktop> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )

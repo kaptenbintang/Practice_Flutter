@@ -3,6 +3,8 @@ import 'package:login_uix_firebase/auth/provider/auth_state_provider.dart';
 import 'package:login_uix_firebase/provider/appointment_page/appointment_upload_provider.dart';
 import 'package:login_uix_firebase/provider/profile_provider/edit_user_provider.dart';
 
+//Watching provider if something change , if is does show loading animations
+
 final isLoadingProvider = Provider<bool>((ref) {
   final authState = ref.watch(authStateProvider);
   final isEditProfile = ref.watch(editUserProvider);
