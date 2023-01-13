@@ -10,6 +10,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/controllers/navigation_controller.dart';
+import 'package:recase/recase.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -19,6 +20,7 @@ import '../../helper/database_service.dart';
 import '../../helper/responsive.dart';
 import '../../model/user_data.dart';
 import '../../routing/routes.dart';
+import '../../widgets/alert_confirm.dart';
 
 class ManageClientDesktop extends StatefulWidget {
   const ManageClientDesktop({super.key});
@@ -37,7 +39,7 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<Map<String, dynamic>>? listofColumn;
   UserData? dataU;
-
+  final controllerSearch = TextEditingController();
   final _emailController = TextEditingController();
   final _clientTypeController = TextEditingController();
   final _rolesController = TextEditingController();
@@ -117,6 +119,14 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
 
     setState(() {
       userList = service.retrieveClientNotDeleted();
+    });
+  }
+
+  Future search() async {
+    retrievedUserList =
+        await service.searchUser(controllerSearch.text.sentenceCase);
+    setState(() {
+      userList = service.searchUser(controllerSearch.text.sentenceCase);
     });
   }
 
@@ -744,35 +754,99 @@ class _ManageClientDesktopState extends State<ManageClientDesktop> {
                       ),
                     ),
                     //Delete Button
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            screenWidth / (width / 5), 0, 0, 0),
-                        child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
-                          text: 'Delete',
-                          options: FFButtonOptions(
-                            width: screenWidth / (width / 63),
-                            height: screenWidth / (width / 30),
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            textStyle: GoogleFonts.getFont(
-                              'Roboto',
-                              color: FlutterFlowTheme.of(context).alternate,
-                              fontWeight: FontWeight.w600,
-                              fontSize: screenWidth / (width / 12),
+                    if (currentUser?.uid.toString != snapshot.id.toString &&
+                        snapshot.markDeleted == false)
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 5), 0, 0, 0),
+                          child: FFButtonWidget(
+                            onPressed: () {
+                              print('Button pressed ...');
+                              showDialog(
+                                context: context,
+                                builder: (contextm) {
+                                  return AlertDialogConfirm(
+                                      type: "Remove",
+                                      id: snapshot.id as String,
+                                      contexts: context,
+                                      textDesc: 'Are you sure?');
+                                },
+                              ).whenComplete(
+                                () => Future.delayed(
+                                  Duration(seconds: 2),
+                                  () {
+                                    controllerSearch.text.isNotEmpty
+                                        ? search()
+                                        : _pullRefresh();
+                                  },
+                                ),
+                              );
+                            },
+                            text: 'Delete',
+                            options: FFButtonOptions(
+                              width: screenWidth / (width / 63),
+                              height: screenWidth / (width / 30),
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              textStyle: GoogleFonts.getFont(
+                                'Roboto',
+                                color: FlutterFlowTheme.of(context).alternate,
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth / (width / 12),
+                              ),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                width: 2.5,
+                              ),
+                              borderRadius: screenWidth / (width / 8),
                             ),
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).alternate,
-                              width: 2.5,
-                            ),
-                            borderRadius: screenWidth / (width / 8),
                           ),
                         ),
                       ),
-                    ),
+                    // if (currentUser?.uid.toString != snapshot.id.toString &&
+                    //     snapshot.markDeleted == true)
+                    //   Padding(
+                    //     padding: EdgeInsetsDirectional.fromSTEB(
+                    //         screenWidth / (width / 5), 0, 0, 0),
+                    //     child: FFButtonWidget(
+                    //       onPressed: () {
+                    //         print('Button pressed ...');
+                    //         service
+                    //             .markdeleteRestoreUser(
+                    //                 context, snapshot.id as String)
+                    //             .whenComplete(
+                    //               () => Future.delayed(
+                    //                 Duration(seconds: 2),
+                    //                 () {
+                    //                   controllerSearch.text.isNotEmpty
+                    //                       ? search()
+                    //                       : _pullRefresh();
+                    //                 },
+                    //               ),
+                    //             );
+                    //       },
+                    //       text: 'Restore',
+                    //       options: FFButtonOptions(
+                    //           width: screenWidth / (width / 75),
+                    //           height: screenWidth / (width / 35),
+                    //           color: FlutterFlowTheme.of(context)
+                    //               .secondaryBackground,
+                    //           textStyle: FlutterFlowTheme.of(context)
+                    //               .subtitle2
+                    //               .override(
+                    //                 fontFamily: 'Poppins',
+                    //                 color:
+                    //                     FlutterFlowTheme.of(context).alternate,
+                    //                 fontSize: screenWidth / (width / 15),
+                    //               ),
+                    //           borderSide: BorderSide(
+                    //             color: FlutterFlowTheme.of(context).alternate,
+                    //             width: 2.5,
+                    //           ),
+                    //           borderRadius: screenWidth / (width / 8)),
+                    //     ),
+                    //   ),
                     //Change Password
                     Expanded(
                       flex: 2,

@@ -695,16 +695,25 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                         },
                         items: [
                           DropdownMenuItem(
-                            child: Text('Action'),
+                            child: Text(
+                              'Action',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
                             value: "Action",
                           ),
                           if (authoRoles['canWrite'] != false)
                             DropdownMenuItem(
-                              child: Text('Edit'),
+                              child: Text(
+                                'Edit',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
                               value: "Edit",
                             ),
                           DropdownMenuItem(
-                            child: Text('Change Password'),
+                            child: Text(
+                              'Change Password',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
                             value: "ResetPassword",
                           ),
                         ],
@@ -897,17 +906,26 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                         },
                         items: [
                           DropdownMenuItem(
+                            child: Text(
+                              'Action',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
                             value: "Action",
-                            child: Text('Action'),
                           ),
                           if (authoRoles['canWrite'] != false)
                             DropdownMenuItem(
+                              child: Text(
+                                'Edit',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
                               value: "Edit",
-                              child: Text('Edit'),
                             ),
                           DropdownMenuItem(
+                            child: Text(
+                              'Change Password',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
                             value: "ResetPassword",
-                            child: Text('Change Password'),
                           ),
                         ],
                       ),

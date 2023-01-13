@@ -720,26 +720,26 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Add new services"),
-            content: SingleChildScrollView(
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: <Widget>[
-                  Positioned(
-                    right: -(Dimensions.width10 * 4),
-                    top: -(Dimensions.height20 * 4),
-                    child: InkResponse(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: CircleAvatar(
-                        child: Icon(Icons.close),
-                        backgroundColor: Colors.red,
-                      ),
+            title: const Text("Add new Practioner"),
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -(Dimensions.width10 * 4),
+                  top: -(Dimensions.height20 * 4),
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: CircleAvatar(
+                      child: Icon(Icons.close),
+                      backgroundColor: Colors.red,
                     ),
                   ),
-                  Form(
-                    key: _formKey,
+                ),
+                Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -919,8 +919,8 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         });
