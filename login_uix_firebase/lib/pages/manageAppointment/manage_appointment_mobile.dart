@@ -1,16 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
 import '../../model/practioner_data.dart';
 
@@ -25,7 +21,7 @@ class ManageAppointmentMobile extends StatefulWidget {
 class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
   TextEditingController? textController;
   DataService service = DataService();
-  Future<List<PractionerData>>? PractionerList;
+  Future<List<PractionerData>>? practionerList;
   Map<String, dynamic>? currentPractionerData;
   List<PractionerData>? retrievedPractionerList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -65,15 +61,13 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
-    PractionerList = service.retrievePractionerAll();
+    practionerList = service.retrievePractionerAll();
     retrievedPractionerList = await service.retrievePractionerAll();
     selected = List<bool>.generate(
         retrievedPractionerList!.length, (int index) => false);
@@ -83,7 +77,7 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
     retrievedPractionerList = await service.retrievePractionerAll();
 
     setState(() {
-      PractionerList = service.retrievePractionerAll();
+      practionerList = service.retrievePractionerAll();
     });
   }
 
@@ -303,10 +297,7 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                                                               .primaryText,
                                                       size: 20,
                                                     ),
-                                                    onPressed: () {
-                                                      print(
-                                                          'IconButton pressed ...');
-                                                    },
+                                                    onPressed: () {},
                                                   ),
                                                 ),
                                               ],
@@ -324,9 +315,7 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                                                       .primaryColor,
                                               size: 20,
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -369,7 +358,7 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 16, 0, 0),
                                         child: FutureBuilder(
-                                            future: PractionerList,
+                                            future: practionerList,
                                             builder: (context,
                                                 AsyncSnapshot<
                                                         List<PractionerData>>
@@ -443,8 +432,6 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
 
   _buildTableUser(BuildContext context, PractionerData snapshot,
       List<PractionerData>? user, int indexs) {
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
       child: Container(
@@ -510,20 +497,17 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                           size: 20,
                         ),
                         onChanged: (value) {
-                          print(value);
                           // if value doesnt contain just close the dropDown
                           if (value == null) {
                             dropDownFocus.unfocus();
                           } else {
                             switch (value) {
                               case "Remove":
-                                print('Button pressed ...');
                                 service.deletePractioners(
                                     context, snapshot.id.toString());
                                 _pullRefresh();
                                 break;
                               case "Edit":
-                                print('Button pressed ...');
                                 dialogEditPractioner(context);
                                 setState(() {
                                   userId = snapshot.id;
@@ -543,24 +527,18 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
-                            child: Text('Action'),
                             value: "Action",
+                            child: Text('Action'),
                           ),
                           DropdownMenuItem(
-                            child: Text('Edit'),
                             value: "Edit",
+                            child: Text('Edit'),
                           ),
                           DropdownMenuItem(
-                            child: Text('Remove'),
                             value: "Remove",
+                            child: Text('Remove'),
                           ),
                         ],
                       ),
@@ -596,8 +574,8 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -701,23 +679,13 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                             var time = await showTimePicker(
                                 context: context, initialTime: TimeOfDay.now());
 
-                            // DateTimeRange? pickedRange =
-                            //     await showDateRangePicker(
-                            //   context: context,
-                            //   firstDate: DateTime.now(),
-                            //   lastDate: DateTime(2023),
-                            //   // initialDateRange: dateRange.value
-                            // );
-
                             if (pickedDate != null &&
                                 // pickedRange != null &&
                                 time != null) {
-                              print(
-                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                              //pickedDate output format => 2021-03-10 00:00:00.000
                               String formattedDate =
                                   DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                              //formatted date output using intl package =>  2021-03-16
                               //you can implement different kind of Date Format here according to your requirement
                               setState(() {
                                 _schedulePractioner.text = formattedDate +
@@ -799,8 +767,8 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -979,10 +947,6 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )

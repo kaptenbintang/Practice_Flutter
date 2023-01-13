@@ -7,8 +7,8 @@ import 'package:login_uix_firebase/pages/historybookingpage/history_booking_mobi
 
 import '../../helper/responsive.dart';
 
-class historyBookingRiverpod extends ConsumerStatefulWidget {
-  const historyBookingRiverpod({super.key});
+class HistoryBookingRiverpod extends ConsumerStatefulWidget {
+  const HistoryBookingRiverpod({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -16,11 +16,11 @@ class historyBookingRiverpod extends ConsumerStatefulWidget {
 }
 
 class _historyBookingRiverpodState
-    extends ConsumerState<historyBookingRiverpod> {
+    extends ConsumerState<HistoryBookingRiverpod> {
   @override
   Widget build(BuildContext context) {
     if (ResponsiveWidget.isLargeScreen(context)) {
-      return historyBookingDesktop();
+      return HistoryBookingDesktop();
     } else {
       return historyBookingMobile();
     }

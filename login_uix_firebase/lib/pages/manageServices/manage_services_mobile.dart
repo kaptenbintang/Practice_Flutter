@@ -4,14 +4,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
 import '../../model/services_data.dart';
 
@@ -25,7 +22,7 @@ class ManageServicesMobile extends StatefulWidget {
 class _ManageServicesMobileState extends State<ManageServicesMobile> {
   TextEditingController? textController;
   DataService service = DataService();
-  Future<List<ServicesData>>? ServicesList;
+  Future<List<ServicesData>>? servicesList;
   Map<String, dynamic>? currentServicesData;
   List<ServicesData>? retrievedServicesList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -33,7 +30,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
   ServicesData? dataU;
   final FocusNode dropDownFocus = FocusNode();
 
-  final _categoryNameController = TextEditingController();
   final _durationController = TextEditingController();
   final _serviceNameController = TextEditingController();
   final _priceController = TextEditingController();
@@ -45,23 +41,19 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
   String? priceID;
   String? selectedValueClient;
   String? selectedValue;
-  int _currentSortColumn = 0;
-  bool _isAscending = true;
 
   List<bool>? selected;
 
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
-    ServicesList = service.retrieveServices();
+    servicesList = service.retrieveServices();
     retrievedServicesList = await service.retrieveServices();
     selected = List<bool>.generate(
         retrievedServicesList!.length, (int index) => false);
@@ -71,7 +63,7 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
     retrievedServicesList = await service.retrieveServices();
 
     setState(() {
-      ServicesList = service.retrieveServices();
+      servicesList = service.retrieveServices();
     });
   }
 
@@ -250,9 +242,7 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                                               .primaryText,
                                           size: Dimensions.font20,
                                         ),
-                                        onPressed: () {
-                                          print('IconButton pressed ...');
-                                        },
+                                        onPressed: () {},
                                       ),
                                     ),
                                   ],
@@ -270,7 +260,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                                   size: Dimensions.font20,
                                 ),
                                 onPressed: () {
-                                  print('IconButton pressed ...');
                                   dialogAddNewServices(context);
                                 },
                               ),
@@ -316,7 +305,7 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0, Dimensions.height08 * 2, 0, 0),
                             child: FutureBuilder(
-                                future: ServicesList,
+                                future: servicesList,
                                 builder: (context,
                                     AsyncSnapshot<List<ServicesData>>
                                         snapshot) {
@@ -373,8 +362,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
 
   _buildTableUser(BuildContext context, ServicesData snapshot,
       List<ServicesData>? user, int indexs) {
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height10 / 5),
       child: Container(
@@ -451,7 +438,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                           size: Dimensions.font20,
                         ),
                         onChanged: (value) {
-                          print(value);
                           // if value doesnt contain just close the dropDown
                           if (value == null) {
                             dropDownFocus.unfocus();
@@ -463,7 +449,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                                 _pullRefresh();
                                 break;
                               case "Edit":
-                                print('Button pressed ...');
                                 dialogEditServices(context);
                                 setState(() {
                                   userId = snapshot.id;
@@ -477,12 +462,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
                             child: Text('Action'),
@@ -630,10 +609,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
@@ -747,7 +722,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                                   categoryNameID = value!;
                                 });
                               },
-                              // selectedItem: categoryNameID,
                             ));
                           },
                         ),
@@ -787,10 +761,6 @@ class _ManageServicesMobileState extends State<ManageServicesMobile> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )

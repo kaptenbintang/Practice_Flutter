@@ -45,7 +45,6 @@ class EditProfileMobileWidgetRiverpod extends ConsumerWidget {
             size: 20,
           ),
           onPressed: () {
-            print('IconButton pressed ...');
             Navigator.pop(context);
           },
         ),
@@ -118,9 +117,7 @@ class EditProfileMobileWidgetRiverpod extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
+                            onPressed: () {},
                             text: 'Change Photo',
                             options: FFButtonOptions(
                               width: 130,

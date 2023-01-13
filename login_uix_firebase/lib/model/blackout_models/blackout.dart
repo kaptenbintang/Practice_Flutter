@@ -1,40 +1,4 @@
-import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-// @immutable
-// class Blackout {
-//   final String blackoutId;
-//   final String valueId;
-//   final String valueName;
-
-//   Blackout({
-//     required this.blackoutId,
-//     required Map<String, dynamic> json,
-//   })  : valueId = json[BlackoutKey.valueId],
-//         valueName = json[BlackoutKey.valueName];
-
-//   // bool get allowsLikes => postSettings[PostSetting.allowLikes] ?? false;
-//   // bool get allowsComments => postSettings[PostSetting.allowComments] ?? false;
-// }
-
-// // class DayName {
-// //   const DayName(this.id, this.name);
-// //   final String name;
-// //   final int id;
-// // }
-
-// class blackoutPayload extends MapView<String, dynamic> {
-//   blackoutPayload({
-//     required UserId userId,
-//     required String blackout,
-//   }) : super(
-//           {
-//             BlackoutKey.valueName: userId,
-//             BlackoutKey.valueId: blackout,
-//           },
-//         );
-// }
 
 class DayName {
   final String? uniqueid;

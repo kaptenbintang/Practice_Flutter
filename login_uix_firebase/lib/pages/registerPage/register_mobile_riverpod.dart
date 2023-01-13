@@ -3,7 +3,6 @@
 import 'dart:math';
 
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
@@ -223,11 +222,6 @@ class RegisterMobileRiverpod extends ConsumerWidget {
                             color: Colors.blue,
                             size: Dimensions.iconSize24,
                           ),
-                          // icon: Icon(
-                          //   Icons.calendar_today,
-                          //   color: Colors.blue,
-                          //size: Dimensions.font20,
-                          // ),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius:
@@ -256,12 +250,10 @@ class RegisterMobileRiverpod extends ConsumerWidget {
                               lastDate: DateTime.now());
 
                           if (pickedDate != null) {
-                            print(
-                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            //pickedDate output format => 2021-03-10 00:00:00.000
                             String formattedDate =
                                 DateFormat('yyyy-MM-dd').format(pickedDate);
-                            print(
-                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //formatted date output using intl package =>  2021-03-16
                             //you can implement different kind of Date Format here according to your requirement
 
                             _dateofbirthController.text =
@@ -343,7 +335,6 @@ class RegisterMobileRiverpod extends ConsumerWidget {
                                 borderSide: BorderSide(color: Colors.blue),
                                 borderRadius:
                                     BorderRadius.circular(Dimensions.radius12)),
-                            // hintText: 'Email',
                             fillColor: Colors.grey[200],
                             filled: true),
                         validator: (value) {
@@ -391,7 +382,6 @@ class RegisterMobileRiverpod extends ConsumerWidget {
                                           BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(
                                           Dimensions.radius12)),
-                                  // hintText: 'Password',
                                   fillColor: Colors.grey[200],
                                   filled: true,
                                   suffix: InkWell(
@@ -467,7 +457,6 @@ class RegisterMobileRiverpod extends ConsumerWidget {
                                   borderSide: BorderSide(color: Colors.blue),
                                   borderRadius: BorderRadius.circular(
                                       Dimensions.radius12)),
-                              // hintText: 'Confirm Password',
                               fillColor: Colors.grey[200],
                               filled: true,
                               suffix: InkWell(

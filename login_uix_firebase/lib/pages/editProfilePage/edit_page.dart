@@ -1,8 +1,5 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:login_uix_firebase/pages/editProfilePage/edit_profile_desktop.dart';
+import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_profile_desktop_riverpod.dart';
-import 'package:login_uix_firebase/pages/editProfilePage/edit_profile_mobile.dart';
 import 'package:login_uix_firebase/pages/editProfilePage/edit_profile_mobile_riverpod.dart';
 
 import '../../helper/responsive.dart';

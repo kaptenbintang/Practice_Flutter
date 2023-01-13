@@ -5,6 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/provider/profile_provider/user_profile_provider.dart';
 
+//function to provide what roles that current user have on firestore
+
 final getRolesPrivProvider = StreamProvider.autoDispose<Map>((ref) {
   final userData = ref
       .watch(

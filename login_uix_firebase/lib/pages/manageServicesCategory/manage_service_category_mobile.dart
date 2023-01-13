@@ -6,8 +6,6 @@ import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
 import '../../model/serviceCategory_data.dart';
 
@@ -38,22 +36,18 @@ class _ManageServiceCategoryMobileState
 
   String? selectedValueClient;
   String? selectedValue;
-  int _currentSortColumn = 0;
-  bool _isAscending = true;
 
   List<bool>? selected;
 
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveServiceCategory()).cast<Map<String, dynamic>>();
     sCategoryList = service.retrieveServiceCategory();
     retrievedsCategoryList = await service.retrieveServiceCategory();
     selected = List<bool>.generate(
@@ -367,8 +361,6 @@ class _ManageServiceCategoryMobileState
 
   _buildTableUser(BuildContext context, serviceCategoryClass snapshot,
       List<serviceCategoryClass>? user, int indexs) {
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height08 / 4),
       child: Container(
@@ -443,12 +435,6 @@ class _ManageServiceCategoryMobileState
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
                             child: Text('Action'),
@@ -531,10 +517,6 @@ class _ManageServiceCategoryMobileState
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
@@ -610,10 +592,6 @@ class _ManageServiceCategoryMobileState
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )

@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../helper/responsive.dart';
@@ -14,7 +12,7 @@ import '../widgets/top_nav.dart';
 
 class LandingLayout extends StatelessWidget {
   LandingLayout({super.key});
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {

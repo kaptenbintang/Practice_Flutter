@@ -3,8 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-import 'package:login_uix_firebase/auth/backend/authenticator.dart';
-import 'package:login_uix_firebase/pages/profile_page.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -38,7 +36,7 @@ class _changePWPageState extends State<changePWPage> {
       try {
         await currentUser!.updatePassword(newPassword);
         FirebaseAuth.instance.signOut();
-        // ignore: use_build_context_synchronously
+
         navigatorKey.currentState!.popUntil((route) => route.isFirst);
         showDialog(
             context: context,
@@ -48,10 +46,6 @@ class _changePWPageState extends State<changePWPage> {
                     "Your password has been changed & Please login again!"),
               );
             });
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //   backgroundColor: Colors.black26,
-        //   content: Text("Your password has been changed & login again!"),
-        // ));
       } catch (error) {}
     }
   }
@@ -76,7 +70,6 @@ class _changePWPageState extends State<changePWPage> {
   void dispose() {
     newPasswordController.dispose();
     newConfirmPasswordController.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -110,12 +103,10 @@ class _changePWPageState extends State<changePWPage> {
                 size: screenWidth / (width / 20),
               ),
               onPressed: () {
-                print('IconButton pressed ...');
                 Navigator.pop(context);
               },
             ),
           ),
-
           title: Padding(
             padding: EdgeInsets.symmetric(vertical: screenWidth / (width / 12)),
             child: Text(
@@ -127,8 +118,6 @@ class _changePWPageState extends State<changePWPage> {
                   ),
             ),
           ),
-
-          // actions: [],
           centerTitle: true,
           elevation: 2,
         ),
@@ -175,8 +164,6 @@ class _changePWPageState extends State<changePWPage> {
                     child: SizedBox(
                       width: 500,
                       child: TextFormField(
-                        // maxLines: 1,
-                        // maxLength: 6,
                         obscureText: _isHidden,
                         decoration: InputDecoration(
                           hintText: "Enter your new password",
@@ -236,8 +223,6 @@ class _changePWPageState extends State<changePWPage> {
                     child: SizedBox(
                       width: 500,
                       child: TextFormField(
-                        // maxLines: 1,
-                        // maxLength: 3,
                         obscureText: _isHidden,
                         decoration: InputDecoration(
                           hintText: "Confirm your password",

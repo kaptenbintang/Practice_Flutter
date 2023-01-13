@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:flutter/material.dart';
+// object model for storaging UserData data from firestore
 
 class UserData {
   final String? id;

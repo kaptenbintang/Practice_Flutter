@@ -40,7 +40,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
   final _createdAt = TextEditingController();
 
   String? userId;
-  String? PractionerNameID;
+  String? practionerNameID;
   String? locationID;
   String? servicesID;
   String? dateandtimeID;
@@ -60,7 +60,6 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
@@ -299,9 +298,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                                                       .primaryText,
                                               size: 25,
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -568,7 +565,6 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                       child: FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
                           dialogEditAppointment(context);
                           setState(() {
                             userId = snapshot.clientId;
@@ -615,7 +611,6 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                       padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          print('Button pressed ...');
                           await service.deleteAppointment(
                               context, snapshot.clientId.toString());
                           _pullRefresh();
@@ -671,8 +666,8 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -814,10 +809,6 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
@@ -829,133 +820,4 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
           );
         });
   }
-
-  // Future<dynamic> dialogaddPractioner(BuildContext context) {
-  //   final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance
-  //       .collection('servicesCategory')
-  //       .snapshots(includeMetadataChanges: true);
-  //   return showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: const Text("Add new services"),
-  //           content: Stack(
-  //             clipBehavior: Clip.none,
-  //             children: <Widget>[
-  //               Positioned(
-  //                 right: -40.0,
-  //                 top: -80.0,
-  //                 child: InkResponse(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                   child: CircleAvatar(
-  //                     child: Icon(Icons.close),
-  //                     backgroundColor: Colors.red,
-  //                   ),
-  //                 ),
-  //               ),
-  //               Form(
-  //                 key: _formKey,
-  //                 child: Column(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: <Widget>[
-  //                     Padding(
-  //                       padding: EdgeInsets.all(8.0),
-  //                       child: TextFormField(
-  //                         controller: _clientcodeorname,
-  //                         decoration: InputDecoration(
-  //                           labelText: "Enter name/code",
-  //                         ),
-  //                         validator: (value) {
-  //                           if (value!.isEmpty) {
-  //                             return "Enter name/code";
-  //                           } else {
-  //                             return null;
-  //                           }
-  //                         },
-  //                       ),
-  //                     ),
-  //                     Padding(
-  //                       padding: EdgeInsets.all(8.0),
-  //                       child: TextFormField(
-  //                         controller: _clientphnumber,
-  //                         decoration: InputDecoration(
-  //                           labelText: "Enter phone number",
-  //                         ),
-  //                         validator: (value) {
-  //                           if (value!.isEmpty) {
-  //                             return "Enter correct phone number";
-  //                           } else {
-  //                             return null;
-  //                           }
-  //                         },
-  //                       ),
-  //                     ),
-  //                     Padding(
-  //                       padding: EdgeInsets.all(8.0),
-  //                       child: TextFormField(
-  //                         controller: _clientemail,
-  //                         decoration: InputDecoration(
-  //                           labelText: "Enter client email",
-  //                         ),
-  //                         validator: (value) {
-  //                           if (value!.isEmpty) {
-  //                             return "Enter email";
-  //                           } else {
-  //                             return null;
-  //                           }
-  //                         },
-  //                       ),
-  //                     ),
-  //                     Padding(
-  //                       padding: EdgeInsets.all(8.0),
-  //                       child: TextFormField(
-  //                         controller: _statusAppointment,
-  //                         decoration: InputDecoration(
-  //                           labelText: "Status Appointment",
-  //                         ),
-  //                         validator: (value) {
-  //                           if (value!.isEmpty) {
-  //                             return "Status Appointment";
-  //                           } else {
-  //                             return null;
-  //                           }
-  //                         },
-  //                       ),
-  //                     ),
-  //                     SizedBox(
-  //                       height: 40,
-  //                     ),
-  //                     Padding(
-  //                       padding: const EdgeInsets.all(8.0),
-  //                       child: ElevatedButton(
-  //                         child: Text("Submit"),
-  //                         onPressed: () async {
-  //                           if (_formKey.currentState!.validate()) {
-  //                             AppointmentData appointmentData = AppointmentData(
-  //                                 id: userId,
-  //                                 clientNameorCode: _clientcodeorname.text,
-  //                                 clientphNumber: _clientphnumber.text,
-  //                                 clientEmail: _clientemail.text,
-  //                                 statusAppointment: _statusAppointment.text);
-  //                             await service.addAppointment(appointmentData);
-  //                             Navigator.pop(context);
-  //                             _pullRefresh();
-  //                           }
-
-  //                           // if (_formKey.currentState!.validate()) {
-  //                           //   _formKey.currentState!.save();
-  //                           // }
-  //                         },
-  //                       ),
-  //                     )
-  //                   ],
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
 }

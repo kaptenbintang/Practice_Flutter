@@ -2,7 +2,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow.dart';
 
 import '../helper/responsive.dart';
@@ -22,7 +21,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _emailController.dispose();
     super.dispose();
   }
@@ -32,15 +30,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
       Util.routeToWidget(context, CheckEmailView());
-      // showDialog(
-      //     context: context,
-      //     builder: (context) {
-      //       return AlertDialog(
-      //         content: Text('Password reset link sent! Check your email!'),
-      //       );
-      //     });
     } on FirebaseAuthException catch (e) {
-      print(e);
       showDialog(
           context: context,
           builder: (context) {
@@ -98,8 +88,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     width: 500,
                     child: TextFormField(
                       controller: _emailController,
-                      // maxLines: 1,
-                      // maxLength: 6,
                       decoration: InputDecoration(
                         hintText: "Enter your email address",
                         hintStyle: FlutterFlowTheme.of(context).subtitle2,

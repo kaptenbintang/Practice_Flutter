@@ -1,9 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
@@ -23,7 +20,7 @@ class ManagePractionerDesktop extends StatefulWidget {
 class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
   TextEditingController? textController;
   DataService service = DataService();
-  Future<List<PractionerData>>? PractionerList;
+  Future<List<PractionerData>>? practionerList;
   Map<String, dynamic>? currentPractionerData;
   List<PractionerData>? retrievedPractionerList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -62,7 +59,6 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
@@ -70,7 +66,7 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
 
   Future<void> _initRetrieval() async {
     // listofColumn = (await service.retrieveClientType()).cast<Map<String, dynamic>>();
-    PractionerList = service.retrievePractionerAll();
+    practionerList = service.retrievePractionerAll();
     retrievedPractionerList = await service.retrievePractionerAll();
     selected = List<bool>.generate(
         retrievedPractionerList!.length, (int index) => false);
@@ -80,7 +76,7 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
     retrievedPractionerList = await service.retrievePractionerAll();
 
     setState(() {
-      PractionerList = service.retrievePractionerAll();
+      practionerList = service.retrievePractionerAll();
     });
   }
 
@@ -232,7 +228,6 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                                     screenWidth / (width / 25),
                                               ),
                                               onPressed: () {
-                                                print('IconButton pressed ...');
                                                 dialogaddPractioner(context);
                                                 _pullRefresh();
                                               },
@@ -372,9 +367,7 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                                       .primaryText,
                                               size: screenWidth / (width / 25),
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -498,7 +491,7 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, screenWidth / (width / 16), 0, 0),
                                     child: FutureBuilder(
-                                        future: PractionerList,
+                                        future: practionerList,
                                         builder: (context,
                                             AsyncSnapshot<List<PractionerData>>
                                                 snapshot) {
@@ -670,7 +663,6 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                           0, 0, screenWidth / (width / 5), 0),
                       child: FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
                           dialogEditPractioner(context);
                           setState(() {
                             userId = snapshot.id;
@@ -712,7 +704,6 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                           screenWidth / (width / 5), 0, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          print('Button pressed ...');
                           await service.deletePractioners(
                               context, snapshot.id.toString());
                           _pullRefresh();
@@ -776,8 +767,8 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -894,12 +885,10 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                               if (pickedDate != null &&
                                   // pickedRange != null &&
                                   time != null) {
-                                print(
-                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                //pickedDate output format => 2021-03-10 00:00:00.000
                                 String formattedDate =
                                     DateFormat('yyyy-MM-dd').format(pickedDate);
-                                print(
-                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //formatted date output using intl package =>  2021-03-16
                                 //you can implement different kind of Date Format here according to your requirement
                                 setState(() {
                                   _schedulePractioner.text = formattedDate +
@@ -945,10 +934,6 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                 Navigator.pop(context);
                                 _pullRefresh();
                               }
-
-                              // if (_formKey.currentState!.validate()) {
-                              //   _formKey.currentState!.save();
-                              // }
                             },
                           ),
                         )
@@ -990,8 +975,8 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -1171,10 +1156,6 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                 Navigator.pop(context);
                                 _pullRefresh();
                               }
-
-                              // if (_formKey.currentState!.validate()) {
-                              //   _formKey.currentState!.save();
-                              // }
                             },
                           ),
                         )

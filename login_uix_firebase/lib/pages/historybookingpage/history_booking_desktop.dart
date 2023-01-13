@@ -13,8 +13,8 @@ import '../../route.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
 
-class historyBookingDesktop extends ConsumerWidget {
-  const historyBookingDesktop({super.key});
+class HistoryBookingDesktop extends ConsumerWidget {
+  const HistoryBookingDesktop({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -289,7 +289,6 @@ class historyBookingDesktop extends ConsumerWidget {
                               );
                             }
                           }, error: (error, stackTrace) {
-                            print(error);
                             return const ErrorAnimationView();
                           }, loading: () {
                             return const LoadingAnimationView();

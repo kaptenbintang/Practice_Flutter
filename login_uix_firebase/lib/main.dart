@@ -8,7 +8,6 @@ import 'package:login_uix_firebase/controllers/side_bar_admin_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:login_uix_firebase/auth/provider/is_logged_in_provider.dart';
-import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/practioner_models/practioner.dart';
 import 'package:login_uix_firebase/pages/MainPages/main_page_pages.dart';
 import 'package:login_uix_firebase/pages/admin_dashboard_layout.dart';
@@ -29,15 +28,11 @@ import 'package:login_uix_firebase/pages/landing_layout.dart';
 import 'package:login_uix_firebase/pages/login/login_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-
-import 'package:login_uix_firebase/pages/profile_page.dart';
-import 'package:login_uix_firebase/pages/profile_riverpod_page.dart';
 import 'package:login_uix_firebase/pages/registerPage/register_page.dart';
 import 'package:login_uix_firebase/pages/schedulePage/blackoutDatePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/mainSchedulePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/specialDatePage.dart';
 import 'package:login_uix_firebase/pages/schedulePage/timeSchedulePage.dart';
-import 'package:login_uix_firebase/pages/user_table_page.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_desktop_riverpod.dart';
 import 'package:login_uix_firebase/pages/viewProfilePage/view_profile_page.dart';
 import 'package:login_uix_firebase/provider/loading_provider/is_loading_provider.dart';
@@ -122,10 +117,7 @@ class MyApp extends ConsumerWidget {
         routes: {
           DeleteAccount.routeName: (context) => DeleteAccount(),
           CheckEmailView.routeName: (context) => CheckEmailView(),
-          ProfilePage.routeName: (context) => ProfilePage(),
-          ProfileRiverpodPage.routeName: (context) => ProfileRiverpodPage(),
           ProfileRiverpodPage2.routeName: (context) => ProfileRiverpodPage2(),
-          UserTablePage.routeName: (context) => UserTablePage(),
           DetailPagePractioner.routeName: (context) => DetailPagePractioner(
               practioner:
                   ModalRoute.of(context)?.settings.arguments as Practioner),
@@ -141,7 +133,7 @@ class MyApp extends ConsumerWidget {
           RouteName.editProfilePage: (context) => EditProfilePage(),
           RouteName.viewProfilePage: (context) => ViewProfilePage(),
           RouteName.historyBookingRiverpod: (context) =>
-              historyBookingRiverpod(),
+              HistoryBookingRiverpod(),
           RouteName.MainPagesPage: (context) => MainPagesPage(),
           RouteName.mainSchedulePage: (context) => mainSchedulePage(),
           RouteName.timeSchedulePage: (context) => timeSchedulePage(),

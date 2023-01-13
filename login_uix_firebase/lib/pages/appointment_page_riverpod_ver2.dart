@@ -60,7 +60,6 @@ class _AppointmentPageRiverpodVersion2State
     final userUid = ref.watch(userIdProvider);
     final userInfo = ref.watch(userInfoModelProvider(userUid.toString()));
 
-    final pNameController = useTextEditingController();
     final dateandtimeController = useTextEditingController();
     final emailController = useTextEditingController();
     final phNumbController = useTextEditingController();
@@ -450,8 +449,6 @@ class _AppointmentPageRiverpodVersion2State
                                         WidgetRef ref, Widget? child) {
                                       final services =
                                           ref.watch(servicesProvider);
-                                      String initService =
-                                          ref.watch(selectedServiceProvider);
 
                                       return services.when(
                                         data: (data) {
@@ -624,8 +621,6 @@ class _AppointmentPageRiverpodVersion2State
                                       dateandtimeController.text =
                                           result.toString();
 
-                                      print(dateandtimeController.text);
-
                                       selectedDate = result.toString();
                                     },
                                     style: FlutterFlowTheme.of(context)
@@ -724,8 +719,6 @@ class _AppointmentPageRiverpodVersion2State
                                         WidgetRef ref, Widget? child) {
                                       final services =
                                           ref.watch(servicesProvider);
-                                      String initService =
-                                          ref.watch(selectedServiceProvider);
 
                                       return services.when(
                                         data: (data) {
@@ -907,8 +900,6 @@ class _AppointmentPageRiverpodVersion2State
 
                                       dateandtimeController.text =
                                           result.toString();
-
-                                      print(dateandtimeController.text);
 
                                       selectedDate = result.toString();
                                     },

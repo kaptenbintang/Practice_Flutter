@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -97,8 +96,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
 
   @override
   void initState() {
-    // selectedValue2 = dropDownItemValue2[0];
-
     _scaffoldKey = GlobalKey();
 
     _initRetrieval();
@@ -343,7 +340,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                     size: screenWidth / (width / 25),
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                     controllerSearch.text.isNotEmpty
                                         ? search()
                                         : _pullRefresh();
@@ -386,7 +382,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                       size: screenWidth / (width / 25),
                                     ),
                                     onPressed: () {
-                                      print('IconButton pressed ...');
                                       showDialog(
                                         context: context,
                                         builder: (contextm) {
@@ -612,7 +607,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
             : ResponsiveWidget.isLargeScreen(context)
                 ? 1920
                 : 1280;
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     if (rolesType! != "superadmin") {
       return InkWell(
         onTap: () {
@@ -741,7 +735,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               0, 0, screenWidth / (width / 5), 0),
                           child: FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
                               dialogEdit(context);
                               setState(() {
                                 _emailController.text = snapshot.emailUser!;
@@ -790,7 +783,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               screenWidth / (width / 5), 0, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
                               dialogResetPassword(context);
                               setState(() {
                                 _emailController.text = snapshot.emailUser!;
@@ -954,7 +946,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               0, 0, screenWidth / (width / 5), 0),
                           child: FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
                               dialogEdit(context);
                               setState(() {
                                 _emailController.text = snapshot.emailUser!;
@@ -1005,7 +996,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                 screenWidth / (width / 5), 0, 0, 0),
                             child: FFButtonWidget(
                               onPressed: () {
-                                print('Button pressed ...');
                                 showDialog(
                                   context: context,
                                   builder: (contextm) {
@@ -1053,7 +1043,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               screenWidth / (width / 5), 0, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
                               dialogResetPassword(context);
                               setState(() {
                                 _emailController.text = snapshot.emailUser!;
@@ -1087,7 +1076,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                 screenWidth / (width / 5), 0, 0, 0),
                             child: FFButtonWidget(
                               onPressed: () {
-                                print('Button pressed ...');
                                 service
                                     .markdeleteRestoreUser(
                                         context, snapshot.id as String)
@@ -1415,12 +1403,10 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                               scrollbarAlwaysShow: true,
                               offset: const Offset(0, 0),
                               dropdownMaxHeight: 250,
-                              value:
-                                  // rolesType == "Developer"
-                                  selectedValueRoles!.isNotEmpty
-                                      ? selectedValueRoles
-                                      : selectedValueRoles = "",
-                              // : null,
+                              value: selectedValueRoles!.isNotEmpty
+                                  ? selectedValueRoles
+                                  : selectedValueRoles = "",
+
                               buttonDecoration: BoxDecoration(
                                 color: rolesType == "superadmin"
                                     ? Colors.grey[200]
@@ -1431,7 +1417,7 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                 //Add isDense true and zero Padding.
                                 //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
                                 isDense: true,
-                                // labelText: 'Client Type',
+
                                 label: const Text("Roles Type"),
 
                                 contentPadding: EdgeInsets.zero,
@@ -1549,8 +1535,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                 child: ElevatedButton(
                                   onPressed: (() async {
                                     if (_formKey.currentState!.validate()) {
-                                      // _formKey.currentState!.save();
-
                                       UserData userData = UserData(
                                         id: userId,
                                         firstName: _firstNameController.text,
@@ -1558,7 +1542,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                         emailUser: _emailController.text,
                                         clientCode: _clientCodeController.text,
                                         roles: selectedValueRoles as String,
-                                        // imgUrl: '',
                                         createdAt: createAt,
                                         markDeleted: marDeleted,
                                         doBirth: _ageController.text,
@@ -1605,7 +1588,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                 child: ListBody(
               children: [
                 SizedBox(
-                  // height: 500,
                   width: 400,
                   child: Form(
                     key: _formKey,
@@ -1616,8 +1598,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             controller: _emailController,
-                            // maxLines: 1,
-                            // maxLength: 6,
                             decoration: InputDecoration(
                               hintText: "Enter your email address",
                               hintStyle: TextStyle(color: Color(0xFF6f6f6f)),

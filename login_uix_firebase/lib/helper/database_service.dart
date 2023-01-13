@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:login_uix_firebase/constant/firebase_collection_name.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
@@ -12,10 +11,10 @@ import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/serviceCategory_data.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
 
-import '../model/blackout_models/blackout.dart';
 import '../model/clientType_data.dart';
 import '../model/user_data.dart';
 
+//Class contain all firestore api data manipulation function
 class DataService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 

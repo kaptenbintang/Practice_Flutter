@@ -2,8 +2,6 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -38,22 +36,18 @@ class _ManageServiceCategoryDesktopState
 
   String? selectedValueClient;
   String? selectedValue;
-  int _currentSortColumn = 0;
-  bool _isAscending = true;
 
   List<bool>? selected;
 
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveServiceCategory()).cast<Map<String, dynamic>>();
     sCategoryList = service.retrieveServiceCategory();
     retrievedsCategoryList = await service.retrieveServiceCategory();
     selected = List<bool>.generate(
@@ -348,9 +342,7 @@ class _ManageServiceCategoryDesktopState
                                                       .primaryText,
                                               size: screenWidth / (width / 25),
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -495,8 +487,7 @@ class _ManageServiceCategoryDesktopState
             : ResponsiveWidget.isLargeScreen(context)
                 ? 1920
                 : 1280;
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
+
     return Padding(
       padding:
           EdgeInsetsDirectional.fromSTEB(0, 0, 0, screenWidth / (width / 2)),
@@ -548,7 +539,6 @@ class _ManageServiceCategoryDesktopState
                           0, 0, screenWidth / (width / 5), 0),
                       child: FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
                           dialogEditCategoryName(context);
                           setState(() {
                             userId = snapshot.id;
@@ -581,7 +571,6 @@ class _ManageServiceCategoryDesktopState
                           screenWidth / (width / 5), 0, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          print('Button pressed ...');
                           await service.deleteServicesCategory(
                               context, snapshot.id.toString());
                           _pullRefresh();
@@ -641,8 +630,8 @@ class _ManageServiceCategoryDesktopState
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -680,10 +669,6 @@ class _ManageServiceCategoryDesktopState
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
@@ -721,8 +706,8 @@ class _ManageServiceCategoryDesktopState
                       Navigator.of(context).pop();
                     },
                     child: CircleAvatar(
-                      child: Icon(Icons.close),
                       backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
                     ),
                   ),
                 ),
@@ -767,10 +752,6 @@ class _ManageServiceCategoryDesktopState
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )

@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/dimensions.dart';
-import '../../model/practioner_models/practioner.dart';
 import '../../provider/main_page/appointment2_provider.dart';
 import '../../route.dart';
 import '../../widgets/animations/error_animation_view.dart';
 import '../../widgets/animations/loading_animation_view.dart';
-import '../appointment_page_riverpod_ver2.dart';
 
 class historyBookingMobile extends ConsumerWidget {
   const historyBookingMobile({super.key});
@@ -197,7 +194,6 @@ class historyBookingMobile extends ConsumerWidget {
                             );
                           }
                         }, error: (error, stackTrace) {
-                          print(error);
                           return const ErrorAnimationView();
                         }, loading: () {
                           return const LoadingAnimationView();

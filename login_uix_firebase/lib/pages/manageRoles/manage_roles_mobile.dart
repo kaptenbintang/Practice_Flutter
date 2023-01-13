@@ -6,8 +6,6 @@ import 'package:login_uix_firebase/helper/dimensions.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
 import '../../helper/database_service.dart';
 import '../../model/roles_data.dart';
 
@@ -48,14 +46,12 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveRoles()).cast<Map<String, dynamic>>();
     RolesList = service.retrieveRoles();
     retrievedRolesList = await service.retrieveRoles();
     selected =
@@ -378,8 +374,6 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
 
   _buildTableUser(BuildContext context, RolesData snapshot,
       List<RolesData>? user, int indexs) {
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimensions.height10 / 5),
       child: Container(
@@ -455,12 +449,6 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                             }
                           }
                         },
-                        // items: List.generate(
-                        //     dropDownItemValue2.length,
-                        //     (index) => DropdownMenuItem(
-                        //           value: dropDownItemValue2[index],
-                        //           child: Text(dropDownItemValue2[index]),
-                        //         )),
                         items: [
                           DropdownMenuItem(
                             child: Text('Action'),
@@ -523,9 +511,6 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                             decoration: InputDecoration(
                               labelText: "Can Write?",
                             ),
-                            // hint: Text(
-                            //   'Can Write?',
-                            // ),
                             icon: Icon(
                               Icons.edit,
                               color: Colors.blue,
@@ -536,7 +521,6 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                 _isWrite = value!;
                               });
                             },
-                            // onSaved: (value) {},
                             items: listOfValue.map((bool val) {
                               return DropdownMenuItem(
                                 value: val,
@@ -556,9 +540,6 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                             decoration: InputDecoration(
                               labelText: "Can Write All?",
                             ),
-                            // hint: Text(
-                            //   'Can Write?',
-                            // ),
                             icon: Icon(
                               Icons.edit,
                               color: Colors.blue,
@@ -569,7 +550,6 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                                 _isWriteAll = value!;
                               });
                             },
-                            // onSaved: (value) {},
                             items: listOfValue.map((bool val) {
                               return DropdownMenuItem(
                                 value: val,
@@ -657,10 +637,6 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
@@ -850,10 +826,6 @@ class _ManageRolesMobileState extends State<ManageRolesMobile> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )

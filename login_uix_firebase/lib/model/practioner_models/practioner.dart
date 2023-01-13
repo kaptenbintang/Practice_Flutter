@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:login_uix_firebase/model/practioner_models/practioner_key.dart';
-import 'package:login_uix_firebase/model/practioner_models/schedule.dart';
+
+// object model for storaging Practioner data from firestore
 
 @immutable
 class Practioner {
@@ -17,7 +17,6 @@ class Practioner {
   final String titleMain;
   final Map schedules;
   final Map dayoff;
-  // final Map blackout;
 
   Practioner({
     required this.userId,

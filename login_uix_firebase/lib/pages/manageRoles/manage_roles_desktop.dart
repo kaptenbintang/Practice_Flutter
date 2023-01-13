@@ -21,7 +21,7 @@ class ManageRolesDesktop extends StatefulWidget {
 class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
   TextEditingController? textController;
   DataService service = DataService();
-  Future<List<RolesData>>? RolesList;
+  Future<List<RolesData>>? rolesList;
   Map<String, dynamic>? currentRolesData;
   List<RolesData>? retrievedRolesList;
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -47,15 +47,13 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scaffoldKey = GlobalKey();
     _initRetrieval();
   }
 
   Future<void> _initRetrieval() async {
-    // listofColumn = (await service.retrieveRoles()).cast<Map<String, dynamic>>();
-    RolesList = service.retrieveRoles();
+    rolesList = service.retrieveRoles();
     retrievedRolesList = await service.retrieveRoles();
     selected =
         List<bool>.generate(retrievedRolesList!.length, (int index) => false);
@@ -65,7 +63,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
     retrievedRolesList = await service.retrieveRoles();
 
     setState(() {
-      RolesList = service.retrieveRoles();
+      rolesList = service.retrieveRoles();
     });
   }
 
@@ -217,7 +215,6 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                                     screenWidth / (width / 25),
                                               ),
                                               onPressed: () {
-                                                print('IconButton pressed ...');
                                                 dialogAddNewRoles(context);
                                               },
                                             ),
@@ -351,9 +348,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                                       .primaryText,
                                               size: screenWidth / (width / 25),
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -475,7 +470,7 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, screenWidth / (width / 16), 0, 0),
                                     child: FutureBuilder(
-                                        future: RolesList,
+                                        future: rolesList,
                                         builder: (context,
                                             AsyncSnapshot<List<RolesData>>
                                                 snapshot) {
@@ -548,8 +543,6 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
             : ResponsiveWidget.isLargeScreen(context)
                 ? 1920
                 : 1280;
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
     return Padding(
       padding:
           EdgeInsetsDirectional.fromSTEB(0, 0, 0, screenWidth / (width / 2)),
@@ -809,9 +802,6 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                             decoration: InputDecoration(
                               labelText: "Can Write?",
                             ),
-                            // hint: Text(
-                            //   'Can Write?',
-                            // ),
                             icon: Icon(
                               Icons.edit,
                               color: Colors.blue,
@@ -822,7 +812,6 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                 _isWrite = value!;
                               });
                             },
-                            // onSaved: (value) {},
                             items: listOfValue.map((bool val) {
                               return DropdownMenuItem(
                                 value: val,
@@ -842,9 +831,6 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                             decoration: InputDecoration(
                               labelText: "Can Write All?",
                             ),
-                            // hint: Text(
-                            //   'Can Write?',
-                            // ),
                             icon: Icon(
                               Icons.edit,
                               color: Colors.blue,
@@ -855,7 +841,6 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                                 _isWriteAll = value!;
                               });
                             },
-                            // onSaved: (value) {},
                             items: listOfValue.map((bool val) {
                               return DropdownMenuItem(
                                 value: val,
@@ -943,10 +928,6 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
@@ -1144,10 +1125,6 @@ class _ManageRolesDesktopState extends State<ManageRolesDesktop> {
                               Navigator.pop(context);
                               _pullRefresh();
                             }
-
-                            // if (_formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            // }
                           },
                         ),
                       )
