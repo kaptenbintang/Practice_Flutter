@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
+import 'package:login_uix_firebase/model/events/events_data.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/serviceCategory_data.dart';
@@ -51,11 +52,12 @@ class DataService {
     // .({'test': dayName});
   }
 
-  static Future<void> updateUserI(UserData employeeData) async =>
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(employeeData.id)
-          .update(employeeData.toMap());
+  static Future<void> updateUserI(UserData employeeData) async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(employeeData.id)
+        .update(employeeData.toMap());
+  }
 
   Future<void> updateUser(UserData employeeData) async {
     await FirebaseFirestore.instance
@@ -354,6 +356,16 @@ class DataService {
         .get();
     return snapshot.docs
         .map((docSnapshot) => PractionerData.fromDocumentSnapshot(docSnapshot))
+        .toList();
+  }
+
+  Future<List<EventsData>> retrieveEventsAll() async {
+    print("hai");
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection("events").get();
+
+    return snapshot.docs
+        .map((docSnapshot) => EventsData.fromDocumentSnapshot(docSnapshot))
         .toList();
   }
 
