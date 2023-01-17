@@ -11,6 +11,7 @@ class FirebaseCollectionName {
   static const appointment = 'appointment';
   static const practioners = 'practioners';
   static const blackout = 'blackout';
+  static const events = 'events';
 
   const FirebaseCollectionName._();
 }
