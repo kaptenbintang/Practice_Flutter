@@ -134,7 +134,10 @@ class _EventDesktopState extends State<EventDesktop> {
               ),
               Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(
-                      0, screenWidth / (width / 10), 0, 0),
+                      0,
+                      screenWidth / (width / 10),
+                      0,
+                      screenWidth / (width / 10)),
                   child: FutureBuilder(
                       future: eventsList,
                       builder:
