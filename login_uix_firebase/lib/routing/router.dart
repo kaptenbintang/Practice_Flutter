@@ -11,6 +11,8 @@ import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
 import 'package:login_uix_firebase/pages/login/login_page.dart';
 import 'package:login_uix_firebase/pages/manageClient/manage_client_page.dart';
 import 'package:login_uix_firebase/pages/manageClientType/manage_client_type_page.dart';
+import 'package:login_uix_firebase/pages/manageEvents/manage_event_desktop.dart';
+import 'package:login_uix_firebase/pages/manageEvents/manage_event_page.dart';
 import 'package:login_uix_firebase/pages/managePractioners/manage_practioner_page.dart';
 import 'package:login_uix_firebase/pages/manageRoles/manage_roles_page.dart';
 import 'package:login_uix_firebase/pages/manageServices/manage_services_page.dart';
@@ -44,6 +46,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
 Route<dynamic> generateRouteAdmin(RouteSettings settings) {
   switch (settings.name) {
+    case ManageEventsRoute:
+      return _getPageRoute(ManageEventPage());
     case ManageStaffRoute:
       return _getPageRoute(ManageStaffPage());
     case ManageClientRoute:
@@ -63,7 +67,7 @@ Route<dynamic> generateRouteAdmin(RouteSettings settings) {
     case AddNewUserRoute:
       return _getPageRoute(AddUserPage());
     default:
-      return _getPageRoute(ManageStaffPage());
+      return _getPageRoute(ManageEventPage());
   }
 }
 

@@ -24,6 +24,8 @@ class SideBarAdminController extends GetxController {
 
   Widget returnIconFor(String itemName) {
     switch (itemName) {
+      case ManageEventsRoute:
+        return _customIcon(Icons.event_outlined, itemName);
       case ManageStaffRoute:
         return _customIcon(Icons.star, itemName);
       case ManageClientRoute:
@@ -37,7 +39,7 @@ class SideBarAdminController extends GetxController {
       case ManageServicesCategoryRoute:
         return _customIcon(Icons.content_paste, itemName);
       case AppointmentRoute:
-        return _customIcon(Icons.calendar_month, itemName);
+        return _customIcon(Icons.timelapse_outlined, itemName);
       case LogOutRoute:
         return _customIcon(Icons.logout, itemName);
       default:
