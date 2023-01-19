@@ -7,7 +7,7 @@ import 'package:login_uix_firebase/routing/routes.dart';
 
 class SideBarAdminController extends GetxController {
   static SideBarAdminController instance = Get.find();
-  var activeItem = ManageStaffRoute.obs;
+  var activeItem = ManageEventsRoute.obs;
   var hoverItem = "".obs;
 
   changeActiveitemTo(String itemName) {
