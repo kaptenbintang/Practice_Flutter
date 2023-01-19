@@ -1,11 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:login_uix_firebase/flutter_flow/flutter_flow_util.dart';
 import 'package:login_uix_firebase/helper/dimensions.dart';
 import 'package:timelines/timelines.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../helper/database_service.dart';
+import '../../model/events/events_data.dart';
+import '../../widgets/animations/error_animation_view.dart';
+import '../../widgets/animations/loading_animation_view.dart';
 
 class EventMobile extends StatefulWidget {
   const EventMobile({super.key});
@@ -15,6 +20,27 @@ class EventMobile extends StatefulWidget {
 }
 
 class _EventMobileState extends State<EventMobile> {
+  GlobalKey<ScaffoldState>? _scaffoldKey;
+  Future<List<EventsData>>? eventsList;
+  List<EventsData>? retrievedEventsList;
+  DataService service = DataService();
+  List<bool>? selected;
+  String? url;
+
+  @override
+  void initState() {
+    super.initState();
+    _scaffoldKey = GlobalKey();
+    _initRetrieval();
+  }
+
+  Future<void> _initRetrieval() async {
+    eventsList = service.retrieveEventsAll();
+    retrievedEventsList = await service.retrieveEventsAll();
+    selected =
+        List<bool>.generate(retrievedEventsList!.length, (int index) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return // Generated code for this MainColumn Widget...
@@ -95,266 +121,325 @@ class _EventMobileState extends State<EventMobile> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(
                       0, Dimensions.height10, 0, 0),
-                  child: FixedTimeline.tileBuilder(
-                    theme: TimelineThemeData(
-                        connectorTheme: ConnectorThemeData(
-                            space: Dimensions.width20 * 2,
-                            color: FlutterFlowTheme.of(context).secondaryColor),
-                        indicatorTheme: IndicatorThemeData(
-                            color: FlutterFlowTheme.of(context).tertiaryColor)),
-                    builder: TimelineTileBuilder.connectedFromStyle(
-                      contentsAlign: ContentsAlign.alternating,
-                      oppositeContentsBuilder:
-                          (context, index1) => // Date Widget...
-                              Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.width08),
-                        child: Container(
-                          width: Dimensions.width100 +
-                              Dimensions.width10 * 5 +
-                              Dimensions.width10 / 2,
-                          height: Dimensions.height100 +
-                              Dimensions.height20 +
-                              Dimensions.height05,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.height08),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        Dimensions.width08,
+                  child: FutureBuilder(
+                      future: eventsList,
+                      builder:
+                          (context, AsyncSnapshot<List<EventsData>> snapshot) {
+                        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                          return FixedTimeline.tileBuilder(
+                            theme: TimelineThemeData(
+                                connectorTheme: ConnectorThemeData(
+                                    space: Dimensions.width20 * 2,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor),
+                                indicatorTheme: IndicatorThemeData(
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor)),
+                            builder: TimelineTileBuilder.connectedFromStyle(
+                              contentsAlign: ContentsAlign.alternating,
+                              oppositeContentsBuilder: (context, indexs) {
+                                // Date Widget...
+                                EventsData event = retrievedEventsList![indexs];
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: Dimensions.width08),
+                                  child: Container(
+                                    width: Dimensions.width100 +
+                                        Dimensions.width10 * 5 +
+                                        Dimensions.width10 / 2,
+                                    height: Dimensions.height100 +
+                                        Dimensions.height20 +
                                         Dimensions.height05,
-                                        Dimensions.width08,
-                                        0),
-                                    child: Text(
-                                      '28',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: Dimensions.font14,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.height08),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: Text(
+                                                DateFormat.d().format(
+                                                    event.eventsDate!.toDate()),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              Dimensions.font14,
+                                                        ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: Text(
+                                                DateFormat.yMMM().format(
+                                                    event.eventsDate!.toDate()),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              Dimensions.font10,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: Icon(
+                                                Icons.place_outlined,
+                                                color: Colors.black,
+                                                size: Dimensions.iconSize18,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: SizedBox(
+                                                width: Dimensions.width100,
+                                                height: Dimensions.height10 * 5,
+                                                child: Text(
+                                                  event.eventsLocation!,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize:
+                                                            Dimensions.font16 /
+                                                                2,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: Icon(
+                                                Icons.attach_money,
+                                                color: Colors.black,
+                                                size: Dimensions.iconSize18,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: SizedBox(
+                                                width: Dimensions.width100,
+                                                height: Dimensions.height10 * 3,
+                                                child: Text(
+                                                  event.eventsPrice!,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize:
+                                                            Dimensions.font10,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              contentsBuilder: (context, indexs) {
+                                // Event Widget...
+                                EventsData event = retrievedEventsList![indexs];
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: Dimensions.width08),
+                                  child: Container(
+                                    width: Dimensions.width100 +
+                                        Dimensions.width60 +
+                                        Dimensions.width10 / 2,
+                                    height: Dimensions.height100 * 3,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryColor,
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.height08),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: Text(
+                                                event.eventsTitle!,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              Dimensions.font10,
+                                                        ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: Image.network(
+                                                event.eventsImage!,
+                                                width: Dimensions.height100,
+                                                height: Dimensions.height100,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      Dimensions.width08,
+                                                      Dimensions.height05,
+                                                      Dimensions.width08,
+                                                      0),
+                                              child: Text(
+                                                event.eventsDescription!,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              Dimensions.font10,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  Dimensions.width08,
+                                                  Dimensions.height05,
+                                                  Dimensions.width08,
+                                                  0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Find Out More >>',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              Dimensions.font10,
+                                                        ),
+                                              ),
+                                              FlutterFlowIconButton(
+                                                borderColor: Colors.transparent,
+                                                borderRadius:
+                                                    Dimensions.height20,
+                                                borderWidth: 1,
+                                                buttonSize: Dimensions.height30,
+                                                icon: Icon(
+                                                  Icons.add,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: Dimensions.font15,
+                                                ),
+                                                onPressed: () {
+                                                  print(
+                                                      'IconButton pressed ...');
+                                                },
+                                              ),
+                                            ],
                                           ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        Dimensions.width08,
-                                        Dimensions.height05,
-                                        Dimensions.width08,
-                                        0),
-                                    child: Text(
-                                      ' December 2022',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: Dimensions.font10,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        Dimensions.width08,
-                                        Dimensions.height05,
-                                        Dimensions.width08,
-                                        0),
-                                    child: Icon(
-                                      Icons.place_outlined,
-                                      color: Colors.black,
-                                      size: Dimensions.iconSize18,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        Dimensions.width08,
-                                        Dimensions.height05,
-                                        Dimensions.width08,
-                                        0),
-                                    child: Text(
-                                      'Online & In-Person,\nE-02-02 \nJalan Lagoon Selatan\nSubang Jaya, \nSelangor 47500 Malaysia',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: Dimensions.font16 / 2,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        Dimensions.width08,
-                                        Dimensions.height05,
-                                        Dimensions.width08,
-                                        0),
-                                    child: Icon(
-                                      Icons.attach_money,
-                                      color: Colors.black,
-                                      size: Dimensions.iconSize18,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        Dimensions.width08,
-                                        Dimensions.height05,
-                                        Dimensions.width08,
-                                        0),
-                                    child: Text(
-                                      'Free',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: Dimensions.font10,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      contentsBuilder: (context,
-                              index) => // Generated code for this Event Widget...
-                          Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.width08),
-                        child: Container(
-                          width: Dimensions.width100 +
-                              Dimensions.width60 +
-                              Dimensions.width10 / 2,
-                          height: Dimensions.height100 * 2 +
-                              Dimensions.height45 +
-                              Dimensions.font10,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).secondaryColor,
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.height08),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    Dimensions.width08,
-                                    Dimensions.height05,
-                                    Dimensions.width08,
-                                    0),
-                                child: Text(
-                                  'Relationships Matter – Wednesday Talk (FOC)',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: Dimensions.font10,
-                                      ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          Dimensions.width08,
-                                          Dimensions.height05,
-                                          Dimensions.width08,
-                                          0),
-                                      child: Image.asset(
-                                        'assets/images/talk.png',
-                                        width: Dimensions.width100,
-                                        height: Dimensions.height100,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    Dimensions.width08,
-                                    Dimensions.height05,
-                                    Dimensions.width08,
-                                    0),
-                                child: Text(
-                                  'Join us and learn a tip or two about what makes a relationship (be it with your parents, children, spouse, friends, colleagues, boss, etc.) healthy and strong.  Every talk will […]',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: Dimensions.font16 / 2,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    Dimensions.width08,
-                                    Dimensions.height05,
-                                    Dimensions.width08,
-                                    0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Find Out More >>',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: Dimensions.font10,
-                                          ),
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: Dimensions.height20,
-                                      borderWidth: 1,
-                                      buttonSize: Dimensions.height30,
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: Dimensions.font15,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      connectorStyleBuilder: (context, index) =>
-                          ConnectorStyle.solidLine,
-                      indicatorStyleBuilder: (context, index) =>
-                          IndicatorStyle.dot,
-                      itemCount: 3,
-                    ),
-                  ),
+                                );
+                              },
+                              connectorStyleBuilder: (context, index) =>
+                                  ConnectorStyle.solidLine,
+                              indicatorStyleBuilder: (context, index) =>
+                                  IndicatorStyle.dot,
+                              itemCount: retrievedEventsList!.length,
+                            ),
+                          );
+                        } else if (snapshot.connectionState ==
+                                ConnectionState.done &&
+                            retrievedEventsList!.isEmpty) {
+                          return const ErrorAnimationView();
+                        } else {
+                          return const LoadingAnimationView();
+                        }
+                      }),
                 )
               ],
             ),
