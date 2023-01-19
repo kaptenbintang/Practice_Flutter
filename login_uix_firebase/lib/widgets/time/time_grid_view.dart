@@ -55,10 +55,10 @@ class _TimesGridViewState extends State<TimesGridView> {
                   onTapped: () {
                     setState(() {
                       oneItem.isSelected = !oneItem.isSelected;
-                      ref
-                          .read(timeSelectedProvider.notifier)
-                          .selectedTime(oneItem.timeStamp);
                     });
+                    ref
+                        .read(timeSelectedProvider.notifier)
+                        .selectedTime(oneItem.timeStamp);
                   },
                 );
               },
