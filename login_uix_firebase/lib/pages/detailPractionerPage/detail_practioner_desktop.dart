@@ -266,7 +266,7 @@ class DetailPractionerDesktop extends ConsumerWidget {
                                         .override(
                                             fontFamily: 'Poppins',
                                             fontSize:
-                                                screenWidth / (width / 24)),
+                                                screenWidth / (width / 20)),
                                   ),
                                   Text(
                                     practioner.titleMain.toString(),
@@ -286,8 +286,8 @@ class DetailPractionerDesktop extends ConsumerWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(
                                 screenWidth / (width / 20)),
-                            child: Image.asset(
-                              'lib/images/doctor.png',
+                            child: Image.network(
+                              practioner.profilePic,
                               width: MediaQuery.of(context).size.width * 0.25,
                               height: MediaQuery.of(context).size.height * 0.4,
                               fit: BoxFit.scaleDown,

@@ -63,11 +63,11 @@ class PractionersThumbnailView extends StatelessWidget {
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(screenWidth / (width / 20)),
-                child: Image.asset(
-                  'lib/images/doctor.png',
+                child: Image.network(
+                  practioner.profilePic,
                   width: screenWidth / (width / 150),
                   height: screenWidth / (width / 150),
-                  fit: BoxFit.scaleDown,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
               Padding(

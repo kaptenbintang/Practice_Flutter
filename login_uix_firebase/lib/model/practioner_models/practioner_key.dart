@@ -12,6 +12,7 @@ class PractionerKey {
   static const myQualifications = 'myQualifications';
   static const myRoles = 'myRoles';
   static const mySpecialty = 'mySpecialty';
+  static const profilePic = 'profilePic';
   static const languages = 'languages';
   static const titleMain = 'titleMain';
   static const schedules = 'schedules';

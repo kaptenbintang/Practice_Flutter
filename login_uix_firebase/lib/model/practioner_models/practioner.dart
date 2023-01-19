@@ -13,6 +13,7 @@ class Practioner {
   final String myQualifications;
   final String myRoles;
   final String mySpecialty;
+  final String profilePic;
   final String languages;
   final String titleMain;
   final Map schedules;
@@ -28,6 +29,7 @@ class Practioner {
         myQualifications = json[PractionerKey.myQualifications],
         myRoles = json[PractionerKey.myRoles],
         mySpecialty = json[PractionerKey.mySpecialty],
+        profilePic = json[PractionerKey.profilePic],
         languages = json[PractionerKey.languages],
         titleMain = json[PractionerKey.titleMain],
         schedules = json[PractionerKey.schedules],
