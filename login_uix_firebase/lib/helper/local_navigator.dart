@@ -11,6 +11,6 @@ Navigator localNavigator() => Navigator(
 
 Navigator adminDashboardNavigator() => Navigator(
       key: navigationController.navigationKey,
-      initialRoute: ManageStaffRoute,
+      initialRoute: ManageEventsRoute,
       onGenerateRoute: generateRouteAdmin,
     );
