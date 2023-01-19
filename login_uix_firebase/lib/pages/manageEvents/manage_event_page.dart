@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/manageEvents/manage_event_desktop.dart';
+import 'package:login_uix_firebase/pages/manageEvents/manage_event_mobile.dart';
 
 import '../../helper/responsive.dart';
 
@@ -18,7 +19,7 @@ class _ManageEventPageState extends State<ManageEventPage> {
     if (ResponsiveWidget.isLargeScreen(context)) {
       return ManageEventDesktop();
     } else {
-      return Container();
+      return ManageEventMobile();
     }
   }
 }
