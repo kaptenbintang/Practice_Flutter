@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
@@ -17,6 +18,7 @@ import '../model/user_data.dart';
 
 //Class contain all firestore api data manipulation function
 class DataService {
+  final _storage = FirebaseStorage.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   addUser(UserData employeeData) async {
@@ -37,6 +39,10 @@ class DataService {
 
   addPractioners(PractionerData practionerData) async {
     await _db.collection("practioners").add(practionerData.toMap());
+  }
+
+  addEvent(EventsData eventsData) async {
+    await _db.collection("events").add(eventsData.toMap());
   }
 
   addAppointment(AppointmentData appointmentData) async {
@@ -92,6 +98,10 @@ class DataService {
         .collection("practioners")
         .doc(practionerData.id)
         .update(practionerData.toMap());
+  }
+
+  Future<void> updateEvent(EventsData eventData) async {
+    await _db.collection("events").doc(eventData.id).update(eventData.toMap());
   }
 
   Future<void> updateAppointment(AppointmentData appointmentData) async {
@@ -187,12 +197,36 @@ class DataService {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text("Deleted Practioner"),
+              content: Text("Practioner deleted"),
             );
           },
         );
       },
     );
+  }
+
+  Future<void> deleteEvent(BuildContext context, EventsData eventData) async {
+    // await _db.collection("users").doc(documentId).delete();
+    final address = _db.collection("events").doc(eventData.id);
+
+    await address.delete().then(
+      (value) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Event deleted"),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  deleteEventImage(EventsData eventData) async {
+    if (eventData.eventsImage != null) {
+      await _storage.refFromURL(eventData.eventsImage!).delete();
+    }
   }
 
   Future<void> deleteAppointment(
@@ -205,7 +239,7 @@ class DataService {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text("Deleted Appointment"),
+              content: Text("Appointment deleted"),
             );
           },
         );
@@ -223,7 +257,7 @@ class DataService {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text("Deleted Services Category"),
+              content: Text("Services Category deleted"),
             );
           },
         );
