@@ -32,14 +32,16 @@ class TimesThumbnailView extends StatelessWidget {
             padding: EdgeInsets.all(screenWidth / (width / 4)),
             child: Container(
               decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).lineColor,
+                color: serviceTime.isSelected
+                    ? FlutterFlowTheme.of(context).secondaryColor
+                    : FlutterFlowTheme.of(context).lineColor,
                 boxShadow: [
                   BoxShadow(
                     blurRadius: screenWidth / (width / 12),
-                    color: serviceTime.isSelected
-                        ? Colors.yellow
-                        : Color(0x33000000),
-                    offset: Offset(0, 2),
+                    // color: serviceTime.isSelected
+                    //     ? Colors.yellow
+                    //     : Color(0x33000000),
+                    // offset: Offset(0, 2),
                   )
                 ],
                 borderRadius: BorderRadius.circular(screenWidth / (width / 10)),
