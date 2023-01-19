@@ -55,11 +55,9 @@ class AppointmentsThumbnailView extends StatelessWidget {
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(screenWidth / (width / 8)),
-                child: Image.asset(
-                  'lib/images/doctor.png',
-                  width: screenWidth / (width / 150),
-                  height: screenWidth / (width / 150),
-                  fit: BoxFit.scaleDown,
+                child: Icon(
+                  Icons.timer_sharp,
+                  size: screenWidth / (width / 150),
                 ),
               ),
               Text(
