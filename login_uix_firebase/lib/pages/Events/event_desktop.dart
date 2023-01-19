@@ -1,12 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/flutter_flow/flutter_flow.dart';
-import 'package:login_uix_firebase/model/events/events.dart';
 import 'package:login_uix_firebase/model/events/events_data.dart';
-import 'package:login_uix_firebase/provider/events_page/events_provider.dart';
 import 'package:timelines/timelines.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
