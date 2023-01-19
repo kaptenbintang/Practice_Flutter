@@ -8,7 +8,7 @@ import 'package:login_uix_firebase/widgets/animations/small_error_animation_view
 import 'package:login_uix_firebase/widgets/animations/small_loading_animation_view.dart';
 import 'package:login_uix_firebase/widgets/time/time_thumbnail_view.dart';
 
-class TimesGridView extends StatelessWidget {
+class TimesGridView extends StatefulWidget {
   final String serviceTime;
   final String selectedTime;
   final Map<dynamic, dynamic> schedule;
@@ -19,6 +19,11 @@ class TimesGridView extends StatelessWidget {
     required this.selectedTime,
   });
 
+  @override
+  State<TimesGridView> createState() => _TimesGridViewState();
+}
+
+class _TimesGridViewState extends State<TimesGridView> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -31,7 +36,7 @@ class TimesGridView extends StatelessWidget {
                 : 1280;
     return Consumer(
       builder: (context, ref, child) {
-        final timeLoop = ref.watch(timeLoopProvider(schedule));
+        final timeLoop = ref.watch(timeLoopProvider(widget.schedule));
         return timeLoop.when(
           data: (data) {
             return GridView.builder(
@@ -48,10 +53,12 @@ class TimesGridView extends StatelessWidget {
                 return TimesThumbnailView(
                   serviceTime: oneItem,
                   onTapped: () {
-                    oneItem.isSelected = !oneItem.isSelected;
-                    ref
-                        .read(timeSelectedProvider.notifier)
-                        .selectedTime(oneItem.timeStamp);
+                    setState(() {
+                      oneItem.isSelected = !oneItem.isSelected;
+                      ref
+                          .read(timeSelectedProvider.notifier)
+                          .selectedTime(oneItem.timeStamp);
+                    });
                   },
                 );
               },
