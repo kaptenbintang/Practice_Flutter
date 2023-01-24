@@ -17,7 +17,6 @@ import 'package:login_uix_firebase/provider/profile_provider/user_profile_provid
 import 'package:login_uix_firebase/user_info/providers/user_info_model_provider.dart';
 import 'package:login_uix_firebase/widgets/animations/error_animation_view.dart';
 import 'package:login_uix_firebase/widgets/animations/loading_animation_view.dart';
-
 import '../../helper/responsive.dart';
 
 class EditProfileDesktopWidget2 extends ConsumerWidget {
@@ -96,6 +95,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                 return Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    //photo
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           0, screenWidth / (width / 20), 0, 0),
@@ -146,6 +146,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                         ],
                       ),
                     ),
+                    //change photo button
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           0,
@@ -181,6 +182,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                         ],
                       ),
                     ),
+                    //firstname
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           screenWidth / (width / 20),
@@ -260,6 +262,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    //lastname
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           screenWidth / (width / 20),
@@ -341,6 +344,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    //phone number
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           screenWidth / (width / 20),
@@ -441,6 +445,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    //date of birth
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           screenWidth / (width / 20),
@@ -543,6 +548,7 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    //submit button/ save change
                     Align(
                       alignment:
                           AlignmentDirectional(0, screenWidth / (width / 0.05)),
