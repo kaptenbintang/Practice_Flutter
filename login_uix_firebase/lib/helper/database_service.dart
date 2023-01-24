@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/constant/firebase_field_name.dart';
 import 'package:login_uix_firebase/model/appointment_data.dart';
 import 'package:login_uix_firebase/model/events/events_data.dart';
+import 'package:login_uix_firebase/model/manage_practioner_data.dart';
 import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/serviceCategory_data.dart';
@@ -93,11 +94,11 @@ class DataService {
         .update(servicesData.toMap());
   }
 
-  Future<void> updatePractioners(PractionerData practionerData) async {
+  Future<void> updatePractioners(managePractionerData mngpractionerData) async {
     await _db
         .collection("practioners")
-        .doc(practionerData.id)
-        .update(practionerData.toMap());
+        .doc(mngpractionerData.id)
+        .update(mngpractionerData.toMap());
   }
 
   Future<void> updateEvent(EventsData eventData) async {
