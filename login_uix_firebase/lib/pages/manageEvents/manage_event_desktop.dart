@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../constant/storage_path.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
@@ -736,19 +737,6 @@ class _ManageEventDesktopState extends State<ManageEventDesktop> {
                             ),
                             IconButton(
                                 onPressed: () async {
-                                  /*
-                                  * Step 1. Pick/Capture an image   (image_picker)
-                                  * Step 2. Upload the image to Firebase storage
-                                  * Step 3. Get the URL of the uploaded image
-                                  * Step 4. Store the image URL inside the corresponding
-                                  *         document of the database.
-                                  * Step 5. Display the image on the list
-                                  *
-                                  * */
-
-                                  /*Step 1:Pick image*/
-                                  //Install image_picker
-                                  //Import the corresponding library
                                   FilePickerResult? result;
 
                                   try {
@@ -768,8 +756,6 @@ class _ManageEventDesktopState extends State<ManageEventDesktop> {
 
                                   if (result != null) {
                                     try {
-                                      String dirpath = 'eventsImage/';
-
                                       Uint8List? uploadfile =
                                           result.files.single.bytes;
 
@@ -779,7 +765,8 @@ class _ManageEventDesktopState extends State<ManageEventDesktop> {
                                       Reference storageRef = FirebaseStorage
                                           .instance
                                           .ref()
-                                          .child('$dirpath$filename');
+                                          .child(StoragePath.eventsImage +
+                                              filename);
 
                                       final UploadTask uploadTask =
                                           storageRef.putData(uploadfile!);
@@ -793,57 +780,6 @@ class _ManageEventDesktopState extends State<ManageEventDesktop> {
                                       print(e);
                                     }
                                   }
-
-                                  // FilePickerResult? result =
-                                  //     await FilePicker.platform.pickFiles(
-                                  //   type: FileType.custom,
-                                  //   allowedExtensions: [
-                                  //     'jpg',
-                                  //     'png',
-                                  //     'jpeg',
-                                  //     'gif'
-                                  //   ],
-                                  // );
-
-                                  // if (result != null) {
-                                  //   Uint8List fileBytes =
-                                  //       result.files.first.bytes!;
-                                  //   String fileName = result.files.first.name;
-                                  //   print(result.paths.first);
-                                  //   //Import dart:core
-                                  //   String uniqueFileName = eventTitle!;
-
-                                  //   /*Step 2: Upload to Firebase storage*/
-                                  //   //Install firebase_storage
-                                  //   //Import the library
-
-                                  //   //Get a reference to storage root
-                                  //   Reference referenceRoot =
-                                  //       FirebaseStorage.instance.ref();
-                                  //   Reference referenceDirImages =
-                                  //       referenceRoot.child('eventsImage/');
-
-                                  //   //Create a reference for the image to be stored
-                                  //   Reference referenceImageToUpload =
-                                  //       referenceDirImages
-                                  //           .child(uniqueFileName);
-
-                                  //   //Handle errors/success
-                                  //   try {
-                                  //     //Store the file
-                                  //     // await referenceImageToUpload.putFile(file);
-                                  //     await FirebaseStorage.instance
-                                  //         .ref('eventsImage/$fileName')
-                                  //         .putData(fileBytes);
-                                  //     //Success: get the download URL
-                                  //     eventImage = await referenceImageToUpload
-                                  //         .getDownloadURL();
-                                  //   } catch (error) {
-                                  //     //Some error occurred
-                                  //   }
-                                  //   // Upload file
-
-                                  // }
                                 },
                                 icon: Icon(Icons.camera_alt)),
                           ]),

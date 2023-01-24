@@ -16,6 +16,7 @@ class UserData {
   final String? clientType;
   final String? createdAt;
   final bool? markDeleted;
+  final String? profilePic;
 
   UserData({
     this.id,
@@ -31,6 +32,7 @@ class UserData {
     this.clientType,
     this.createdAt,
     this.markDeleted,
+    this.profilePic,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +49,7 @@ class UserData {
       "clientType": clientType,
       "createdAt": createdAt,
       "markDeleted": markDeleted,
+      "profilePic": profilePic,
     }..removeWhere((key, value) => value == null);
   }
 
@@ -85,5 +88,6 @@ class UserData {
         doBirth = doc.data()!["dateofbirth"],
         clientType = doc.data()!["clientType"],
         createdAt = doc.data()!["createdAt"],
-        markDeleted = doc.data()!["markDeleted"];
+        markDeleted = doc.data()!["markDeleted"],
+        profilePic = doc.data()!["profilePic"];
 }

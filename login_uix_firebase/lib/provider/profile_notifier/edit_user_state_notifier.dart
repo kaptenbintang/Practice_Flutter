@@ -37,6 +37,7 @@ class EditUserNotifier extends StateNotifier<IsLoading> {
             FirebaseFieldName.lastName: userData.lastName,
             FirebaseFieldName.phoneNumber: userData.phoneNumber,
             FirebaseFieldName.dateofbirth: userData.doBirth,
+            FirebaseFieldName.profilePic: userData.profilePic,
           },
         );
       }

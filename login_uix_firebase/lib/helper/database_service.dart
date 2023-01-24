@@ -13,6 +13,7 @@ import 'package:login_uix_firebase/model/practioner_data.dart';
 import 'package:login_uix_firebase/model/roles_data.dart';
 import 'package:login_uix_firebase/model/serviceCategory_data.dart';
 import 'package:login_uix_firebase/model/services_data.dart';
+import 'package:login_uix_firebase/user_info/models/user_info_model.dart';
 
 import '../model/clientType_data.dart';
 import '../model/user_data.dart';
@@ -225,8 +226,14 @@ class DataService {
   }
 
   deleteEventImage(EventsData eventData) async {
-    if (eventData.eventsImage != null) {
+    if (eventData.eventsImage.toString() != '') {
       await _storage.refFromURL(eventData.eventsImage!).delete();
+    }
+  }
+
+  deleteUserImage(UserInfoModel userData) async {
+    if (userData.profilePic.toString() != '') {
+      await _storage.refFromURL(userData.profilePic!).delete();
     }
   }
 

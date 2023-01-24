@@ -19,6 +19,7 @@ class UserInfoModel extends MapView<String, dynamic> {
   final bool markDeleted;
   final String? clientType;
   final String? dateofbirth;
+  final String? profilePic;
 
   UserInfoModel({
     required this.userId,
@@ -32,6 +33,7 @@ class UserInfoModel extends MapView<String, dynamic> {
     required this.markDeleted,
     required this.clientType,
     required this.dateofbirth,
+    required this.profilePic,
   }) : super(
           {
             FirebaseFieldName.userId: userId,
@@ -45,6 +47,7 @@ class UserInfoModel extends MapView<String, dynamic> {
             FirebaseFieldName.markDeleted: markDeleted,
             FirebaseFieldName.clientType: clientType,
             FirebaseFieldName.dateofbirth: dateofbirth,
+            FirebaseFieldName.profilePic: profilePic,
           },
         );
 
@@ -63,6 +66,7 @@ class UserInfoModel extends MapView<String, dynamic> {
           markDeleted: json[FirebaseFieldName.markDeleted],
           clientType: json[FirebaseFieldName.clientType] ?? '',
           dateofbirth: json[FirebaseFieldName.dateofbirth] ?? '',
+          profilePic: json[FirebaseFieldName.profilePic] ?? '',
         );
 
   @override
@@ -90,6 +94,7 @@ class UserInfoModel extends MapView<String, dynamic> {
           markDeleted,
           clientType,
           dateofbirth,
+          profilePic
         ],
       );
 }

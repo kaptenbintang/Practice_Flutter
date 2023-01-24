@@ -187,7 +187,8 @@ class SideBarAdmin extends ConsumerWidget {
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .primaryBackground,
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(
+                                  _width / (maxWidth / 12)),
                             ),
                             child: ResponsiveWidget.isLargeScreen(context)
                                 ? Padding(
@@ -199,74 +200,68 @@ class SideBarAdmin extends ConsumerWidget {
                                           CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(40),
-                                          child: Image(
-                                            image: AssetImage(
-                                                'lib/images/relationary.png'),
-                                            width: _width / (maxWidth / 40),
-                                            height: _width / (maxWidth / 40),
-                                            fit: BoxFit.cover,
-                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              _width / (maxWidth / 40)),
+                                          child: (data.profilePic.toString() ==
+                                                  '')
+                                              ? Icon(Icons.person)
+                                              : Image.network(
+                                                  data.profilePic!,
+                                                  width:
+                                                      _width / (maxWidth / 40),
+                                                  height:
+                                                      _width / (maxWidth / 40),
+                                                  fit: BoxFit.cover,
+                                                ),
                                         ),
                                         Expanded(
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    16, 0, 0, 0),
-                                            child: Consumer(
-                                              builder: (context, ref, child) {
-                                                final userData = ref.watch(
-                                                  userDetailProvider,
-                                                );
-                                                final model = userData.value;
-
-                                                return Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        model?['firstName'] +
-                                                            ' ' +
-                                                            model?['lastName'],
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .subtitle1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  fontSize: _width /
-                                                                      (maxWidth /
-                                                                          18),
-                                                                )),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 0, 0),
-                                                      child: Text(
-                                                        model?['email'],
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  fontSize: _width /
-                                                                      (maxWidth /
-                                                                          12),
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
+                                                    _width / (maxWidth / 16),
+                                                    0,
+                                                    0,
+                                                    0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                    data['firstName'] +
+                                                        ' ' +
+                                                        data['lastName'],
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: _width /
+                                                              (maxWidth / 18),
+                                                        )),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0,
+                                                          _width /
+                                                              (maxWidth / 4),
+                                                          0,
+                                                          0),
+                                                  child: Text(
+                                                    data['email'],
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: _width /
+                                                              (maxWidth / 12),
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -277,10 +272,11 @@ class SideBarAdmin extends ConsumerWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(bottom: 8.0),
+                                        padding: EdgeInsets.only(
+                                            bottom: _width / (maxWidth / 8)),
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(40),
+                                          borderRadius: BorderRadius.circular(
+                                              _width / (maxWidth / 40)),
                                           child: Image(
                                             image: AssetImage(
                                                 'lib/images/relationary.png'),

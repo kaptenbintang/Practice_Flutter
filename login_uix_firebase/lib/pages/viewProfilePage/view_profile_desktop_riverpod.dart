@@ -42,6 +42,7 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
     return userInfoModel.when(
       data: (data) {
         String isRoleadminorUser = data.roles;
+        print(data.profilePic.toString());
         return Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF1F4F8),
@@ -130,7 +131,12 @@ class ProfileRiverpodPage2 extends ConsumerWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(
                                     screenWidth / (width / 12)),
-                                child: Icon(Icons.person),
+                                child: (data.profilePic.toString() == '')
+                                    ? Icon(Icons.person)
+                                    : Image.network(
+                                        data.profilePic!,
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                             ),
                           ),
