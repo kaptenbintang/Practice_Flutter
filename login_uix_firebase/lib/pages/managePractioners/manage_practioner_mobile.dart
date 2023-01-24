@@ -9,6 +9,7 @@ import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../helper/database_service.dart';
+import '../../model/manage_practioner_data.dart';
 import '../../model/practioner_data.dart';
 
 class ManagePractionerMobile extends StatefulWidget {
@@ -634,45 +635,45 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                           ),
                         ),
                         //Schedule
-                        Padding(
-                          padding: EdgeInsets.all(Dimensions.height08),
-                          child: TextFormField(
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(
-                                      2022), //DateTime.now() - not to allow to choose before today.
-                                  lastDate: DateTime(2023));
+                        // Padding(
+                        //   padding: EdgeInsets.all(Dimensions.height08),
+                        //   child: TextFormField(
+                        //     onTap: () async {
+                        //       DateTime? pickedDate = await showDatePicker(
+                        //           context: context,
+                        //           initialDate: DateTime.now(),
+                        //           firstDate: DateTime(
+                        //               2022), //DateTime.now() - not to allow to choose before today.
+                        //           lastDate: DateTime(2023));
 
-                              var time = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now());
+                        //       var time = await showTimePicker(
+                        //           context: context,
+                        //           initialTime: TimeOfDay.now());
 
-                              if (pickedDate != null && time != null) {
-                                //pickedDate output format => 2021-03-10 00:00:00.000
-                                String formattedDate =
-                                    DateFormat('yyyy-MM-dd').format(pickedDate);
-                                //formatted date output using intl package =>  2021-03-16
-                                //you can implement different kind of Date Format here according to your requirement
-                                setState(() {
-                                  _schedulePractioner.text = formattedDate +
-                                      " " +
-                                      "${time.hour}:${time.minute}";
+                        //       if (pickedDate != null && time != null) {
+                        //         //pickedDate output format => 2021-03-10 00:00:00.000
+                        //         String formattedDate =
+                        //             DateFormat('yyyy-MM-dd').format(pickedDate);
+                        //         //formatted date output using intl package =>  2021-03-16
+                        //         //you can implement different kind of Date Format here according to your requirement
+                        //         setState(() {
+                        //           _schedulePractioner.text = formattedDate +
+                        //               " " +
+                        //               "${time.hour}:${time.minute}";
 
-                                  //set output date to TextField value.
-                                });
-                              } else {
-                                print("Date is not selected");
-                              }
-                            },
-                            controller: _schedulePractioner,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: "Schedule",
-                            ),
-                          ),
-                        ),
+                        //           //set output date to TextField value.
+                        //         });
+                        //       } else {
+                        //         print("Date is not selected");
+                        //       }
+                        //     },
+                        //     controller: _schedulePractioner,
+                        //     readOnly: true,
+                        //     decoration: InputDecoration(
+                        //       labelText: "Schedule",
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: Dimensions.height20 * 2,
                         ),
@@ -682,7 +683,8 @@ class _ManagePractionerMobileState extends State<ManagePractionerMobile> {
                             child: Text("Submit"),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                PractionerData practionerData = PractionerData(
+                                managePractionerData practionerData =
+                                    managePractionerData(
                                   id: userId,
                                   firstName: _firstNamePractioner.text,
                                   lastName: _lastNamePractioner.text,
