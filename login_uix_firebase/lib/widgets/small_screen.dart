@@ -10,6 +10,11 @@ class SmallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return localNavigator();
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.width08),
+          child: localNavigator()),
+    );
   }
 }

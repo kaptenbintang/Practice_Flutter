@@ -16,24 +16,21 @@ class LandingLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        key: _scaffoldKey,
-        extendBodyBehindAppBar: true,
-        appBar: topNavigationBar(context, _scaffoldKey),
-        drawer: SizedBox(
-          width: Dimensions.width100 * 2,
-          child: Drawer(
-            child: SideMenu(),
-          ),
+    return Scaffold(
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
+      appBar: topNavigationBar(context, _scaffoldKey),
+      drawer: SizedBox(
+        width: Dimensions.width100 * 2,
+        child: Drawer(
+          child: SideMenu(),
         ),
-        body: SafeArea(
-          child: ResponsiveWidget(
-            largeScreen: LargeScreen(),
-            mediumScreen: MediumScreen(),
-            smallScreen: SmallScreen(),
-          ),
+      ),
+      body: SafeArea(
+        child: ResponsiveWidget(
+          largeScreen: LargeScreen(),
+          mediumScreen: MediumScreen(),
+          smallScreen: SmallScreen(),
         ),
       ),
     );
