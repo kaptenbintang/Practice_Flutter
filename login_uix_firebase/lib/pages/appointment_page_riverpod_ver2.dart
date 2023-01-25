@@ -71,360 +71,314 @@ class _AppointmentPageRiverpodVersion2State
         selectedLocation,
         selectedCodeorName;
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            //Header /NavigationBar
-            ResponsiveWidget.isLargeScreen(context)
-                ? Padding(
-                    padding: EdgeInsets.only(
-                        left: screenWidth / (width / 100),
-                        top: screenWidth / (width / 40),
-                        right: screenWidth / (width / 100),
-                        bottom: screenWidth / (width / 40)),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.35,
-                          height: MediaQuery.of(context).size.height * 0.07,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
+        body: SafeArea(
+            child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //Header /NavigationBar
+              ResponsiveWidget.isLargeScreen(context)
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          left: screenWidth / (width / 100),
+                          top: screenWidth / (width / 40),
+                          right: screenWidth / (width / 100),
+                          bottom: screenWidth / (width / 40)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                //Home navigation
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, RouteName.MainPagesPage);
+                                    },
+                                    child: Text(
+                                      'Home',
+                                      textAlign: TextAlign.justify,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize:
+                                                  screenWidth / (width / 14)),
+                                    ),
+                                  ),
+                                ),
+                                //Profile navigation
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, RouteName.viewProfilePage);
+                                    },
+                                    child: Text(
+                                      'Profile',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize:
+                                                  screenWidth / (width / 14)),
+                                    ),
+                                  ),
+                                ),
+                                //Booking History
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20),
+                                      screenWidth / (width / 20)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(context,
+                                          RouteName.historyBookingRiverpod);
+                                    },
+                                    child: Text(
+                                      'Booking History',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize:
+                                                  screenWidth / (width / 14)),
+                                    ),
+                                  ),
+                                ),
+                                //Search Text field
+                                SizedBox(
+                                  height: screenWidth / (width / 50),
+                                  width: screenWidth / (width / 300),
+                                  child: TextFormField(
+                                    controller: searchController,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      hintText: 'Search Something here..',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      contentPadding: EdgeInsets.all(
+                                          screenWidth / (width / 8)),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 20)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 20)),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 20)),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            screenWidth / (width / 20)),
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.search,
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize:
+                                                screenWidth / (width / 14)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Image.asset(
+                            'lib/images/Logo-Slogan-BL-H400-W1080.png',
+                            width: screenWidth / (width / 300),
+                            height: screenWidth / (width / 60),
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ],
+                      ),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.only(
+                          left: Dimensions.height10,
+                          right: Dimensions.height10,
+                          bottom: Dimensions.height20),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(Dimensions.radius15),
+                            bottomRight: Radius.circular(Dimensions.radius15),
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(0),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.width08),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               //Home navigation
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20)),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, RouteName.MainPagesPage);
-                                  },
-                                  child: Text(
-                                    'Home',
-                                    textAlign: TextAlign.justify,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize:
-                                                screenWidth / (width / 14)),
-                                  ),
-                                ),
-                              ),
-                              //Profile navigation
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20)),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, RouteName.viewProfilePage);
-                                  },
-                                  child: Text(
-                                    'Profile',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize:
-                                                screenWidth / (width / 14)),
-                                  ),
-                                ),
-                              ),
-                              //Booking History
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20),
-                                    screenWidth / (width / 20)),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(context,
-                                        RouteName.historyBookingRiverpod);
-                                  },
-                                  child: Text(
-                                    'Booking History',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize:
-                                                screenWidth / (width / 14)),
-                                  ),
-                                ),
-                              ),
-                              //Search Text field
-                              SizedBox(
-                                height: screenWidth / (width / 50),
-                                width: screenWidth / (width / 300),
-                                child: TextFormField(
-                                  controller: searchController,
-                                  autofocus: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'Search Something here..',
-                                    hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                    contentPadding: EdgeInsets.all(
-                                        screenWidth / (width / 8)),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          screenWidth / (width / 20)),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          screenWidth / (width / 20)),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          screenWidth / (width / 20)),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          screenWidth / (width / 20)),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.search,
-                                    ),
-                                  ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RouteName.MainPagesPage);
+                                },
+                                child: Text(
+                                  'Home',
+                                  textAlign: TextAlign.justify,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
                                           fontFamily: 'Poppins',
-                                          fontSize: screenWidth / (width / 14)),
+                                          fontSize: Dimensions.font12),
                                 ),
+                              ),
+                              //Profile navigation
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RouteName.viewProfilePage);
+                                },
+                                child: Text(
+                                  'Profile',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: Dimensions.font12),
+                                ),
+                              ),
+                              //Booking History
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context,
+                                      RouteName.historyBookingRiverpod);
+                                },
+                                child: Text(
+                                  'Booking History',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: Dimensions.font12),
+                                ),
+                              ),
+
+                              //Logo Image
+                              Image.asset(
+                                'lib/images/Logo-Slogan-BL-H400-W1080.png',
+                                width: Dimensions.width100,
+                                height: Dimensions.height20 * 2,
+                                fit: BoxFit.fitHeight,
                               ),
                             ],
                           ),
                         ),
-                        Image.asset(
-                          'lib/images/Logo-Slogan-BL-H400-W1080.png',
-                          width: screenWidth / (width / 300),
-                          height: screenWidth / (width / 60),
-                          fit: BoxFit.fitHeight,
-                        ),
-                      ],
-                    ),
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(
-                        left: Dimensions.height10,
-                        right: Dimensions.height10,
-                        bottom: Dimensions.height20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(Dimensions.radius15),
-                          bottomRight: Radius.circular(Dimensions.radius15),
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0),
-                        ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.width08),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            //Home navigation
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.MainPagesPage);
-                              },
-                              child: Text(
-                                'Home',
-                                textAlign: TextAlign.justify,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: Dimensions.font12),
-                              ),
-                            ),
-                            //Profile navigation
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.viewProfilePage);
-                              },
-                              child: Text(
-                                'Profile',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: Dimensions.font12),
-                              ),
-                            ),
-                            //Booking History
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.historyBookingRiverpod);
-                              },
-                              child: Text(
-                                'Booking History',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize: Dimensions.font12),
-                              ),
-                            ),
+                    ),
 
-                            //Logo Image
-                            Image.asset(
-                              'lib/images/Logo-Slogan-BL-H400-W1080.png',
-                              width: Dimensions.width100,
-                              height: Dimensions.height20 * 2,
-                              fit: BoxFit.fitHeight,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+              //Appointment Form Container
+              Padding(
+                padding: EdgeInsets.only(
+                    right: ResponsiveWidget.isLargeScreen(context)
+                        ? screenWidth / (width / 400)
+                        : screenWidth / (width / 10),
+                    left: ResponsiveWidget.isLargeScreen(context)
+                        ? screenWidth / (width / 400)
+                        : screenWidth / (width / 10),
+                    bottom: ResponsiveWidget.isLargeScreen(context)
+                        ? screenWidth / (width / 24)
+                        : screenWidth / (width / 20)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).lineColor,
+                    borderRadius:
+                        BorderRadius.circular(screenWidth / (width / 20)),
                   ),
+                  child: Form(
+                    key: formKey,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        //Appointment Details
 
-            //Appointment Form Container
-            Padding(
-              padding: EdgeInsets.only(
-                  right: ResponsiveWidget.isLargeScreen(context)
-                      ? screenWidth / (width / 400)
-                      : screenWidth / (width / 10),
-                  left: ResponsiveWidget.isLargeScreen(context)
-                      ? screenWidth / (width / 400)
-                      : screenWidth / (width / 10),
-                  bottom: ResponsiveWidget.isLargeScreen(context)
-                      ? screenWidth / (width / 24)
-                      : screenWidth / (width / 20)),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).lineColor,
-                  borderRadius:
-                      BorderRadius.circular(screenWidth / (width / 20)),
-                ),
-                child: Form(
-                  key: formKey,
-                  autovalidateMode: AutovalidateMode.disabled,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      //Appointment Details
-
-                      //Title
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0, screenWidth / (width / 20), 0, 0),
-                        child: Text(
-                          'Make an appointment!',
-                          style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: ResponsiveWidget.isLargeScreen(context)
-                                  ? screenWidth / (width / 24)
-                                  : screenWidth / (width / 20)),
-                        ),
-                      ),
-                      //Practioner Name Row
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Practioner Name: ',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize:
-                                            ResponsiveWidget.isLargeScreen(
-                                                    context)
-                                                ? screenWidth / (width / 18)
-                                                : screenWidth / (width / 16)),
-                              ),
-                            ),
-                            Expanded(
-                              flex: ResponsiveWidget.isLargeScreen(context)
-                                  ? 4
-                                  : 2,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth / (width / 8)),
-                                child: Text(
-                                  widget.practioner.firstName +
-                                      ' ' +
-                                      widget.practioner.lastName,
-                                  style: FlutterFlowTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize:
-                                            ResponsiveWidget.isLargeScreen(
-                                                    context)
-                                                ? screenWidth / (width / 18)
-                                                : screenWidth / (width / 14),
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      //Services Row
-                      if (ResponsiveWidget.isLargeScreen(context))
+                        //Title
                         Padding(
-                          padding: EdgeInsets.all(screenWidth / (width / 20)),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, screenWidth / (width / 20), 0, 0),
+                          child: Text(
+                            'Make an appointment!',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                fontFamily: 'Poppins',
+                                fontSize:
+                                    ResponsiveWidget.isLargeScreen(context)
+                                        ? screenWidth / (width / 24)
+                                        : screenWidth / (width / 20)),
+                          ),
+                        ),
+                        //Practioner Name Row
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20)),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Services: ',
+                                  'Practioner Name: ',
                                   style: FlutterFlowTheme.of(context)
                                       .title1
                                       .override(
@@ -437,267 +391,207 @@ class _AppointmentPageRiverpodVersion2State
                                 ),
                               ),
                               Expanded(
-                                flex: 2,
+                                flex: ResponsiveWidget.isLargeScreen(context)
+                                    ? 4
+                                    : 2,
                                 child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: screenWidth / (width / 8),
-                                      left: screenWidth / (width / 12),
-                                      right: screenWidth / (width / 8),
-                                      bottom: screenWidth / (width / 8)),
-                                  child: Consumer(
-                                    builder: (BuildContext context,
-                                        WidgetRef ref, Widget? child) {
-                                      final services =
-                                          ref.watch(servicesProvider);
-
-                                      return services.when(
-                                        data: (data) {
-                                          return DropdownButtonFormField2(
-                                            items: List.generate(
-                                              data.length,
-                                              (index) => DropdownMenuItem(
-                                                value: data
-                                                    .elementAt(index)
-                                                    .servicesName,
-                                                child: Text(
-                                                  data
-                                                      .elementAt(index)
-                                                      .servicesName,
-                                                  style: TextStyle(
-                                                    fontSize: ResponsiveWidget
-                                                            .isLargeScreen(
-                                                                context)
-                                                        ? screenWidth /
-                                                            (width / 14)
-                                                        : screenWidth /
-                                                            (width / 12),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            onChanged: (val) {
-                                              ref
-                                                  .read(selectedServiceProvider
-                                                      .notifier)
-                                                  .selectedService(
-                                                      val.toString());
-
-                                              selectedService = val;
-
-                                              ref
-                                                  .read(servicesChangeProvider
-                                                      .notifier)
-                                                  .state = val!.isNotEmpty;
-                                            },
-                                            icon: const Icon(
-                                              Icons.arrow_drop_down,
-                                              color: Colors.black45,
-                                            ),
-                                            iconSize:
-                                                ResponsiveWidget.isLargeScreen(
-                                                        context)
-                                                    ? screenWidth / (width / 30)
-                                                    : 0,
-                                            buttonHeight:
-                                                screenWidth / (width / 60),
-                                            buttonPadding: EdgeInsets.only(
-                                                left: ResponsiveWidget
-                                                        .isLargeScreen(context)
-                                                    ? screenWidth / (width / 20)
-                                                    : 0,
-                                                right: 10),
-                                            dropdownDecoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 15)),
-                                            ),
-                                            decoration: InputDecoration(
-                                              isDense: true,
-                                              contentPadding: EdgeInsets.zero,
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        screenWidth /
-                                                            (width / 8)),
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  width: 1,
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        screenWidth /
-                                                            (width / 8)),
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  width: 1,
-                                                ),
-                                              ),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        screenWidth /
-                                                            (width / 8)),
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  width: 1,
-                                                ),
-                                              ),
-                                            ),
-                                            hint: Text(
-                                              'Select Services',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize:
-                                                              screenWidth /
-                                                                  (width / 18)),
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1
-                                                .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: screenWidth /
-                                                        (width / 18)),
-                                          );
-                                        },
-                                        error: (error, stackTrace) {
-                                          return const SmallErrorAnimationView();
-                                        },
-                                        loading: () {
-                                          return const SmallLoadingAnimationView();
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                'Date: ',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize:
-                                            ResponsiveWidget.isLargeScreen(
-                                                    context)
-                                                ? screenWidth / (width / 24)
-                                                : screenWidth / (width / 20)),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.all(screenWidth / (width / 8)),
-                                  child: TextFormField(
-                                    controller: dateandtimeController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    readOnly: true,
-                                    onTap: () async {
-                                      final result = await showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            builder: (context) {
-                                              return DateTimeAppointmentDialog(
-                                                context: context,
-                                                dayoff:
-                                                    widget.practioner.dayoff,
-                                              );
-                                            },
-                                          ) ??
-                                          '';
-
-                                      dateandtimeController.text =
-                                          result.toString();
-
-                                      selectedDate = result.toString();
-                                    },
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth / (width / 8)),
+                                  child: Text(
+                                    widget.practioner.firstName +
+                                        ' ' +
+                                        widget.practioner.lastName,
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle1
+                                        .title3
                                         .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize:
-                                                screenWidth / (width / 18)),
-                                    keyboardType: TextInputType.datetime,
-                                    decoration: InputDecoration(
-                                      labelText: "Select date",
-                                      prefixIcon: Icon(
-                                        Icons.calendar_today,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .title2
-                                          .override(
-                                              fontFamily: 'Poppins',
-                                              fontSize: ResponsiveWidget
-                                                      .isLargeScreen(context)
-                                                  ? screenWidth / (width / 24)
-                                                  : screenWidth / (width / 20)),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          width: 1,
+                                          fontFamily: 'Poppins',
+                                          fontSize:
+                                              ResponsiveWidget.isLargeScreen(
+                                                      context)
+                                                  ? screenWidth / (width / 18)
+                                                  : screenWidth / (width / 14),
+                                          fontStyle: FontStyle.italic,
                                         ),
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 8)),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 8)),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 8)),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 8)),
-                                      ),
-                                    ),
+                                    textAlign: TextAlign.start,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                        )
-                      else
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              screenWidth / (width / 20),
-                              screenWidth / (width / 20),
-                              screenWidth / (width / 20),
-                              screenWidth / (width / 20)),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Services: ',
+                        ),
+                        //Services Row
+                        if (ResponsiveWidget.isLargeScreen(context))
+                          Padding(
+                            padding: EdgeInsets.all(screenWidth / (width / 20)),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Services: ',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: ResponsiveWidget
+                                                    .isLargeScreen(context)
+                                                ? screenWidth / (width / 18)
+                                                : screenWidth / (width / 16)),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: screenWidth / (width / 8),
+                                        left: screenWidth / (width / 12),
+                                        right: screenWidth / (width / 8),
+                                        bottom: screenWidth / (width / 8)),
+                                    child: Consumer(
+                                      builder: (BuildContext context,
+                                          WidgetRef ref, Widget? child) {
+                                        final services =
+                                            ref.watch(servicesProvider);
+
+                                        return services.when(
+                                          data: (data) {
+                                            return DropdownButtonFormField2(
+                                              items: List.generate(
+                                                data.length,
+                                                (index) => DropdownMenuItem(
+                                                  value: data
+                                                      .elementAt(index)
+                                                      .servicesName,
+                                                  child: Text(
+                                                    data
+                                                        .elementAt(index)
+                                                        .servicesName,
+                                                    style: TextStyle(
+                                                      fontSize: ResponsiveWidget
+                                                              .isLargeScreen(
+                                                                  context)
+                                                          ? screenWidth /
+                                                              (width / 14)
+                                                          : screenWidth /
+                                                              (width / 12),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (val) {
+                                                ref
+                                                    .read(
+                                                        selectedServiceProvider
+                                                            .notifier)
+                                                    .selectedService(
+                                                        val.toString());
+
+                                                selectedService = val;
+
+                                                ref
+                                                    .read(servicesChangeProvider
+                                                        .notifier)
+                                                    .state = val!.isNotEmpty;
+                                              },
+                                              icon: const Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.black45,
+                                              ),
+                                              iconSize: ResponsiveWidget
+                                                      .isLargeScreen(context)
+                                                  ? screenWidth / (width / 30)
+                                                  : 0,
+                                              buttonHeight:
+                                                  screenWidth / (width / 60),
+                                              buttonPadding: EdgeInsets.only(
+                                                  left: ResponsiveWidget
+                                                          .isLargeScreen(
+                                                              context)
+                                                      ? screenWidth /
+                                                          (width / 20)
+                                                      : 0,
+                                                  right: 10),
+                                              dropdownDecoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 15)),
+                                              ),
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                contentPadding: EdgeInsets.zero,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryColor,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                              ),
+                                              hint: Text(
+                                                'Select Services',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .subtitle2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: screenWidth /
+                                                            (width / 18)),
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1
+                                                      .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize:
+                                                              screenWidth /
+                                                                  (width / 18)),
+                                            );
+                                          },
+                                          error: (error, stackTrace) {
+                                            return const SmallErrorAnimationView();
+                                          },
+                                          loading: () {
+                                            return const SmallLoadingAnimationView();
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'Date: ',
                                   style: FlutterFlowTheme.of(context)
                                       .title1
                                       .override(
@@ -706,86 +600,215 @@ class _AppointmentPageRiverpodVersion2State
                                               ResponsiveWidget.isLargeScreen(
                                                       context)
                                                   ? screenWidth / (width / 24)
-                                                  : screenWidth / (width / 16)),
+                                                  : screenWidth / (width / 20)),
                                 ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.all(screenWidth / (width / 8)),
-                                  child: Consumer(
-                                    builder: (BuildContext context,
-                                        WidgetRef ref, Widget? child) {
-                                      final services =
-                                          ref.watch(servicesProvider);
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(
+                                        screenWidth / (width / 8)),
+                                    child: TextFormField(
+                                      controller: dateandtimeController,
+                                      autofocus: true,
+                                      obscureText: false,
+                                      readOnly: true,
+                                      onTap: () async {
+                                        final result = await showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return DateTimeAppointmentDialog(
+                                                  context: context,
+                                                  dayoff:
+                                                      widget.practioner.dayoff,
+                                                );
+                                              },
+                                            ) ??
+                                            '';
 
-                                      return services.when(
-                                        data: (data) {
-                                          return DropdownButtonFormField2(
-                                            icon: const Icon(
-                                              Icons.arrow_drop_down,
-                                              color: Colors.black45,
-                                            ),
-                                            iconSize:
-                                                screenWidth / (width / 30),
-                                            buttonHeight:
-                                                screenWidth / (width / 60),
-                                            buttonPadding: EdgeInsets.only(
-                                                left:
-                                                    screenWidth / (width / 20),
-                                                right: 10),
-                                            dropdownDecoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 15)),
-                                            ),
-                                            decoration: InputDecoration(
-                                              isDense: true,
-                                              contentPadding: EdgeInsets.zero,
-                                              enabledBorder: OutlineInputBorder(
+                                        dateandtimeController.text =
+                                            result.toString();
+
+                                        selectedDate = result.toString();
+                                      },
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize:
+                                                  screenWidth / (width / 18)),
+                                      keyboardType: TextInputType.datetime,
+                                      decoration: InputDecoration(
+                                        labelText: "Select date",
+                                        prefixIcon: Icon(
+                                          Icons.calendar_today,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                        ),
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .title2
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 24)
+                                                    : screenWidth /
+                                                        (width / 20)),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 8)),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 8)),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 8)),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 8)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        else
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20)),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Services: ',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: ResponsiveWidget
+                                                    .isLargeScreen(context)
+                                                ? screenWidth / (width / 24)
+                                                : screenWidth / (width / 16)),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(
+                                        screenWidth / (width / 8)),
+                                    child: Consumer(
+                                      builder: (BuildContext context,
+                                          WidgetRef ref, Widget? child) {
+                                        final services =
+                                            ref.watch(servicesProvider);
+
+                                        return services.when(
+                                          data: (data) {
+                                            return DropdownButtonFormField2(
+                                              icon: const Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.black45,
+                                              ),
+                                              iconSize:
+                                                  screenWidth / (width / 30),
+                                              buttonHeight:
+                                                  screenWidth / (width / 60),
+                                              buttonPadding: EdgeInsets.only(
+                                                  left: screenWidth /
+                                                      (width / 20),
+                                                  right: 10),
+                                              dropdownDecoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         screenWidth /
-                                                            (width / 8)),
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  width: 1,
+                                                            (width / 15)),
+                                              ),
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                contentPadding: EdgeInsets.zero,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryColor,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
                                                 ),
                                               ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        screenWidth /
-                                                            (width / 8)),
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  width: 1,
-                                                ),
+                                              hint: Text(
+                                                'Select Services',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .subtitle2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: ResponsiveWidget
+                                                                .isLargeScreen(
+                                                                    context)
+                                                            ? screenWidth /
+                                                                (width / 18)
+                                                            : screenWidth /
+                                                                (width / 14)),
                                               ),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        screenWidth /
-                                                            (width / 8)),
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  width: 1,
-                                                ),
-                                              ),
-                                            ),
-                                            hint: Text(
-                                              'Select Services',
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .subtitle2
+                                                  .subtitle1
                                                   .override(
                                                       fontFamily: 'Poppins',
                                                       fontSize: ResponsiveWidget
@@ -795,67 +818,172 @@ class _AppointmentPageRiverpodVersion2State
                                                               (width / 18)
                                                           : screenWidth /
                                                               (width / 14)),
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1
-                                                .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: ResponsiveWidget
-                                                            .isLargeScreen(
-                                                                context)
-                                                        ? screenWidth /
-                                                            (width / 18)
-                                                        : screenWidth /
-                                                            (width / 14)),
-                                            items: List.generate(
-                                              data.length,
-                                              (index) => DropdownMenuItem(
-                                                value: data
-                                                    .elementAt(index)
-                                                    .servicesName,
-                                                child: Text(
-                                                  data
+                                              items: List.generate(
+                                                data.length,
+                                                (index) => DropdownMenuItem(
+                                                  value: data
                                                       .elementAt(index)
                                                       .servicesName,
-                                                  style: TextStyle(
-                                                    fontSize: screenWidth /
-                                                        (width / 10),
+                                                  child: Text(
+                                                    data
+                                                        .elementAt(index)
+                                                        .servicesName,
+                                                    style: TextStyle(
+                                                      fontSize: screenWidth /
+                                                          (width / 10),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            onChanged: (val) {
-                                              ref
-                                                  .read(selectedServiceProvider
-                                                      .notifier)
-                                                  .selectedService(
-                                                      val.toString());
+                                              onChanged: (val) {
+                                                ref
+                                                    .read(
+                                                        selectedServiceProvider
+                                                            .notifier)
+                                                    .selectedService(
+                                                        val.toString());
 
-                                              selectedService = val;
+                                                selectedService = val;
 
-                                              ref
-                                                  .read(servicesChangeProvider
-                                                      .notifier)
-                                                  .state = val!.isNotEmpty;
-                                            },
-                                            onSaved: (value) {},
-                                          );
-                                        },
-                                        error: (error, stackTrace) {
-                                          return const SmallErrorAnimationView();
-                                        },
-                                        loading: () {
-                                          return const SmallLoadingAnimationView();
-                                        },
-                                      );
-                                    },
+                                                ref
+                                                    .read(servicesChangeProvider
+                                                        .notifier)
+                                                    .state = val!.isNotEmpty;
+                                              },
+                                              onSaved: (value) {},
+                                            );
+                                          },
+                                          error: (error, stackTrace) {
+                                            return const SmallErrorAnimationView();
+                                          },
+                                          loading: () {
+                                            return const SmallLoadingAnimationView();
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      if (!ResponsiveWidget.isLargeScreen(context))
+                        if (!ResponsiveWidget.isLargeScreen(context))
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20),
+                                screenWidth / (width / 20)),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Date: ',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize:
+                                                screenWidth / (width / 16)),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(
+                                        screenWidth / (width / 8)),
+                                    child: TextFormField(
+                                      controller: dateandtimeController,
+                                      autofocus: true,
+                                      obscureText: false,
+                                      readOnly: true,
+                                      onTap: () async {
+                                        final result = await showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return DateTimeAppointmentDialog(
+                                                  context: context,
+                                                  dayoff:
+                                                      widget.practioner.dayoff,
+                                                );
+                                              },
+                                            ) ??
+                                            '';
+
+                                        dateandtimeController.text =
+                                            result.toString();
+
+                                        selectedDate = result.toString();
+                                      },
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize: ResponsiveWidget
+                                                      .isLargeScreen(context)
+                                                  ? screenWidth / (width / 18)
+                                                  : screenWidth / (width / 14)),
+                                      keyboardType: TextInputType.datetime,
+                                      decoration: InputDecoration(
+                                        labelText: "Select date",
+                                        prefixIcon: Icon(
+                                          Icons.calendar_today,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                        ),
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .title2
+                                            .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: ResponsiveWidget
+                                                        .isLargeScreen(context)
+                                                    ? screenWidth / (width / 24)
+                                                    : screenWidth /
+                                                        (width / 20)),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 8)),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 8)),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 8)),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              screenWidth / (width / 8)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        //Time Row
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               screenWidth / (width / 20),
@@ -863,223 +991,303 @@ class _AppointmentPageRiverpodVersion2State
                               screenWidth / (width / 20),
                               screenWidth / (width / 20)),
                           child: Row(
+                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Date: ',
+                                  'Time: ',
                                   style: FlutterFlowTheme.of(context)
                                       .title1
                                       .override(
                                           fontFamily: 'Poppins',
-                                          fontSize: screenWidth / (width / 16)),
+                                          fontSize:
+                                              ResponsiveWidget.isLargeScreen(
+                                                      context)
+                                                  ? screenWidth / (width / 18)
+                                                  : screenWidth / (width / 16)),
                                 ),
                               ),
                               Expanded(
-                                flex: 2,
+                                flex: ResponsiveWidget.isLargeScreen(context)
+                                    ? 4
+                                    : 2,
                                 child: Padding(
                                   padding:
                                       EdgeInsets.all(screenWidth / (width / 8)),
-                                  child: TextFormField(
-                                    controller: dateandtimeController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    readOnly: true,
-                                    onTap: () async {
-                                      final result = await showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            builder: (context) {
-                                              return DateTimeAppointmentDialog(
-                                                context: context,
-                                                dayoff:
-                                                    widget.practioner.dayoff,
-                                              );
-                                            },
-                                          ) ??
-                                          '';
+                                  child: Consumer(
+                                    builder: (context, ref, child) {
+                                      final valuesService =
+                                          ref.watch(servicesChangeProvider);
 
-                                      dateandtimeController.text =
-                                          result.toString();
-
-                                      selectedDate = result.toString();
+                                      final valueDate =
+                                          ref.watch(dateChangeProvider);
+                                      if (valuesService! && valueDate!) {
+                                        return SizedBox(
+                                          height: screenWidth / (width / 210),
+                                          child: TimesGridView(
+                                            serviceTime:
+                                                selectedService.toString(),
+                                            schedule:
+                                                widget.practioner.schedules,
+                                            selectedTime:
+                                                dateandtimeController.text,
+                                          ),
+                                        );
+                                      } else {
+                                        return Text(
+                                          'Please select service and date',
+                                          style: FlutterFlowTheme.of(context)
+                                              .title2
+                                              .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontStyle: FontStyle.italic,
+                                                  fontSize: ResponsiveWidget
+                                                          .isLargeScreen(
+                                                              context)
+                                                      ? screenWidth /
+                                                          (width / 18)
+                                                      : screenWidth /
+                                                          (width / 14)),
+                                          textAlign: TextAlign.start,
+                                        );
+                                      }
                                     },
-                                    style: FlutterFlowTheme.of(context)
-                                        .subtitle1
-                                        .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: ResponsiveWidget
-                                                    .isLargeScreen(context)
-                                                ? screenWidth / (width / 18)
-                                                : screenWidth / (width / 14)),
-                                    keyboardType: TextInputType.datetime,
-                                    decoration: InputDecoration(
-                                      labelText: "Select date",
-                                      prefixIcon: Icon(
-                                        Icons.calendar_today,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .title2
-                                          .override(
-                                              fontFamily: 'Poppins',
-                                              fontSize: ResponsiveWidget
-                                                      .isLargeScreen(context)
-                                                  ? screenWidth / (width / 24)
-                                                  : screenWidth / (width / 20)),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 8)),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 8)),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 8)),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth / (width / 8)),
-                                      ),
-                                    ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-
-                      //Time Row
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Time: ',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize:
-                                            ResponsiveWidget.isLargeScreen(
-                                                    context)
-                                                ? screenWidth / (width / 18)
-                                                : screenWidth / (width / 16)),
-                              ),
-                            ),
-                            Expanded(
-                              flex: ResponsiveWidget.isLargeScreen(context)
-                                  ? 4
-                                  : 2,
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(screenWidth / (width / 8)),
-                                child: Consumer(
-                                  builder: (context, ref, child) {
-                                    final valuesService =
-                                        ref.watch(servicesChangeProvider);
-
-                                    final valueDate =
-                                        ref.watch(dateChangeProvider);
-                                    if (valuesService! && valueDate!) {
-                                      return SizedBox(
-                                        height: screenWidth / (width / 210),
-                                        child: TimesGridView(
-                                          serviceTime:
-                                              selectedService.toString(),
-                                          schedule: widget.practioner.schedules,
-                                          selectedTime:
-                                              dateandtimeController.text,
-                                        ),
-                                      );
-                                    } else {
-                                      return Text(
-                                        'Please select service and date',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title2
-                                            .override(
-                                                fontFamily: 'Poppins',
-                                                fontStyle: FontStyle.italic,
-                                                fontSize: ResponsiveWidget
-                                                        .isLargeScreen(context)
-                                                    ? screenWidth / (width / 18)
-                                                    : screenWidth /
-                                                        (width / 14)),
-                                        textAlign: TextAlign.start,
-                                      );
-                                    }
-                                  },
+                        //Location Row
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Location: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .title1
+                                      .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize:
+                                              ResponsiveWidget.isLargeScreen(
+                                                      context)
+                                                  ? screenWidth / (width / 18)
+                                                  : screenWidth / (width / 16)),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      //Location Row
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Location: ',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                        fontFamily: 'Poppins',
-                                        fontSize:
-                                            ResponsiveWidget.isLargeScreen(
-                                                    context)
-                                                ? screenWidth / (width / 18)
-                                                : screenWidth / (width / 16)),
-                              ),
-                            ),
-                            Expanded(
-                              flex: ResponsiveWidget.isLargeScreen(context)
-                                  ? 4
-                                  : 2,
-                              child: Padding(
-                                  padding:
-                                      EdgeInsets.all(screenWidth / (width / 8)),
-                                  child: Consumer(
-                                    builder: (context, ref, child) {
-                                      final locations =
-                                          ref.watch(locationProvider);
+                              Expanded(
+                                flex: ResponsiveWidget.isLargeScreen(context)
+                                    ? 4
+                                    : 2,
+                                child: Padding(
+                                    padding: EdgeInsets.all(
+                                        screenWidth / (width / 8)),
+                                    child: Consumer(
+                                      builder: (context, ref, child) {
+                                        final locations =
+                                            ref.watch(locationProvider);
 
-                                      return locations.when(
-                                        data: (data) {
-                                          return DropdownButtonFormField2(
+                                        return locations.when(
+                                          data: (data) {
+                                            return DropdownButtonFormField2(
+                                              icon: const Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.black45,
+                                              ),
+                                              iconSize:
+                                                  screenWidth / (width / 30),
+                                              buttonHeight:
+                                                  screenWidth / (width / 60),
+                                              buttonPadding: EdgeInsets.only(
+                                                  left: screenWidth /
+                                                      (width / 20),
+                                                  right: 10),
+                                              dropdownDecoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 15)),
+                                              ),
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                contentPadding: EdgeInsets.zero,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryColor,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          screenWidth /
+                                                              (width / 8)),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                              ),
+                                              hint: Text(
+                                                'Select Location',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .subtitle2
+                                                    .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: ResponsiveWidget
+                                                                .isLargeScreen(
+                                                                    context)
+                                                            ? screenWidth /
+                                                                (width / 18)
+                                                            : screenWidth /
+                                                                (width / 14)),
+                                              ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .subtitle1
+                                                  .override(
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: ResponsiveWidget
+                                                              .isLargeScreen(
+                                                                  context)
+                                                          ? screenWidth /
+                                                              (width / 18)
+                                                          : screenWidth /
+                                                              (width / 14)),
+                                              items: List.generate(
+                                                data.length,
+                                                (index) => DropdownMenuItem(
+                                                  value: data
+                                                      .elementAt(index)
+                                                      .type,
+                                                  child: Text(
+                                                    data.elementAt(index).type,
+                                                    style: TextStyle(
+                                                      fontSize: screenWidth /
+                                                          (width / 14),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                ref
+                                                    .read(
+                                                        locationSelectedProvider
+                                                            .notifier)
+                                                    .changeLocation(
+                                                        value.toString());
+
+                                                selectedLocation = value;
+                                              },
+                                              onSaved: (value) {},
+                                            );
+                                          },
+                                          error: (error, stackTrace) {
+                                            return const SmallErrorAnimationView();
+                                          },
+                                          loading: () {
+                                            return const SmallLoadingAnimationView();
+                                          },
+                                        );
+                                      },
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        //Client Details
+
+                        //Title
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20),
+                              screenWidth / (width / 20)),
+                          child: Text(
+                            'Your Details',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                fontFamily: 'Poppins',
+                                fontSize:
+                                    ResponsiveWidget.isLargeScreen(context)
+                                        ? screenWidth / (width / 24)
+                                        : screenWidth / (width / 20)),
+                          ),
+                        ),
+                        //Client Details Column
+                        userInfo.when(
+                          data: (data) {
+                            emailController.text = data.email.toString();
+                            phNumbController.text = data.phoneNumber.toString();
+
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      screenWidth / (width / 20)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Code/Name: ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .title1
+                                              .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: ResponsiveWidget
+                                                          .isLargeScreen(
+                                                              context)
+                                                      ? screenWidth /
+                                                          (width / 18)
+                                                      : screenWidth /
+                                                          (width / 16)),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: ResponsiveWidget.isLargeScreen(
+                                                context)
+                                            ? 4
+                                            : 2,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10)),
+                                          child: DropdownButtonFormField2(
                                             icon: const Icon(
                                               Icons.arrow_drop_down,
                                               color: Colors.black45,
@@ -1139,7 +1347,7 @@ class _AppointmentPageRiverpodVersion2State
                                               ),
                                             ),
                                             hint: Text(
-                                              'Select Location',
+                                              'Select Name/Code',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .subtitle2
@@ -1151,175 +1359,10 @@ class _AppointmentPageRiverpodVersion2State
                                                           ? screenWidth /
                                                               (width / 18)
                                                           : screenWidth /
-                                                              (width / 14)),
+                                                              (width / 12)),
                                             ),
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle1
-                                                .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: ResponsiveWidget
-                                                            .isLargeScreen(
-                                                                context)
-                                                        ? screenWidth /
-                                                            (width / 18)
-                                                        : screenWidth /
-                                                            (width / 14)),
-                                            items: List.generate(
-                                              data.length,
-                                              (index) => DropdownMenuItem(
-                                                value:
-                                                    data.elementAt(index).type,
-                                                child: Text(
-                                                  data.elementAt(index).type,
-                                                  style: TextStyle(
-                                                    fontSize: screenWidth /
-                                                        (width / 14),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            onChanged: (value) {
-                                              ref
-                                                  .read(locationSelectedProvider
-                                                      .notifier)
-                                                  .changeLocation(
-                                                      value.toString());
-
-                                              selectedLocation = value;
-                                            },
-                                            onSaved: (value) {},
-                                          );
-                                        },
-                                        error: (error, stackTrace) {
-                                          return const SmallErrorAnimationView();
-                                        },
-                                        loading: () {
-                                          return const SmallLoadingAnimationView();
-                                        },
-                                      );
-                                    },
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      //Client Details
-
-                      //Title
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20),
-                            screenWidth / (width / 20)),
-                        child: Text(
-                          'Your Details',
-                          style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: ResponsiveWidget.isLargeScreen(context)
-                                  ? screenWidth / (width / 24)
-                                  : screenWidth / (width / 20)),
-                        ),
-                      ),
-                      //Client Details Column
-                      userInfo.when(
-                        data: (data) {
-                          emailController.text = data.email.toString();
-                          phNumbController.text = data.phoneNumber.toString();
-
-                          return Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsets.all(screenWidth / (width / 20)),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'Code/Name: ',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title1
-                                            .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: ResponsiveWidget
-                                                        .isLargeScreen(context)
-                                                    ? screenWidth / (width / 18)
-                                                    : screenWidth /
-                                                        (width / 16)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: ResponsiveWidget.isLargeScreen(
-                                              context)
-                                          ? 4
-                                          : 2,
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10)),
-                                        child: DropdownButtonFormField2(
-                                          icon: const Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Colors.black45,
-                                          ),
-                                          iconSize: screenWidth / (width / 30),
-                                          buttonHeight:
-                                              screenWidth / (width / 60),
-                                          buttonPadding: EdgeInsets.only(
-                                              left: screenWidth / (width / 20),
-                                              right: 10),
-                                          dropdownDecoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                                screenWidth / (width / 15)),
-                                          ),
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            contentPadding: EdgeInsets.zero,
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 8)),
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                width: 1,
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 8)),
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                width: 1,
-                                              ),
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 8)),
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                width: 1,
-                                              ),
-                                            ),
-                                          ),
-                                          hint: Text(
-                                            'Select Name/Code',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle2
                                                 .override(
                                                     fontFamily: 'Poppins',
                                                     fontSize: ResponsiveWidget
@@ -1329,9 +1372,66 @@ class _AppointmentPageRiverpodVersion2State
                                                             (width / 18)
                                                         : screenWidth /
                                                             (width / 12)),
+                                            items: [
+                                              DropdownMenuItem(
+                                                value:
+                                                    '${data.firstName} ${data.lastName}',
+                                                child: Text(
+                                                  '${data.firstName} ${data.lastName}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle1
+                                                      .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: ResponsiveWidget
+                                                                  .isLargeScreen(
+                                                                      context)
+                                                              ? screenWidth /
+                                                                  (width / 18)
+                                                              : screenWidth /
+                                                                  (width / 8)),
+                                                ),
+                                              ),
+                                              DropdownMenuItem(
+                                                value: data.clientcode,
+                                                child: Text(
+                                                  data.clientcode,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle1
+                                                      .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: ResponsiveWidget
+                                                                  .isLargeScreen(
+                                                                      context)
+                                                              ? screenWidth /
+                                                                  (width / 18)
+                                                              : screenWidth /
+                                                                  (width / 8)),
+                                                ),
+                                              ),
+                                            ],
+                                            onChanged: (value) {
+                                              selectedCodeorName = value;
+                                            },
+                                            onSaved: (value) {},
                                           ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      screenWidth / (width / 20)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Email: ',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle1
+                                              .title1
                                               .override(
                                                   fontFamily: 'Poppins',
                                                   fontSize: ResponsiveWidget
@@ -1340,352 +1440,300 @@ class _AppointmentPageRiverpodVersion2State
                                                       ? screenWidth /
                                                           (width / 18)
                                                       : screenWidth /
-                                                          (width / 12)),
-                                          items: [
-                                            DropdownMenuItem(
-                                              value:
-                                                  '${data.firstName} ${data.lastName}',
-                                              child: Text(
-                                                '${data.firstName} ${data.lastName}',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .subtitle1
-                                                    .override(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: ResponsiveWidget
-                                                                .isLargeScreen(
-                                                                    context)
-                                                            ? screenWidth /
-                                                                (width / 18)
-                                                            : screenWidth /
-                                                                (width / 8)),
-                                              ),
-                                            ),
-                                            DropdownMenuItem(
-                                              value: data.clientcode,
-                                              child: Text(
-                                                data.clientcode,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .subtitle1
-                                                    .override(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: ResponsiveWidget
-                                                                .isLargeScreen(
-                                                                    context)
-                                                            ? screenWidth /
-                                                                (width / 18)
-                                                            : screenWidth /
-                                                                (width / 8)),
-                                              ),
-                                            ),
-                                          ],
-                                          onChanged: (value) {
-                                            selectedCodeorName = value;
-                                          },
-                                          onSaved: (value) {},
+                                                          (width / 16)),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.all(screenWidth / (width / 20)),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'Email: ',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title1
-                                            .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: ResponsiveWidget
-                                                        .isLargeScreen(context)
-                                                    ? screenWidth / (width / 18)
-                                                    : screenWidth /
-                                                        (width / 16)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: ResponsiveWidget.isLargeScreen(
-                                              context)
-                                          ? 4
-                                          : 2,
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10)),
-                                        child: Text(
-                                          data.email!,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: ResponsiveWidget
-                                                        .isLargeScreen(context)
-                                                    ? screenWidth / (width / 18)
-                                                    : screenWidth /
-                                                        (width / 14),
-                                                fontStyle: FontStyle.italic,
-                                              ),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.all(screenWidth / (width / 20)),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'Phone Number: ',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title1
-                                            .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: ResponsiveWidget
-                                                        .isLargeScreen(context)
-                                                    ? screenWidth / (width / 18)
-                                                    : screenWidth /
-                                                        (width / 16)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: ResponsiveWidget.isLargeScreen(
-                                              context)
-                                          ? 4
-                                          : 2,
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10)),
-                                        child: Text(
-                                          data.phoneNumber!,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: ResponsiveWidget
-                                                        .isLargeScreen(context)
-                                                    ? screenWidth / (width / 18)
-                                                    : screenWidth /
-                                                        (width / 14),
-                                                fontStyle: FontStyle.italic,
-                                              ),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.all(screenWidth / (width / 20)),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'Comment: ',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title1
-                                            .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: ResponsiveWidget
-                                                        .isLargeScreen(context)
-                                                    ? screenWidth / (width / 18)
-                                                    : screenWidth /
-                                                        (width / 16)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: ResponsiveWidget.isLargeScreen(
-                                              context)
-                                          ? 4
-                                          : 2,
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10),
-                                            screenWidth / (width / 10)),
-                                        child: TextFormField(
-                                          controller: commentController,
-                                          autofocus: true,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            hintText:
-                                                "What would you like to gain from this session?",
-                                            hintStyle: FlutterFlowTheme.of(
-                                                    context)
-                                                .subtitle2
+                                      Expanded(
+                                        flex: ResponsiveWidget.isLargeScreen(
+                                                context)
+                                            ? 4
+                                            : 2,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10)),
+                                          child: Text(
+                                            data.email!,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title3
                                                 .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: ResponsiveWidget
-                                                            .isLargeScreen(
-                                                                context)
-                                                        ? screenWidth /
-                                                            (width / 18)
-                                                        : screenWidth /
-                                                            (width / 16)),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 8)),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 8)),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 8)),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth /
-                                                          (width / 8)),
-                                            ),
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: ResponsiveWidget
+                                                          .isLargeScreen(
+                                                              context)
+                                                      ? screenWidth /
+                                                          (width / 18)
+                                                      : screenWidth /
+                                                          (width / 14),
+                                                  fontStyle: FontStyle.italic,
+                                                ),
+                                            textAlign: TextAlign.start,
                                           ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      screenWidth / (width / 20)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Phone Number: ',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle1
+                                              .title1
                                               .override(
                                                   fontFamily: 'Poppins',
-                                                  fontSize: screenWidth /
-                                                      (width / 18)),
-                                          keyboardType: TextInputType.multiline,
+                                                  fontSize: ResponsiveWidget
+                                                          .isLargeScreen(
+                                                              context)
+                                                      ? screenWidth /
+                                                          (width / 18)
+                                                      : screenWidth /
+                                                          (width / 16)),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        flex: ResponsiveWidget.isLargeScreen(
+                                                context)
+                                            ? 4
+                                            : 2,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10)),
+                                          child: Text(
+                                            data.phoneNumber!,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: ResponsiveWidget
+                                                          .isLargeScreen(
+                                                              context)
+                                                      ? screenWidth /
+                                                          (width / 18)
+                                                      : screenWidth /
+                                                          (width / 14),
+                                                  fontStyle: FontStyle.italic,
+                                                ),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      screenWidth / (width / 20)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Comment: ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .title1
+                                              .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: ResponsiveWidget
+                                                          .isLargeScreen(
+                                                              context)
+                                                      ? screenWidth /
+                                                          (width / 18)
+                                                      : screenWidth /
+                                                          (width / 16)),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: ResponsiveWidget.isLargeScreen(
+                                                context)
+                                            ? 4
+                                            : 2,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10),
+                                                  screenWidth / (width / 10)),
+                                          child: TextFormField(
+                                            controller: commentController,
+                                            autofocus: true,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              hintText:
+                                                  "What would you like to gain from this session?",
+                                              hintStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .subtitle2
+                                                  .override(
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: ResponsiveWidget
+                                                              .isLargeScreen(
+                                                                  context)
+                                                          ? screenWidth /
+                                                              (width / 18)
+                                                          : screenWidth /
+                                                              (width / 16)),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        screenWidth /
+                                                            (width / 8)),
+                                              ),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1
+                                                .override(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: screenWidth /
+                                                        (width / 18)),
+                                            keyboardType:
+                                                TextInputType.multiline,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          error: (error, stackTrace) {
+                            return const ErrorAnimationView();
+                          },
+                          loading: () {
+                            return const LoadingAnimationView();
+                          },
+                        ),
+
+                        //Submit button
+                        Padding(
+                          padding: EdgeInsets.all(screenWidth / (width / 8)),
+                          child: SizedBox(
+                            width: screenWidth / (width / 150),
+                            height: screenWidth / (width / 30),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateColor.resolveWith(
+                                    (states) => FlutterFlowTheme.of(context)
+                                        .primaryColor),
+                                side: MaterialStateProperty.all(
+                                  BorderSide(
+                                      width: 1.0, color: Colors.transparent),
                                 ),
                               ),
-                            ],
-                          );
-                        },
-                        error: (error, stackTrace) {
-                          return const ErrorAnimationView();
-                        },
-                        loading: () {
-                          return const LoadingAnimationView();
-                        },
-                      ),
-
-                      //Submit button
-                      Padding(
-                        padding: EdgeInsets.all(screenWidth / (width / 8)),
-                        child: SizedBox(
-                          width: screenWidth / (width / 150),
-                          height: screenWidth / (width / 30),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateColor.resolveWith(
-                                  (states) => FlutterFlowTheme.of(context)
-                                      .primaryColor),
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                    width: 1.0, color: Colors.transparent),
-                              ),
-                            ),
-                            onPressed: true
-                                ? () async {
-                                    final appointmentData = AppointmentPayload(
-                                      clientId: userUid.toString(),
-                                      practionerId:
-                                          widget.practioner.userId.toString(),
-                                      practionerName:
-                                          '${widget.practioner.firstName} ${widget.practioner.lastName}',
-                                      services: selectedService.toString(),
-                                      date:
-                                          dateandtimeController.text.toString(),
-                                      time:
-                                          await ref.watch(timeSelectedProvider),
-                                      location: selectedLocation.toString(),
-                                      clientNameorCode:
-                                          selectedCodeorName.toString(),
-                                      clientEmail: emailController.text,
-                                      clientphNumber: phNumbController.text,
-                                      clientComment:
-                                          commentController.text.toString(),
-                                      statusAppointment: 'ongoing',
-                                      createdAt: DateTime.now().toString(),
-                                    );
-                                    final isUploaded = await ref
-                                        .read(appointmentUploaderProvider
-                                            .notifier)
-                                        .upload(
-                                          appointmentData: appointmentData,
-                                        );
-                                    if (isUploaded && mounted) {
-                                      Navigator.pushNamed(
-                                              context, RouteName.MainPagesPage)
-                                          .then((_) => ref.refresh(
-                                              userAppointmentProvider.future));
+                              onPressed: true
+                                  ? () async {
+                                      final appointmentData =
+                                          AppointmentPayload(
+                                        clientId: userUid.toString(),
+                                        practionerId:
+                                            widget.practioner.userId.toString(),
+                                        practionerName:
+                                            '${widget.practioner.firstName} ${widget.practioner.lastName}',
+                                        services: selectedService.toString(),
+                                        date: dateandtimeController.text
+                                            .toString(),
+                                        time: await ref
+                                            .watch(timeSelectedProvider),
+                                        location: selectedLocation.toString(),
+                                        clientNameorCode:
+                                            selectedCodeorName.toString(),
+                                        clientEmail: emailController.text,
+                                        clientphNumber: phNumbController.text,
+                                        clientComment:
+                                            commentController.text.toString(),
+                                        statusAppointment: 'ongoing',
+                                        createdAt: DateTime.now().toString(),
+                                      );
+                                      final isUploaded = await ref
+                                          .read(appointmentUploaderProvider
+                                              .notifier)
+                                          .upload(
+                                            appointmentData: appointmentData,
+                                          );
+                                      if (isUploaded && mounted) {
+                                        Navigator.pushNamed(context,
+                                                RouteName.MainPagesPage)
+                                            .then((_) => ref.refresh(
+                                                userAppointmentProvider
+                                                    .future));
+                                      }
                                     }
-                                  }
-                                : null,
-                            child: Text(
-                              'Submit',
-                              style: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    fontSize: screenWidth / (width / 16),
-                                    color: Colors.white,
-                                  ),
+                                  : null,
+                              child: Text(
+                                'Submit',
+                                style: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: screenWidth / (width / 16),
+                                      color: Colors.white,
+                                    ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      )),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }
