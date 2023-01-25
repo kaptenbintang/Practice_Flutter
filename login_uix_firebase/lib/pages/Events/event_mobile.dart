@@ -120,7 +120,7 @@ class _EventMobileState extends State<EventMobile> {
                 //Timeline Widget
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(
-                      0, Dimensions.height10, 0, 0),
+                      0, Dimensions.height10, 0, Dimensions.height10),
                   child: FutureBuilder(
                       future: eventsList,
                       builder:

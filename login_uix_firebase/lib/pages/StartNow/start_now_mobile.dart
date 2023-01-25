@@ -18,12 +18,10 @@ class _StartNowMobileState extends State<StartNowMobile> {
   List<String>? checkboxGroupValues;
   @override
   Widget build(BuildContext context) {
-    return // Generated code for this Column Widget...
-        Container(
-      width: double.maxFinite,
-      height: double.maxFinite,
-      color: Colors.white,
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Container(
+        width: double.maxFinite,
+        color: Colors.white,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
