@@ -7,9 +7,12 @@ class SmallAdminDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.width16),
-      child: adminDashboardNavigator(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: Dimensions.width16),
+        child: adminDashboardNavigator(),
+      ),
     );
   }
 }
