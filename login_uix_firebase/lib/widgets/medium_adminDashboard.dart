@@ -6,7 +6,8 @@ import 'package:login_uix_firebase/widgets/side_bar_admin.dart';
 import '../helper/local_navigator.dart';
 
 class MediumAdminDashboard extends StatelessWidget {
-  const MediumAdminDashboard({super.key});
+  final String roles;
+  const MediumAdminDashboard({super.key, required this.roles});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,9 @@ class MediumAdminDashboard extends StatelessWidget {
             flex: 5,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: adminDashboardNavigator(),
+              child: (roles != 'practioner')
+                  ? adminDashboardNavigator()
+                  : practionerDashboardNavigator(),
             ))
       ],
     );

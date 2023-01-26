@@ -1,12 +1,19 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_uix_firebase/widgets/side_bar_admin.dart';
 
+import '../auth/provider/user_id_provider.dart';
 import '../helper/local_navigator.dart';
+import '../user_info/providers/user_info_model_provider.dart';
+import 'animations/error_animation_view.dart';
+import 'animations/loading_animation_view.dart';
 
 class LargeAdminDashboard extends StatelessWidget {
-  const LargeAdminDashboard({super.key});
+  final String roles;
+
+  const LargeAdminDashboard({super.key, required this.roles});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,9 @@ class LargeAdminDashboard extends StatelessWidget {
             flex: 5,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: adminDashboardNavigator(),
+              child: (roles != 'practioner')
+                  ? adminDashboardNavigator()
+                  : practionerDashboardNavigator(),
             ))
       ],
     );

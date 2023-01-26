@@ -113,62 +113,58 @@ class SideBarAdmin extends ConsumerWidget {
                     flex: ResponsiveWidget.isSmallScreen(context) ? 6 : 5,
                     child: Consumer(
                       builder: (context, ref, child) {
-                        return (isRoleadminorUser == "admin" ||
-                                isRoleadminorUser == "superadmin")
-                            ? Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: sideBarAdminItems.map((itemname) {
-                                  return SideBarAdminItem(
-                                    itemName: itemname == LogOutRoute
-                                        ? "Log Out"
-                                        : itemname,
-                                    onTap: () async {
-                                      if (itemname == LogOutRoute) {
-                                        logOutRoute(context, ref, child);
-                                      }
-
-                                      if (!sideAdminController
-                                          .isActive(itemname)) {
-                                        sideAdminController
-                                            .changeActiveitemTo(itemname);
-                                        if (ResponsiveWidget.isSmallScreen(
-                                            context)) {
-                                          Get.back();
+                        return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: (isRoleadminorUser != 'practioner')
+                                ? sideBarAdminItems.map((itemname) {
+                                    return SideBarAdminItem(
+                                      itemName: itemname == LogOutRoute
+                                          ? "Log Out"
+                                          : itemname,
+                                      onTap: () async {
+                                        if (itemname == LogOutRoute) {
+                                          logOutRoute(context, ref, child);
                                         }
-                                        navigationController
-                                            .navigateTo(itemname);
-                                      }
-                                    },
-                                  );
-                                }).toList())
-                            : Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: sideBarPractionerItem.map((itemname) {
-                                  return SideBarPractionerItem(
-                                    itemName: itemname == LogOutRoute
-                                        ? "Log Out"
-                                        : itemname,
-                                    onTap: () async {
-                                      if (itemname == LogOutRoute) {
-                                        logOutRoute(context, ref, child);
-                                      }
 
-                                      if (!sideAdminController
-                                          .isActive(itemname)) {
-                                        sideAdminController
-                                            .changeActiveitemTo(itemname);
-                                        if (ResponsiveWidget.isSmallScreen(
-                                            context)) {
-                                          Get.back();
+                                        if (!sideAdminController
+                                            .isActive(itemname)) {
+                                          sideAdminController
+                                              .changeActiveitemTo(itemname);
+                                          if (ResponsiveWidget.isSmallScreen(
+                                              context)) {
+                                            Get.back();
+                                          }
+                                          navigationController
+                                              .navigateTo(itemname);
                                         }
-                                        navigationController
-                                            .navigateTo(itemname);
-                                      }
-                                    },
-                                  );
-                                }).toList());
+                                      },
+                                    );
+                                  }).toList()
+                                : sideBarPractionerItem.map((itemname) {
+                                    return SideBarAdminItem(
+                                      itemName: itemname == LogOutRoute
+                                          ? "Log Out"
+                                          : itemname,
+                                      onTap: () async {
+                                        if (itemname == LogOutRoute) {
+                                          logOutRoute(context, ref, child);
+                                        }
+
+                                        if (!sideAdminController
+                                            .isActive(itemname)) {
+                                          sideAdminController
+                                              .changeActiveitemTo(itemname);
+                                          if (ResponsiveWidget.isSmallScreen(
+                                              context)) {
+                                            Get.back();
+                                          }
+                                          navigationController
+                                              .navigateTo(itemname);
+                                        }
+                                      },
+                                    );
+                                  }).toList());
                       },
                     )),
                 // Generated code for this Column Widget...

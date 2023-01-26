@@ -3,7 +3,8 @@ import 'package:login_uix_firebase/helper/dimensions.dart';
 import 'package:login_uix_firebase/helper/local_navigator.dart';
 
 class SmallAdminDashboard extends StatelessWidget {
-  const SmallAdminDashboard({super.key});
+  final String roles;
+  const SmallAdminDashboard({super.key, required this.roles});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,9 @@ class SmallAdminDashboard extends StatelessWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: Dimensions.width16),
-        child: adminDashboardNavigator(),
+        child: (roles != 'practioner')
+            ? adminDashboardNavigator()
+            : practionerDashboardNavigator(),
       ),
     );
   }
