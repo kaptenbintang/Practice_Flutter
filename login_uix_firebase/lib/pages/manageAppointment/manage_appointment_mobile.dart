@@ -36,16 +36,19 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
   final _practionername = TextEditingController();
   final _location = TextEditingController();
   final _services = TextEditingController();
-  final _dateandtime = TextEditingController();
+  final _date = TextEditingController();
   final _clientcodeorname = TextEditingController();
   final _clientphnumber = TextEditingController();
   final _clientemail = TextEditingController();
   final _clientcomment = TextEditingController();
   final _statusAppointment = TextEditingController();
   final _createdAt = TextEditingController();
+  final _time = TextEditingController();
 
+  String? appointmentId;
   String? userId;
-  String? PractionerNameID;
+  String? practionerId;
+
   String? locationID;
   String? servicesID;
   String? dateandtimeID;
@@ -458,19 +461,22 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                                 () async {
                                   print('Button pressed ...');
                                   await service.deleteAppointment(
-                                      context, snapshot.clientId.toString());
+                                      context, snapshot.id!);
                                   _pullRefresh();
                                 };
                                 break;
                               case "Edit":
-                                dialogEditPractioner(context);
+                                dialogEditAppointment(context);
                                 setState(() {
+                                  practionerId = snapshot.practionerId;
+                                  appointmentId = snapshot.id;
                                   userId = snapshot.clientId;
+                                  _time.text = snapshot.time!;
                                   _practionername.text =
                                       snapshot.practionerName.toString();
                                   _services.text = snapshot.services.toString();
                                   _location.text = snapshot.location.toString();
-                                  _dateandtime.text = snapshot.date.toString();
+                                  _date.text = snapshot.date.toString();
                                   _clientcodeorname.text =
                                       snapshot.clientNameorCode.toString();
                                   _clientphnumber.text =
@@ -518,7 +524,7 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
     );
   }
 
-  Future<dynamic> dialogEditPractioner(BuildContext context) {
+  Future<dynamic> dialogEditAppointment(BuildContext context) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -576,7 +582,7 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                         Padding(
                           padding: EdgeInsets.all(Dimensions.height08),
                           child: TextFormField(
-                            controller: _dateandtime,
+                            controller: _date,
                             decoration: InputDecoration(
                               labelText: "Date/Time",
                             ),
@@ -665,11 +671,14 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                               if (_formKey.currentState!.validate()) {
                                 AppointmentData appointmentData =
                                     AppointmentData(
+                                        id: appointmentId,
                                         clientId: userId,
                                         practionerName: _practionername.text,
+                                        practionerId: practionerId,
                                         services: _services.text,
                                         location: _location.text,
-                                        date: _dateandtime.text,
+                                        date: _date.text,
+                                        time: _time.text,
                                         clientNameorCode:
                                             _clientcodeorname.text,
                                         clientphNumber: _clientphnumber.text,

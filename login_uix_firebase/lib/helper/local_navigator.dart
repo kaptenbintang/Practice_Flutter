@@ -14,3 +14,8 @@ Navigator adminDashboardNavigator() => Navigator(
       initialRoute: ManageEventsRoute,
       onGenerateRoute: generateRouteAdmin,
     );
+Navigator practionerDashboardNavigator() => Navigator(
+      key: navigationController.navigationKey,
+      initialRoute: AppointmentRoute,
+      onGenerateRoute: generateRouteAdmin,
+    );

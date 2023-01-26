@@ -32,16 +32,18 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
   final _practionername = TextEditingController();
   final _location = TextEditingController();
   final _services = TextEditingController();
-  final _dateandtime = TextEditingController();
+  final _date = TextEditingController();
   final _clientcodeorname = TextEditingController();
   final _clientphnumber = TextEditingController();
   final _clientemail = TextEditingController();
   final _clientcomment = TextEditingController();
   final _statusAppointment = TextEditingController();
   final _createdAt = TextEditingController();
+  final _time = TextEditingController();
 
+  String? appointmentId;
   String? userId;
-  String? practionerNameID;
+  String? practionerId;
   String? locationID;
   String? servicesID;
   String? dateandtimeID;
@@ -497,8 +499,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
             : ResponsiveWidget.isLargeScreen(context)
                 ? 1920
                 : 1280;
-    // print(_isChecked);
-    // int idx = int.parse(dropDownItemValue2[indexs]);
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
       child: Container(
@@ -608,12 +609,15 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                         onPressed: () {
                           dialogEditAppointment(context);
                           setState(() {
+                            practionerId = snapshot.practionerId;
+                            appointmentId = snapshot.id;
                             userId = snapshot.clientId;
+                            _time.text = snapshot.time!;
                             _practionername.text =
                                 snapshot.practionerName.toString();
                             _services.text = snapshot.services.toString();
                             _location.text = snapshot.location.toString();
-                            _dateandtime.text = snapshot.date.toString();
+                            _date.text = snapshot.date.toString();
                             _clientcodeorname.text =
                                 snapshot.clientNameorCode.toString();
                             _clientphnumber.text =
@@ -654,7 +658,7 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                       child: FFButtonWidget(
                         onPressed: () async {
                           await service.deleteAppointment(
-                              context, snapshot.clientId.toString());
+                              context, snapshot.id!);
                           _pullRefresh();
                         },
                         text: 'Delete',
@@ -752,9 +756,18 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
-                          controller: _dateandtime,
+                          controller: _date,
                           decoration: InputDecoration(
-                            labelText: "Date/Time",
+                            labelText: "Date",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _time,
+                          decoration: InputDecoration(
+                            labelText: "Time",
                           ),
                         ),
                       ),
@@ -840,11 +853,14 @@ class _ManageAppointmentDesktopState extends State<ManageAppointmentDesktop> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               AppointmentData appointmentData = AppointmentData(
+                                  id: appointmentId,
                                   clientId: userId,
                                   practionerName: _practionername.text,
+                                  practionerId: practionerId,
                                   services: _services.text,
                                   location: _location.text,
-                                  date: _dateandtime.text,
+                                  date: _date.text,
+                                  time: _time.text,
                                   clientNameorCode: _clientcodeorname.text,
                                   clientphNumber: _clientphnumber.text,
                                   clientEmail: _clientemail.text,

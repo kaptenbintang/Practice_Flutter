@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // object model for storaging appointment data from firestore
 
 class AppointmentData {
+  final String? id;
   final String? clientId;
   final String? practionerId;
   final String? practionerName;
@@ -17,7 +18,8 @@ class AppointmentData {
   final String? createdAt;
 
   AppointmentData(
-      {this.clientId,
+      {this.id,
+      this.clientId,
       this.practionerId,
       this.practionerName,
       this.services,
@@ -51,8 +53,9 @@ class AppointmentData {
 
   AppointmentData.fromDocumentSnapshot(
       DocumentSnapshot<Map<String, dynamic>> doc)
-      : clientId = doc.data()!["clientId"],
-        practionerId = doc.data()!["practionerid"],
+      : id = doc.id,
+        clientId = doc.data()!["clientId"],
+        practionerId = doc.data()!["practionerId"],
         practionerName = doc.data()!["practionerName"],
         services = doc.data()!["services"],
         date = doc.data()!["date"],
