@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,6 +7,7 @@ import 'package:login_uix_firebase/model/appointment/appointment_updated.dart';
 import 'package:login_uix_firebase/widgets/appointments/appointments_thumbnail_view.dart';
 
 import '../../helper/responsive.dart';
+import '../../provider/main_page/appointment_provider.dart';
 import '../../provider/main_page/cancel_provider.dart';
 
 class AppointmentsGridView extends StatelessWidget {
@@ -44,6 +47,9 @@ class AppointmentsGridView extends StatelessWidget {
         return AppointmentsThumbnailView(
           appointment: appointment,
           onTapped: () {
+            print(appointment.statusAppointment);
+            print(appointment.clientId);
+
             showDialog(
                 context: context,
                 builder: (context) {
@@ -61,16 +67,12 @@ class AppointmentsGridView extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () async {
-                              Appointment appointmentData = Appointment({
-                                'clientId':
-                                    FirebaseAuth.instance.currentUser!.uid,
-                                'statusAppointment':
-                                    editStatusAppointment.toString(),
-                              }, appointmentId: appointment.appointmentId);
                               await ref
                                   .read(editStatusAppointment.notifier)
                                   .editAppointmentCancel(
-                                      appointmentData: appointmentData);
+                                      appointmentData: appointment)
+                                  .then((value) =>
+                                      ref.refresh(userAppointmentProvider));
                               Navigator.of(context).pop();
                             },
                           ),

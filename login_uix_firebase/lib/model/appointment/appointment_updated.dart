@@ -6,21 +6,6 @@ import 'package:login_uix_firebase/model/appointment/appointment_key.dart';
 // object model for storaging appointment data from firestore
 @immutable
 class Appointment extends Equatable {
-  Appointment(Map<String, dynamic> json, {required this.appointmentId})
-      : practionerId = json[AppointmentKey.practionerId],
-        clientId = json[AppointmentKey.clientId],
-        clientComment = json[AppointmentKey.clientComment],
-        clientEmail = json[AppointmentKey.clientEmail],
-        clientNameorCode = json[AppointmentKey.clientNameorCode],
-        clientphNumber = json[AppointmentKey.clientphNumber],
-        createdAt = json[AppointmentKey.createdAt],
-        date = json[AppointmentKey.date],
-        time = json[AppointmentKey.time],
-        location = json[AppointmentKey.location],
-        practionerName = json[AppointmentKey.practionerName],
-        services = json[AppointmentKey.services],
-        statusAppointment = json[AppointmentKey.statusAppointment];
-
   final String appointmentId;
   final String practionerId;
   final String clientId;
@@ -35,6 +20,21 @@ class Appointment extends Equatable {
   final String practionerName;
   final String services;
   final String statusAppointment;
+
+  Appointment(Map<String, dynamic> json, {required this.appointmentId})
+      : practionerId = json[AppointmentKey.practionerId],
+        clientId = json[AppointmentKey.clientId],
+        clientComment = json[AppointmentKey.clientComment],
+        clientEmail = json[AppointmentKey.clientEmail],
+        clientNameorCode = json[AppointmentKey.clientNameorCode],
+        clientphNumber = json[AppointmentKey.clientphNumber],
+        createdAt = json[AppointmentKey.createdAt],
+        date = json[AppointmentKey.date],
+        time = json[AppointmentKey.time],
+        location = json[AppointmentKey.location],
+        practionerName = json[AppointmentKey.practionerName],
+        services = json[AppointmentKey.services],
+        statusAppointment = json[AppointmentKey.statusAppointment];
 
   @override
   List<Object?> get props => [

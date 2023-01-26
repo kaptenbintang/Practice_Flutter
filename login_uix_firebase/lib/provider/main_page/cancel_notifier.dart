@@ -18,27 +18,14 @@ class ChangeStatusAppointmentNotifier extends StateNotifier<IsLoading> {
   }) async {
     try {
       isLoading = true;
-      final userInfo = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection(
             FirebaseCollectionName.appointment,
           )
-          .where(
-            FirebaseFieldName.statusAppointment,
-            isEqualTo: "ongoing",
-          )
-          .where(
-            FirebaseFieldName.userId,
-            isEqualTo: appointmentData.clientId,
-          )
-          .limit(1)
-          .get();
-      if (userInfo.docs.isNotEmpty) {
-        await userInfo.docs.first.reference.update(
-          {
-            FirebaseFieldName.statusAppointment: "Cancel",
-          },
-        );
-      }
+          .doc(appointmentData.appointmentId)
+          .update({
+        FirebaseFieldName.statusAppointment: "Cancel",
+      });
 
       return true;
     } catch (e) {
