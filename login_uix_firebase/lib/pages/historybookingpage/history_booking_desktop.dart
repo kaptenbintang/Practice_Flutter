@@ -131,7 +131,6 @@ class HistoryBookingDesktop extends ConsumerWidget {
                               width: screenWidth / (width / 300),
                               child: TextFormField(
                                 controller: searchController,
-                                autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Search Something here..',

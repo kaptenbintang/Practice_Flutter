@@ -177,7 +177,6 @@ class _ManageEventMobileState extends State<ManageEventMobile> {
                                             Dimensions.width10 * 5,
                                         child: TextFormField(
                                           controller: textController,
-                                          autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             hintText: 'Search...',

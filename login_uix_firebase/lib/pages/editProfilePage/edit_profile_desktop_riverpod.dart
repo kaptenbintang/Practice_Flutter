@@ -305,7 +305,6 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                           height: screenWidth / (width / 80),
                           child: TextFormField(
                             controller: lastsNameController,
-                            autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Last Name',
@@ -401,7 +400,6 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                             disableLengthCheck: true,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
@@ -489,7 +487,6 @@ class EditProfileDesktopWidget2 extends ConsumerWidget {
                           height: screenWidth / (width / 80),
                           child: TextFormField(
                             controller: dateofbirthController,
-                            autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Date of Birth',

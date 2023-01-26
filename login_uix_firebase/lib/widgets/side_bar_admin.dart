@@ -273,13 +273,17 @@ class SideBarAdmin extends ConsumerWidget {
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.circular(
                                               _width / (maxWidth / 40)),
-                                          child: Image(
-                                            image: AssetImage(
-                                                'lib/images/relationary.png'),
-                                            width: _width / (maxWidth / 40),
-                                            height: _width / (maxWidth / 40),
-                                            fit: BoxFit.cover,
-                                          ),
+                                          child: (data.profilePic.toString() ==
+                                                  '')
+                                              ? Icon(Icons.person)
+                                              : Image.network(
+                                                  data.profilePic!,
+                                                  width:
+                                                      _width / (maxWidth / 40),
+                                                  height:
+                                                      _width / (maxWidth / 40),
+                                                  fit: BoxFit.cover,
+                                                ),
                                         ),
                                       ),
                                       Consumer(

@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors
-
+// ignore_for_file: prefer_const_constructors, deprecated_member_use, prefer_const_literals_to_create_immutables
+import 'package:url_launcher/url_launcher.dart';
+import 'package:universal_html/html.dart' as html;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:login_uix_firebase/pages/forgot_pw_page.dart';
-import 'dart:html' as html;
+
 import '../main.dart';
 
 class CheckEmailView extends StatelessWidget {
@@ -68,9 +70,15 @@ class CheckEmailView extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         const url = 'https://gmail.com';
-                        html.window.open(url, "_blank");
+                        if (kIsWeb) {
+                          html.window.open(url, '_blank');
+                        } else {
+                          if (await canLaunch(url)) {
+                            launch(url);
+                          }
+                        }
                       },
                       child: Text(
                         'Open email app',

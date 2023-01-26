@@ -254,7 +254,6 @@ class _ManageServiceCategoryDesktopState
                                                     screenWidth / (width / 200),
                                                 child: TextFormField(
                                                   controller: textController,
-                                                  autofocus: true,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
                                                     hintText: 'Search...',

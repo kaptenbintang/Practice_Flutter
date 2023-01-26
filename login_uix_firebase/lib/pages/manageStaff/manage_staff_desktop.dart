@@ -267,7 +267,6 @@ class _ManageStaffDesktopState extends State<ManageStaffDesktop> {
                                       width: screenWidth / (width / 200),
                                       child: TextFormField(
                                         controller: controllerSearch,
-                                        autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           hintText: 'Search...',

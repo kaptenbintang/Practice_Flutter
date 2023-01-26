@@ -182,8 +182,8 @@ class DetailPractionerMobile extends ConsumerWidget {
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.circular(Dimensions.radius20),
-                                child: Image.asset(
-                                  'lib/images/doctor.png',
+                                child: Image.network(
+                                  practioner.profilePic,
                                   width: Dimensions.width100 * 1.5,
                                   height: Dimensions.height100 * 1.5,
                                   fit: BoxFit.scaleDown,

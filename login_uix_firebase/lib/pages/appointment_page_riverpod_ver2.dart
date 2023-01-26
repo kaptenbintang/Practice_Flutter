@@ -44,6 +44,9 @@ class AppointmentPageRiverpodVersion2 extends StatefulHookConsumerWidget {
 
 class _AppointmentPageRiverpodVersion2State
     extends ConsumerState<AppointmentPageRiverpodVersion2> {
+  final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -54,8 +57,6 @@ class _AppointmentPageRiverpodVersion2State
             : ResponsiveWidget.isLargeScreen(context)
                 ? 1920
                 : 1280;
-    final formKey = GlobalKey<FormState>();
-    final scaffoldKey = GlobalKey<ScaffoldState>();
 
     final userUid = ref.watch(userIdProvider);
     final userInfo = ref.watch(userInfoModelProvider(userUid.toString()));
@@ -177,7 +178,6 @@ class _AppointmentPageRiverpodVersion2State
                                   width: screenWidth / (width / 300),
                                   child: TextFormField(
                                     controller: searchController,
-                                    autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       hintText: 'Search Something here..',
@@ -609,7 +609,6 @@ class _AppointmentPageRiverpodVersion2State
                                         screenWidth / (width / 8)),
                                     child: TextFormField(
                                       controller: dateandtimeController,
-                                      autofocus: true,
                                       obscureText: false,
                                       readOnly: true,
                                       onTap: () async {
@@ -894,7 +893,6 @@ class _AppointmentPageRiverpodVersion2State
                                         screenWidth / (width / 8)),
                                     child: TextFormField(
                                       controller: dateandtimeController,
-                                      autofocus: true,
                                       obscureText: false,
                                       readOnly: true,
                                       onTap: () async {
@@ -1389,7 +1387,7 @@ class _AppointmentPageRiverpodVersion2State
                                                               ? screenWidth /
                                                                   (width / 18)
                                                               : screenWidth /
-                                                                  (width / 8)),
+                                                                  (width / 12)),
                                                 ),
                                               ),
                                               DropdownMenuItem(
@@ -1407,7 +1405,7 @@ class _AppointmentPageRiverpodVersion2State
                                                               ? screenWidth /
                                                                   (width / 18)
                                                               : screenWidth /
-                                                                  (width / 8)),
+                                                                  (width / 12)),
                                                 ),
                                               ),
                                             ],
@@ -1569,7 +1567,6 @@ class _AppointmentPageRiverpodVersion2State
                                                   screenWidth / (width / 10)),
                                           child: TextFormField(
                                             controller: commentController,
-                                            autofocus: true,
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               hintText:

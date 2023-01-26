@@ -127,7 +127,6 @@ class DetailPractionerDesktop extends ConsumerWidget {
                           Expanded(
                             child: TextFormField(
                               controller: textController,
-                              autofocus: true,
                               obscureText: false,
                               decoration: InputDecoration(
                                 hintText: 'Search Something here..',

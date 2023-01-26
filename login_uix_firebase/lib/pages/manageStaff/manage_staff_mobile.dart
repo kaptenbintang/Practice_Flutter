@@ -273,7 +273,6 @@ class _ManageStaffMobileState extends State<ManageStaffMobile> {
                                       height: Dimensions.height10 * 5,
                                       child: TextFormField(
                                         controller: controllerSearch,
-                                        autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           hintText: 'Search...',

@@ -244,7 +244,6 @@ class _ManagePractionerDesktopState extends State<ManagePractionerDesktop> {
                                       width: screenWidth / (width / 200),
                                       child: TextFormField(
                                         controller: textController,
-                                        autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           hintText: 'Search...',

@@ -186,12 +186,11 @@ class _ManageAppointmentMobileState extends State<ManageAppointmentMobile> {
                                       Dimensions.height05,
                                       0,
                                       Dimensions.height05),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: Dimensions.height100 +
                                         Dimensions.height10 * 5,
                                     child: TextFormField(
                                       controller: textController,
-                                      autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         hintText: 'Search...',

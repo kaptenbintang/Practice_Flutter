@@ -170,7 +170,6 @@ class _ManageClientTypeMobileState extends State<ManageClientTypeMobile> {
                                             Dimensions.width10 * 5,
                                         child: TextFormField(
                                           controller: textController,
-                                          autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             hintText: 'Search...',

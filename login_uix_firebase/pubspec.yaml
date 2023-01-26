@@ -100,6 +100,7 @@ dependencies:
   timelines: ^0.1.0
   freezed: ^2.3.2
   equatable: ^2.0.5
+  universal_html: ^2.0.8
   
   
 

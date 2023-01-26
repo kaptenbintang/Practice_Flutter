@@ -38,9 +38,9 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                 ? 1920
                 : 1280;
     return Consumer(builder: (context, ref, child) {
-      final userUid = ref.watch(userIdProvider)!;
+      final userUid = ref.watch(userIdProvider);
       final userInfoModel = ref.watch(
-        userInfoModelProvider(userUid),
+        userInfoModelProvider(userUid!),
       );
       return userInfoModel.when(
         data: (data) {
@@ -111,7 +111,12 @@ class ProfilePageMobileWidgetRiverpod extends ConsumerWidget {
                             padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: Icon(Icons.person),
+                              child: (data.profilePic.toString() == '')
+                                  ? Icon(Icons.person)
+                                  : Image.network(
+                                      data.profilePic!,
+                                      fit: BoxFit.cover,
+                                    ),
 
                               // ),
                             ),

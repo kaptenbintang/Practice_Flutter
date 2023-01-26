@@ -343,7 +343,6 @@ class _StartNowMobileState extends State<StartNowMobile> {
                               decoration: BoxDecoration(),
                               child: TextFormField(
                                 controller: textController,
-                                autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   isDense: true,

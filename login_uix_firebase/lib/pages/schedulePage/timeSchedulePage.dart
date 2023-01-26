@@ -280,7 +280,6 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                                 height: screenWidth / (width / 20),
                                 child: TextFormField(
                                   controller: textController1,
-                                  autofocus: true,
                                   readOnly: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -354,7 +353,6 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                                 height: screenWidth / (width / 20),
                                 child: TextFormField(
                                   controller: textController2,
-                                  autofocus: true,
                                   readOnly: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -626,7 +624,6 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                             height: screenWidth / (width / 20),
                             child: TextFormField(
                               controller: textController1,
-                              autofocus: true,
                               readOnly: true,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -703,7 +700,6 @@ class _timeSchedulePageState extends State<timeSchedulePage> {
                             height: screenWidth / (width / 20),
                             child: TextFormField(
                               controller: textController2,
-                              autofocus: true,
                               readOnly: true,
                               obscureText: false,
                               decoration: InputDecoration(

@@ -492,7 +492,6 @@ class _StartNowDesktopState extends State<StartNowDesktop> {
                                       decoration: BoxDecoration(),
                                       child: TextFormField(
                                         controller: textController,
-                                        autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           isDense: true,
